@@ -8,6 +8,8 @@
 
 CWStatsBarNotification uses ARC and requires iOS 6.0+.
 
+Works for iPhone and iPad.
+
 ## Installation
 
 ### CocoaPods
@@ -40,6 +42,8 @@ The category adds a new property to `UIViewController` called `statusBarNotifica
 ### Additional Remarks
 
 Queueing is not yet implemented. As such, if you trigger a notification while a notification is already showing, nothing will happen. You can check whether the notification is showing with the Boolean property `self.statusBarNotificationIsShowing` in UIViewController.
+
+Screen orientation changing is fully supported.
 
 ## License
 
