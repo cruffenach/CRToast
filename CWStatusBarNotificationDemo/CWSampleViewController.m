@@ -29,6 +29,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self sliderValueChanged:nil];
+    // setup status bar notification visuals
+    self.statusBarNotificationLabel.textColor = [UIColor whiteColor];
+    self.statusBarNotificationLabel.backgroundColor = self.view.tintColor;
 }
 
 - (void)didReceiveMemoryWarning
@@ -38,6 +41,7 @@
 }
 
 - (IBAction)btnShowNotification:(UIButton *)sender {
+    // display notification
     [self showStatusBarNotification:self.textField.text forDuration:self.slider.value];
 }
 
