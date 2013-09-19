@@ -20,6 +20,7 @@ NSString const *CWStatusBarNotificationIsShowingKey = @"CWStatusBarNotificationI
 NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabelKey";
 
 # pragma mark - helper functions
+// The below functions produce warnings - not an issue
 
 - (BOOL)prefersStatusBarHidden {
     return self.statusBarIsHidden;
@@ -37,6 +38,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
         self.statusBarNotificationLabel.frame = CGRectMake(0, -1*STATUS_BAR_HEIGHT, [UIScreen mainScreen].bounds.size.width, STATUS_BAR_HEIGHT);
         self.statusBarNotificationLabel.text = message;
         self.statusBarNotificationLabel.textAlignment = NSTextAlignmentCenter;
+        self.statusBarNotificationLabel.adjustsFontSizeToFitWidth = YES;
         self.statusBarNotificationLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         [self.view addSubview:self.statusBarNotificationLabel];
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
