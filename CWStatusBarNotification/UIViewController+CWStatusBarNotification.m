@@ -19,7 +19,7 @@ NSString const *CWStatusBarIsHiddenKey = @"CWStatusBarIsHiddenKey";
 NSString const *CWStatusBarNotificationIsShowingKey = @"CWStatusBarNotificationIsShowingKey";
 NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabelKey";
 
-# pragma mark - helper functions
+# pragma mark - overriding functions
 // The below functions produce warnings - not an issue
 
 - (BOOL)prefersStatusBarHidden {
@@ -28,6 +28,18 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
 
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationSlide;
+}
+
+# pragma mark - helper functions
+
+- (void)updateStatusBar {
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        // iOS 7
+        [self setNeedsStatusBarAppearanceUpdate];
+    } else {
+        // iOS 6
+        [[UIApplication sharedApplication] setStatusBarHidden:self.statusBarIsHidden withAnimation:self.preferredStatusBarUpdateAnimation];
+    }
 }
 
 # pragma mark - dimensions
@@ -61,7 +73,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenOrientationChanged) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
             self.statusBarIsHidden = YES;
-            [self setNeedsStatusBarAppearanceUpdate];
+            [self updateStatusBar];
             self.statusBarNotificationLabel.frame = [self getStatusBarFrame];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:duration - 2*STATUS_BAR_ANIMATION_LENGTH animations:^{
@@ -71,7 +83,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
                         self.statusBarIsHidden = NO;
-                        [self setNeedsStatusBarAppearanceUpdate];
+                        [self updateStatusBar];
                         self.statusBarNotificationLabel.frame = [self getStatusBarHiddenFrame];
                     } completion:^(BOOL finished) {
                         [self.statusBarNotificationLabel removeFromSuperview];
