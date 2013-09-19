@@ -7,6 +7,7 @@
 //
 
 #import "CWAppDelegate.h"
+#import "CWSampleViewController.h"
 
 @implementation CWAppDelegate
 
@@ -19,6 +20,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    CWSampleViewController *sampleViewController = [[CWSampleViewController alloc] initWithNibName:@"CWSampleViewController" bundle:nil];
+    self.window.rootViewController = sampleViewController;
     [self.window makeKeyAndVisible];
     return YES;
 }

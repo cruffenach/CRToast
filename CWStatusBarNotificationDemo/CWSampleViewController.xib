@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4510" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CWSampleViewController">
+            <connections>
+                <outlet property="label" destination="vWS-51-pZK" id="iJs-QB-uJY"/>
+                <outlet property="slider" destination="OmA-2w-f6U" id="VeU-YT-yPi"/>
+                <outlet property="textField" destination="b05-o2-vNO" id="rEI-Vs-m9A"/>
+                <outlet property="view" destination="1" id="3"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2HW-YD-pSU">
+                    <rect key="frame" x="100" y="269" width="121" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Show Notification">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnShowNotification:" destination="-1" eventType="touchUpInside" id="ywZ-Mn-kXw"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Notification Text" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b05-o2-vNO">
+                    <rect key="frame" x="27" y="231" width="273" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <action selector="txtFieldEditingDidEnd:" destination="-1" eventType="editingDidEnd" id="05i-ja-tsU"/>
+                    </connections>
+                </textField>
+                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="OmA-2w-f6U">
+                    <rect key="frame" x="25" y="190" width="277" height="34"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <connections>
+                        <action selector="sliderValueChanged:" destination="-1" eventType="valueChanged" id="68h-ee-HdI"/>
+                    </connections>
+                </slider>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vWS-51-pZK">
+                    <rect key="frame" x="27" y="161" width="273" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="OmA-2w-f6U" firstAttribute="top" secondItem="vWS-51-pZK" secondAttribute="bottom" constant="8" id="0IG-RX-1tU"/>
+                <constraint firstAttribute="centerX" secondItem="2HW-YD-pSU" secondAttribute="centerX" constant="-0.5" id="1Nk-TF-emp"/>
+                <constraint firstAttribute="centerY" secondItem="2HW-YD-pSU" secondAttribute="centerY" id="1SV-MZ-5ia"/>
+                <constraint firstAttribute="trailing" secondItem="b05-o2-vNO" secondAttribute="trailing" constant="20" id="3GR-Yj-nSd"/>
+                <constraint firstItem="2HW-YD-pSU" firstAttribute="top" secondItem="b05-o2-vNO" secondAttribute="bottom" constant="8" id="Lxf-5Q-ZXL"/>
+                <constraint firstItem="vWS-51-pZK" firstAttribute="width" secondItem="OmA-2w-f6U" secondAttribute="width" id="RPv-CJ-1u0"/>
+                <constraint firstItem="OmA-2w-f6U" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="27" id="Vru-g9-xcj"/>
+                <constraint firstItem="b05-o2-vNO" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="27" id="cRo-NU-WIe"/>
+                <constraint firstAttribute="centerX" secondItem="b05-o2-vNO" secondAttribute="centerX" constant="-3.5" id="cTM-5u-OOZ"/>
+                <constraint firstItem="b05-o2-vNO" firstAttribute="top" secondItem="OmA-2w-f6U" secondAttribute="bottom" constant="8" id="o2b-0d-Fzo"/>
+                <constraint firstItem="b05-o2-vNO" firstAttribute="width" secondItem="OmA-2w-f6U" secondAttribute="width" id="v8i-sd-swe"/>
+                <constraint firstItem="vWS-51-pZK" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="27" id="zdy-3b-ugd"/>
+            </constraints>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

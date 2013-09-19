@@ -22,6 +22,9 @@
 		CE8882E317EAD71900A6F491 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE8882C717EAD71900A6F491 /* CoreData.framework */; };
 		CE8882EB17EAD71900A6F491 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CE8882E917EAD71900A6F491 /* InfoPlist.strings */; };
 		CE8882ED17EAD71900A6F491 /* CWStatusBarNotificationDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8882EC17EAD71900A6F491 /* CWStatusBarNotificationDemoTests.m */; };
+		CE8882F917EAD78400A6F491 /* UIViewController+CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8882F817EAD78400A6F491 /* UIViewController+CWStatusBarNotification.m */; };
+		CE88830417EAD86900A6F491 /* CWSampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE88830217EAD86900A6F491 /* CWSampleViewController.m */; };
+		CE88830517EAD86900A6F491 /* CWSampleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE88830317EAD86900A6F491 /* CWSampleViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,11 @@
 		CE8882E817EAD71900A6F491 /* CWStatusBarNotificationDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CWStatusBarNotificationDemoTests-Info.plist"; sourceTree = "<group>"; };
 		CE8882EA17EAD71900A6F491 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CE8882EC17EAD71900A6F491 /* CWStatusBarNotificationDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CWStatusBarNotificationDemoTests.m; sourceTree = "<group>"; };
+		CE8882F717EAD78400A6F491 /* UIViewController+CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+CWStatusBarNotification.h"; sourceTree = "<group>"; };
+		CE8882F817EAD78400A6F491 /* UIViewController+CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+CWStatusBarNotification.m"; sourceTree = "<group>"; };
+		CE88830117EAD86900A6F491 /* CWSampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CWSampleViewController.h; path = CWStatusBarNotificationDemo/CWSampleViewController.h; sourceTree = "<group>"; };
+		CE88830217EAD86900A6F491 /* CWSampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CWSampleViewController.m; path = CWStatusBarNotificationDemo/CWSampleViewController.m; sourceTree = "<group>"; };
+		CE88830317EAD86900A6F491 /* CWSampleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CWSampleViewController.xib; path = CWStatusBarNotificationDemo/CWSampleViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +92,7 @@
 		CE8882B517EAD71900A6F491 = {
 			isa = PBXGroup;
 			children = (
+				CE8882F617EAD75F00A6F491 /* CWStatusBarNotification */,
 				CE8882C917EAD71900A6F491 /* CWStatusBarNotificationDemo */,
 				CE8882E617EAD71900A6F491 /* CWStatusBarNotificationDemoTests */,
 				CE8882C017EAD71900A6F491 /* Frameworks */,
@@ -117,6 +126,7 @@
 			children = (
 				CE8882D217EAD71900A6F491 /* CWAppDelegate.h */,
 				CE8882D317EAD71900A6F491 /* CWAppDelegate.m */,
+				CE8882FA17EAD81600A6F491 /* View Controllers */,
 				CE8882D817EAD71900A6F491 /* Images.xcassets */,
 				CE8882D517EAD71900A6F491 /* CWStatusBarNotificationDemo.xcdatamodeld */,
 				CE8882CA17EAD71900A6F491 /* Supporting Files */,
@@ -151,6 +161,26 @@
 				CE8882E917EAD71900A6F491 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CE8882F617EAD75F00A6F491 /* CWStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				CE8882F717EAD78400A6F491 /* UIViewController+CWStatusBarNotification.h */,
+				CE8882F817EAD78400A6F491 /* UIViewController+CWStatusBarNotification.m */,
+			);
+			path = CWStatusBarNotification;
+			sourceTree = "<group>";
+		};
+		CE8882FA17EAD81600A6F491 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE88830117EAD86900A6F491 /* CWSampleViewController.h */,
+				CE88830217EAD86900A6F491 /* CWSampleViewController.m */,
+				CE88830317EAD86900A6F491 /* CWSampleViewController.xib */,
+			);
+			name = "View Controllers";
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +231,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Cezary Wojcik";
 				TargetAttributes = {
+					CE8882BD17EAD71900A6F491 = {
+						DevelopmentTeam = QMZH6X9D3C;
+					};
 					CE8882DD17EAD71900A6F491 = {
 						TestTargetID = CE8882BD17EAD71900A6F491;
 					};
@@ -229,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE88830517EAD86900A6F491 /* CWSampleViewController.xib in Resources */,
 				CE8882CE17EAD71900A6F491 /* InfoPlist.strings in Resources */,
 				CE8882D917EAD71900A6F491 /* Images.xcassets in Resources */,
 			);
@@ -249,9 +283,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE88830417EAD86900A6F491 /* CWSampleViewController.m in Sources */,
 				CE8882D417EAD71900A6F491 /* CWAppDelegate.m in Sources */,
 				CE8882D717EAD71900A6F491 /* CWStatusBarNotificationDemo.xcdatamodeld in Sources */,
 				CE8882D017EAD71900A6F491 /* main.m in Sources */,
+				CE8882F917EAD78400A6F491 /* UIViewController+CWStatusBarNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +408,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CWStatusBarNotificationDemo/CWStatusBarNotificationDemo-Prefix.pch";
 				INFOPLIST_FILE = "CWStatusBarNotificationDemo/CWStatusBarNotificationDemo-Info.plist";
@@ -385,6 +422,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CWStatusBarNotificationDemo/CWStatusBarNotificationDemo-Prefix.pch";
 				INFOPLIST_FILE = "CWStatusBarNotificationDemo/CWStatusBarNotificationDemo-Info.plist";
