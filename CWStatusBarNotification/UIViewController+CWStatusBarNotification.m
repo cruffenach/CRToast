@@ -30,21 +30,39 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
     return UIStatusBarAnimationSlide;
 }
 
+# pragma mark - dimensions
+
+- (CGFloat)getStatusBarWidth {
+    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+        return [UIScreen mainScreen].bounds.size.width;
+    }
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
+- (CGRect)getStatusBarHiddenFrame {
+    return CGRectMake(0, -1*STATUS_BAR_HEIGHT, [self getStatusBarWidth], STATUS_BAR_HEIGHT);
+}
+
+- (CGRect)getStatusBarFrame {
+    return CGRectMake(0, 0, [self getStatusBarWidth], STATUS_BAR_HEIGHT);
+}
+
 # pragma mark - show status bar notification function
 
 - (void)showStatusBarNotification:(NSString *)message forDuration:(CGFloat)duration {
     if (!self.statusBarNotificationIsShowing) {
         self.statusBarNotificationIsShowing = YES;
-        self.statusBarNotificationLabel.frame = CGRectMake(0, -1*STATUS_BAR_HEIGHT, [UIScreen mainScreen].bounds.size.width, STATUS_BAR_HEIGHT);
+        self.statusBarNotificationLabel.frame = [self getStatusBarHiddenFrame];
         self.statusBarNotificationLabel.text = message;
         self.statusBarNotificationLabel.textAlignment = NSTextAlignmentCenter;
         self.statusBarNotificationLabel.adjustsFontSizeToFitWidth = YES;
         self.statusBarNotificationLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         [self.view addSubview:self.statusBarNotificationLabel];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenOrientationChanged) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
             self.statusBarIsHidden = YES;
             [self setNeedsStatusBarAppearanceUpdate];
-            self.statusBarNotificationLabel.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, STATUS_BAR_HEIGHT);
+            self.statusBarNotificationLabel.frame = [self getStatusBarFrame];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:duration - 2*STATUS_BAR_ANIMATION_LENGTH animations:^{
 
@@ -54,10 +72,11 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
                     [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
                         self.statusBarIsHidden = NO;
                         [self setNeedsStatusBarAppearanceUpdate];
-                        self.statusBarNotificationLabel.frame = CGRectMake(0, -1*STATUS_BAR_HEIGHT, [UIScreen mainScreen].bounds.size.width, STATUS_BAR_HEIGHT);
+                        self.statusBarNotificationLabel.frame = [self getStatusBarHiddenFrame];
                     } completion:^(BOOL finished) {
                         [self.statusBarNotificationLabel removeFromSuperview];
                         self.statusBarNotificationIsShowing = NO;
+                        [[NSNotificationCenter defaultCenter] removeObserver:self];
                     }];
                 });
             }];
@@ -66,6 +85,12 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
 }
 
 - (IBAction)txtFieldEditingDidEnd:(UITextField *)sender {
+}
+
+# pragma mark - screen orientation change
+
+- (void)screenOrientationChanged {
+    self.statusBarNotificationLabel.frame = [self getStatusBarFrame];
 }
 
 # pragma mark - getters/setters
