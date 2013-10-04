@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage     = "http://github.com/cezarywojcik/CWStatusBarNotification"
   s.screenshots  = "https://raw.github.com/cezarywojcik/CWStatusBarNotification/master/screenshot.png"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
-  s.author       = { "Cezary Wojcik" => "cezarywojcik@cezarywojcik.com" }
+  s.author       = { "Cezary Wojcik" => "me@cezarywojcik.com" }
   s.platform     = :ios, '6.0'
   s.source = { :git => "https://github.com/cezarywojcik/CWStatusBarNotification.git",
                :tag => s.version.to_s }
