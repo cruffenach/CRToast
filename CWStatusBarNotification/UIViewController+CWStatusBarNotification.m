@@ -11,7 +11,6 @@
 
 @implementation UIViewController (CWStatusBarNotification);
 
-#define STATUS_BAR_HEIGHT 22.0f
 #define STATUS_BAR_ANIMATION_LENGTH 0.25f
 #define FONT_SIZE 12.0f
 
@@ -44,6 +43,15 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
 
 # pragma mark - dimensions
 
+- (CGFloat)getStatusBarHeight {
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.width;
+    }
+    NSLog(@"%f", statusBarHeight);
+    return statusBarHeight;
+}
+
 - (CGFloat)getStatusBarWidth {
     if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
         return [UIScreen mainScreen].bounds.size.width;
@@ -52,11 +60,11 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
 }
 
 - (CGRect)getStatusBarHiddenFrame {
-    return CGRectMake(0, -1*STATUS_BAR_HEIGHT, [self getStatusBarWidth], STATUS_BAR_HEIGHT);
+    return CGRectMake(0, -1*[self getStatusBarHeight], [self getStatusBarWidth], [self getStatusBarHeight]);
 }
 
 - (CGRect)getStatusBarFrame {
-    return CGRectMake(0, 0, [self getStatusBarWidth], STATUS_BAR_HEIGHT);
+    return CGRectMake(0, 0, [self getStatusBarWidth], [self getStatusBarHeight]);
 }
 
 # pragma mark - show status bar notification function
@@ -71,10 +79,11 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
         self.statusBarNotificationLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         [self.view addSubview:self.statusBarNotificationLabel];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenOrientationChanged) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+        CGRect statusBarFrame = [self getStatusBarFrame];
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
             self.statusBarIsHidden = YES;
             [self updateStatusBar];
-            self.statusBarNotificationLabel.frame = [self getStatusBarFrame];
+            self.statusBarNotificationLabel.frame = statusBarFrame;
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:duration - 2*STATUS_BAR_ANIMATION_LENGTH animations:^{
 
