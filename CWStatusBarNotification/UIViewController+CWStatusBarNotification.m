@@ -78,6 +78,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
         self.statusBarNotificationLabel.adjustsFontSizeToFitWidth = YES;
         self.statusBarNotificationLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
         [self.view addSubview:self.statusBarNotificationLabel];
+        [self.view bringSubviewToFront:self.statusBarNotificationLabel];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenOrientationChanged) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         CGRect statusBarFrame = [self getStatusBarFrame];
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
@@ -97,7 +98,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
                     } completion:^(BOOL finished) {
                         [self.statusBarNotificationLabel removeFromSuperview];
                         self.statusBarNotificationIsShowing = NO;
-                        [[NSNotificationCenter defaultCenter] removeObserver:self];
+                        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
                     }];
                 });
             }];
