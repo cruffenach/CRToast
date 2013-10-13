@@ -19,8 +19,9 @@ NSString const *CWStatusBarNotificationIsShowingKey = @"CWStatusBarNotificationI
 NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabelKey";
 
 # pragma mark - overriding functions
-// The below functions produce warnings - not an issue
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wobjc-protocol-method-implementation"
 - (BOOL)prefersStatusBarHidden {
     return self.statusBarIsHidden;
 }
@@ -28,6 +29,7 @@ NSString const *CWStatusBarNotificationLabelKey = @"CWStatusBarNotificationLabel
 - (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
     return UIStatusBarAnimationSlide;
 }
+#pragma clang diagnostic pop
 
 # pragma mark - helper functions
 
