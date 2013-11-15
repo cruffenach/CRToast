@@ -21,7 +21,9 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     CWSampleViewController *sampleViewController = [[CWSampleViewController alloc] initWithNibName:@"CWSampleViewController" bundle:nil];
-    self.window.rootViewController = sampleViewController;
+    UINavigationController *navigationController = [UINavigationController new];
+    self.window.rootViewController = navigationController;
+    [navigationController pushViewController:sampleViewController animated:YES];
     [self.window makeKeyAndVisible];
     return YES;
 }

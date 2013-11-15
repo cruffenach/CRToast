@@ -15,5 +15,6 @@
 @property (nonatomic, readwrite) BOOL statusBarIsHidden;
 @property (nonatomic, readwrite) BOOL statusBarNotificationIsShowing;
 @property (nonatomic, readwrite) UILabel *statusBarNotificationLabel;
+@property (nonatomic, readwrite) UIWindow *notificationWindow;
 
 @end
