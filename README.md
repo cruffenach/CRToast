@@ -49,8 +49,8 @@ First of all, you can customize the background color and text color using the fo
 Example:
 
 ```
-notification.notificationLabelBackgroundColor = [UIColor redColor];
-notification.notificationLabelTextColor = [UIColor yellowColor];
+notification.notificationLabelBackgroundColor = [UIColor blackColor];
+notification.notificationLabelTextColor = [UIColor greenColor];
 ```
 
 ![custom colors](screenshots/ss1.gif)
