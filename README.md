@@ -1,12 +1,12 @@
 # CWStatusBarNotification
 
-`CSStatusBarNotification` is a category on UIViewController that allows you to easily create text-based notifications that appear on the status bar.
+`CWStatusBarNotification` is a library that allows you to easily create text-based notifications that appear on the status bar.
 
-![screenshot](demo.gif)
+![demo](screenshots/demo.gif)
 
 ## Requirements
 
-CWStatsBarNotification uses ARC and requires iOS 6.0+.
+`CWStatusBarNotification` uses ARC and requires iOS 7.0+.
 
 Works for iPhone and iPad.
 
@@ -14,7 +14,7 @@ Works for iPhone and iPad.
 
 ### CocoaPods
 
-`pod 'CWStatusBarNotification', '~> 1.1.0'`
+`pod 'CWStatusBarNotification', '~> 2.0.0'`
 
 ### Manual
 
@@ -22,28 +22,67 @@ Copy the folder `CWStatusBarNotification` to your project.
 
 ## Usage
 
-Use the following import statement in the View Controller you wish to use this with:
+***Note:** The previous version of this library implemented the notifications using a category. This version uses an object instead.*
 
-    #import "UIViewController+CWStatusBarNotification.h"
+Firstly, you need the following import statement:
 
-Now, to trigger a notification:
+```
+#import "CWStatusBarNotification.h"
+```
 
-    NSString *notificationText = @"This is a test notification";
-    CGFloat duration = 1.0f;
-    [self showStatusBarNotification:notificationText forDuration:duration];
+Now, you need to create a `CWStatusBarNotification` object. It is recommended that you do so by attaching it as a property to a `UIViewController`.
 
-### Customization
+```
+CWStatusBarNotification *notification = [CWStatusBarNotification new];
+```
+After you have a `CWStatusBarNotification` object, you can simply call the `displayNotificationMessage:forDuration:` method:
 
-The category adds a new property to `UIViewController` called `statusBarNotificationLabel`. Here is an example usage:
+```
+[self.notification displayNotificationWithMessage:@"Hello, World!"
+                   forDuration:1.0f];
+```
 
-    self.statusBarNotificationLabel.textColor = [UIColor whiteColor];
-    self.statusBarNotificationLabel.backgroundColor = self.view.tintColor;
+## Customizing Appearance
+
+First of all, you can customize the background color and text color using the following properties: `notificationLabelBackgroundColor` and `notificationLabelTextColor`.
+
+Example:
+
+```
+notification.notificationLabelBackgroundColor = [UIColor redColor];
+notification.notificationLabelTextColor = [UIColor yellowColor];
+```
+
+![custom colors](screenshots/ss1.gif)
+
+The default value of `notificationLabelBackgroundColor` is `[[UIApplication sharedApplication] delegate].window.tintColor`.
+
+The default value of `notification.notificationLabelTextColor` is `[UIColor whiteColor]`.
+
+Finally, you can also choose from two styles - a notification the size of the status bar, or a notification the size of the status bar and a navigation bar. Simply change the `notificationStyle` property of the `CWStatusBarNotification` object to either `CWNotificationStyleStatusBarNotification` or `CWNotificationStyleNavigationBarNotification`.
+
+![custom style](screenshots/ss2.gif)
+
+The default value of `notificationStyle` is `CWNotificationStyleStatusBarNotification`.
+
+## Customizing Animation
+
+There are two properties that determine the animation style of the notification: `notificationAnimationInStyle` and `notificationAnimationOutStyle`. Each can take on one of four values:
+
+* `CWNotificationAnimationStyleTop`
+* `CWNotificationAnimationStyleBottom`
+* `CWNotificationAnimationStyleLeft`
+* `CWNotificationAnimationStyleRight`
+
+The `notificationAnimationInStyle` describes where the notification comes from, whereas the `notificationAnimationOutStyle` describes where the notification will go.
+
+The default value for `notificationAnimationInStyle` is `CWNotificationAnimationStyleTop`.
+
+The default value for `notificationAnimationOutStyle` is `CWNotificationAnimationStyleTop`.
 
 ### Additional Remarks
 
-Queueing is not yet implemented. As such, if you trigger a notification while a notification is already showing, nothing will happen. You can check whether the notification is showing with the Boolean property `self.statusBarNotificationIsShowing` in UIViewController.
-
-Screen orientation changing is fully supported.
+The notifications will work in both screen orientations, however, screen rotation while a notification is displayed is not yet fully supported.
 
 ## License
 
@@ -68,3 +107,5 @@ Screen orientation changing is fully supported.
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
+
+
