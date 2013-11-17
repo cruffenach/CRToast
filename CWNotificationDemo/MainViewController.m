@@ -62,7 +62,6 @@
 {
     self.notification.notificationAnimationInStyle = self.segFromStyle.selectedSegmentIndex;
     self.notification.notificationAnimationOutStyle = self.segToStyle.selectedSegmentIndex;
-    self.notification.notificationStyle = CWNotificationStyleNavigationBarNotification;
     [self.notification displayNotificationWithMessage:self.txtNotificationMessage.text forDuration:self.sliderDuration.value];
 }
 

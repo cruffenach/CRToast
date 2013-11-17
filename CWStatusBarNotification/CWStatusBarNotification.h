@@ -36,5 +36,7 @@ enum {
 @property (strong, nonatomic) UIWindow *notificationWindow;
 
 - (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration;
+- (void)displayNotificationWithMessage:(NSString *)message completion:(void (^)(void))completion;
+- (void)dismissNotification;
 
 @end

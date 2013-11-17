@@ -208,7 +208,7 @@
 
 # pragma mark - display notification
 
-- (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration
+- (void)displayNotificationWithMessage:(NSString *)message completion:(void (^)(void))completion
 {
     if (!self.notificationIsShowing) {
         self.notificationIsShowing = YES;
@@ -234,25 +234,37 @@
         [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
             [self firstFrameChange];
         } completion:^(BOOL finished) {
-            [UIView animateWithDuration:duration - 2*STATUS_BAR_ANIMATION_LENGTH animations:^{
-                // potential animations while notification is showing
-            } completion:^(BOOL finished) {
-                [self secondFrameChange];
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC));
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
-                        [self thirdFrameChange];
-                    } completion:^(BOOL finished) {
-                        [self.notificationLabel removeFromSuperview];
-                        [self.statusBarView removeFromSuperview];
-                        self.notificationWindow = nil;
-                        self.notificationIsShowing = NO;
-                        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-                    }];
-                });
-            }];
+            [completion invoke];
         }];
     }
+
+}
+
+- (void)dismissNotification
+{
+    if (self.notificationIsShowing) {
+        [self secondFrameChange];
+        [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
+            [self thirdFrameChange];
+        } completion:^(BOOL finished) {
+            [self.notificationLabel removeFromSuperview];
+            [self.statusBarView removeFromSuperview];
+            self.notificationWindow = nil;
+            self.notificationIsShowing = NO;
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+        }];
+    }
+}
+
+- (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration
+{
+    [self displayNotificationWithMessage:message completion:^{
+        double delayInSeconds = duration;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self dismissNotification];
+        });
+    }];
 }
 
 @end

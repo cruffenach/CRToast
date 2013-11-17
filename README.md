@@ -42,6 +42,14 @@ After you have a `CWStatusBarNotification` object, you can simply call the `disp
                    forDuration:1.0f];
 ```
 
+If you prefer to manually choose when to display and dismiss the notification, you can do so as well:
+
+```
+[self.notification displayNotificationWithMessage:@"Hello" completion:nil];
+// wait until you need to dismiss
+[self.notofication dismissNotification];
+```
+
 ## Customizing Appearance
 
 First of all, you can customize the background color and text color using the following properties: `notificationLabelBackgroundColor` and `notificationLabelTextColor`.
