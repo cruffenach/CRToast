@@ -10,6 +10,9 @@
 
 #import "CWStatusBarNotification.h"
 
+CGFloat const CWStatusBarDefaultHeight = 44.0f;
+CGFloat const CWStatusBariPhoneLandscape = 30.0f;
+
 #define STATUS_BAR_ANIMATION_LENGTH 0.25f
 #define FONT_SIZE 12.0f
 
@@ -34,6 +37,45 @@ static CGFloat CWGetStatusBarWidth() {
     return [UIScreen mainScreen].bounds.size.height;
 }
 
+static CGFloat CWGetNavigationBarHeight() {
+    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
+        UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return CWStatusBarDefaultHeight;
+    }
+    return CWStatusBariPhoneLandscape;
+}
+
+static CGFloat CWGetNotificationLabelHeight(CWNotificationStyle notificationStyle) {
+    switch (notificationStyle) {
+        case CWNotificationStyleStatusBarNotification:
+            return CWGetStatusBarHeight();
+        case CWNotificationStyleNavigationBarNotification:
+            return CWGetStatusBarHeight() + CWGetNavigationBarHeight();
+        default:
+            return CWGetStatusBarHeight();
+    }
+}
+
+static CGRect CWGetNotificationLabelTopFrame(CWNotificationStyle notificationStyle) {
+    return CGRectMake(0, -1*CWGetNotificationLabelHeight(notificationStyle), CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
+}
+
+static CGRect CWGetNotificationLabelLeftFrame(CWNotificationStyle notificationStyle) {
+    return CGRectMake(-1*CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
+}
+
+static CGRect CWGetNotificationLabelRightFrame(CWNotificationStyle notificationStyle) {
+    return CGRectMake(CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
+}
+
+static CGRect CWGetNotificationLabelBottomFrame(CWNotificationStyle notificationStyle) {
+    return CGRectMake(0, CWGetNotificationLabelHeight(notificationStyle), CWGetStatusBarWidth(), 0);
+}
+
+static CGRect CWGetNotificationLabelFrame(CWNotificationStyle notificationStyle) {
+    return CGRectMake(0, 0, CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
+}
+
 @implementation CWStatusBarNotification
 
 - (CWStatusBarNotification *)init {
@@ -49,51 +91,10 @@ static CGFloat CWGetStatusBarWidth() {
     return self;
 }
 
-# pragma mark - dimensions
-
-- (CGRect)getNotificationLabelTopFrame {
-    return CGRectMake(0, -1*[self getNotificationLabelHeight], CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
-}
-
-- (CGRect)getNotificationLabelLeftFrame {
-    return CGRectMake(-1*CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
-}
-
-- (CGRect)getNotificationLabelRightFrame {
-    return CGRectMake(CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
-}
-
-- (CGRect)getNotificationLabelBottomFrame {
-    return CGRectMake(0, [self getNotificationLabelHeight], CWGetStatusBarWidth(), 0);
-}
-
-- (CGRect)getNotificationLabelFrame {
-    return CGRectMake(0, 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
-}
-
-- (CGFloat)getNavigationBarHeight {
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
-        UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return 44.0f;
-    }
-    return 30.0f;
-}
-
-- (CGFloat)getNotificationLabelHeight {
-    switch (self.notificationStyle) {
-        case CWNotificationStyleStatusBarNotification:
-            return CWGetStatusBarHeight();
-        case CWNotificationStyleNavigationBarNotification:
-            return CWGetStatusBarHeight() + [self getNavigationBarHeight];
-        default:
-            return CWGetStatusBarHeight();
-    }
-}
-
 # pragma mark - screen orientation change
 
 - (void)screenOrientationChanged {
-    self.notificationLabel.frame = [self getNotificationLabelFrame];
+    self.notificationLabel.frame = CWGetNotificationLabelFrame(self.notificationStyle);
     self.statusBarView.hidden = YES;
 }
 
@@ -110,16 +111,16 @@ static CGFloat CWGetStatusBarWidth() {
     self.notificationLabel.textColor = self.notificationLabelTextColor;
     switch (self.notificationAnimationInStyle) {
         case CWNotificationAnimationStyleTop:
-            self.notificationLabel.frame = [self getNotificationLabelTopFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelTopFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleBottom:
-            self.notificationLabel.frame = [self getNotificationLabelBottomFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelBottomFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleLeft:
-            self.notificationLabel.frame = [self getNotificationLabelLeftFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelLeftFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleRight:
-            self.notificationLabel.frame = [self getNotificationLabelRightFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelRightFrame(self.notificationStyle);
             break;
             
     }
@@ -133,12 +134,12 @@ static CGFloat CWGetStatusBarWidth() {
     self.notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.notificationWindow.windowLevel = UIWindowLevelStatusBar;
     self.notificationWindow.rootViewController = [UIViewController new];
-    self.notificationWindow.rootViewController.view.bounds = [self getNotificationLabelFrame];
+    self.notificationWindow.rootViewController.view.bounds = CWGetNotificationLabelFrame(self.notificationStyle);
 }
 
 - (void)createStatusBarView
 {
-    self.statusBarView = [[UIView alloc] initWithFrame:[self getNotificationLabelFrame]];
+    self.statusBarView = [[UIView alloc] initWithFrame:CWGetNotificationLabelFrame(self.notificationStyle)];
     self.statusBarView.clipsToBounds = YES;
     UIView *statusBarImageView = [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
     [self.statusBarView addSubview:statusBarImageView];
@@ -150,19 +151,19 @@ static CGFloat CWGetStatusBarWidth() {
 
 - (void)firstFrameChange
 {
-    self.notificationLabel.frame = [self getNotificationLabelFrame];
+    self.notificationLabel.frame = CWGetNotificationLabelFrame(self.notificationStyle);
     switch (self.notificationAnimationInStyle) {
         case CWNotificationAnimationStyleTop:
-            self.statusBarView.frame = [self getNotificationLabelBottomFrame];
+            self.statusBarView.frame = CWGetNotificationLabelBottomFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleBottom:
-            self.statusBarView.frame = [self getNotificationLabelTopFrame];
+            self.statusBarView.frame = CWGetNotificationLabelTopFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleLeft:
-            self.statusBarView.frame = [self getNotificationLabelRightFrame];
+            self.statusBarView.frame = CWGetNotificationLabelRightFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleRight:
-            self.statusBarView.frame = [self getNotificationLabelLeftFrame];
+            self.statusBarView.frame = CWGetNotificationLabelLeftFrame(self.notificationStyle);
             break;
     }
 }
@@ -171,37 +172,37 @@ static CGFloat CWGetStatusBarWidth() {
 {
     switch (self.notificationAnimationOutStyle) {
         case CWNotificationAnimationStyleTop:
-            self.statusBarView.frame = [self getNotificationLabelBottomFrame];
+            self.statusBarView.frame = CWGetNotificationLabelBottomFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleBottom:
-            self.statusBarView.frame = [self getNotificationLabelTopFrame];
+            self.statusBarView.frame = CWGetNotificationLabelTopFrame(self.notificationStyle);
             self.notificationLabel.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
-            self.notificationLabel.center = CGPointMake(self.notificationLabel.center.x, [self getNotificationLabelHeight]);
+            self.notificationLabel.center = CGPointMake(self.notificationLabel.center.x, CWGetNotificationLabelHeight(self.notificationStyle));
             break;
         case CWNotificationAnimationStyleLeft:
-            self.statusBarView.frame = [self getNotificationLabelRightFrame];
+            self.statusBarView.frame = CWGetNotificationLabelRightFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleRight:
-            self.statusBarView.frame = [self getNotificationLabelLeftFrame];
+            self.statusBarView.frame = CWGetNotificationLabelLeftFrame(self.notificationStyle);
             break;
     }
 }
 
 - (void)thirdFrameChange
 {
-    self.statusBarView.frame = [self getNotificationLabelFrame];
+    self.statusBarView.frame = CWGetNotificationLabelFrame(self.notificationStyle);
     switch (self.notificationAnimationOutStyle) {
         case CWNotificationAnimationStyleTop:
-            self.notificationLabel.frame = [self getNotificationLabelTopFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelTopFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleBottom:
             self.notificationLabel.transform = CGAffineTransformMakeScale(1.0f, 0.0f);
             break;
         case CWNotificationAnimationStyleLeft:
-            self.notificationLabel.frame = [self getNotificationLabelLeftFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelLeftFrame(self.notificationStyle);
             break;
         case CWNotificationAnimationStyleRight:
-            self.notificationLabel.frame = [self getNotificationLabelRightFrame];
+            self.notificationLabel.frame = CWGetNotificationLabelRightFrame(self.notificationStyle);
             break;
     }
 }
