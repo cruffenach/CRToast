@@ -22,18 +22,13 @@ enum {
     CWNotificationAnimationStyleRight
 };
 
-@property (strong, nonatomic) UILabel *notificationLabel;
 @property (strong, nonatomic) UIColor *notificationLabelBackgroundColor;
 @property (strong, nonatomic) UIColor *notificationLabelTextColor;
-
-@property (strong, nonatomic) UIView *statusBarView;
 
 @property (nonatomic) NSInteger notificationStyle;
 @property (nonatomic) NSInteger notificationAnimationInStyle;
 @property (nonatomic) NSInteger notificationAnimationOutStyle;
 @property (nonatomic) BOOL notificationIsShowing;
-
-@property (strong, nonatomic) UIWindow *notificationWindow;
 
 - (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration;
 - (void)displayNotificationWithMessage:(NSString *)message completion:(void (^)(void))completion;

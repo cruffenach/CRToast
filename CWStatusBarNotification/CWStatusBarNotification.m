@@ -13,6 +13,12 @@
 #define STATUS_BAR_ANIMATION_LENGTH 0.25f
 #define FONT_SIZE 12.0f
 
+@interface CWStatusBarNotification ()
+@property (strong, nonatomic) UILabel *notificationLabel;
+@property (strong, nonatomic) UIView *statusBarView;
+@property (strong, nonatomic) UIWindow *notificationWindow;
+@end
+
 @implementation CWStatusBarNotification
 
 @synthesize notificationLabel, notificationLabelBackgroundColor, notificationLabelTextColor, notificationWindow;
