@@ -21,12 +21,6 @@
 
 @implementation CWStatusBarNotification
 
-@synthesize notificationLabel, notificationLabelBackgroundColor, notificationLabelTextColor, notificationWindow;
-
-@synthesize statusBarView;
-
-@synthesize notificationStyle, notificationIsShowing;
-
 - (CWStatusBarNotification *)init {
     self = [super init];
     if (self) {
