@@ -27,6 +27,13 @@ static CGFloat CWGetStatusBarHeight() {
     return statusBarHeight;
 }
 
+static CGFloat CWGetStatusBarWidth() {
+    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+        return [UIScreen mainScreen].bounds.size.width;
+    }
+    return [UIScreen mainScreen].bounds.size.height;
+}
+
 @implementation CWStatusBarNotification
 
 - (CWStatusBarNotification *)init {
@@ -44,31 +51,24 @@ static CGFloat CWGetStatusBarHeight() {
 
 # pragma mark - dimensions
 
-- (CGFloat)getStatusBarWidth {
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-        return [UIScreen mainScreen].bounds.size.width;
-    }
-    return [UIScreen mainScreen].bounds.size.height;
-}
-
 - (CGRect)getNotificationLabelTopFrame {
-    return CGRectMake(0, -1*[self getNotificationLabelHeight], [self getStatusBarWidth], [self getNotificationLabelHeight]);
+    return CGRectMake(0, -1*[self getNotificationLabelHeight], CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
 }
 
 - (CGRect)getNotificationLabelLeftFrame {
-    return CGRectMake(-1*[self getStatusBarWidth], 0, [self getStatusBarWidth], [self getNotificationLabelHeight]);
+    return CGRectMake(-1*CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
 }
 
 - (CGRect)getNotificationLabelRightFrame {
-    return CGRectMake([self getStatusBarWidth], 0, [self getStatusBarWidth], [self getNotificationLabelHeight]);
+    return CGRectMake(CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
 }
 
 - (CGRect)getNotificationLabelBottomFrame {
-    return CGRectMake(0, [self getNotificationLabelHeight], [self getStatusBarWidth], 0);
+    return CGRectMake(0, [self getNotificationLabelHeight], CWGetStatusBarWidth(), 0);
 }
 
 - (CGRect)getNotificationLabelFrame {
-    return CGRectMake(0, 0, [self getStatusBarWidth], [self getNotificationLabelHeight]);
+    return CGRectMake(0, 0, CWGetStatusBarWidth(), [self getNotificationLabelHeight]);
 }
 
 - (CGFloat)getNavigationBarHeight {
