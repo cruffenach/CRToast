@@ -10,11 +10,11 @@
 
 #import "CWStatusBarNotification.h"
 
-CGFloat const CWStatusBarDefaultHeight = 44.0f;
-CGFloat const CWStatusBariPhoneLandscape = 30.0f;
+static CGFloat const CWStatusBarDefaultHeight = 44.0f;
+static CGFloat const CWStatusBariPhoneLandscape = 30.0f;
 
-#define STATUS_BAR_ANIMATION_LENGTH 0.25f
-#define FONT_SIZE 12.0f
+static CGFloat const CWStatusBarAnimationLength = 0.25f;
+static CGFloat const CWDefaultFontSize = 12.0f;
 
 @interface CWStatusBarNotification ()
 @property (strong, nonatomic) UILabel *notificationLabel;
@@ -106,7 +106,7 @@ static CGRect CWGetNotificationLabelFrame(CWNotificationStyle notificationStyle)
     self.notificationLabel.text = message;
     self.notificationLabel.textAlignment = NSTextAlignmentCenter;
     self.notificationLabel.adjustsFontSizeToFitWidth = YES;
-    self.notificationLabel.font = [UIFont systemFontOfSize:FONT_SIZE];
+    self.notificationLabel.font = [UIFont systemFontOfSize:CWDefaultFontSize];
     self.notificationLabel.backgroundColor = self.notificationLabelBackgroundColor;
     self.notificationLabel.textColor = self.notificationLabelTextColor;
     switch (self.notificationAnimationInStyle) {
@@ -232,7 +232,7 @@ static CGRect CWGetNotificationLabelFrame(CWNotificationStyle notificationStyle)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenOrientationChanged) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
         
         // animate
-        [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
+        [UIView animateWithDuration:CWStatusBarAnimationLength animations:^{
             [self firstFrameChange];
         } completion:^(BOOL finished) {
             [completion invoke];
@@ -245,7 +245,7 @@ static CGRect CWGetNotificationLabelFrame(CWNotificationStyle notificationStyle)
 {
     if (self.notificationIsShowing) {
         [self secondFrameChange];
-        [UIView animateWithDuration:STATUS_BAR_ANIMATION_LENGTH animations:^{
+        [UIView animateWithDuration:CWStatusBarAnimationLength animations:^{
             [self thirdFrameChange];
         } completion:^(BOOL finished) {
             [self.notificationLabel removeFromSuperview];
