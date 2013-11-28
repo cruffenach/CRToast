@@ -19,6 +19,14 @@
 @property (strong, nonatomic) UIWindow *notificationWindow;
 @end
 
+static CGFloat CWGetStatusBarHeight() {
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.width;
+    }
+    return statusBarHeight;
+}
+
 @implementation CWStatusBarNotification
 
 - (CWStatusBarNotification *)init {
@@ -35,14 +43,6 @@
 }
 
 # pragma mark - dimensions
-
-- (CGFloat)getStatusBarHeight {
-    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.width;
-    }
-    return statusBarHeight;
-}
 
 - (CGFloat)getStatusBarWidth {
     if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
@@ -82,11 +82,11 @@
 - (CGFloat)getNotificationLabelHeight {
     switch (self.notificationStyle) {
         case CWNotificationStyleStatusBarNotification:
-            return [self getStatusBarHeight];
+            return CWGetStatusBarHeight();
         case CWNotificationStyleNavigationBarNotification:
-            return [self getStatusBarHeight] + [self getNavigationBarHeight];
+            return CWGetStatusBarHeight() + [self getNavigationBarHeight];
         default:
-            return [self getStatusBarHeight];
+            return CWGetStatusBarHeight();
     }
 }
 
