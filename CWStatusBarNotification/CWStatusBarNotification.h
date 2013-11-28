@@ -10,12 +10,12 @@
 
 @interface CWStatusBarNotification : NSObject
 
-enum {
+typedef NS_ENUM(NSInteger, CWNotificationStyle){
     CWNotificationStyleStatusBarNotification,
     CWNotificationStyleNavigationBarNotification
 };
 
-enum {
+typedef NS_ENUM(NSInteger, CWNotificationAnimationStyle) {
     CWNotificationAnimationStyleTop,
     CWNotificationAnimationStyleBottom,
     CWNotificationAnimationStyleLeft,
@@ -25,9 +25,9 @@ enum {
 @property (strong, nonatomic) UIColor *notificationLabelBackgroundColor;
 @property (strong, nonatomic) UIColor *notificationLabelTextColor;
 
-@property (nonatomic) NSInteger notificationStyle;
-@property (nonatomic) NSInteger notificationAnimationInStyle;
-@property (nonatomic) NSInteger notificationAnimationOutStyle;
+@property (nonatomic) CWNotificationStyle notificationStyle;
+@property (nonatomic) CWNotificationAnimationStyle notificationAnimationInStyle;
+@property (nonatomic) CWNotificationAnimationStyle notificationAnimationOutStyle;
 @property (nonatomic) BOOL notificationIsShowing;
 
 - (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration;
