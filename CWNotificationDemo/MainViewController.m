@@ -37,7 +37,7 @@
     [self.segFromStyle setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [self.segToStyle setTitleTextAttributes:attributes forState:UIControlStateNormal];
     // initialize CWNotification
-    self.notification = [CWStatusBarNotification new];
+//    self.notification = [CWStatusBarNotification new];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,9 +60,65 @@
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender
 {
-    self.notification.notificationAnimationInStyle = self.segFromStyle.selectedSegmentIndex;
-    self.notification.notificationAnimationOutStyle = self.segToStyle.selectedSegmentIndex;
-    [self.notification displayNotificationWithMessage:self.txtNotificationMessage.text forDuration:self.sliderDuration.value];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationNotificationInAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleLeft),
+                                                                  kCWStatusBarNotificationNotificationOutAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleRight),
+                                                                  kCWStatusBarNotificationTextKey : @"Hello World",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(1),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:18],
+                                                                  kCWStatusBarNotificationTextColorKey : [UIColor whiteColor],
+                                                                  kCWStatusBarNotificationBackgroundColorKey : [UIColor redColor],
+                                                                  kCWStatusBarNotificationImageKey : [UIImage imageNamed:@"white_checkmark.png"]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationTextKey : @"My Name is Collin",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(2),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:24],
+                                                                  kCWStatusBarNotificationTextColorKey : [UIColor blackColor],
+                                                                  kCWStatusBarNotificationBackgroundColorKey : [UIColor whiteColor]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationTextKey : @"I have a new framework",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(1.5),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:22],
+                                                                  kCWStatusBarNotificationTextColorKey : [UIColor greenColor],
+                                                                  kCWStatusBarNotificationBackgroundColorKey : [UIColor lightGrayColor]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationTextKey : @"For showing alerts",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(1),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:18],
+                                                                  kCWStatusBarNotificationTextColorKey : [UIColor cyanColor],
+                                                                  kCWStatusBarNotificationBackgroundColorKey : [UIColor purpleColor],
+                                                                  kCWStatusBarNotificationImageKey : [UIImage imageNamed:@"subtle_checkmark.png"]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationTextKey : @"To Users",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(.5),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:18],
+                                                                  kCWStatusBarNotificationTextColorKey : [UIColor whiteColor],
+                                                                  kCWStatusBarNotificationBackgroundColorKey : [UIColor redColor],
+                                                                  kCWStatusBarNotificationImageKey : [UIImage imageNamed:@"teal_checkmark.png"]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                                  kCWStatusBarNotificationTextKey : @"I hope you like it!",
+                                                                  kCWStatusBarNotificationImageKey : [UIImage imageNamed:@"alert_icon.png"]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
+//    self.notification.notificationAnimationInStyle = self.segFromStyle.selectedSegmentIndex;
+//    self.notification.notificationAnimationOutStyle = self.segToStyle.selectedSegmentIndex;
+//    [self.notification displayNotificationWithMessage:self.txtNotificationMessage.text forDuration:self.sliderDuration.value];
 }
 
 @end

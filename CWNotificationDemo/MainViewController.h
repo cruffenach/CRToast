@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segFromStyle;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToStyle;
 
-@property (strong, nonatomic) CWStatusBarNotification *notification;
+//@property (strong, nonatomic) CWStatusBarNotification *notification;
 
 - (IBAction)sliderDurationChanged:(UISlider *)sender;
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender;

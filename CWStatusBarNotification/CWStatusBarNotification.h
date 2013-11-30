@@ -8,30 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CWStatusBarNotification : NSObject
-
-typedef NS_ENUM(NSInteger, CWNotificationStyle){
-    CWNotificationStyleStatusBarNotification,
-    CWNotificationStyleNavigationBarNotification
+typedef NS_ENUM(NSInteger, CWStatusBarNotificationType){
+    CWStatusBarNotificationTypeStatusBar,
+    CWStatusBarNotificationTypeNavigationBar
 };
 
-typedef NS_ENUM(NSInteger, CWNotificationAnimationStyle) {
-    CWNotificationAnimationStyleTop,
-    CWNotificationAnimationStyleBottom,
-    CWNotificationAnimationStyleLeft,
-    CWNotificationAnimationStyleRight
+typedef NS_ENUM(NSInteger, CWStatusBarNotificationAnimationStyle) {
+    CWStatusBarNotificationAnimationStyleTop,
+    CWStatusBarNotificationAnimationStyleBottom,
+    CWStatusBarNotificationAnimationStyleLeft,
+    CWStatusBarNotificationAnimationStyleRight
 };
 
-@property (strong, nonatomic) UIColor *notificationLabelBackgroundColor;
-@property (strong, nonatomic) UIColor *notificationLabelTextColor;
+extern NSString *const kCWStatusBarNotificationNotificationTypeKey;
+extern NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey;
+extern NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey;
+extern NSString *const kCWStatusBarNotificationTimeIntervalKey;
+extern NSString *const kCWStatusBarNotificationFontKey;
+extern NSString *const kCWStatusBarNotificationTextColorKey;
+extern NSString *const kCWStatusBarNotificationBackgroundColorKey;
+extern NSString *const kCWStatusBarNotificationTextKey;
+extern NSString *const kCWStatusBarNotificationImageKey;
 
-@property (nonatomic) CWNotificationStyle notificationStyle;
-@property (nonatomic) CWNotificationAnimationStyle notificationAnimationInStyle;
-@property (nonatomic) CWNotificationAnimationStyle notificationAnimationOutStyle;
-@property (nonatomic) BOOL notificationIsShowing;
+@interface CWStatusBarNotificationManager : NSObject
 
-- (void)displayNotificationWithMessage:(NSString *)message forDuration:(CGFloat)duration;
-- (void)displayNotificationWithMessage:(NSString *)message completion:(void (^)(void))completion;
-- (void)dismissNotification;
++ (void)setDefaultOptions:(NSDictionary*)defaultOptions;
++ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion;
 
 @end
