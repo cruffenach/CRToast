@@ -19,8 +19,6 @@
 @property (nonatomic, strong) UILabel *label;
 @end
 
-static CGFloat const kCWStatusBarNotificationImageRightMagin = 10;
-static CGFloat const kCWStatusBarNotificationLabelLeftMargin = kCWStatusBarNotificationImageRightMagin;
 static CGFloat const kCWStatusBarNotificationLabelRightMargin = 10;
 
 @implementation CWStatusBarNotificationView
@@ -45,9 +43,9 @@ static CGFloat const kCWStatusBarNotificationLabelRightMargin = 10;
     CGRect bounds = self.bounds;
     CGSize imageSize = self.imageView.image.size;
     self.imageView.frame = CGRectMake(0, 0, imageSize.width == 0 ? 0 : CGRectGetHeight(bounds), imageSize.height == 0 ? 0 : CGRectGetHeight(bounds));
-    self.label.frame = CGRectMake(CGRectGetMaxX(_imageView.frame)+kCWStatusBarNotificationImageRightMagin,
+    self.label.frame = CGRectMake(CGRectGetMaxX(_imageView.frame),
                                   0,
-                                  CGRectGetWidth(bounds)-CGRectGetMaxX(_imageView.frame)-kCWStatusBarNotificationImageRightMagin-kCWStatusBarNotificationLabelRightMargin,
+                                  CGRectGetWidth(bounds)-CGRectGetMaxX(_imageView.frame)-kCWStatusBarNotificationLabelRightMargin,
                                   CGRectGetHeight(bounds));
 }
 
@@ -89,15 +87,15 @@ NSString *const kCWStatusBarNotificationImageKey                          = @"kS
 
 #pragma mark - Option Defaults
 
-static CWStatusBarNotificationType kCWNotificationTypeDefault = CWStatusBarNotificationTypeStatusBar;
-static CWStatusBarNotificationAnimationStyle kCWInAnimationStyleDefault = CWStatusBarNotificationAnimationStyleTop;
-static CWStatusBarNotificationAnimationStyle kCWOutAnimationStyleDefault = CWStatusBarNotificationAnimationStyleBottom;
-static NSTimeInterval kCWTimeIntervalDefault = 2.0f;
-static UIFont  *kCWFontDefault;
-static UIColor *kCWTextColorDefault;
-static UIColor *kCWBackgroundColorDefault;
-static NSString *kCWTextDefault = @"";
-static UIImage *kCWImageDefault = nil;
+static CWStatusBarNotificationType              kCWNotificationTypeDefault  = CWStatusBarNotificationTypeStatusBar;
+static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault  = CWStatusBarNotificationAnimationStyleTop;
+static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault = CWStatusBarNotificationAnimationStyleBottom;
+static NSTimeInterval                           kCWTimeIntervalDefault      = 2.0f;
+static UIFont   *                               kCWFontDefault              = nil;
+static UIColor  *                               kCWTextColorDefault         = nil;
+static UIColor  *                               kCWBackgroundColorDefault   = nil;
+static NSString *                               kCWTextDefault              = @"";
+static UIImage  *                               kCWImageDefault             = nil;
 
 @interface CWStatusBarNotification : NSObject
 
