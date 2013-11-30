@@ -24,7 +24,7 @@
 
     self.title = @"CWStatusBarNotification";
     [self updateDurationLabel];
-    UIFont *font = [UIFont boldSystemFontOfSize:10.0f];
+    UIFont *font = [UIFont boldSystemFontOfSize:10];
     [self.segFromStyle setTitleTextAttributes:@{NSFontAttributeName : font}
                                      forState:UIControlStateNormal];
     [self.segToStyle setTitleTextAttributes:@{NSFontAttributeName : font}
@@ -42,7 +42,18 @@
 # pragma mark - show notification
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender {
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationTextKey : @"Hello World!"}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
     
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeStatusBar),
+                                                                  kCWStatusBarNotificationTextKey : @"Let's test a little one!",
+                                                                  kCWStatusBarNotificationTimeIntervalKey : @(5),
+                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:10]}
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
 }
 
 @end

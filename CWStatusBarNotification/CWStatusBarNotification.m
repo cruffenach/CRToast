@@ -148,48 +148,25 @@ static CGFloat CWGetNavigationBarHeight() {
     return CWStatusBariPhoneLandscape;
 }
 
-static CGFloat CWGetNotificationLabelHeight(CWStatusBarNotificationType notificationStyle) {
-    switch (notificationStyle) {
+static CGFloat CWGetNotificationViewHeight(CWStatusBarNotificationType type) {
+    switch (type) {
         case CWStatusBarNotificationTypeStatusBar:
             return CWGetStatusBarHeight();
         case CWStatusBarNotificationTypeNavigationBar:
             return CWGetStatusBarHeight() + CWGetNavigationBarHeight();
-        default:
-            return CWGetStatusBarHeight();
     }
-}
-
-static CGRect CWGetNotificationLabelTopFrame(CWStatusBarNotificationType notificationStyle) {
-    return CGRectMake(0, -1*CWGetNotificationLabelHeight(notificationStyle), CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
-}
-
-static CGRect CWGetNotificationLabelLeftFrame(CWStatusBarNotificationType notificationStyle) {
-    return CGRectMake(-1*CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
-}
-
-static CGRect CWGetNotificationLabelRightFrame(CWStatusBarNotificationType notificationStyle) {
-    return CGRectMake(CWGetStatusBarWidth(), 0, CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
-}
-
-static CGRect CWGetNotificationLabelBottomFrame(CWStatusBarNotificationType notificationStyle) {
-    return CGRectMake(0, CWGetNotificationLabelHeight(notificationStyle), CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationStyle));
 }
 
 static CGSize CWNotificationViewSize(CWStatusBarNotificationType notificationType) {
-    return CGSizeMake(CWGetStatusBarWidth(), CWGetNotificationLabelHeight(notificationType));
+    return CGSizeMake(CWGetStatusBarWidth(), CWGetNotificationViewHeight(notificationType));
 }
 
 static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatusBarNotificationAnimationStyle style) {
-    switch (style) {
-        case CWStatusBarNotificationAnimationStyleTop:
-            return CWGetNotificationLabelTopFrame(type);
-        case CWStatusBarNotificationAnimationStyleLeft:
-            return CWGetNotificationLabelLeftFrame(type);
-        case CWStatusBarNotificationAnimationStyleBottom:
-            return CWGetNotificationLabelBottomFrame(type);
-        case CWStatusBarNotificationAnimationStyleRight:
-            return CWGetNotificationLabelRightFrame(type);
-    }
+    
+    return CGRectMake(style == CWStatusBarNotificationAnimationStyleLeft ? -CWGetStatusBarWidth() : style == CWStatusBarNotificationAnimationStyleRight ? CWGetStatusBarWidth() : 0,
+                      style == CWStatusBarNotificationAnimationStyleTop ? -CWGetNotificationViewHeight(type) : style == CWStatusBarNotificationAnimationStyleBottom ? CWGetNotificationViewHeight(type) : 0,
+                      CWGetStatusBarWidth(),
+                      CWGetNotificationViewHeight(type));
 }
 
 @implementation CWStatusBarNotification
