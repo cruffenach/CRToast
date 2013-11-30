@@ -280,10 +280,6 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
 @property (nonatomic, strong) NSMutableArray *notifications;
 @end
 
-static UIView *CWStatusBarScreenshot() {
-    return [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
-}
-
 @implementation CWStatusBarNotificationManager
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
@@ -331,13 +327,8 @@ static UIView *CWStatusBarScreenshot() {
     }
 }
 
-- (void)prepareToShowNotification {
-    [_notificationWindow.rootViewController.view addSubview:CWStatusBarScreenshot()];
-    _notificationWindow.hidden = NO;
-}
-
 - (void)displayNotification:(CWStatusBarNotification*)notification {
-    [self prepareToShowNotification];
+    _notificationWindow.hidden = NO;
     CGSize notificationSize = CWNotificationViewSize(notification.notificationType);
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     UIView *notificationView = notification.notificationView;
@@ -362,9 +353,7 @@ static UIView *CWStatusBarScreenshot() {
                                                   CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
                                                   [weakSelf  displayNotification:notification];
                                               } else {
-                                                  for (UIView *view in _notificationWindow.rootViewController.view.subviews) {
-                                                      [view removeFromSuperview];
-                                                  }
+                                                  weakSelf.notificationWindow.hidden = YES;
                                               }
                                           }];
                      }];

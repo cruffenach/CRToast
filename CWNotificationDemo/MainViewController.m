@@ -42,15 +42,10 @@
 # pragma mark - show notification
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender {
-    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationTextKey : @"Hello World!"}
-                                                completionBlock:^{
-                                                    NSLog(@"Completed");
-                                                }];
-    
-    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeStatusBar),
-                                                                  kCWStatusBarNotificationTextKey : @"Let's test a little one!",
-                                                                  kCWStatusBarNotificationTimeIntervalKey : @(5),
-                                                                  kCWStatusBarNotificationFontKey : [UIFont systemFontOfSize:10]}
+    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationTextKey                           : self.txtNotificationMessage.text,
+                                                                  kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
+                                                                  kCWStatusBarNotificationNotificationInAnimationStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
+                                                                  kCWStatusBarNotificationNotificationOutAnimationStyleKey  : @(self.segToStyle.selectedSegmentIndex)}
                                                 completionBlock:^{
                                                     NSLog(@"Completed");
                                                 }];
