@@ -12,8 +12,13 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [CWStatusBarNotificationManager setDefaultOptions:@{kCWStatusBarNotificationNotificationTypeKey : @(CWStatusBarNotificationTypeNavigationBar),
+                                                        kCWStatusBarNotificationFontKey             : [UIFont fontWithName:@"HelveticaNeue-Light" size:16],
+                                                        kCWStatusBarNotificationTextColorKey        : [UIColor whiteColor],
+                                                        kCWStatusBarNotificationBackgroundColorKey  : [UIColor orangeColor]}];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     MainViewController *mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     UINavigationController *navigationController = [UINavigationController new];

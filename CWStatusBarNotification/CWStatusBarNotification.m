@@ -19,7 +19,8 @@
 @property (nonatomic, strong) UILabel *label;
 @end
 
-static CGFloat const kCWStatusBarNotificationLabelRightMargin = 10;
+static CGFloat const kCWStatusBarViewNoImageLeftContentInset = 10;
+static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 
 @implementation CWStatusBarNotificationView
 
@@ -43,9 +44,10 @@ static CGFloat const kCWStatusBarNotificationLabelRightMargin = 10;
     CGRect bounds = self.bounds;
     CGSize imageSize = self.imageView.image.size;
     self.imageView.frame = CGRectMake(0, 0, imageSize.width == 0 ? 0 : CGRectGetHeight(bounds), imageSize.height == 0 ? 0 : CGRectGetHeight(bounds));
-    self.label.frame = CGRectMake(CGRectGetMaxX(_imageView.frame),
+    CGFloat x = imageSize.width == 0 ? kCWStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    self.label.frame = CGRectMake(x,
                                   0,
-                                  CGRectGetWidth(bounds)-CGRectGetMaxX(_imageView.frame)-kCWStatusBarNotificationLabelRightMargin,
+                                  CGRectGetWidth(bounds)-x-kCWStatusBarViewNoImageRightContentInset,
                                   CGRectGetHeight(bounds));
 }
 
@@ -275,18 +277,14 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
 }
 
 - (UIView*)notificationView {
-    if (self.notificationType == CWStatusBarNotificationTypeStatusBar) {
-        return nil;
-    } else {
-        CGSize size = CWNotificationViewSize(self.notificationType);
-        CWStatusBarNotificationView *notificationView = [[CWStatusBarNotificationView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-        notificationView.label.text = self.text;
-        notificationView.label.font = self.font;
-        notificationView.label.textColor = self.textColor;
-        notificationView.backgroundColor = self.backgroundColor;
-        notificationView.image = self.image;
-        return notificationView;
-    }
+    CGSize size = CWNotificationViewSize(self.notificationType);
+    CWStatusBarNotificationView *notificationView = [[CWStatusBarNotificationView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    notificationView.label.text = self.text;
+    notificationView.label.font = self.font;
+    notificationView.label.textColor = self.textColor;
+    notificationView.backgroundColor = self.backgroundColor;
+    notificationView.image = self.image;
+    return notificationView;
 }
 
 - (CGRect)prepareToAnimateInFrame {
