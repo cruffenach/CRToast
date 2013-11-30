@@ -286,6 +286,15 @@ static UIView *CWStatusBarScreenshot() {
 
 @implementation CWStatusBarNotificationManager
 
++ (void)setDefaultOptions:(NSDictionary*)defaultOptions {
+    [CWStatusBarNotification setDefaultOptions:defaultOptions];
+}
+
++ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
+    [[CWStatusBarNotificationManager manager] addNotification:[CWStatusBarNotification notificationWithOptions:options
+                                                                                               completionBlock:completion]];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;
@@ -310,15 +319,6 @@ static UIView *CWStatusBarScreenshot() {
         self.notifications = [@[] mutableCopy];
     }
     return self;
-}
-
-+ (void)setDefaultOptions:(NSDictionary*)defaultOptions {
-    [CWStatusBarNotification setDefaultOptions:defaultOptions];
-}
-
-+ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
-    [[CWStatusBarNotificationManager manager] addNotification:[CWStatusBarNotification notificationWithOptions:options
-                                                                                               completionBlock:completion]];
 }
 
 #pragma mark - Notification Management
