@@ -433,10 +433,10 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
         } else {
-            [UIView animateWithDuration:0.6
+            [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
-                 usingSpringWithDamping:0.4
-                  initialSpringVelocity:1.0
+                 usingSpringWithDamping:notification.animationSpringDamping
+                  initialSpringVelocity:notification.animationInitialVelocity
                                 options:0
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
