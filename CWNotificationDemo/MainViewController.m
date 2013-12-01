@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segFromStyle;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToStyle;
+@property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @end
 
 @implementation MainViewController
@@ -42,10 +44,16 @@
 # pragma mark - show notification
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender {
-    [CWStatusBarNotificationManager showNotificationWithOptions:@{kCWStatusBarNotificationTextKey                           : self.txtNotificationMessage.text,
-                                                                  kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
-                                                                  kCWStatusBarNotificationNotificationInAnimationStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
-                                                                  kCWStatusBarNotificationNotificationOutAnimationStyleKey  : @(self.segToStyle.selectedSegmentIndex)}
+    NSMutableDictionary *options = [@{kCWStatusBarNotificationNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CWStatusBarNotificationTypeNavigationBar) : @(CWStatusBarNotificationTypeStatusBar),
+                                      kCWStatusBarNotificationTextKey                           : self.txtNotificationMessage.text,
+                                      kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
+                                      kCWStatusBarNotificationNotificationInAnimationStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
+                                      kCWStatusBarNotificationNotificationOutAnimationStyleKey  : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
+    if (self.showImageSwitch.on) {
+        options[kCWStatusBarNotificationImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+    }
+    
+    [CWStatusBarNotificationManager showNotificationWithOptions:[NSDictionary dictionaryWithDictionary:options]
                                                 completionBlock:^{
                                                     NSLog(@"Completed");
                                                 }];
