@@ -77,15 +77,18 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 
 #pragma mark - Option Constant Definitions
 
-NSString *const kCWStatusBarNotificationNotificationTypeKey               = @"kSFCWStatusBarNotificationNotificationTypeKey";
-NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey   = @"kSFCWStatusBarNotificationNotificationInAnimationStyleKey";
-NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey  = @"kSFCWStatusBarNotificationNotificationOutAnimationStyleKey";
-NSString *const kCWStatusBarNotificationTimeIntervalKey                   = @"kSFCWStatusBarNotificationTimeIntervalKey";
-NSString *const kCWStatusBarNotificationFontKey                           = @"kSFCWStatusBarNotificationFontKey";
-NSString *const kCWStatusBarNotificationTextColorKey                      = @"kSFCWStatusBarNotificationTextColorKey";
-NSString *const kCWStatusBarNotificationBackgroundColorKey                = @"kSFCWStatusBarNotificationBackgroundColorKey";
-NSString *const kCWStatusBarNotificationTextKey                           = @"kSFCWStatusBarNotificationTextKey";
-NSString *const kCWStatusBarNotificationImageKey                          = @"kSFCWStatusBarNotificationImageKey";
+NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kSFCWStatusBarNotificationNotificationTypeKey";
+NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kSFCWStatusBarNotificationNotificationInAnimationStyleKey";
+NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey    = @"kSFCWStatusBarNotificationNotificationOutAnimationStyleKey";
+NSString *const kCWStatusBarNotificationTimeIntervalKey                     = @"kSFCWStatusBarNotificationTimeIntervalKey";
+
+NSString *const kCWStatusBarNotificationTextKey                             = @"kSFCWStatusBarNotificationTextKey";
+NSString *const kCWStatusBarNotificationFontKey                             = @"kSFCWStatusBarNotificationFontKey";
+NSString *const kCWStatusBarNotificationTextColorKey                        = @"kSFCWStatusBarNotificationTextColorKey";
+NSString *const kCWStatusBarNotificationTextAlignmentKey                    = @"kCWStatusBarNotificationTextAlignmentKey";
+
+NSString *const kCWStatusBarNotificationBackgroundColorKey                  = @"kSFCWStatusBarNotificationBackgroundColorKey";
+NSString *const kCWStatusBarNotificationImageKey                            = @"kSFCWStatusBarNotificationImageKey";
 
 #pragma mark - Option Defaults
 
@@ -93,10 +96,13 @@ static CWStatusBarNotificationType              kCWNotificationTypeDefault  = CW
 static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault  = CWStatusBarNotificationAnimationStyleTop;
 static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault = CWStatusBarNotificationAnimationStyleBottom;
 static NSTimeInterval                           kCWTimeIntervalDefault      = 2.0f;
+
+static NSString *                               kCWTextDefault              = @"";
 static UIFont   *                               kCWFontDefault              = nil;
 static UIColor  *                               kCWTextColorDefault         = nil;
+static NSTextAlignment                          kCWTextAlignmentDefault     = NSTextAlignmentCenter;
+
 static UIColor  *                               kCWBackgroundColorDefault   = nil;
-static NSString *                               kCWTextDefault              = @"";
 static UIImage  *                               kCWImageDefault             = nil;
 
 @interface CWStatusBarNotification : NSObject
@@ -109,10 +115,13 @@ static UIImage  *                               kCWImageDefault             = ni
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle outAnimationStyle;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
+
+@property (nonatomic, readonly) NSString *text;
 @property (nonatomic, readonly) UIFont *font;
 @property (nonatomic, readonly) UIColor *textColor;
+@property (nonatomic, readonly) NSTextAlignment textAlignment;
+
 @property (nonatomic, readonly) UIColor *backgroundColor;
-@property (nonatomic, readonly) NSString *text;
 @property (nonatomic, readonly) UIImage *image;
 
 @property (nonatomic, readonly) CGRect prepareToAnimateInFrame;
@@ -122,8 +131,6 @@ static UIImage  *                               kCWImageDefault             = ni
 
 static CGFloat const CWStatusBarDefaultHeight = 44.0f;
 static CGFloat const CWStatusBariPhoneLandscape = 30.0f;
-
-static CGFloat const CWDefaultFontSize = 12.0f;
 
 static CGFloat CWGetStatusBarHeight() {
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -141,11 +148,10 @@ static CGFloat CWGetStatusBarWidth() {
 }
 
 static CGFloat CWGetNavigationBarHeight() {
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
-        UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return CWStatusBarDefaultHeight;
-    }
-    return CWStatusBariPhoneLandscape;
+    return (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
+            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
+    CWStatusBarDefaultHeight :
+    CWStatusBariPhoneLandscape;
 }
 
 static CGFloat CWGetNotificationViewHeight(CWStatusBarNotificationType type) {
@@ -249,6 +255,10 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return _options[kCWStatusBarNotificationTextKey] ?: kCWTextDefault;
 }
 
+- (NSTextAlignment)textAlignment {
+    return _options[kCWStatusBarNotificationTextAlignmentKey] ? [_options[kCWStatusBarNotificationTextAlignmentKey] integerValue] : kCWTextAlignmentDefault;
+}
+
 - (NSString*)image {
     return _options[kCWStatusBarNotificationImageKey] ?: kCWImageDefault;
 }
@@ -259,6 +269,7 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     notificationView.label.text = self.text;
     notificationView.label.font = self.font;
     notificationView.label.textColor = self.textColor;
+    notificationView.label.textAlignment = self.textAlignment;
     notificationView.backgroundColor = self.backgroundColor;
     notificationView.image = self.image;
     return notificationView;

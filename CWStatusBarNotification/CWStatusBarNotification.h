@@ -24,10 +24,13 @@ extern NSString *const kCWStatusBarNotificationNotificationTypeKey;
 extern NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey;
 extern NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey;
 extern NSString *const kCWStatusBarNotificationTimeIntervalKey;
+
+extern NSString *const kCWStatusBarNotificationTextKey;
 extern NSString *const kCWStatusBarNotificationFontKey;
 extern NSString *const kCWStatusBarNotificationTextColorKey;
+extern NSString *const kCWStatusBarNotificationTextAlignmentKey;
+
 extern NSString *const kCWStatusBarNotificationBackgroundColorKey;
-extern NSString *const kCWStatusBarNotificationTextKey;
 extern NSString *const kCWStatusBarNotificationImageKey;
 
 @interface CWStatusBarNotificationManager : NSObject
