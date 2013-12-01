@@ -29,6 +29,8 @@ extern NSString *const kCWStatusBarNotificationTextKey;
 extern NSString *const kCWStatusBarNotificationFontKey;
 extern NSString *const kCWStatusBarNotificationTextColorKey;
 extern NSString *const kCWStatusBarNotificationTextAlignmentKey;
+extern NSString *const kCWStatusBarNotificationTextShadowColorKey;
+extern NSString *const kCWStatusBarNotificationTextShadowOffsetKey;
 
 extern NSString *const kCWStatusBarNotificationBackgroundColorKey;
 extern NSString *const kCWStatusBarNotificationImageKey;

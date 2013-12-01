@@ -86,6 +86,9 @@ NSString *const kCWStatusBarNotificationTextKey                             = @"
 NSString *const kCWStatusBarNotificationFontKey                             = @"kSFCWStatusBarNotificationFontKey";
 NSString *const kCWStatusBarNotificationTextColorKey                        = @"kSFCWStatusBarNotificationTextColorKey";
 NSString *const kCWStatusBarNotificationTextAlignmentKey                    = @"kCWStatusBarNotificationTextAlignmentKey";
+NSString *const kCWStatusBarNotificationTextShadowColorKey                  = @"kCWStatusBarNotificationTextShadowColorKey";
+NSString *const kCWStatusBarNotificationTextShadowOffsetKey                 = @"kCWStatusBarNotificationTextShadowOffsetKey";
+
 
 NSString *const kCWStatusBarNotificationBackgroundColorKey                  = @"kSFCWStatusBarNotificationBackgroundColorKey";
 NSString *const kCWStatusBarNotificationImageKey                            = @"kSFCWStatusBarNotificationImageKey";
@@ -101,6 +104,8 @@ static NSString *                               kCWTextDefault              = @"
 static UIFont   *                               kCWFontDefault              = nil;
 static UIColor  *                               kCWTextColorDefault         = nil;
 static NSTextAlignment                          kCWTextAlignmentDefault     = NSTextAlignmentCenter;
+static UIColor  *                               kCWTextShadowColorDefault   = nil;
+static CGSize                                   kCWTextShadowOffsetDefault;
 
 static UIColor  *                               kCWBackgroundColorDefault   = nil;
 static UIImage  *                               kCWImageDefault             = nil;
@@ -120,6 +125,8 @@ static UIImage  *                               kCWImageDefault             = ni
 @property (nonatomic, readonly) UIFont *font;
 @property (nonatomic, readonly) UIColor *textColor;
 @property (nonatomic, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, readonly) UIColor *textShadowColor;
+@property (nonatomic, readonly) CGSize textShadowOffset;
 
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
@@ -133,11 +140,9 @@ static CGFloat const CWStatusBarDefaultHeight = 44.0f;
 static CGFloat const CWStatusBariPhoneLandscape = 30.0f;
 
 static CGFloat CWGetStatusBarHeight() {
-    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
-    if (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.width;
-    }
-    return statusBarHeight;
+    return (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ?
+    [[UIApplication sharedApplication] statusBarFrame].size.width :
+    [[UIApplication sharedApplication] statusBarFrame].size.height;
 }
 
 static CGFloat CWGetStatusBarWidth() {
@@ -182,6 +187,7 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
         kCWFontDefault = [UIFont systemFontOfSize:12];
         kCWTextColorDefault = [UIColor whiteColor];
         kCWBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor;
+        kCWTextShadowOffsetDefault = CGSizeZero;
     }
 }
 
@@ -239,6 +245,10 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     kCWTimeIntervalDefault;
 }
 
+- (NSString*)text {
+    return _options[kCWStatusBarNotificationTextKey] ?: kCWTextDefault;
+}
+
 - (UIFont*)font {
     return _options[kCWStatusBarNotificationFontKey] ?: kCWFontDefault;
 }
@@ -247,21 +257,29 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return _options[kCWStatusBarNotificationTextColorKey] ?: kCWTextColorDefault;
 }
 
-- (UIColor*)backgroundColor {
-    return _options[kCWStatusBarNotificationBackgroundColorKey] ?: kCWBackgroundColorDefault;
-}
-
-- (NSString*)text {
-    return _options[kCWStatusBarNotificationTextKey] ?: kCWTextDefault;
-}
-
 - (NSTextAlignment)textAlignment {
     return _options[kCWStatusBarNotificationTextAlignmentKey] ? [_options[kCWStatusBarNotificationTextAlignmentKey] integerValue] : kCWTextAlignmentDefault;
+}
+
+- (UIColor*)textShadowColor {
+    return _options[kCWStatusBarNotificationTextShadowColorKey] ?: kCWTextShadowColorDefault;
+}
+
+- (CGSize)textShadowOffset {
+    return _options[kCWStatusBarNotificationTextShadowOffsetKey] ?
+    [_options[kCWStatusBarNotificationTextShadowOffsetKey] CGSizeValue]:
+    kCWTextShadowOffsetDefault;
+}
+
+- (UIColor*)backgroundColor {
+    return _options[kCWStatusBarNotificationBackgroundColorKey] ?: kCWBackgroundColorDefault;
 }
 
 - (NSString*)image {
     return _options[kCWStatusBarNotificationImageKey] ?: kCWImageDefault;
 }
+
+#pragma mark - Notification View Helpers
 
 - (UIView*)notificationView {
     CGSize size = CWNotificationViewSize(self.notificationType);
@@ -362,7 +380,7 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
                                               [weakSelf.notifications removeObject:notification];
                                               if (weakSelf.notifications.count > 0) {
                                                   CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
-                                                  [weakSelf  displayNotification:notification];
+                                                  [weakSelf displayNotification:notification];
                                               } else {
                                                   weakSelf.notificationWindow.hidden = YES;
                                               }
