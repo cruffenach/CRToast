@@ -77,33 +77,42 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 
 #pragma mark - Option Constant Definitions
 
-NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kSFCWStatusBarNotificationNotificationTypeKey";
-NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kSFCWStatusBarNotificationNotificationInAnimationStyleKey";
-NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey    = @"kSFCWStatusBarNotificationNotificationOutAnimationStyleKey";
+NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kCWStatusBarNotificationNotificationTypeKey";
+
+NSString *const kCWStatusBarNotificationAnimationTypeKey                    = @"kCWStatusBarNotificationAnimationTypeKey";
+NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kCWStatusBarNotificationNotificationInAnimationStyleKey";
+NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey    = @"kCWStatusBarNotificationNotificationOutAnimationStyleKey";
 
 NSString *const kCWStatusBarNotificationAnimateInTimeIntervalKey            = @"kCWStatusBarNotificationAnimateInTimeInterval";
-NSString *const kCWStatusBarNotificationTimeIntervalKey                     = @"kSFCWStatusBarNotificationTimeIntervalKey";
+NSString *const kCWStatusBarNotificationTimeIntervalKey                     = @"kCWStatusBarNotificationTimeIntervalKey";
 NSString *const kCWStatusBarNotificationAnimateOutTimeIntervalKey           = @"kCWStatusBarNotificationAnimateOutTimeInterval";
 
-NSString *const kCWStatusBarNotificationTextKey                             = @"kSFCWStatusBarNotificationTextKey";
-NSString *const kCWStatusBarNotificationFontKey                             = @"kSFCWStatusBarNotificationFontKey";
-NSString *const kCWStatusBarNotificationTextColorKey                        = @"kSFCWStatusBarNotificationTextColorKey";
+NSString *const kCWStatusBarNotificationAnimateSpringDampingKey             = @"kCWStatusBarNotificationAnimateSpringDampingKey";
+NSString *const kCWStatusBarNotificationAnimateSpringInitialVelocityKey     = @"kCWStatusBarNotificationAnimateSpringVelocityKey";
+
+NSString *const kCWStatusBarNotificationTextKey                             = @"kCWStatusBarNotificationTextKey";
+NSString *const kCWStatusBarNotificationFontKey                             = @"kCWStatusBarNotificationFontKey";
+NSString *const kCWStatusBarNotificationTextColorKey                        = @"kCWStatusBarNotificationTextColorKey";
 NSString *const kCWStatusBarNotificationTextAlignmentKey                    = @"kCWStatusBarNotificationTextAlignmentKey";
 NSString *const kCWStatusBarNotificationTextShadowColorKey                  = @"kCWStatusBarNotificationTextShadowColorKey";
 NSString *const kCWStatusBarNotificationTextShadowOffsetKey                 = @"kCWStatusBarNotificationTextShadowOffsetKey";
 
-NSString *const kCWStatusBarNotificationBackgroundColorKey                  = @"kSFCWStatusBarNotificationBackgroundColorKey";
-NSString *const kCWStatusBarNotificationImageKey                            = @"kSFCWStatusBarNotificationImageKey";
+NSString *const kCWStatusBarNotificationBackgroundColorKey                  = @"kCWStatusBarNotificationBackgroundColorKey";
+NSString *const kCWStatusBarNotificationImageKey                            = @"kCWStatusBarNotificationImageKey";
 
 #pragma mark - Option Defaults
 
 static CWStatusBarNotificationType              kCWNotificationTypeDefault          = CWStatusBarNotificationTypeStatusBar;
+
+static CWStatusBarNotificationAnimationType     kCWAnimationTypeDefault             = CWStatusBarNotificationAnimationTypeLinear;
 static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault          = CWStatusBarNotificationAnimationStyleTop;
 static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault         = CWStatusBarNotificationAnimationStyleBottom;
-
 static NSTimeInterval                           kCWAnimateInTimeIntervalDefault     = 0.25;
 static NSTimeInterval                           kCWTimeIntervalDefault              = 2.0f;
 static NSTimeInterval                           kCWAnimateOutTimeIntervalDefault    = 0.25;
+
+static CGFloat                                  kCWSpringDampingDefault             = 0.4;
+static CGFloat                                  kCWSpringInitialVelocityDefault     = 1.0;
 
 static NSString *                               kCWTextDefault                      = @"";
 static UIFont   *                               kCWFontDefault                      = nil;
@@ -122,12 +131,16 @@ static UIImage  *                               kCWImageDefault                 
 @property (nonatomic, readonly) UIView *notificationView;
 
 @property (nonatomic, readonly) CWStatusBarNotificationType notificationType;
+
+@property (nonatomic, readonly) CWStatusBarNotificationAnimationType animationType;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle outAnimationStyle;
-
 @property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
 @property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
+
+@property (nonatomic, readonly) CGFloat animationSpringDamping;
+@property (nonatomic, readonly) CGFloat animationInitialVelocity;
 
 @property (nonatomic, readonly) NSString *text;
 @property (nonatomic, readonly) UIFont *font;
@@ -235,6 +248,12 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     kCWNotificationTypeDefault;
 }
 
+- (CWStatusBarNotificationAnimationType)animationType {
+    return _options[kCWStatusBarNotificationAnimationTypeKey] ?
+    [_options[kCWStatusBarNotificationAnimationTypeKey] integerValue] :
+    kCWAnimationTypeDefault;
+}
+
 - (CWStatusBarNotificationAnimationStyle)inAnimationStyle {
     return _options[kCWStatusBarNotificationNotificationInAnimationStyleKey] ?
     [_options[kCWStatusBarNotificationNotificationInAnimationStyleKey] integerValue] :
@@ -263,6 +282,18 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return _options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] ?
     [_options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] doubleValue] :
     kCWAnimateOutTimeIntervalDefault;
+}
+
+- (CGFloat)animationInitialVelocity {
+    return _options[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] ?
+    [_options[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] floatValue] :
+    kCWSpringInitialVelocityDefault;
+}
+
+- (CGFloat)animationSpringDamping {
+    return _options[kCWStatusBarNotificationAnimateSpringDampingKey] ?
+    [_options[kCWStatusBarNotificationAnimateSpringDampingKey] floatValue] :
+    kCWSpringDampingDefault;
 }
 
 - (NSString*)text {
@@ -384,28 +415,64 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     notificationView.frame = notification.prepareToAnimateInFrame;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:notification.animateInTimeInterval
-                     animations:^{
-                         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
-                     }
-                     completion:^(BOOL finished) {
-                         [UIView animateWithDuration:notification.animateOutTimeInterval
-                                               delay:notification.timeInterval
-                                             options:0
-                                          animations:^{
-                                              notificationView.frame = notification.animatedOutFrame;
-                                          }
-                                          completion:^(BOOL finished) {
-                                              if (notification.completion) notification.completion();
-                                              [weakSelf.notifications removeObject:notification];
-                                              if (weakSelf.notifications.count > 0) {
-                                                  CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
-                                                  [weakSelf displayNotification:notification];
-                                              } else {
-                                                  weakSelf.notificationWindow.hidden = YES;
-                                              }
-                                          }];
-                     }];
+    
+    void (^inwardAnimationsBlock)(void);
+    void (^inwardAnimationsCompletionBlock)(BOOL);
+    void (^outwardAnimationsBlock)(void);
+    void (^outwardAnimationsCompletionBlock)(BOOL);
+    
+    inwardAnimationsBlock= ^void(void) {
+        notificationView.frame = _notificationWindow.rootViewController.view.bounds;
+    };
+    
+    inwardAnimationsCompletionBlock = ^void(BOOL finished) {
+        if (notification.animationType == CWStatusBarNotificationAnimationTypeLinear) {
+            [UIView animateWithDuration:notification.animateOutTimeInterval
+                                  delay:notification.timeInterval
+                                options:0
+                             animations:outwardAnimationsBlock
+                             completion:outwardAnimationsCompletionBlock];
+        } else {
+            [UIView animateWithDuration:0.6
+                                  delay:notification.timeInterval
+                 usingSpringWithDamping:0.4
+                  initialSpringVelocity:1.0
+                                options:0
+                             animations:outwardAnimationsBlock
+                             completion:outwardAnimationsCompletionBlock];
+            
+        }
+    };
+    
+    outwardAnimationsBlock = ^void(void) {
+        notificationView.frame = notification.animatedOutFrame;
+    };
+    
+    outwardAnimationsCompletionBlock = ^void(BOOL finished) {
+        if (notification.completion) notification.completion();
+        [weakSelf.notifications removeObject:notification];
+        if (weakSelf.notifications.count > 0) {
+            CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
+            [weakSelf displayNotification:notification];
+        } else {
+            weakSelf.notificationWindow.hidden = YES;
+        }
+    };
+    
+    if (notification.animationType == CWStatusBarNotificationAnimationTypeLinear) {
+        [UIView animateWithDuration:notification.animateInTimeInterval
+                         animations:inwardAnimationsBlock
+                         completion:inwardAnimationsCompletionBlock];
+
+    } else if (notification.animationType == CWStatusBarNotificationAnimationTypeSpring) {
+        [UIView animateWithDuration:0.6
+                              delay:0.0
+             usingSpringWithDamping:0.4
+              initialSpringVelocity:1.0
+                            options:0
+                         animations:outwardAnimationsBlock
+                         completion:outwardAnimationsCompletionBlock];
+    }
 }
 
 #pragma mark - Overrides
