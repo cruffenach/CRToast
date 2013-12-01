@@ -80,7 +80,10 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kSFCWStatusBarNotificationNotificationTypeKey";
 NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kSFCWStatusBarNotificationNotificationInAnimationStyleKey";
 NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey    = @"kSFCWStatusBarNotificationNotificationOutAnimationStyleKey";
+
+NSString *const kCWStatusBarNotificationAnimateInTimeIntervalKey            = @"kCWStatusBarNotificationAnimateInTimeInterval";
 NSString *const kCWStatusBarNotificationTimeIntervalKey                     = @"kSFCWStatusBarNotificationTimeIntervalKey";
+NSString *const kCWStatusBarNotificationAnimateOutTimeIntervalKey           = @"kCWStatusBarNotificationAnimateOutTimeInterval";
 
 NSString *const kCWStatusBarNotificationTextKey                             = @"kSFCWStatusBarNotificationTextKey";
 NSString *const kCWStatusBarNotificationFontKey                             = @"kSFCWStatusBarNotificationFontKey";
@@ -89,26 +92,28 @@ NSString *const kCWStatusBarNotificationTextAlignmentKey                    = @"
 NSString *const kCWStatusBarNotificationTextShadowColorKey                  = @"kCWStatusBarNotificationTextShadowColorKey";
 NSString *const kCWStatusBarNotificationTextShadowOffsetKey                 = @"kCWStatusBarNotificationTextShadowOffsetKey";
 
-
 NSString *const kCWStatusBarNotificationBackgroundColorKey                  = @"kSFCWStatusBarNotificationBackgroundColorKey";
 NSString *const kCWStatusBarNotificationImageKey                            = @"kSFCWStatusBarNotificationImageKey";
 
 #pragma mark - Option Defaults
 
-static CWStatusBarNotificationType              kCWNotificationTypeDefault  = CWStatusBarNotificationTypeStatusBar;
-static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault  = CWStatusBarNotificationAnimationStyleTop;
-static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault = CWStatusBarNotificationAnimationStyleBottom;
-static NSTimeInterval                           kCWTimeIntervalDefault      = 2.0f;
+static CWStatusBarNotificationType              kCWNotificationTypeDefault          = CWStatusBarNotificationTypeStatusBar;
+static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault          = CWStatusBarNotificationAnimationStyleTop;
+static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault         = CWStatusBarNotificationAnimationStyleBottom;
 
-static NSString *                               kCWTextDefault              = @"";
-static UIFont   *                               kCWFontDefault              = nil;
-static UIColor  *                               kCWTextColorDefault         = nil;
-static NSTextAlignment                          kCWTextAlignmentDefault     = NSTextAlignmentCenter;
-static UIColor  *                               kCWTextShadowColorDefault   = nil;
+static NSTimeInterval                           kCWAnimateInTimeIntervalDefault     = 0.25;
+static NSTimeInterval                           kCWTimeIntervalDefault              = 2.0f;
+static NSTimeInterval                           kCWAnimateOutTimeIntervalDefault    = 0.25;
+
+static NSString *                               kCWTextDefault                      = @"";
+static UIFont   *                               kCWFontDefault                      = nil;
+static UIColor  *                               kCWTextColorDefault                 = nil;
+static NSTextAlignment                          kCWTextAlignmentDefault             = NSTextAlignmentCenter;
+static UIColor  *                               kCWTextShadowColorDefault           = nil;
 static CGSize                                   kCWTextShadowOffsetDefault;
 
-static UIColor  *                               kCWBackgroundColorDefault   = nil;
-static UIImage  *                               kCWImageDefault             = nil;
+static UIColor  *                               kCWBackgroundColorDefault           = nil;
+static UIImage  *                               kCWImageDefault                     = nil;
 
 @interface CWStatusBarNotification : NSObject
 
@@ -119,7 +124,10 @@ static UIImage  *                               kCWImageDefault             = ni
 @property (nonatomic, readonly) CWStatusBarNotificationType notificationType;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle outAnimationStyle;
+
+@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
+@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
 
 @property (nonatomic, readonly) NSString *text;
 @property (nonatomic, readonly) UIFont *font;
@@ -239,10 +247,22 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     kCWOutAnimationStyleDefault;
 }
 
+- (NSTimeInterval)animateInTimeInterval {
+    return _options[kCWStatusBarNotificationAnimateInTimeIntervalKey] ?
+    [_options[kCWStatusBarNotificationAnimateInTimeIntervalKey] doubleValue] :
+    kCWAnimateInTimeIntervalDefault;
+}
+
 - (NSTimeInterval)timeInterval {
     return _options[kCWStatusBarNotificationTimeIntervalKey] ?
     [_options[kCWStatusBarNotificationTimeIntervalKey] doubleValue] :
     kCWTimeIntervalDefault;
+}
+
+- (NSTimeInterval)animateOutTimeInterval {
+    return _options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] ?
+    [_options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] doubleValue] :
+    kCWAnimateOutTimeIntervalDefault;
 }
 
 - (NSString*)text {
@@ -364,12 +384,12 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     notificationView.frame = notification.prepareToAnimateInFrame;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     __weak typeof(self) weakSelf = self;
-    [UIView animateWithDuration:0.25
+    [UIView animateWithDuration:notification.animateInTimeInterval
                      animations:^{
                          notificationView.frame = _notificationWindow.rootViewController.view.bounds;
                      }
                      completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.25
+                         [UIView animateWithDuration:notification.animateOutTimeInterval
                                                delay:notification.timeInterval
                                              options:0
                                           animations:^{

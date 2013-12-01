@@ -23,7 +23,10 @@ typedef NS_ENUM(NSInteger, CWStatusBarNotificationAnimationStyle) {
 extern NSString *const kCWStatusBarNotificationNotificationTypeKey;
 extern NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey;
 extern NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey;
+
+extern NSString *const kCWStatusBarNotificationAnimateInTimeIntervalKey;
 extern NSString *const kCWStatusBarNotificationTimeIntervalKey;
+extern NSString *const kCWStatusBarNotificationAnimateOutTimeIntervalKey;
 
 extern NSString *const kCWStatusBarNotificationTextKey;
 extern NSString *const kCWStatusBarNotificationFontKey;
