@@ -9,6 +9,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CWStatusBarNotification.h"
 
+#pragma mark - CWStatusBarNotificationView
+
 @interface CWStatusBarNotificationView : UIView
 @property (nonatomic, assign) UIImage *image;
 @property (nonatomic, assign) NSString *text;
@@ -75,6 +77,47 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 
 @end
 
+#pragma mark - CWStatusBarNotification
+
+@interface CWStatusBarNotification : NSObject
+
+//Top Level Properties
+
+@property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, copy) void(^completion)(void);
+
+//Views and Layout Data
+
+@property (nonatomic, readonly) UIView *notificationView;
+@property (nonatomic, readonly) CGRect prepareToAnimateInFrame;
+@property (nonatomic, readonly) CGRect animatedOutFrame;
+
+//Read Only Convinence Properties Providing Default Values or Values from Options
+
+@property (nonatomic, readonly) CWStatusBarNotificationType notificationType;
+
+@property (nonatomic, readonly) CWStatusBarNotificationAnimationType animationType;
+@property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
+@property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle outAnimationStyle;
+@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
+@property (nonatomic, readonly) NSTimeInterval timeInterval;
+@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
+
+@property (nonatomic, readonly) CGFloat animationSpringDamping;
+@property (nonatomic, readonly) CGFloat animationInitialVelocity;
+
+@property (nonatomic, readonly) NSString *text;
+@property (nonatomic, readonly) UIFont *font;
+@property (nonatomic, readonly) UIColor *textColor;
+@property (nonatomic, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, readonly) UIColor *textShadowColor;
+@property (nonatomic, readonly) CGSize textShadowOffset;
+
+@property (nonatomic, readonly) UIColor *backgroundColor;
+@property (nonatomic, readonly) UIImage *image;
+
+@end
+
 #pragma mark - Option Constant Definitions
 
 NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kCWStatusBarNotificationNotificationTypeKey";
@@ -124,38 +167,7 @@ static CGSize                                   kCWTextShadowOffsetDefault;
 static UIColor  *                               kCWBackgroundColorDefault           = nil;
 static UIImage  *                               kCWImageDefault                     = nil;
 
-@interface CWStatusBarNotification : NSObject
-
-@property (nonatomic, strong) NSDictionary *options;
-@property (nonatomic, copy) void(^completion)(void);
-@property (nonatomic, readonly) UIView *notificationView;
-
-@property (nonatomic, readonly) CWStatusBarNotificationType notificationType;
-
-@property (nonatomic, readonly) CWStatusBarNotificationAnimationType animationType;
-@property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
-@property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle outAnimationStyle;
-@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
-@property (nonatomic, readonly) NSTimeInterval timeInterval;
-@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
-
-@property (nonatomic, readonly) CGFloat animationSpringDamping;
-@property (nonatomic, readonly) CGFloat animationInitialVelocity;
-
-@property (nonatomic, readonly) NSString *text;
-@property (nonatomic, readonly) UIFont *font;
-@property (nonatomic, readonly) UIColor *textColor;
-@property (nonatomic, readonly) NSTextAlignment textAlignment;
-@property (nonatomic, readonly) UIColor *textShadowColor;
-@property (nonatomic, readonly) CGSize textShadowOffset;
-
-@property (nonatomic, readonly) UIColor *backgroundColor;
-@property (nonatomic, readonly) UIImage *image;
-
-@property (nonatomic, readonly) CGRect prepareToAnimateInFrame;
-@property (nonatomic, readonly) CGRect animatedOutFrame;
-
-@end
+#pragma mark - Layout Helper Functions
 
 static CGFloat const CWStatusBarDefaultHeight = 44.0f;
 static CGFloat const CWStatusBariPhoneLandscape = 30.0f;
@@ -238,6 +250,28 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     if (defaultOptions[kCWStatusBarNotificationBackgroundColorKey]) kCWBackgroundColorDefault = defaultOptions[kCWStatusBarNotificationBackgroundColorKey];
     if (defaultOptions[kCWStatusBarNotificationTextKey]) kCWTextDefault = defaultOptions[kCWStatusBarNotificationTextKey];
     if (defaultOptions[kCWStatusBarNotificationImageKey]) kCWImageDefault = defaultOptions[kCWStatusBarNotificationImageKey];
+}
+
+#pragma mark - Notification View Helpers
+
+- (UIView*)notificationView {
+    CGSize size = CWNotificationViewSize(self.notificationType);
+    CWStatusBarNotificationView *notificationView = [[CWStatusBarNotificationView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    notificationView.label.text = self.text;
+    notificationView.label.font = self.font;
+    notificationView.label.textColor = self.textColor;
+    notificationView.label.textAlignment = self.textAlignment;
+    notificationView.backgroundColor = self.backgroundColor;
+    notificationView.image = self.image;
+    return notificationView;
+}
+
+- (CGRect)prepareToAnimateInFrame {
+    return CWNotificationViewFrame(self.notificationType, self.inAnimationStyle);
+}
+
+- (CGRect)animatedOutFrame {
+    return CWNotificationViewFrame(self.notificationType, self.outAnimationStyle);
 }
 
 #pragma mark - Overrides
@@ -330,29 +364,9 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return _options[kCWStatusBarNotificationImageKey] ?: kCWImageDefault;
 }
 
-#pragma mark - Notification View Helpers
-
-- (UIView*)notificationView {
-    CGSize size = CWNotificationViewSize(self.notificationType);
-    CWStatusBarNotificationView *notificationView = [[CWStatusBarNotificationView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    notificationView.label.text = self.text;
-    notificationView.label.font = self.font;
-    notificationView.label.textColor = self.textColor;
-    notificationView.label.textAlignment = self.textAlignment;
-    notificationView.backgroundColor = self.backgroundColor;
-    notificationView.image = self.image;
-    return notificationView;
-}
-
-- (CGRect)prepareToAnimateInFrame {
-    return CWNotificationViewFrame(self.notificationType, self.inAnimationStyle);
-}
-
-- (CGRect)animatedOutFrame {
-    return CWNotificationViewFrame(self.notificationType, self.outAnimationStyle);
-}
-
 @end
+
+#pragma mark - CWStatusBarNotificationManager
 
 @interface CWStatusBarNotificationManager ()
 @property (nonatomic, readonly) BOOL showingNotification;
@@ -465,10 +479,10 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
                          completion:inwardAnimationsCompletionBlock];
 
     } else if (notification.animationType == CWStatusBarNotificationAnimationTypeSpring) {
-        [UIView animateWithDuration:0.6
+        [UIView animateWithDuration:notification.animateInTimeInterval
                               delay:0.0
-             usingSpringWithDamping:0.4
-              initialSpringVelocity:1.0
+             usingSpringWithDamping:notification.animationSpringDamping
+              initialSpringVelocity:notification.animationInitialVelocity
                             options:0
                          animations:outwardAnimationsBlock
                          completion:outwardAnimationsCompletionBlock];
