@@ -253,15 +253,29 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
 }
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
-    if (defaultOptions[kCWStatusBarNotificationNotificationTypeKey]) kCWNotificationTypeDefault = [defaultOptions[kCWStatusBarNotificationNotificationTypeKey] integerValue];
-    if (defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey]) kCWInAnimationStyleDefault = [defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey] integerValue];
-    if (defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey]) kCWOutAnimationStyleDefault = [defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey] integerValue];
-    if (defaultOptions[kCWStatusBarNotificationTimeIntervalKey]) kCWTimeIntervalDefault = [defaultOptions[kCWStatusBarNotificationTimeIntervalKey] doubleValue];
-    if (defaultOptions[kCWStatusBarNotificationFontKey]) kCWFontDefault = defaultOptions[kCWStatusBarNotificationFontKey];
-    if (defaultOptions[kCWStatusBarNotificationTextColorKey]) kCWTextColorDefault = defaultOptions[kCWStatusBarNotificationTextColorKey];
-    if (defaultOptions[kCWStatusBarNotificationBackgroundColorKey]) kCWBackgroundColorDefault = defaultOptions[kCWStatusBarNotificationBackgroundColorKey];
-    if (defaultOptions[kCWStatusBarNotificationTextKey]) kCWTextDefault = defaultOptions[kCWStatusBarNotificationTextKey];
-    if (defaultOptions[kCWStatusBarNotificationImageKey]) kCWImageDefault = defaultOptions[kCWStatusBarNotificationImageKey];
+    if (defaultOptions[kCWStatusBarNotificationNotificationTypeKey])                kCWNotificationTypeDefault              = [defaultOptions[kCWStatusBarNotificationNotificationTypeKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationNotificationPresentationTypeKey])    kCWNotificationPresentationTypeDefault  = [defaultOptions[kCWStatusBarNotificationNotificationPresentationTypeKey] integerValue];
+
+    if (defaultOptions[kCWStatusBarNotificationAnimationTypeKey])                   kCWAnimationTypeDefault                 = [defaultOptions[kCWStatusBarNotificationAnimationTypeKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey])    kCWInAnimationStyleDefault              = [defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey])   kCWOutAnimationStyleDefault             = [defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey] integerValue];
+
+    if (defaultOptions[kCWStatusBarNotificationAnimateInTimeIntervalKey])           kCWAnimateInTimeIntervalDefault         = [defaultOptions[kCWStatusBarNotificationAnimateInTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCWStatusBarNotificationTimeIntervalKey])                    kCWTimeIntervalDefault                  = [defaultOptions[kCWStatusBarNotificationTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimateOutTimeIntervalKey])          kCWAnimateOutTimeIntervalDefault        = [defaultOptions[kCWStatusBarNotificationAnimateOutTimeIntervalKey] doubleValue];
+    
+    if (defaultOptions[kCWStatusBarNotificationAnimateSpringDampingKey])            kCWSpringDampingDefault                 = [defaultOptions[kCWStatusBarNotificationAnimateSpringDampingKey] floatValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimateSpringInitialVelocityKey])    kCWSpringInitialVelocityDefault         = [defaultOptions[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] floatValue];
+    
+    if (defaultOptions[kCWStatusBarNotificationTextKey])                            kCWTextDefault                          = defaultOptions[kCWStatusBarNotificationTextKey];
+    if (defaultOptions[kCWStatusBarNotificationFontKey])                            kCWFontDefault                          = defaultOptions[kCWStatusBarNotificationFontKey];
+    if (defaultOptions[kCWStatusBarNotificationTextColorKey])                       kCWTextColorDefault                     = defaultOptions[kCWStatusBarNotificationTextColorKey];
+    if (defaultOptions[kCWStatusBarNotificationTextAlignmentKey])                   kCWTextAlignmentDefault                 = [defaultOptions[kCWStatusBarNotificationTextAlignmentKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationTextShadowColorKey])                 kCWTextShadowColorDefault               = defaultOptions[kCWStatusBarNotificationTextShadowColorKey];
+    if (defaultOptions[kCWStatusBarNotificationTextShadowOffsetKey])                kCWTextShadowOffsetDefault              = [defaultOptions[kCWStatusBarNotificationTextShadowOffsetKey] CGSizeValue];
+    
+    if (defaultOptions[kCWStatusBarNotificationBackgroundColorKey])                 kCWBackgroundColorDefault               = defaultOptions[kCWStatusBarNotificationBackgroundColorKey];
+    if (defaultOptions[kCWStatusBarNotificationImageKey])                           kCWImageDefault                         = defaultOptions[kCWStatusBarNotificationImageKey];
 }
 
 #pragma mark - Notification View Helpers
