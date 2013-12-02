@@ -430,16 +430,25 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     __weak typeof(self) weakSelf = self;
     
-    void (^inwardAnimationsBlock)(void);
-    void (^inwardAnimationsCompletionBlock)(BOOL);
-    void (^outwardAnimationsBlock)(void);
-    void (^outwardAnimationsCompletionBlock)(BOOL);
-    
-    inwardAnimationsBlock= ^void(void) {
+    void (^inwardAnimationsBlock)(void) = ^void(void) {
         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
     };
     
-    inwardAnimationsCompletionBlock = ^void(BOOL finished) {
+    void (^outwardAnimationsBlock)(void) = ^void(void) {
+        notificationView.frame = notification.animatedOutFrame;
+    };
+    void (^outwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
+        if (notification.completion) notification.completion();
+        [weakSelf.notifications removeObject:notification];
+        if (weakSelf.notifications.count > 0) {
+            CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
+            [weakSelf displayNotification:notification];
+        } else {
+            weakSelf.notificationWindow.hidden = YES;
+        }
+    };
+    
+    void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
         if (notification.animationType == CWStatusBarNotificationAnimationTypeLinear) {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
@@ -458,21 +467,6 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
         }
     };
     
-    outwardAnimationsBlock = ^void(void) {
-        notificationView.frame = notification.animatedOutFrame;
-    };
-    
-    outwardAnimationsCompletionBlock = ^void(BOOL finished) {
-        if (notification.completion) notification.completion();
-        [weakSelf.notifications removeObject:notification];
-        if (weakSelf.notifications.count > 0) {
-            CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
-            [weakSelf displayNotification:notification];
-        } else {
-            weakSelf.notificationWindow.hidden = YES;
-        }
-    };
-    
     if (notification.animationType == CWStatusBarNotificationAnimationTypeLinear) {
         [UIView animateWithDuration:notification.animateInTimeInterval
                          animations:inwardAnimationsBlock
@@ -484,8 +478,8 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
              usingSpringWithDamping:notification.animationSpringDamping
               initialSpringVelocity:notification.animationInitialVelocity
                             options:0
-                         animations:outwardAnimationsBlock
-                         completion:outwardAnimationsCompletionBlock];
+                         animations:inwardAnimationsBlock
+                         completion:inwardAnimationsCompletionBlock];
     }
 }
 
