@@ -393,7 +393,7 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
     return _options[kCWStatusBarNotificationBackgroundColorKey] ?: kCWBackgroundColorDefault;
 }
 
-- (NSString*)image {
+- (UIImage*)image {
     return _options[kCWStatusBarNotificationImageKey] ?: kCWImageDefault;
 }
 
