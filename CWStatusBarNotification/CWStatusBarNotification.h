@@ -13,6 +13,11 @@ typedef NS_ENUM(NSInteger, CWStatusBarNotificationType){
     CWStatusBarNotificationTypeNavigationBar
 };
 
+typedef NS_ENUM(NSInteger, CWStatusBarNotificationPresentationType){
+    CWStatusBarNotificationPresentationTypeCover,
+    CWStatusBarNotificationPresentationTypePush
+};
+
 typedef NS_ENUM(NSInteger, CWStatusBarNotificationAnimationStyle) {
     CWStatusBarNotificationAnimationStyleTop,
     CWStatusBarNotificationAnimationStyleBottom,
@@ -26,6 +31,7 @@ typedef NS_ENUM(NSInteger, CWStatusBarNotificationAnimationType) {
 };
 
 extern NSString *const kCWStatusBarNotificationNotificationTypeKey;
+extern NSString *const kCWStatusBarNotificationNotificationPresentationTypeKey;
 
 extern NSString *const kCWStatusBarNotificationAnimationTypeKey;
 extern NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey;

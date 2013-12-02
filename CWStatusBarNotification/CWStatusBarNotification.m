@@ -89,12 +89,16 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 //Views and Layout Data
 
 @property (nonatomic, readonly) UIView *notificationView;
-@property (nonatomic, readonly) CGRect prepareToAnimateInFrame;
-@property (nonatomic, readonly) CGRect animatedOutFrame;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame2;
+@property (nonatomic, readonly) UIView *statusBarView;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
 
 //Read Only Convinence Properties Providing Default Values or Values from Options
 
 @property (nonatomic, readonly) CWStatusBarNotificationType notificationType;
+@property (nonatomic, readonly) CWStatusBarNotificationPresentationType presentationType;
 
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationType animationType;
 @property (nonatomic, readonly) CWStatusBarNotificationAnimationStyle inAnimationStyle;
@@ -121,6 +125,7 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 #pragma mark - Option Constant Definitions
 
 NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"kCWStatusBarNotificationNotificationTypeKey";
+NSString *const kCWStatusBarNotificationNotificationPresentationTypeKey     = @"kCWStatusBarNotificationNotificationPresentationTypeKey";
 
 NSString *const kCWStatusBarNotificationAnimationTypeKey                    = @"kCWStatusBarNotificationAnimationTypeKey";
 NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kCWStatusBarNotificationNotificationInAnimationStyleKey";
@@ -145,27 +150,28 @@ NSString *const kCWStatusBarNotificationImageKey                            = @"
 
 #pragma mark - Option Defaults
 
-static CWStatusBarNotificationType              kCWNotificationTypeDefault          = CWStatusBarNotificationTypeStatusBar;
+static CWStatusBarNotificationType              kCWNotificationTypeDefault              = CWStatusBarNotificationTypeStatusBar;
+static CWStatusBarNotificationPresentationType  kCWNotificationPresentationTypeDefault  = CWStatusBarNotificationPresentationTypePush;
 
-static CWStatusBarNotificationAnimationType     kCWAnimationTypeDefault             = CWStatusBarNotificationAnimationTypeLinear;
-static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault          = CWStatusBarNotificationAnimationStyleTop;
-static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault         = CWStatusBarNotificationAnimationStyleBottom;
-static NSTimeInterval                           kCWAnimateInTimeIntervalDefault     = 0.25;
-static NSTimeInterval                           kCWTimeIntervalDefault              = 2.0f;
-static NSTimeInterval                           kCWAnimateOutTimeIntervalDefault    = 0.25;
+static CWStatusBarNotificationAnimationType     kCWAnimationTypeDefault                 = CWStatusBarNotificationAnimationTypeLinear;
+static CWStatusBarNotificationAnimationStyle    kCWInAnimationStyleDefault              = CWStatusBarNotificationAnimationStyleTop;
+static CWStatusBarNotificationAnimationStyle    kCWOutAnimationStyleDefault             = CWStatusBarNotificationAnimationStyleBottom;
+static NSTimeInterval                           kCWAnimateInTimeIntervalDefault         = 0.25;
+static NSTimeInterval                           kCWTimeIntervalDefault                  = 2.0f;
+static NSTimeInterval                           kCWAnimateOutTimeIntervalDefault        = 0.25;
 
-static CGFloat                                  kCWSpringDampingDefault             = 0.4;
-static CGFloat                                  kCWSpringInitialVelocityDefault     = 1.0;
+static CGFloat                                  kCWSpringDampingDefault                 = 0.4;
+static CGFloat                                  kCWSpringInitialVelocityDefault         = 1.0;
 
-static NSString *                               kCWTextDefault                      = @"";
-static UIFont   *                               kCWFontDefault                      = nil;
-static UIColor  *                               kCWTextColorDefault                 = nil;
-static NSTextAlignment                          kCWTextAlignmentDefault             = NSTextAlignmentCenter;
-static UIColor  *                               kCWTextShadowColorDefault           = nil;
+static NSString *                               kCWTextDefault                          = @"";
+static UIFont   *                               kCWFontDefault                          = nil;
+static UIColor  *                               kCWTextColorDefault                     = nil;
+static NSTextAlignment                          kCWTextAlignmentDefault                 = NSTextAlignmentCenter;
+static UIColor  *                               kCWTextShadowColorDefault               = nil;
 static CGSize                                   kCWTextShadowOffsetDefault;
 
-static UIColor  *                               kCWBackgroundColorDefault           = nil;
-static UIImage  *                               kCWImageDefault                     = nil;
+static UIColor  *                               kCWBackgroundColorDefault               = nil;
+static UIImage  *                               kCWImageDefault                         = nil;
 
 #pragma mark - Layout Helper Functions
 
@@ -206,11 +212,17 @@ static CGSize CWNotificationViewSize(CWStatusBarNotificationType notificationTyp
 }
 
 static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatusBarNotificationAnimationStyle style) {
-    
     return CGRectMake(style == CWStatusBarNotificationAnimationStyleLeft ? -CWGetStatusBarWidth() : style == CWStatusBarNotificationAnimationStyleRight ? CWGetStatusBarWidth() : 0,
                       style == CWStatusBarNotificationAnimationStyleTop ? -CWGetNotificationViewHeight(type) : style == CWStatusBarNotificationAnimationStyleBottom ? CWGetNotificationViewHeight(type) : 0,
                       CWGetStatusBarWidth(),
                       CWGetNotificationViewHeight(type));
+}
+
+static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBarNotificationAnimationStyle style) {
+    return CWNotificationViewFrame(type,style == CWStatusBarNotificationAnimationStyleTop ? CWStatusBarNotificationAnimationStyleBottom :
+                                        style == CWStatusBarNotificationAnimationStyleBottom ? CWStatusBarNotificationAnimationStyleTop :
+                                        style == CWStatusBarNotificationAnimationStyleLeft ? CWStatusBarNotificationAnimationStyleRight :
+                                        CWStatusBarNotificationAnimationStyleLeft);
 }
 
 @implementation CWStatusBarNotification
@@ -266,12 +278,27 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return notificationView;
 }
 
-- (CGRect)prepareToAnimateInFrame {
+- (CGRect)notificationViewAnimationFrame1 {
     return CWNotificationViewFrame(self.notificationType, self.inAnimationStyle);
 }
 
-- (CGRect)animatedOutFrame {
+- (CGRect)notificationViewAnimationFrame2 {
     return CWNotificationViewFrame(self.notificationType, self.outAnimationStyle);
+}
+
+- (UIView*)statusBarView {
+    UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
+    [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
+    statusBarView.clipsToBounds = YES;
+    return statusBarView;
+}
+
+- (CGRect)statusBarViewAnimationFrame1 {
+    return CWStatusBarViewFrame(self.notificationType, self.inAnimationStyle);
+}
+
+- (CGRect)statusBarViewAnimationFrame2 {
+    return CWStatusBarViewFrame(self.notificationType, self.outAnimationStyle);
 }
 
 #pragma mark - Overrides
@@ -280,6 +307,12 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     return _options[kCWStatusBarNotificationNotificationTypeKey] ?
     [self.options[kCWStatusBarNotificationNotificationTypeKey] integerValue] :
     kCWNotificationTypeDefault;
+}
+
+- (CWStatusBarNotificationPresentationType)presentationType {
+    return _options[kCWStatusBarNotificationNotificationPresentationTypeKey] ?
+    [self.options[kCWStatusBarNotificationNotificationPresentationTypeKey] integerValue] :
+    kCWNotificationPresentationTypeDefault;
 }
 
 - (CWStatusBarNotificationAnimationType)animationType {
@@ -425,21 +458,31 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CWNotificationViewSize(notification.notificationType);
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+
+    UIView *statusBarView = notification.statusBarView;
+    statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
+    [_notificationWindow.rootViewController.view addSubview:statusBarView];
+    statusBarView.hidden = notification.presentationType == CWStatusBarNotificationPresentationTypeCover;
+    
     UIView *notificationView = notification.notificationView;
-    notificationView.frame = notification.prepareToAnimateInFrame;
+    notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     __weak typeof(self) weakSelf = self;
     
     void (^inwardAnimationsBlock)(void) = ^void(void) {
         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
+        statusBarView.frame = notification.statusBarViewAnimationFrame1;
     };
     
     void (^outwardAnimationsBlock)(void) = ^void(void) {
-        notificationView.frame = notification.animatedOutFrame;
+        notificationView.frame = notification.notificationViewAnimationFrame2;
+        statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     };
     void (^outwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
         if (notification.completion) notification.completion();
         [weakSelf.notifications removeObject:notification];
+        [notificationView removeFromSuperview];
+        [statusBarView removeFromSuperview];
         if (weakSelf.notifications.count > 0) {
             CWStatusBarNotification *notification = weakSelf.notifications.firstObject;
             [weakSelf displayNotification:notification];
@@ -449,6 +492,7 @@ static CGRect CWNotificationViewFrame(CWStatusBarNotificationType type, CWStatus
     };
     
     void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
+        statusBarView.frame = notification.statusBarViewAnimationFrame2;
         if (notification.animationType == CWStatusBarNotificationAnimationTypeLinear) {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
