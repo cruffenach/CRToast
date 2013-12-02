@@ -104,6 +104,7 @@
 - (NSDictionary*)options {
     NSMutableDictionary *options = [@{kCWStatusBarNotificationNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CWStatusBarNotificationTypeNavigationBar) : @(CWStatusBarNotificationTypeStatusBar),
                                       kCWStatusBarNotificationTextKey                           : self.txtNotificationMessage.text,
+                                      kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCWStatusBarNotificationTextAlignmentKey                  : @(self.textAlignment),
                                       kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCWStatusBarNotificationNotificationInAnimationStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
