@@ -499,7 +499,7 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
                                 options:0
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
-        } else {
+        } else if (notification.animationType == CWStatusBarNotificationAnimationTypeSpring) {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
                  usingSpringWithDamping:notification.animationSpringDamping
