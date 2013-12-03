@@ -430,6 +430,11 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
                                                                                                completionBlock:completion]];
 }
 
++ (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
+    [self showNotificationWithOptions:@{kCWStatusBarNotificationTextKey : message}
+                      completionBlock:completion];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;

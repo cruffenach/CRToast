@@ -58,5 +58,6 @@ extern NSString *const kCWStatusBarNotificationImageKey;
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions;
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion;
++ (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion;
 
 @end
