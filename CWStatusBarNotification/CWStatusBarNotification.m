@@ -62,7 +62,6 @@ static CGFloat const kCWStatusBarViewNoImageRightContentInset = 10;
 
 - (UIImage*)image {
     return self.imageView.image;
-    [self setNeedsLayout];
 }
 
 - (void)setText:(NSString *)text {
