@@ -30,14 +30,14 @@ NSDictionary *options = @{kCWStatusBarNotificationTextKey : @"Hello World!",
                           kCWStatusBarNotificationTextAlignmentKey : @(NSTextAlignmentCenter),
                           kCWStatusBarNotificationBackgroundColorKey : [UIColor redColor],
                           kCWStatusBarNotificationAnimationTypeKey : @(CWStatusBarNotificationAnimationTypeSpring),
-                          kCWStatusBarNotificationNotificationInAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleLeft),
-                          kCWStatusBarNotificationNotificationOutAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleRight),
-                          kCWStatusBarNotificationAnimateInTimeIntervalKey : @(0.5),
-                          kCWStatusBarNotificationAnimateOutTimeIntervalKey: @(0.5)};
-[CWStatusBarNotificationManager showNotificationWithOptions:options
-                                            completionBlock:^{
-                                                NSLog(@"Completed");                                            
-                                            }];
+                          kCWStatusBarNotificationAnimationInStyleKey : @(CWStatusBarNotificationAnimationStyleLeft),
+                          kCWStatusBarNotificationAnimationOutStyleKey : @(CWStatusBarNotificationAnimationStyleRight),
+                          kCWStatusBarNotificationAnimationInTimeIntervalKey : @(0.5),
+                          kCWStatusBarNotificationAnimationOutTimeIntervalKey: @(0.5)};
+    [CWStatusBarNotificationManager showNotificationWithOptions:options
+                                                completionBlock:^{
+                                                    NSLog(@"Completed");
+                                                }];
 ```
 Generates this
 
