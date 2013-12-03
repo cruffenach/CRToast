@@ -108,8 +108,8 @@
                                       kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCWStatusBarNotificationTextAlignmentKey                  : @(self.textAlignment),
                                       kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
-                                      kCWStatusBarNotificationAnimationInStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
-                                      kCWStatusBarNotificationAnimationOutStyleKey  : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
+                                      kCWStatusBarNotificationAnimationInStyleKey               : @(self.segFromStyle.selectedSegmentIndex),
+                                      kCWStatusBarNotificationAnimationOutStyleKey              : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCWStatusBarNotificationImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
