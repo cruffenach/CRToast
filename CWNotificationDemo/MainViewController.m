@@ -108,16 +108,16 @@
                                       kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCWStatusBarNotificationTextAlignmentKey                  : @(self.textAlignment),
                                       kCWStatusBarNotificationTimeIntervalKey                   : @(self.sliderDuration.value),
-                                      kCWStatusBarNotificationNotificationInAnimationStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
-                                      kCWStatusBarNotificationNotificationOutAnimationStyleKey  : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
+                                      kCWStatusBarNotificationAnimationInStyleKey   : @(self.segFromStyle.selectedSegmentIndex),
+                                      kCWStatusBarNotificationAnimationOutStyleKey  : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCWStatusBarNotificationImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
     
     if (self.springPhysicsSwitch.on) {
         options[kCWStatusBarNotificationAnimationTypeKey] = @(CWStatusBarNotificationAnimationTypeSpring);
-        options[kCWStatusBarNotificationAnimateInTimeIntervalKey] = @(0.5);
-        options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] = @(0.5);
+        options[kCWStatusBarNotificationAnimationInTimeIntervalKey] = @(0.5);
+        options[kCWStatusBarNotificationAnimationOutTimeIntervalKey] = @(0.5);
     }
     
     return [NSDictionary dictionaryWithDictionary:options];

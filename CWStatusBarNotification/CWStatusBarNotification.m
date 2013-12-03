@@ -126,15 +126,15 @@ NSString *const kCWStatusBarNotificationNotificationTypeKey                 = @"
 NSString *const kCWStatusBarNotificationNotificationPresentationTypeKey     = @"kCWStatusBarNotificationNotificationPresentationTypeKey";
 
 NSString *const kCWStatusBarNotificationAnimationTypeKey                    = @"kCWStatusBarNotificationAnimationTypeKey";
-NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey     = @"kCWStatusBarNotificationNotificationInAnimationStyleKey";
-NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey    = @"kCWStatusBarNotificationNotificationOutAnimationStyleKey";
+NSString *const kCWStatusBarNotificationAnimationInStyleKey     = @"kCWStatusBarNotificationAnimationInStyleKey";
+NSString *const kCWStatusBarNotificationAnimationOutStyleKey    = @"kCWStatusBarNotificationAnimationOutStyleKey";
 
-NSString *const kCWStatusBarNotificationAnimateInTimeIntervalKey            = @"kCWStatusBarNotificationAnimateInTimeInterval";
+NSString *const kCWStatusBarNotificationAnimationInTimeIntervalKey            = @"kCWStatusBarNotificationAnimateInTimeInterval";
 NSString *const kCWStatusBarNotificationTimeIntervalKey                     = @"kCWStatusBarNotificationTimeIntervalKey";
-NSString *const kCWStatusBarNotificationAnimateOutTimeIntervalKey           = @"kCWStatusBarNotificationAnimateOutTimeInterval";
+NSString *const kCWStatusBarNotificationAnimationOutTimeIntervalKey           = @"kCWStatusBarNotificationAnimateOutTimeInterval";
 
-NSString *const kCWStatusBarNotificationAnimateSpringDampingKey             = @"kCWStatusBarNotificationAnimateSpringDampingKey";
-NSString *const kCWStatusBarNotificationAnimateSpringInitialVelocityKey     = @"kCWStatusBarNotificationAnimateSpringVelocityKey";
+NSString *const kCWStatusBarNotificationAnimationSpringDampingKey             = @"kCWStatusBarNotificationAnimationSpringDampingKey";
+NSString *const kCWStatusBarNotificationAnimationSpringInitialVelocityKey     = @"kCWStatusBarNotificationAnimateSpringVelocityKey";
 
 NSString *const kCWStatusBarNotificationTextKey                             = @"kCWStatusBarNotificationTextKey";
 NSString *const kCWStatusBarNotificationFontKey                             = @"kCWStatusBarNotificationFontKey";
@@ -255,15 +255,15 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
     if (defaultOptions[kCWStatusBarNotificationNotificationPresentationTypeKey])    kCWNotificationPresentationTypeDefault  = [defaultOptions[kCWStatusBarNotificationNotificationPresentationTypeKey] integerValue];
 
     if (defaultOptions[kCWStatusBarNotificationAnimationTypeKey])                   kCWAnimationTypeDefault                 = [defaultOptions[kCWStatusBarNotificationAnimationTypeKey] integerValue];
-    if (defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey])    kCWInAnimationStyleDefault              = [defaultOptions[kCWStatusBarNotificationNotificationInAnimationStyleKey] integerValue];
-    if (defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey])   kCWOutAnimationStyleDefault             = [defaultOptions[kCWStatusBarNotificationNotificationOutAnimationStyleKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationInStyleKey])    kCWInAnimationStyleDefault              = [defaultOptions[kCWStatusBarNotificationAnimationInStyleKey] integerValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationOutStyleKey])   kCWOutAnimationStyleDefault             = [defaultOptions[kCWStatusBarNotificationAnimationOutStyleKey] integerValue];
 
-    if (defaultOptions[kCWStatusBarNotificationAnimateInTimeIntervalKey])           kCWAnimateInTimeIntervalDefault         = [defaultOptions[kCWStatusBarNotificationAnimateInTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationInTimeIntervalKey])           kCWAnimateInTimeIntervalDefault         = [defaultOptions[kCWStatusBarNotificationAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCWStatusBarNotificationTimeIntervalKey])                    kCWTimeIntervalDefault                  = [defaultOptions[kCWStatusBarNotificationTimeIntervalKey] doubleValue];
-    if (defaultOptions[kCWStatusBarNotificationAnimateOutTimeIntervalKey])          kCWAnimateOutTimeIntervalDefault        = [defaultOptions[kCWStatusBarNotificationAnimateOutTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationOutTimeIntervalKey])          kCWAnimateOutTimeIntervalDefault        = [defaultOptions[kCWStatusBarNotificationAnimationOutTimeIntervalKey] doubleValue];
     
-    if (defaultOptions[kCWStatusBarNotificationAnimateSpringDampingKey])            kCWSpringDampingDefault                 = [defaultOptions[kCWStatusBarNotificationAnimateSpringDampingKey] floatValue];
-    if (defaultOptions[kCWStatusBarNotificationAnimateSpringInitialVelocityKey])    kCWSpringInitialVelocityDefault         = [defaultOptions[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] floatValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationSpringDampingKey])            kCWSpringDampingDefault                 = [defaultOptions[kCWStatusBarNotificationAnimationSpringDampingKey] floatValue];
+    if (defaultOptions[kCWStatusBarNotificationAnimationSpringInitialVelocityKey])    kCWSpringInitialVelocityDefault         = [defaultOptions[kCWStatusBarNotificationAnimationSpringInitialVelocityKey] floatValue];
     
     if (defaultOptions[kCWStatusBarNotificationTextKey])                            kCWTextDefault                          = defaultOptions[kCWStatusBarNotificationTextKey];
     if (defaultOptions[kCWStatusBarNotificationFontKey])                            kCWFontDefault                          = defaultOptions[kCWStatusBarNotificationFontKey];
@@ -334,20 +334,20 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
 }
 
 - (CWStatusBarNotificationAnimationStyle)inAnimationStyle {
-    return _options[kCWStatusBarNotificationNotificationInAnimationStyleKey] ?
-    [_options[kCWStatusBarNotificationNotificationInAnimationStyleKey] integerValue] :
+    return _options[kCWStatusBarNotificationAnimationInStyleKey] ?
+    [_options[kCWStatusBarNotificationAnimationInStyleKey] integerValue] :
     kCWInAnimationStyleDefault;
 }
 
 - (CWStatusBarNotificationAnimationStyle)outAnimationStyle {
-    return _options[kCWStatusBarNotificationNotificationInAnimationStyleKey] ?
-    [_options[kCWStatusBarNotificationNotificationOutAnimationStyleKey] integerValue] :
+    return _options[kCWStatusBarNotificationAnimationInStyleKey] ?
+    [_options[kCWStatusBarNotificationAnimationOutStyleKey] integerValue] :
     kCWOutAnimationStyleDefault;
 }
 
 - (NSTimeInterval)animateInTimeInterval {
-    return _options[kCWStatusBarNotificationAnimateInTimeIntervalKey] ?
-    [_options[kCWStatusBarNotificationAnimateInTimeIntervalKey] doubleValue] :
+    return _options[kCWStatusBarNotificationAnimationInTimeIntervalKey] ?
+    [_options[kCWStatusBarNotificationAnimationInTimeIntervalKey] doubleValue] :
     kCWAnimateInTimeIntervalDefault;
 }
 
@@ -358,20 +358,20 @@ static CGRect CWStatusBarViewFrame(CWStatusBarNotificationType type, CWStatusBar
 }
 
 - (NSTimeInterval)animateOutTimeInterval {
-    return _options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] ?
-    [_options[kCWStatusBarNotificationAnimateOutTimeIntervalKey] doubleValue] :
+    return _options[kCWStatusBarNotificationAnimationOutTimeIntervalKey] ?
+    [_options[kCWStatusBarNotificationAnimationOutTimeIntervalKey] doubleValue] :
     kCWAnimateOutTimeIntervalDefault;
 }
 
 - (CGFloat)animationInitialVelocity {
-    return _options[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] ?
-    [_options[kCWStatusBarNotificationAnimateSpringInitialVelocityKey] floatValue] :
+    return _options[kCWStatusBarNotificationAnimationSpringInitialVelocityKey] ?
+    [_options[kCWStatusBarNotificationAnimationSpringInitialVelocityKey] floatValue] :
     kCWSpringInitialVelocityDefault;
 }
 
 - (CGFloat)animationSpringDamping {
-    return _options[kCWStatusBarNotificationAnimateSpringDampingKey] ?
-    [_options[kCWStatusBarNotificationAnimateSpringDampingKey] floatValue] :
+    return _options[kCWStatusBarNotificationAnimationSpringDampingKey] ?
+    [_options[kCWStatusBarNotificationAnimationSpringDampingKey] floatValue] :
     kCWSpringDampingDefault;
 }
 

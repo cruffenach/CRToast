@@ -34,15 +34,15 @@ extern NSString *const kCWStatusBarNotificationNotificationTypeKey;
 extern NSString *const kCWStatusBarNotificationNotificationPresentationTypeKey;
 
 extern NSString *const kCWStatusBarNotificationAnimationTypeKey;
-extern NSString *const kCWStatusBarNotificationNotificationInAnimationStyleKey;
-extern NSString *const kCWStatusBarNotificationNotificationOutAnimationStyleKey;
+extern NSString *const kCWStatusBarNotificationAnimationInStyleKey;
+extern NSString *const kCWStatusBarNotificationAnimationOutStyleKey;
 
-extern NSString *const kCWStatusBarNotificationAnimateInTimeIntervalKey;
+extern NSString *const kCWStatusBarNotificationAnimationInTimeIntervalKey;
 extern NSString *const kCWStatusBarNotificationTimeIntervalKey;
-extern NSString *const kCWStatusBarNotificationAnimateOutTimeIntervalKey;
+extern NSString *const kCWStatusBarNotificationAnimationOutTimeIntervalKey;
 
-extern NSString *const kCWStatusBarNotificationAnimateSpringDampingKey;
-extern NSString *const kCWStatusBarNotificationAnimateSpringInitialVelocityKey;
+extern NSString *const kCWStatusBarNotificationAnimationSpringDampingKey;
+extern NSString *const kCWStatusBarNotificationAnimationSpringInitialVelocityKey;
 
 extern NSString *const kCWStatusBarNotificationTextKey;
 extern NSString *const kCWStatusBarNotificationFontKey;
