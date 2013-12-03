@@ -1,20 +1,18 @@
 # CWStatusBarNotification
 
-`CWStatusBarNotification` is a library that allows you to easily create text-based notifications that appear on the status bar.
+`CWStatusBarNotification` is a library that allows you to easily create notifications that appear on the status bar.
 
 ![demo](screenshots/demo.gif)
 
 ## Requirements
 
-`CWStatusBarNotification` uses ARC and requires iOS 7.0+.
-
-Works for iPhone and iPad.
+`CWStatusBarNotification` uses ARC and requires iOS 7.0+. Works for iPhone and iPad.
 
 ## Installation
 
 ### CocoaPods
 
-`pod 'CWStatusBarNotification', '~> 2.1.0'`
+`pod 'CWStatusBarNotification', '~> 3.0'`
 
 ### Manual
 
@@ -22,75 +20,59 @@ Copy the folder `CWStatusBarNotification` to your project.
 
 ## Usage
 
-***Note:** The previous version of this library implemented the notifications using a category. This version uses an object instead.*
+Notifications can be created through `CWStatusBarNotificationManager`'s `showNotificationWithOptions:completionBlock:` This will queue up a notification with the options specified. You provide options for your notification in a dictionary using the keys in `CWStatusBarNotification.h`
 
-Firstly, you need the following import statement:
+#### Example
+This code
 
+```	objc
+NSDictionary *options = @{kCWStatusBarNotificationTextKey : @"Hello World!",
+                          kCWStatusBarNotificationTextAlignmentKey : @(NSTextAlignmentCenter),
+                          kCWStatusBarNotificationBackgroundColorKey : [UIColor redColor],
+                          kCWStatusBarNotificationAnimationTypeKey : @(CWStatusBarNotificationAnimationTypeSpring),
+                          kCWStatusBarNotificationNotificationInAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleLeft),
+                          kCWStatusBarNotificationNotificationOutAnimationStyleKey : @(CWStatusBarNotificationAnimationStyleRight),
+                          kCWStatusBarNotificationAnimateInTimeIntervalKey : @(0.5),
+                          kCWStatusBarNotificationAnimateOutTimeIntervalKey: @(0.5)};
+[CWStatusBarNotificationManager showNotificationWithOptions:options
+                                            completionBlock:^{
+                                                NSLog(@"Completed");                                            
+                                            }];
 ```
-#import "CWStatusBarNotification.h"
-```
+Generates this
 
-Now, you need to create a `CWStatusBarNotification` object. It is recommended that you do so by attaching it as a property to a `UIViewController`.
+![](screenshots/red_notification.gif)
 
-```
-CWStatusBarNotification *notification = [CWStatusBarNotification new];
-```
-After you have a `CWStatusBarNotification` object, you can simply call the `displayNotificationMessage:forDuration:` method:
 
-```
-[self.notification displayNotificationWithMessage:@"Hello, World!"
-                   forDuration:1.0f];
-```
+## Customization
 
-If you prefer to manually choose when to display and dismiss the notification, you can do so as well:
+`CWStatusBarNotification` is very customizable. Taking a hint from `UIStringDrawing`'s `drawInRect:withAttributes:` book, notifications are created with dictionaries filled with all their options.
 
-```
-[self.notification displayNotificationWithMessage:@"Hello" completion:nil];
-// wait until you need to dismiss
-[self.notofication dismissNotification];
-```
+### Customizing Appearance
 
-## Customizing Appearance
+`CWStatusBarNotification` allows for setting of
 
-First of all, you can customize the background color and text color using the following properties: `notificationLabelBackgroundColor` and `notificationLabelTextColor`.
+- Alert Text
+- Text Color
+- Text Font
+- Text Alignment
+- Text Color
+- Text Shadow Color
+- Text Shadow Offset
+- Left aligned image
 
-Example:
+### Customizing Animation
 
-```
-notification.notificationLabelBackgroundColor = [UIColor blackColor];
-notification.notificationLabelTextColor = [UIColor greenColor];
-```
+`CWStatusBarNotification` also allows for animation customization. This includes.
 
-![custom colors](screenshots/ss1.gif)
+- Animation Type (Linear or Spring)
+- Presentation Type (Slide over bars or push content out)
+- Direction (Enter and exit in any direction)
+- Enter, Stay on Screen and Exit Timing
 
-The default value of `notificationLabelBackgroundColor` is `[[UIApplication sharedApplication] delegate].window.tintColor`.
+### Setting Defaults
 
-The default value of `notification.notificationLabelTextColor` is `[UIColor whiteColor]`.
-
-Finally, you can also choose from two styles - a notification the size of the status bar, or a notification the size of the status bar and a navigation bar. Simply change the `notificationStyle` property of the `CWStatusBarNotification` object to either `CWNotificationStyleStatusBarNotification` or `CWNotificationStyleNavigationBarNotification`.
-
-![custom style](screenshots/ss2.gif)
-
-The default value of `notificationStyle` is `CWNotificationStyleStatusBarNotification`.
-
-## Customizing Animation
-
-There are two properties that determine the animation style of the notification: `notificationAnimationInStyle` and `notificationAnimationOutStyle`. Each can take on one of four values:
-
-* `CWNotificationAnimationStyleTop`
-* `CWNotificationAnimationStyleBottom`
-* `CWNotificationAnimationStyleLeft`
-* `CWNotificationAnimationStyleRight`
-
-The `notificationAnimationInStyle` describes where the notification comes from, whereas the `notificationAnimationOutStyle` describes where the notification will go.
-
-The default value for `notificationAnimationInStyle` is `CWNotificationAnimationStyleTop`.
-
-The default value for `notificationAnimationOutStyle` is `CWNotificationAnimationStyleTop`.
-
-### Additional Remarks
-
-The notifications will work in both screen orientations, however, screen rotation while a notification is displayed is not yet fully supported.
+There are sane defaults set for all properties, however you can set a default set of options for your application's notifications using `CWStatusBarNotificationManagers`'s `setDefaultOptions:`.
 
 ## License
 
@@ -115,5 +97,3 @@ The notifications will work in both screen orientations, however, screen rotatio
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-
-
