@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E0D045E1838AE0D00CBFC35 /* CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D045D1838AE0D00CBFC35 /* CWStatusBarNotification.m */; };
+		5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D045D1838AE0D00CBFC35 /* CRToast.m */; };
 		5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
 		5E2FFB5918367C01003333F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5818367C01003333F8 /* CoreGraphics.framework */; };
 		5E2FFB5B18367C01003333F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
@@ -33,20 +33,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5E0D045C1838AE0D00CBFC35 /* CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CWStatusBarNotification.h; path = CWStatusBarNotification/CWStatusBarNotification.h; sourceTree = SOURCE_ROOT; };
-		5E0D045D1838AE0D00CBFC35 /* CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CWStatusBarNotification.m; path = CWStatusBarNotification/CWStatusBarNotification.m; sourceTree = SOURCE_ROOT; };
-		5E2FFB5318367C01003333F8 /* CWNotificationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CWNotificationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E0D045C1838AE0D00CBFC35 /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRToast.h; path = CRToast/CRToast.h; sourceTree = SOURCE_ROOT; };
+		5E0D045D1838AE0D00CBFC35 /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRToast.m; path = CRToast/CRToast.m; sourceTree = SOURCE_ROOT; };
+		5E2FFB5318367C01003333F8 /* CRToastDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRToastDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB5618367C01003333F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E2FFB5818367C01003333F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		5E2FFB5A18367C01003333F8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		5E2FFB5E18367C01003333F8 /* CWNotificationDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CWNotificationDemo-Info.plist"; sourceTree = "<group>"; };
+		5E2FFB5E18367C01003333F8 /* CRToastDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRToastDemo-Info.plist"; sourceTree = "<group>"; };
 		5E2FFB6018367C01003333F8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5E2FFB6218367C01003333F8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		5E2FFB6418367C01003333F8 /* CWNotificationDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CWNotificationDemo-Prefix.pch"; sourceTree = "<group>"; };
+		5E2FFB6418367C01003333F8 /* CRToastDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRToastDemo-Prefix.pch"; sourceTree = "<group>"; };
 		5E2FFB6518367C01003333F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5E2FFB6618367C01003333F8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5E2FFB6818367C01003333F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5E2FFB6E18367C01003333F8 /* CWNotificationDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CWNotificationDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB6F18367C01003333F8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -80,8 +80,8 @@
 		5E2FFB4A18367C01003333F8 = {
 			isa = PBXGroup;
 			children = (
-				5E2FFB8518367C1B003333F8 /* CWStatusBarNotification */,
-				5E2FFB5C18367C01003333F8 /* CWNotificationDemo */,
+				5E2FFB8518367C1B003333F8 /* CRToast */,
+				5E2FFB5C18367C01003333F8 /* CRToastDemo */,
 				5E2FFB5518367C01003333F8 /* Frameworks */,
 				5E2FFB5418367C01003333F8 /* Products */,
 			);
@@ -90,8 +90,8 @@
 		5E2FFB5418367C01003333F8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E2FFB5318367C01003333F8 /* CWNotificationDemo.app */,
-				5E2FFB6E18367C01003333F8 /* CWNotificationDemoTests.xctest */,
+				5E2FFB5318367C01003333F8 /* CRToastDemo.app */,
+				5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,7 +107,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5E2FFB5C18367C01003333F8 /* CWNotificationDemo */ = {
+		5E2FFB5C18367C01003333F8 /* CRToastDemo */ = {
 			isa = PBXGroup;
 			children = (
 				5E2FFB6518367C01003333F8 /* AppDelegate.h */,
@@ -116,28 +116,27 @@
 				5E2FFB6818367C01003333F8 /* Images.xcassets */,
 				5E2FFB5D18367C01003333F8 /* Supporting Files */,
 			);
-			path = CWNotificationDemo;
+			path = CRToastDemo;
 			sourceTree = "<group>";
 		};
 		5E2FFB5D18367C01003333F8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5E2FFB5E18367C01003333F8 /* CWNotificationDemo-Info.plist */,
+				5E2FFB5E18367C01003333F8 /* CRToastDemo-Info.plist */,
 				5E2FFB5F18367C01003333F8 /* InfoPlist.strings */,
 				5E2FFB6218367C01003333F8 /* main.m */,
-				5E2FFB6418367C01003333F8 /* CWNotificationDemo-Prefix.pch */,
+				5E2FFB6418367C01003333F8 /* CRToastDemo-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5E2FFB8518367C1B003333F8 /* CWStatusBarNotification */ = {
+		5E2FFB8518367C1B003333F8 /* CRToast */ = {
 			isa = PBXGroup;
 			children = (
-				5E0D045C1838AE0D00CBFC35 /* CWStatusBarNotification.h */,
-				5E0D045D1838AE0D00CBFC35 /* CWStatusBarNotification.m */,
+				5E0D045C1838AE0D00CBFC35 /* CRToast.h */,
+				5E0D045D1838AE0D00CBFC35 /* CRToast.m */,
 			);
-			name = CWStatusBarNotification;
-			path = CWNotification;
+			path = CRToast;
 			sourceTree = "<group>";
 		};
 		5E2FFB8918367C75003333F8 /* View Controllers */ = {
@@ -161,9 +160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5E2FFB5218367C01003333F8 /* CWNotificationDemo */ = {
+		5E2FFB5218367C01003333F8 /* CRToastDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CWNotificationDemo" */;
+			buildConfigurationList = 5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemo" */;
 			buildPhases = (
 				5E2FFB4F18367C01003333F8 /* Sources */,
 				5E2FFB5018367C01003333F8 /* Frameworks */,
@@ -173,14 +172,14 @@
 			);
 			dependencies = (
 			);
-			name = CWNotificationDemo;
+			name = CRToastDemo;
 			productName = CWNotificationDemo;
-			productReference = 5E2FFB5318367C01003333F8 /* CWNotificationDemo.app */;
+			productReference = 5E2FFB5318367C01003333F8 /* CRToastDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5E2FFB6D18367C01003333F8 /* CWNotificationDemoTests */ = {
+		5E2FFB6D18367C01003333F8 /* CRToastDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CWNotificationDemoTests" */;
+			buildConfigurationList = 5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemoTests" */;
 			buildPhases = (
 				5E2FFB6A18367C01003333F8 /* Sources */,
 				5E2FFB6B18367C01003333F8 /* Frameworks */,
@@ -191,9 +190,9 @@
 			dependencies = (
 				5E2FFB7418367C01003333F8 /* PBXTargetDependency */,
 			);
-			name = CWNotificationDemoTests;
+			name = CRToastDemoTests;
 			productName = CWNotificationDemoTests;
-			productReference = 5E2FFB6E18367C01003333F8 /* CWNotificationDemoTests.xctest */;
+			productReference = 5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -213,7 +212,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CWNotificationDemo" */;
+			buildConfigurationList = 5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -225,8 +224,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5E2FFB5218367C01003333F8 /* CWNotificationDemo */,
-				5E2FFB6D18367C01003333F8 /* CWNotificationDemoTests */,
+				5E2FFB5218367C01003333F8 /* CRToastDemo */,
+				5E2FFB6D18367C01003333F8 /* CRToastDemoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -256,7 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E0D045E1838AE0D00CBFC35 /* CWStatusBarNotification.m in Sources */,
+				5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */,
 				5E2FFB6718367C01003333F8 /* AppDelegate.m in Sources */,
 				5E2FFB6318367C01003333F8 /* main.m in Sources */,
 				5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */,
@@ -275,7 +274,7 @@
 /* Begin PBXTargetDependency section */
 		5E2FFB7418367C01003333F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5E2FFB5218367C01003333F8 /* CWNotificationDemo */;
+			target = 5E2FFB5218367C01003333F8 /* CRToastDemo */;
 			targetProxy = 5E2FFB7318367C01003333F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -374,9 +373,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CWNotificationDemo/CWNotificationDemo-Prefix.pch";
-				INFOPLIST_FILE = "CWNotificationDemo/CWNotificationDemo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
+				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -390,9 +389,9 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CWNotificationDemo/CWNotificationDemo-Prefix.pch";
-				INFOPLIST_FILE = "CWNotificationDemo/CWNotificationDemo-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
+				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -415,7 +414,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "CWNotificationDemoTests/CWNotificationDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CRToastDemoTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -434,7 +433,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CWNotificationDemo/CWNotificationDemo-Prefix.pch";
 				INFOPLIST_FILE = "CWNotificationDemoTests/CWNotificationDemoTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CRToastDemoTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -443,7 +442,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CWNotificationDemo" */ = {
+		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E2FFB7D18367C01003333F8 /* Debug */,
@@ -452,7 +451,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CWNotificationDemo" */ = {
+		5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E2FFB8018367C01003333F8 /* Debug */,
@@ -461,7 +460,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CWNotificationDemoTests" */ = {
+		5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5E2FFB8318367C01003333F8 /* Debug */,
