@@ -79,7 +79,7 @@ There are sane defaults set for all properties, however you can set a default se
 
     The MIT License (MIT)
 
-    Copyright (c) 2013 Cezary Wojcik <http://www.cezarywojcik.com>
+    Copyright (c) 2013 Collin Ruffenach
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
