@@ -12,33 +12,34 @@
 
 ### CocoaPods
 
-`pod 'CWStatusBarNotification', '~> 3.0'`
+`pod 'CRToast', '~> 0.0.1'`
 
 ### Manual
 
-Copy the folder `CWStatusBarNotification` to your project.
+Copy the folder `CRToast` to your project.
 
 ## Usage
 
-Notifications can be created through `CWStatusBarNotificationManager`'s `showNotificationWithOptions:completionBlock:` This will queue up a notification with the options specified. You provide options for your notification in a dictionary using the keys in `CWStatusBarNotification.h`
+Notifications can be created through `CRToastManager`'s `showNotificationWithOptions:completionBlock:` This will queue up a notification with the options specified. You provide options for your notification in a dictionary using the keys in `CRToast.h`
 
 #### Example
 This code
 
 ```	objc
-NSDictionary *options = @{kCWStatusBarNotificationTextKey : @"Hello World!",
-                          kCWStatusBarNotificationTextAlignmentKey : @(NSTextAlignmentCenter),
-                          kCWStatusBarNotificationBackgroundColorKey : [UIColor redColor],
-                          kCWStatusBarNotificationAnimationTypeKey : @(CWStatusBarNotificationAnimationTypeSpring),
-                          kCWStatusBarNotificationAnimationInStyleKey : @(CWStatusBarNotificationAnimationStyleLeft),
-                          kCWStatusBarNotificationAnimationOutStyleKey : @(CWStatusBarNotificationAnimationStyleRight),
-                          kCWStatusBarNotificationAnimationInTimeIntervalKey : @(0.5),
-                          kCWStatusBarNotificationAnimationOutTimeIntervalKey: @(0.5)};
-    [CWStatusBarNotificationManager showNotificationWithOptions:options
-                                                completionBlock:^{
-                                                    NSLog(@"Completed");
-                                                }];
+NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
+                          kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
+                          kCRToastBackgroundColorKey : [UIColor redColor],
+                          kCRToastAnimationTypeKey : @(CRToastAnimationTypeSpring),
+                          kCRToastAnimationInStyleKey : @(CRToastAnimationStyleLeft),
+                          kCRToastAnimationOutStyleKey : @(CRToastAnimationStyleRight),
+                          kCRToastAnimationInTimeIntervalKey : @(0.5),
+                          kCRToastAnimationOutTimeIntervalKey: @(0.5)};
+[CRToastManager showNotificationWithOptions:options
+                            completionBlock:^{
+                                NSLog(@"Completed");
+                            }];
 ```
+
 Generates this
 
 ![](screenshots/red_notification.gif)
@@ -46,11 +47,11 @@ Generates this
 
 ## Customization
 
-`CWStatusBarNotification` is very customizable. Taking a hint from `UIStringDrawing`'s `drawInRect:withAttributes:` book, notifications are created with dictionaries filled with all their options.
+`CRToast` is very customizable. Taking a hint from `UIStringDrawing`'s `drawInRect:withAttributes:` book, notifications are created with dictionaries filled with all their options.
 
 ### Customizing Appearance
 
-`CWStatusBarNotification` allows for setting of
+`CRToast` allows for setting of
 
 - Alert Text
 - Text Color
@@ -63,7 +64,7 @@ Generates this
 
 ### Customizing Animation
 
-`CWStatusBarNotification` also allows for animation customization. This includes.
+`CRToast` also allows for animation customization. This includes.
 
 - Animation Type (Linear or Spring)
 - Presentation Type (Slide over bars or push content out)
@@ -72,7 +73,7 @@ Generates this
 
 ### Setting Defaults
 
-There are sane defaults set for all properties, however you can set a default set of options for your application's notifications using `CWStatusBarNotificationManagers`'s `setDefaultOptions:`.
+There are sane defaults set for all properties, however you can set a default set of options for your application's notifications using `CRToastManagers`'s `setDefaultOptions:`.
 
 ## License
 
