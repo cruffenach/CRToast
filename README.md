@@ -1,12 +1,12 @@
-# CWStatusBarNotification
+# CRToast
 
-`CWStatusBarNotification` is a library that allows you to easily create notifications that appear on the status bar.
+`CRToast` is a library that allows you to easily create notifications that appear on the status bar. CRToast was originally based on [CWStatusBarNotification](https://github.com/cezarywojcik/CWStatusBarNotification) but the direction I found helpful wasn't something CWStatusBarNotification wanted to embrace.
 
 ![demo](screenshots/demo.gif)
 
 ## Requirements
 
-`CWStatusBarNotification` uses ARC and requires iOS 7.0+. Works for iPhone and iPad.
+`CRToast` uses ARC and requires iOS 7.0+. Works for iPhone and iPad.
 
 ## Installation
 

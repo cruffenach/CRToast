@@ -126,15 +126,15 @@ NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotifica
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastAnimationTypeKey                    = @"kCRToastAnimationTypeKey";
-NSString *const kCRToastAnimationInStyleKey     = @"kCRToastAnimationInStyleKey";
-NSString *const kCRToastAnimationOutStyleKey    = @"kCRToastAnimationOutStyleKey";
+NSString *const kCRToastAnimationInStyleKey                 = @"kCRToastAnimationInStyleKey";
+NSString *const kCRToastAnimationOutStyleKey                = @"kCRToastAnimationOutStyleKey";
 
-NSString *const kCRToastAnimationInTimeIntervalKey            = @"kCRToastAnimateInTimeInterval";
+NSString *const kCRToastAnimationInTimeIntervalKey          = @"kCRToastAnimateInTimeInterval";
 NSString *const kCRToastTimeIntervalKey                     = @"kCRToastTimeIntervalKey";
-NSString *const kCRToastAnimationOutTimeIntervalKey           = @"kCRToastAnimateOutTimeInterval";
+NSString *const kCRToastAnimationOutTimeIntervalKey         = @"kCRToastAnimateOutTimeInterval";
 
-NSString *const kCRToastAnimationSpringDampingKey             = @"kCRToastAnimationSpringDampingKey";
-NSString *const kCRToastAnimationSpringInitialVelocityKey     = @"kCRToastAnimateSpringVelocityKey";
+NSString *const kCRToastAnimationSpringDampingKey           = @"kCRToastAnimationSpringDampingKey";
+NSString *const kCRToastAnimationSpringInitialVelocityKey   = @"kCRToastAnimateSpringVelocityKey";
 
 NSString *const kCRToastTextKey                             = @"kCRToastTextKey";
 NSString *const kCRToastFontKey                             = @"kCRToastFontKey";
@@ -154,22 +154,22 @@ static CRToastPresentationType  kCRNotificationPresentationTypeDefault  = CRToas
 static CRToastAnimationType     kCRAnimationTypeDefault                 = CRToastAnimationTypeLinear;
 static CRToastAnimationStyle    kCRInAnimationStyleDefault              = CRToastAnimationStyleTop;
 static CRToastAnimationStyle    kCROutAnimationStyleDefault             = CRToastAnimationStyleBottom;
-static NSTimeInterval                           kCRAnimateInTimeIntervalDefault         = 0.25;
-static NSTimeInterval                           kCRTimeIntervalDefault                  = 2.0f;
-static NSTimeInterval                           kCRAnimateOutTimeIntervalDefault        = 0.25;
+static NSTimeInterval           kCRAnimateInTimeIntervalDefault         = 0.25;
+static NSTimeInterval           kCRTimeIntervalDefault                  = 2.0f;
+static NSTimeInterval           kCRAnimateOutTimeIntervalDefault        = 0.25;
 
-static CGFloat                                  kCRSpringDampingDefault                 = 0.4;
-static CGFloat                                  kCRSpringInitialVelocityDefault         = 1.0;
+static CGFloat                  kCRSpringDampingDefault                 = 0.4;
+static CGFloat                  kCRSpringInitialVelocityDefault         = 1.0;
 
-static NSString *                               kCRTextDefault                          = @"";
-static UIFont   *                               kCRFontDefault                          = nil;
-static UIColor  *                               kCRTextColorDefault                     = nil;
-static NSTextAlignment                          kCRTextAlignmentDefault                 = NSTextAlignmentCenter;
-static UIColor  *                               kCRTextShadowColorDefault               = nil;
-static CGSize                                   kCRTextShadowOffsetDefault;
+static NSString *               kCRTextDefault                          = @"";
+static UIFont   *               kCRFontDefault                          = nil;
+static UIColor  *               kCRTextColorDefault                     = nil;
+static NSTextAlignment          kCRTextAlignmentDefault                 = NSTextAlignmentCenter;
+static UIColor  *               kCRTextShadowColorDefault               = nil;
+static CGSize                   kCRTextShadowOffsetDefault;
 
-static UIColor  *                               kCRBackgroundColorDefault               = nil;
-static UIImage  *                               kCRImageDefault                         = nil;
+static UIColor  *               kCRBackgroundColorDefault               = nil;
+static UIImage  *               kCRImageDefault                         = nil;
 
 #pragma mark - Layout Helper Functions
 
@@ -255,15 +255,15 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
 
     if (defaultOptions[kCRToastAnimationTypeKey])                   kCRAnimationTypeDefault                 = [defaultOptions[kCRToastAnimationTypeKey] integerValue];
-    if (defaultOptions[kCRToastAnimationInStyleKey])    kCRInAnimationStyleDefault              = [defaultOptions[kCRToastAnimationInStyleKey] integerValue];
-    if (defaultOptions[kCRToastAnimationOutStyleKey])   kCROutAnimationStyleDefault             = [defaultOptions[kCRToastAnimationOutStyleKey] integerValue];
+    if (defaultOptions[kCRToastAnimationInStyleKey])                kCRInAnimationStyleDefault              = [defaultOptions[kCRToastAnimationInStyleKey] integerValue];
+    if (defaultOptions[kCRToastAnimationOutStyleKey])               kCROutAnimationStyleDefault             = [defaultOptions[kCRToastAnimationOutStyleKey] integerValue];
 
-    if (defaultOptions[kCRToastAnimationInTimeIntervalKey])           kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
-    if (defaultOptions[kCRToastAnimationOutTimeIntervalKey])          kCRAnimateOutTimeIntervalDefault        = [defaultOptions[kCRToastAnimationOutTimeIntervalKey] doubleValue];
+    if (defaultOptions[kCRToastAnimationOutTimeIntervalKey])        kCRAnimateOutTimeIntervalDefault        = [defaultOptions[kCRToastAnimationOutTimeIntervalKey] doubleValue];
     
-    if (defaultOptions[kCRToastAnimationSpringDampingKey])            kCRSpringDampingDefault                 = [defaultOptions[kCRToastAnimationSpringDampingKey] floatValue];
-    if (defaultOptions[kCRToastAnimationSpringInitialVelocityKey])    kCRSpringInitialVelocityDefault         = [defaultOptions[kCRToastAnimationSpringInitialVelocityKey] floatValue];
+    if (defaultOptions[kCRToastAnimationSpringDampingKey])          kCRSpringDampingDefault                 = [defaultOptions[kCRToastAnimationSpringDampingKey] floatValue];
+    if (defaultOptions[kCRToastAnimationSpringInitialVelocityKey])  kCRSpringInitialVelocityDefault         = [defaultOptions[kCRToastAnimationSpringInitialVelocityKey] floatValue];
     
     if (defaultOptions[kCRToastTextKey])                            kCRTextDefault                          = defaultOptions[kCRToastTextKey];
     if (defaultOptions[kCRToastFontKey])                            kCRFontDefault                          = defaultOptions[kCRToastFontKey];
