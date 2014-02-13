@@ -58,6 +58,9 @@
                                      forState:UIControlStateNormal];
     [self.segToStyle setTitleTextAttributes:@{NSFontAttributeName : font}
                                    forState:UIControlStateNormal];
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
+    [_scrollView addGestureRecognizer:tapGestureRecognizer];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -128,6 +131,12 @@
     return selectedSegment == 0 ? NSTextAlignmentLeft :
     selectedSegment == 1 ? NSTextAlignmentCenter :
     NSTextAlignmentRight;
+}
+
+#pragma mark - Gesture Recognizer Selectors
+
+- (void)scrollViewTapped:(UITapGestureRecognizer*)tapGestureRecognizer {
+    [_txtNotificationMessage resignFirstResponder];
 }
 
 @end
