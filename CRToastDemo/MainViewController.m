@@ -110,6 +110,7 @@
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
+                                      kCRToastTextMaxNumberOfLinesKey           : @(0),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastAnimationInStyleKey               : @(self.segFromStyle.selectedSegmentIndex),
                                       kCRToastAnimationOutStyleKey              : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
@@ -119,8 +120,8 @@
     
     if (self.springPhysicsSwitch.on) {
         options[kCRToastAnimationTypeKey] = @(CRToastAnimationTypeSpring);
-        options[kCRToastAnimationInTimeIntervalKey] = @(0.5);
-        options[kCRToastAnimationOutTimeIntervalKey] = @(0.5);
+//        options[kCRToastAnimationInTimeIntervalKey] = @(0.5);
+//        options[kCRToastAnimationOutTimeIntervalKey] = @(0.5);
     }
     
     return [NSDictionary dictionaryWithDictionary:options];

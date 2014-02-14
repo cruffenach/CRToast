@@ -50,6 +50,7 @@ extern NSString *const kCRToastTextColorKey;
 extern NSString *const kCRToastTextAlignmentKey;
 extern NSString *const kCRToastTextShadowColorKey;
 extern NSString *const kCRToastTextShadowOffsetKey;
+extern NSString *const kCRToastTextMaxNumberOfLinesKey;
 
 extern NSString *const kCRToastBackgroundColorKey;
 extern NSString *const kCRToastImageKey;

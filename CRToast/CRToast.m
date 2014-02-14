@@ -114,6 +114,7 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 @property (nonatomic, readonly) NSTextAlignment textAlignment;
 @property (nonatomic, readonly) UIColor *textShadowColor;
 @property (nonatomic, readonly) CGSize textShadowOffset;
+@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
 
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
@@ -142,6 +143,7 @@ NSString *const kCRToastTextColorKey                        = @"kCRToastTextColo
 NSString *const kCRToastTextAlignmentKey                    = @"kCRToastTextAlignmentKey";
 NSString *const kCRToastTextShadowColorKey                  = @"kCRToastTextShadowColorKey";
 NSString *const kCRToastTextShadowOffsetKey                 = @"kCRToastTextShadowOffsetKey";
+NSString *const kCRToastTextMaxNumberOfLinesKey             = @"kCRToastTextMaxNumberOfLinesKey";
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
@@ -154,11 +156,11 @@ static CRToastPresentationType  kCRNotificationPresentationTypeDefault  = CRToas
 static CRToastAnimationType     kCRAnimationTypeDefault                 = CRToastAnimationTypeLinear;
 static CRToastAnimationStyle    kCRInAnimationStyleDefault              = CRToastAnimationStyleTop;
 static CRToastAnimationStyle    kCROutAnimationStyleDefault             = CRToastAnimationStyleBottom;
-static NSTimeInterval           kCRAnimateInTimeIntervalDefault         = 0.25;
+static NSTimeInterval           kCRAnimateInTimeIntervalDefault         = 0.4;
 static NSTimeInterval           kCRTimeIntervalDefault                  = 2.0f;
-static NSTimeInterval           kCRAnimateOutTimeIntervalDefault        = 0.25;
+static NSTimeInterval           kCRAnimateOutTimeIntervalDefault        = 0.4;
 
-static CGFloat                  kCRSpringDampingDefault                 = 0.4;
+static CGFloat                  kCRSpringDampingDefault                 = 0.6;
 static CGFloat                  kCRSpringInitialVelocityDefault         = 1.0;
 
 static NSString *               kCRTextDefault                          = @"";
@@ -167,6 +169,7 @@ static UIColor  *               kCRTextColorDefault                     = nil;
 static NSTextAlignment          kCRTextAlignmentDefault                 = NSTextAlignmentCenter;
 static UIColor  *               kCRTextShadowColorDefault               = nil;
 static CGSize                   kCRTextShadowOffsetDefault;
+static NSInteger                kCRTextMaxNumberOfLinesDefault          = 0;
 
 static UIColor  *               kCRBackgroundColorDefault               = nil;
 static UIImage  *               kCRImageDefault                         = nil;
@@ -271,6 +274,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     if (defaultOptions[kCRToastTextAlignmentKey])                   kCRTextAlignmentDefault                 = [defaultOptions[kCRToastTextAlignmentKey] integerValue];
     if (defaultOptions[kCRToastTextShadowColorKey])                 kCRTextShadowColorDefault               = defaultOptions[kCRToastTextShadowColorKey];
     if (defaultOptions[kCRToastTextShadowOffsetKey])                kCRTextShadowOffsetDefault              = [defaultOptions[kCRToastTextShadowOffsetKey] CGSizeValue];
+    if (defaultOptions[kCRToastTextMaxNumberOfLinesKey])            kCRTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastTextMaxNumberOfLinesKey] integerValue];
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
@@ -285,6 +289,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     notificationView.label.font = self.font;
     notificationView.label.textColor = self.textColor;
     notificationView.label.textAlignment = self.textAlignment;
+    notificationView.label.numberOfLines = self.textMaxNumberOfLines;
     notificationView.backgroundColor = self.backgroundColor;
     notificationView.image = self.image;
     return notificationView;
@@ -409,6 +414,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     return _options[kCRToastImageKey] ?: kCRImageDefault;
 }
 
+- (NSInteger)maxNumberOfLines {
+    return _options[kCRToastTextMaxNumberOfLinesKey] ?
+    [_options[kCRToastTextMaxNumberOfLinesKey] integerValue] :
+    kCRTextMaxNumberOfLinesDefault;
+}
+
 @end
 
 #pragma mark - CRToastManager
@@ -427,7 +438,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
     [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
-                                                                                               completionBlock:completion]];
+                                                               completionBlock:completion]];
 }
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
@@ -484,7 +495,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
-    __weak typeof(self) weakSelf = self;
+    __weak __block typeof(self) weakSelf = self;
     
     void (^inwardAnimationsBlock)(void) = ^void(void) {
         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
@@ -495,6 +506,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
         notificationView.frame = notification.notificationViewAnimationFrame2;
         statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     };
+    
     void (^outwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
         if (notification.completion) notification.completion();
         [weakSelf.notifications removeObject:notification];
