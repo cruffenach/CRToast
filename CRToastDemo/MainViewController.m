@@ -120,8 +120,6 @@
     
     if (self.springPhysicsSwitch.on) {
         options[kCRToastAnimationTypeKey] = @(CRToastAnimationTypeSpring);
-//        options[kCRToastAnimationInTimeIntervalKey] = @(0.5);
-//        options[kCRToastAnimationOutTimeIntervalKey] = @(0.5);
     }
     
     return [NSDictionary dictionaryWithDictionary:options];
