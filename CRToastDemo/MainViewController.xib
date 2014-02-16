@@ -12,8 +12,8 @@
                 <outlet property="lblDuration" destination="oAK-DR-B27" id="roa-nx-2td"/>
                 <outlet property="scrollView" destination="csJ-tx-cXU" id="9Qm-4F-EkG"/>
                 <outlet property="segAlignment" destination="Db2-zb-fY5" id="S6H-bt-9A1"/>
-                <outlet property="segFromStyle" destination="vWx-wx-d32" id="Zvu-PE-8D7"/>
-                <outlet property="segToStyle" destination="Bza-7R-910" id="CkD-Lr-RCl"/>
+                <outlet property="segFromDirection" destination="vWx-wx-d32" id="uqN-Hk-EMi"/>
+                <outlet property="segToDirection" destination="Bza-7R-910" id="jxe-ow-GGd"/>
                 <outlet property="showImageSwitch" destination="YNG-r4-yjU" id="2gN-mK-GJk"/>
                 <outlet property="showNotificationButton" destination="DId-6z-9ak" id="aos-qf-Zle"/>
                 <outlet property="slideOverSwitch" destination="xEk-iN-Qop" id="TiP-vW-oJn"/>

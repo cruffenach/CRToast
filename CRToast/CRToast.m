@@ -34,8 +34,8 @@
 
 @property (nonatomic, readonly) CRToastAnimationType inAnimationType;
 @property (nonatomic, readonly) CRToastAnimationType outAnimationType;
-@property (nonatomic, readonly) CRToastAnimationStyle inAnimationStyle;
-@property (nonatomic, readonly) CRToastAnimationStyle outAnimationStyle;
+@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
+@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
 @property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
 @property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
@@ -67,8 +67,8 @@ NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotifica
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
-NSString *const kCRToastAnimationInStyleKey                 = @"kCRToastAnimationInStyleKey";
-NSString *const kCRToastAnimationOutStyleKey                = @"kCRToastAnimationOutStyleKey";
+NSString *const kCRToastAnimationInDirectionKey                 = @"kCRToastAnimationInDirectionKey";
+NSString *const kCRToastAnimationOutDirectionKey                = @"kCRToastAnimationOutDirectionKey";
 
 NSString *const kCRToastAnimationInTimeIntervalKey          = @"kCRToastAnimateInTimeInterval";
 NSString *const kCRToastTimeIntervalKey                     = @"kCRToastTimeIntervalKey";
@@ -95,8 +95,8 @@ static CRToastPresentationType  kCRNotificationPresentationTypeDefault  = CRToas
 
 static CRToastAnimationType     kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
 static CRToastAnimationType     kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
-static CRToastAnimationStyle    kCRInAnimationStyleDefault              = CRToastAnimationStyleTop;
-static CRToastAnimationStyle    kCROutAnimationStyleDefault             = CRToastAnimationStyleBottom;
+static CRToastAnimationDirection    kCRInAnimationDirectionDefault              = CRToastAnimationDirectionTop;
+static CRToastAnimationDirection    kCROutAnimationDirectionDefault             = CRToastAnimationDirectionBottom;
 static NSTimeInterval           kCRAnimateInTimeIntervalDefault         = 0.4;
 static NSTimeInterval           kCRTimeIntervalDefault                  = 2.0f;
 static NSTimeInterval           kCRAnimateOutTimeIntervalDefault        = 0.4;
@@ -153,18 +153,18 @@ static CGSize CRNotificationViewSize(CRToastType notificationType) {
     return CGSizeMake(CRGetStatusBarWidth(), CRGetNotificationViewHeight(notificationType));
 }
 
-static CGRect CRNotificationViewFrame(CRToastType type, CRToastAnimationStyle style) {
-    return CGRectMake(style == CRToastAnimationStyleLeft ? -CRGetStatusBarWidth() : style == CRToastAnimationStyleRight ? CRGetStatusBarWidth() : 0,
-                      style == CRToastAnimationStyleTop ? -CRGetNotificationViewHeight(type) : style == CRToastAnimationStyleBottom ? CRGetNotificationViewHeight(type) : 0,
+static CGRect CRNotificationViewFrame(CRToastType type, CRToastAnimationDirection direction) {
+    return CGRectMake(direction == CRToastAnimationDirectionLeft ? -CRGetStatusBarWidth() : direction == CRToastAnimationDirectionRight ? CRGetStatusBarWidth() : 0,
+                      direction == CRToastAnimationDirectionTop ? -CRGetNotificationViewHeight(type) : direction == CRToastAnimationDirectionBottom ? CRGetNotificationViewHeight(type) : 0,
                       CRGetStatusBarWidth(),
                       CRGetNotificationViewHeight(type));
 }
 
-static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style) {
-    return CRNotificationViewFrame(type,style == CRToastAnimationStyleTop ? CRToastAnimationStyleBottom :
-                                   style == CRToastAnimationStyleBottom ? CRToastAnimationStyleTop :
-                                   style == CRToastAnimationStyleLeft ? CRToastAnimationStyleRight :
-                                   CRToastAnimationStyleLeft);
+static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection direction) {
+    return CRNotificationViewFrame(type,direction == CRToastAnimationDirectionTop ? CRToastAnimationDirectionBottom :
+                                   direction == CRToastAnimationDirectionBottom ? CRToastAnimationDirectionTop :
+                                   direction == CRToastAnimationDirectionLeft ? CRToastAnimationDirectionRight :
+                                   CRToastAnimationDirectionLeft);
 }
 
 @implementation CRToast
@@ -200,8 +200,8 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     
     if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
-    if (defaultOptions[kCRToastAnimationInStyleKey])                kCRInAnimationStyleDefault              = [defaultOptions[kCRToastAnimationInStyleKey] integerValue];
-    if (defaultOptions[kCRToastAnimationOutStyleKey])               kCROutAnimationStyleDefault             = [defaultOptions[kCRToastAnimationOutStyleKey] integerValue];
+    if (defaultOptions[kCRToastAnimationInDirectionKey])                kCRInAnimationDirectionDefault              = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
+    if (defaultOptions[kCRToastAnimationOutDirectionKey])               kCROutAnimationDirectionDefault             = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
     
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
@@ -232,11 +232,11 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 }
 
 - (CGRect)notificationViewAnimationFrame1 {
-    return CRNotificationViewFrame(self.notificationType, self.inAnimationStyle);
+    return CRNotificationViewFrame(self.notificationType, self.inAnimationDirection);
 }
 
 - (CGRect)notificationViewAnimationFrame2 {
-    return CRNotificationViewFrame(self.notificationType, self.outAnimationStyle);
+    return CRNotificationViewFrame(self.notificationType, self.outAnimationDirection);
 }
 
 - (UIView*)statusBarView {
@@ -247,11 +247,11 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 }
 
 - (CGRect)statusBarViewAnimationFrame1 {
-    return CRStatusBarViewFrame(self.notificationType, self.inAnimationStyle);
+    return CRStatusBarViewFrame(self.notificationType, self.inAnimationDirection);
 }
 
 - (CGRect)statusBarViewAnimationFrame2 {
-    return CRStatusBarViewFrame(self.notificationType, self.outAnimationStyle);
+    return CRStatusBarViewFrame(self.notificationType, self.outAnimationDirection);
 }
 
 #pragma mark - Overrides
@@ -280,16 +280,16 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     kCRAnimationTypeDefaultOut;
 }
 
-- (CRToastAnimationStyle)inAnimationStyle {
-    return _options[kCRToastAnimationInStyleKey] ?
-    [_options[kCRToastAnimationInStyleKey] integerValue] :
-    kCRInAnimationStyleDefault;
+- (CRToastAnimationDirection)inAnimationDirection {
+    return _options[kCRToastAnimationInDirectionKey] ?
+    [_options[kCRToastAnimationInDirectionKey] integerValue] :
+    kCRInAnimationDirectionDefault;
 }
 
-- (CRToastAnimationStyle)outAnimationStyle {
-    return _options[kCRToastAnimationInStyleKey] ?
-    [_options[kCRToastAnimationOutStyleKey] integerValue] :
-    kCROutAnimationStyleDefault;
+- (CRToastAnimationDirection)outAnimationDirection {
+    return _options[kCRToastAnimationInDirectionKey] ?
+    [_options[kCRToastAnimationOutDirectionKey] integerValue] :
+    kCROutAnimationDirectionDefault;
 }
 
 - (NSTimeInterval)animateInTimeInterval {

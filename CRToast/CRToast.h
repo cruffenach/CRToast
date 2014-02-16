@@ -18,11 +18,11 @@ typedef NS_ENUM(NSInteger, CRToastPresentationType){
     CRToastPresentationTypePush
 };
 
-typedef NS_ENUM(NSInteger, CRToastAnimationStyle) {
-    CRToastAnimationStyleTop,
-    CRToastAnimationStyleBottom,
-    CRToastAnimationStyleLeft,
-    CRToastAnimationStyleRight
+typedef NS_ENUM(NSInteger, CRToastAnimationDirection) {
+    CRToastAnimationDirectionTop,
+    CRToastAnimationDirectionBottom,
+    CRToastAnimationDirectionLeft,
+    CRToastAnimationDirectionRight
 };
 
 typedef NS_ENUM(NSInteger, CRToastAnimationType) {
@@ -36,8 +36,8 @@ extern NSString *const kCRToastNotificationPresentationTypeKey;
 
 extern NSString *const kCRToastAnimationInTypeKey;
 extern NSString *const kCRToastAnimationOutTypeKey;
-extern NSString *const kCRToastAnimationInStyleKey;
-extern NSString *const kCRToastAnimationOutStyleKey;
+extern NSString *const kCRToastAnimationInDirectionKey;
+extern NSString *const kCRToastAnimationOutDirectionKey;
 
 extern NSString *const kCRToastAnimationInTimeIntervalKey;
 extern NSString *const kCRToastTimeIntervalKey;

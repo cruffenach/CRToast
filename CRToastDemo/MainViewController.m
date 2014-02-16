@@ -16,8 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segFromStyle;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *segToStyle;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segFromDirection;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segToDirection;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *animationTypeSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
@@ -55,9 +55,9 @@
     self.title = @"CRToast";
     [self updateDurationLabel];
     UIFont *font = [UIFont boldSystemFontOfSize:10];
-    [self.segFromStyle setTitleTextAttributes:@{NSFontAttributeName : font}
+    [self.segFromDirection setTitleTextAttributes:@{NSFontAttributeName : font}
                                      forState:UIControlStateNormal];
-    [self.segToStyle setTitleTextAttributes:@{NSFontAttributeName : font}
+    [self.segToDirection setTitleTextAttributes:@{NSFontAttributeName : font}
                                    forState:UIControlStateNormal];
     [self.animationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
                                                       forState:UIControlStateNormal];
@@ -122,8 +122,8 @@ CRToastAnimationType toastAnimationTypeFromSegmentedControl(UISegmentedControl *
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastAnimationInTypeKey                : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
                                       kCRToastAnimationOutTypeKey               : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
-                                      kCRToastAnimationInStyleKey               : @(self.segFromStyle.selectedSegmentIndex),
-                                      kCRToastAnimationOutStyleKey              : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
+                                      kCRToastAnimationInDirectionKey               : @(self.segFromDirection.selectedSegmentIndex),
+                                      kCRToastAnimationOutDirectionKey              : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
