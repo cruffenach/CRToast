@@ -27,13 +27,14 @@ This code
 
 ```	objc
 NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
-                          kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
-                          kCRToastBackgroundColorKey : [UIColor redColor],
-                          kCRToastAnimationTypeKey : @(CRToastAnimationTypeSpring),
-                          kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
-                          kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight),
-                          kCRToastAnimationInTimeIntervalKey : @(0.5),
-                          kCRToastAnimationOutTimeIntervalKey: @(0.5)};
+                              kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
+                              kCRToastBackgroundColorKey : [UIColor redColor],
+                              kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
+                              kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
+                              kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
+                              kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight),
+                              kCRToastAnimationInTimeIntervalKey : @(0.5),
+                              kCRToastAnimationOutTimeIntervalKey: @(0.5)};
 [CRToastManager showNotificationWithOptions:options
                             completionBlock:^{
                                 NSLog(@"Completed");
