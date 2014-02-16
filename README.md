@@ -67,7 +67,8 @@ Generates this
 
 `CRToast` also allows for animation customization. This includes.
 
-- Animation Type (Linear or Spring)
+- Animation Type (Linear, Spring or Gravity)
+- Animation Physics Coefficients (Spring Damping, Spring Initial Velocity, Gravity Magnitude)
 - Presentation Type (Slide over bars or push content out)
 - Direction (Enter and exit in any direction)
 - Enter, Stay on Screen and Exit Timing

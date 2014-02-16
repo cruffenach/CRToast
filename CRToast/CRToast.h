@@ -46,6 +46,8 @@ extern NSString *const kCRToastAnimationOutTimeIntervalKey;
 extern NSString *const kCRToastAnimationSpringDampingKey;
 extern NSString *const kCRToastAnimationSpringInitialVelocityKey;
 
+extern NSString *const kCRToastAnimationGravityMagnitudeKey;
+
 extern NSString *const kCRToastTextKey;
 extern NSString *const kCRToastFontKey;
 extern NSString *const kCRToastTextColorKey;

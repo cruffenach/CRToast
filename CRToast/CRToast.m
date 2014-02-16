@@ -41,7 +41,8 @@
 @property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
 
 @property (nonatomic, readonly) CGFloat animationSpringDamping;
-@property (nonatomic, readonly) CGFloat animationInitialVelocity;
+@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
+@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
 
 @property (nonatomic, readonly) NSString *text;
 @property (nonatomic, readonly) UIFont *font;
@@ -85,6 +86,7 @@ NSString *const kCRToastAnimationOutTimeIntervalKey         = @"kCRToastAnimateO
 
 NSString *const kCRToastAnimationSpringDampingKey           = @"kCRToastAnimationSpringDampingKey";
 NSString *const kCRToastAnimationSpringInitialVelocityKey   = @"kCRToastAnimateSpringVelocityKey";
+NSString *const kCRToastAnimationGravityMagnitudeKey        = @"kCRToastAnimationGravityMagnitudeKey";
 
 NSString *const kCRToastTextKey                             = @"kCRToastTextKey";
 NSString *const kCRToastFontKey                             = @"kCRToastFontKey";
@@ -112,6 +114,7 @@ static NSTimeInterval           kCRAnimateOutTimeIntervalDefault        = 0.4;
 
 static CGFloat                  kCRSpringDampingDefault                 = 0.6;
 static CGFloat                  kCRSpringInitialVelocityDefault         = 1.0;
+static CGFloat                  kCRGravityMagnitudeDefault              = 1.0;
 
 static NSString *               kCRTextDefault                          = @"";
 static UIFont   *               kCRFontDefault                          = nil;
@@ -209,8 +212,8 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     
     if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
-    if (defaultOptions[kCRToastAnimationInDirectionKey])                kCRInAnimationDirectionDefault              = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
-    if (defaultOptions[kCRToastAnimationOutDirectionKey])               kCROutAnimationDirectionDefault             = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
+    if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault              = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
+    if (defaultOptions[kCRToastAnimationOutDirectionKey])           kCROutAnimationDirectionDefault             = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
     
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
@@ -218,6 +221,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     
     if (defaultOptions[kCRToastAnimationSpringDampingKey])          kCRSpringDampingDefault                 = [defaultOptions[kCRToastAnimationSpringDampingKey] floatValue];
     if (defaultOptions[kCRToastAnimationSpringInitialVelocityKey])  kCRSpringInitialVelocityDefault         = [defaultOptions[kCRToastAnimationSpringInitialVelocityKey] floatValue];
+    if (defaultOptions[kCRToastAnimationGravityMagnitudeKey])       kCRGravityMagnitudeDefault              = [defaultOptions[kCRToastAnimationGravityMagnitudeKey] floatValue];
     
     if (defaultOptions[kCRToastTextKey])                            kCRTextDefault                          = defaultOptions[kCRToastTextKey];
     if (defaultOptions[kCRToastFontKey])                            kCRFontDefault                          = defaultOptions[kCRToastFontKey];
@@ -319,7 +323,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     kCRAnimateOutTimeIntervalDefault;
 }
 
-- (CGFloat)animationInitialVelocity {
+- (CGFloat)animationSpringInitialVelocity {
     return _options[kCRToastAnimationSpringInitialVelocityKey] ?
     [_options[kCRToastAnimationSpringInitialVelocityKey] floatValue] :
     kCRSpringInitialVelocityDefault;
@@ -329,6 +333,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     return _options[kCRToastAnimationSpringDampingKey] ?
     [_options[kCRToastAnimationSpringDampingKey] floatValue] :
     kCRSpringDampingDefault;
+}
+
+- (CGFloat)animationGravityMagnitude {
+    return _options[kCRToastAnimationGravityMagnitudeKey] ?
+    [_options[kCRToastAnimationGravityMagnitudeKey] floatValue] :
+    kCRGravityMagnitudeDefault;
 }
 
 - (NSString*)text {
@@ -663,7 +673,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     
     void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
         statusBarView.frame = notification.statusBarViewAnimationFrame2;
-        switch (notification.inAnimationType) {
+        switch (notification.outAnimationType) {
             case CRToastAnimationTypeLinear: {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
@@ -675,7 +685,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
                  usingSpringWithDamping:notification.animationSpringDamping
-                  initialSpringVelocity:notification.animationInitialVelocity
+                  initialSpringVelocity:notification.animationSpringInitialVelocity
                                 options:0
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
@@ -686,6 +696,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
                 [_animator removeAllBehaviors];
                 UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];            ;
                 gravity.gravityDirection = notification.outGravityDirection;
+                gravity.magnitude = notification.animationGravityMagnitude;
                 UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
                 collision.collisionDelegate = self;
                 [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
@@ -710,7 +721,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
             [UIView animateWithDuration:notification.animateInTimeInterval
                                   delay:0.0
                  usingSpringWithDamping:notification.animationSpringDamping
-                  initialSpringVelocity:notification.animationInitialVelocity
+                  initialSpringVelocity:notification.animationSpringInitialVelocity
                                 options:0
                              animations:inwardAnimationsBlock
                              completion:inwardAnimationsCompletionBlock];
@@ -720,6 +731,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
             [_animator removeAllBehaviors];
             UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];
             gravity.gravityDirection = notification.inGravityDirection;
+            gravity.magnitude = notification.animationGravityMagnitude;
             UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
             collision.collisionDelegate = self;
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
@@ -727,7 +739,6 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
                                          toPoint:notification.inCollisionPoint2];
             [_animator addBehavior:gravity];
             [_animator addBehavior:collision];
-            
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         }
             break;
@@ -747,7 +758,6 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 - (void)collisionBehavior:(UICollisionBehavior*)behavior
       endedContactForItem:(id <UIDynamicItem>)item
    withBoundaryIdentifier:(id <NSCopying>)identifier {
-    NSLog(@"contact");
     CRToastView *notificationView = (CRToastView*)item;
     if (self.gravityAnimationCompletionBlock) {
         void (^gravityCompletionBlock)(BOOL) = [self.gravityAnimationCompletionBlock copy];
@@ -757,4 +767,5 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
         });
     }
 }
+
 @end
