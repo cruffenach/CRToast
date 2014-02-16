@@ -1,0 +1,17 @@
+0.0.1
+-----
+* Initial CRToast Release
+
+0.0.2
+-----
+* Support for max number of text lines
+
+0.0.3
+-----
+* CRToastAnimationType Gravity Support
+* In and out animations can be specified separately
+* Gravity magnitude can be set
+
+0.0.4
+-----
+* CRToastPresentationTypePush support for CRToastAnimationTypeGravity
