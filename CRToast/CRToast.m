@@ -9,72 +9,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CRToast.h"
 
-#pragma mark - CRToastView
-
-@interface CRToastView : UIView
-@property (nonatomic, assign) UIImage *image;
-@property (nonatomic, assign) NSString *text;
-@end
-
-@interface CRToastView ()
-@property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UILabel *label;
-@end
-
-static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
-static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
-
-@implementation CRToastView
-
-- (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-        imageView.contentMode = UIViewContentModeCenter;
-        [self addSubview:imageView];
-        self.imageView = imageView;
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-        [self addSubview:label];
-        self.label = label;
-    }
-    return self;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    CGRect bounds = self.bounds;
-    CGSize imageSize = self.imageView.image.size;
-    self.imageView.frame = CGRectMake(0, 0, imageSize.width == 0 ? 0 : CGRectGetHeight(bounds), imageSize.height == 0 ? 0 : CGRectGetHeight(bounds));
-    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    self.label.frame = CGRectMake(x,
-                                  0,
-                                  CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
-                                  CGRectGetHeight(bounds));
-}
-
-#pragma mark - Overrides
-
-- (void)setImage:(UIImage *)image {
-    self.imageView.image = image;
-    [self setNeedsLayout];
-}
-
-- (UIImage*)image {
-    return self.imageView.image;
-}
-
-- (void)setText:(NSString *)text {
-    self.label.text = text;
-    [self setNeedsLayout];
-}
-
-- (NSString*)text {
-    return self.label.text;
-}
-
-@end
-
 #pragma mark - CRToast
 
 @interface CRToast : NSObject
@@ -98,7 +32,8 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 @property (nonatomic, readonly) CRToastType notificationType;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 
-@property (nonatomic, readonly) CRToastAnimationType animationType;
+@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
+@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
 @property (nonatomic, readonly) CRToastAnimationStyle inAnimationStyle;
 @property (nonatomic, readonly) CRToastAnimationStyle outAnimationStyle;
 @property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
@@ -121,12 +56,17 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 @end
 
+@interface CRToastView : UIView
+@property (nonatomic, strong) CRToast *toast;
+@end
+
 #pragma mark - Option Constant Definitions
 
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
-NSString *const kCRToastAnimationTypeKey                    = @"kCRToastAnimationTypeKey";
+NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
+NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
 NSString *const kCRToastAnimationInStyleKey                 = @"kCRToastAnimationInStyleKey";
 NSString *const kCRToastAnimationOutStyleKey                = @"kCRToastAnimationOutStyleKey";
 
@@ -153,7 +93,8 @@ NSString *const kCRToastImageKey                            = @"kCRToastImageKey
 static CRToastType              kCRNotificationTypeDefault              = CRToastTypeStatusBar;
 static CRToastPresentationType  kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
 
-static CRToastAnimationType     kCRAnimationTypeDefault                 = CRToastAnimationTypeLinear;
+static CRToastAnimationType     kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
+static CRToastAnimationType     kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
 static CRToastAnimationStyle    kCRInAnimationStyleDefault              = CRToastAnimationStyleTop;
 static CRToastAnimationStyle    kCROutAnimationStyleDefault             = CRToastAnimationStyleBottom;
 static NSTimeInterval           kCRAnimateInTimeIntervalDefault         = 0.4;
@@ -221,9 +162,9 @@ static CGRect CRNotificationViewFrame(CRToastType type, CRToastAnimationStyle st
 
 static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style) {
     return CRNotificationViewFrame(type,style == CRToastAnimationStyleTop ? CRToastAnimationStyleBottom :
-                                        style == CRToastAnimationStyleBottom ? CRToastAnimationStyleTop :
-                                        style == CRToastAnimationStyleLeft ? CRToastAnimationStyleRight :
-                                        CRToastAnimationStyleLeft);
+                                   style == CRToastAnimationStyleBottom ? CRToastAnimationStyleTop :
+                                   style == CRToastAnimationStyleLeft ? CRToastAnimationStyleRight :
+                                   CRToastAnimationStyleLeft);
 }
 
 @implementation CRToast
@@ -256,11 +197,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
-
-    if (defaultOptions[kCRToastAnimationTypeKey])                   kCRAnimationTypeDefault                 = [defaultOptions[kCRToastAnimationTypeKey] integerValue];
+    
+    if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
+    if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationInStyleKey])                kCRInAnimationStyleDefault              = [defaultOptions[kCRToastAnimationInStyleKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutStyleKey])               kCROutAnimationStyleDefault             = [defaultOptions[kCRToastAnimationOutStyleKey] integerValue];
-
+    
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastAnimationOutTimeIntervalKey])        kCRAnimateOutTimeIntervalDefault        = [defaultOptions[kCRToastAnimationOutTimeIntervalKey] doubleValue];
@@ -285,13 +227,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 - (UIView*)notificationView {
     CGSize size = CRNotificationViewSize(self.notificationType);
     CRToastView *notificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    notificationView.label.text = self.text;
-    notificationView.label.font = self.font;
-    notificationView.label.textColor = self.textColor;
-    notificationView.label.textAlignment = self.textAlignment;
-    notificationView.label.numberOfLines = self.textMaxNumberOfLines;
-    notificationView.backgroundColor = self.backgroundColor;
-    notificationView.image = self.image;
+    notificationView.toast = self;
     return notificationView;
 }
 
@@ -332,10 +268,16 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     kCRNotificationPresentationTypeDefault;
 }
 
-- (CRToastAnimationType)animationType {
-    return _options[kCRToastAnimationTypeKey] ?
-    [_options[kCRToastAnimationTypeKey] integerValue] :
-    kCRAnimationTypeDefault;
+- (CRToastAnimationType)inAnimationType {
+    return _options[kCRToastAnimationInTypeKey] ?
+    [_options[kCRToastAnimationInTypeKey] integerValue] :
+    kCRAnimationTypeDefaultIn;
+}
+
+- (CRToastAnimationType)ouAnimationType {
+    return _options[kCRToastAnimationOutTypeKey] ?
+    [_options[kCRToastAnimationOutTypeKey] integerValue] :
+    kCRAnimationTypeDefaultOut;
 }
 
 - (CRToastAnimationStyle)inAnimationStyle {
@@ -422,13 +364,78 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
 
 @end
 
+#pragma mark - CRToastView
+
+@interface CRToastView ()
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UILabel *label;
+@end
+
+static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
+static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
+
+@implementation CRToastView
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        imageView.contentMode = UIViewContentModeCenter;
+        [self addSubview:imageView];
+        self.imageView = imageView;
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self addSubview:label];
+        self.label = label;
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    CGRect bounds = self.bounds;
+    CGSize imageSize = self.imageView.image.size;
+    self.imageView.frame = CGRectMake(0,
+                                      0,
+                                      imageSize.width == 0 ?
+                                        0 :
+                                        CGRectGetHeight(bounds),
+                                      imageSize.height == 0 ?
+                                        0 :
+                                        CGRectGetHeight(bounds));
+    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    self.label.frame = CGRectMake(x,
+                                  0,
+                                  CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                  CGRectGetHeight(bounds));
+}
+
+#pragma mark - Overrides
+
+- (void)setToast:(CRToast *)toast {
+    _toast = toast;
+    _label.text = toast.text;
+    _label.font = toast.font;
+    _label.textColor = toast.textColor;
+    _label.textAlignment = toast.textAlignment;
+    _label.numberOfLines = toast.textMaxNumberOfLines;
+    _imageView.image = toast.image;
+    self.backgroundColor = toast.backgroundColor;
+}
+
+@end
+
 #pragma mark - CRToastManager
 
-@interface CRToastManager ()
+@interface CRToastManager () <UICollisionBehaviorDelegate>
 @property (nonatomic, readonly) BOOL showingNotification;
 @property (nonatomic, strong) UIWindow *notificationWindow;
 @property (nonatomic, strong) NSMutableArray *notifications;
+@property (nonatomic, retain) UIDynamicAnimator *animator;
+@property (nonatomic, copy) void (^gravityAnimationCompletionBlock)(BOOL finished);
 @end
+
+static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastManagerCollisionBoundryIdentifier";
 
 @implementation CRToastManager
 
@@ -468,6 +475,9 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
         self.notificationWindow = notificationWindow;
         
         self.notifications = [@[] mutableCopy];
+        
+        UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:notificationWindow.rootViewController.view];
+        self.animator = animator;
     }
     return self;
 }
@@ -522,13 +532,15 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     
     void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
         statusBarView.frame = notification.statusBarViewAnimationFrame2;
-        if (notification.animationType == CRToastAnimationTypeLinear) {
+        switch (notification.inAnimationType) {
+            case CRToastAnimationTypeLinear: {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
                                 options:0
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
-        } else if (notification.animationType == CRToastAnimationTypeSpring) {
+            } break;
+            case CRToastAnimationTypeSpring: {
             [UIView animateWithDuration:notification.animateOutTimeInterval
                                   delay:notification.timeInterval
                  usingSpringWithDamping:notification.animationSpringDamping
@@ -537,22 +549,57 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
                              animations:outwardAnimationsBlock
                              completion:outwardAnimationsCompletionBlock];
             
+            }
+                break;
+            case CRToastAnimationTypeGravity: {
+                [_animator removeAllBehaviors];
+                UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];            ;
+                UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
+                collision.collisionDelegate = self;
+                [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
+                                           fromPoint:CGPointMake(CGRectGetMinX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)
+                                             toPoint:CGPointMake(CGRectGetMaxX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)];
+                [_animator addBehavior:gravity];
+                [_animator addBehavior:collision];
+                
+                self.gravityAnimationCompletionBlock = outwardAnimationsCompletionBlock;
+            }
         }
     };
     
-    if (notification.animationType == CRToastAnimationTypeLinear) {
-        [UIView animateWithDuration:notification.animateInTimeInterval
-                         animations:inwardAnimationsBlock
-                         completion:inwardAnimationsCompletionBlock];
-
-    } else if (notification.animationType == CRToastAnimationTypeSpring) {
-        [UIView animateWithDuration:notification.animateInTimeInterval
-                              delay:0.0
-             usingSpringWithDamping:notification.animationSpringDamping
-              initialSpringVelocity:notification.animationInitialVelocity
-                            options:0
-                         animations:inwardAnimationsBlock
-                         completion:inwardAnimationsCompletionBlock];
+    switch (notification.inAnimationType) {
+        case CRToastAnimationTypeLinear: {
+            [UIView animateWithDuration:notification.animateInTimeInterval
+                             animations:inwardAnimationsBlock
+                             completion:inwardAnimationsCompletionBlock];
+        }
+            break;
+        case CRToastAnimationTypeSpring: {
+            [UIView animateWithDuration:notification.animateInTimeInterval
+                                  delay:0.0
+                 usingSpringWithDamping:notification.animationSpringDamping
+                  initialSpringVelocity:notification.animationInitialVelocity
+                                options:0
+                             animations:inwardAnimationsBlock
+                             completion:inwardAnimationsCompletionBlock];
+        }
+            break;
+        case CRToastAnimationTypeGravity: {
+            [_animator removeAllBehaviors];
+            UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];
+            UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
+            collision.collisionDelegate = self;
+            [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
+                                       fromPoint:CGPointMake(CGRectGetMinX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)
+                                         toPoint:CGPointMake(CGRectGetMaxX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)];
+            [_animator addBehavior:gravity];
+            [_animator addBehavior:collision];
+            
+            self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
+        }
+            break;
+        default:
+            break;
     }
 }
 
@@ -562,4 +609,14 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationStyle style
     return self.notifications.count > 0;
 }
 
+#pragma mark - UICollisionBehaviorDelegate
+
+- (void)collisionBehavior:(UICollisionBehavior*)behavior
+      endedContactForItem:(id <UIDynamicItem>)item
+   withBoundaryIdentifier:(id <NSCopying>)identifier {
+    CRToastView *notificationView = (CRToastView*)item;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notificationView.toast.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.gravityAnimationCompletionBlock) self.gravityAnimationCompletionBlock(YES);
+    });
+}
 @end

@@ -27,13 +27,15 @@ typedef NS_ENUM(NSInteger, CRToastAnimationStyle) {
 
 typedef NS_ENUM(NSInteger, CRToastAnimationType) {
     CRToastAnimationTypeLinear,
-    CRToastAnimationTypeSpring
+    CRToastAnimationTypeSpring,
+    CRToastAnimationTypeGravity
 };
 
 extern NSString *const kCRToastNotificationTypeKey;
 extern NSString *const kCRToastNotificationPresentationTypeKey;
 
-extern NSString *const kCRToastAnimationTypeKey;
+extern NSString *const kCRToastAnimationInTypeKey;
+extern NSString *const kCRToastAnimationOutTypeKey;
 extern NSString *const kCRToastAnimationInStyleKey;
 extern NSString *const kCRToastAnimationOutStyleKey;
 

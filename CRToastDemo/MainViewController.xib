@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5051" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="animationTypeSegmentedControl" destination="woe-q8-hb2" id="aD7-oi-sxD"/>
                 <outlet property="contentView" destination="jNX-q4-3cu" id="d2u-Sj-LIA"/>
                 <outlet property="coverNavBarSwitch" destination="uOV-sj-WK6" id="Bas-cF-VRf"/>
                 <outlet property="lblDuration" destination="oAK-DR-B27" id="roa-nx-2td"/>
@@ -17,7 +18,6 @@
                 <outlet property="showNotificationButton" destination="DId-6z-9ak" id="aos-qf-Zle"/>
                 <outlet property="slideOverSwitch" destination="xEk-iN-Qop" id="TiP-vW-oJn"/>
                 <outlet property="sliderDuration" destination="lnj-T4-sfz" id="BYx-MN-Cnz"/>
-                <outlet property="springPhysicsSwitch" destination="fsd-qC-jh8" id="COL-EA-G5W"/>
                 <outlet property="txtNotificationMessage" destination="VqG-wR-oYI" id="Dgh-h3-sie"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -36,7 +36,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DId-6z-9ak">
-                                    <rect key="frame" x="102" y="386" width="121" height="62"/>
+                                    <rect key="frame" x="102" y="416" width="121" height="62"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Show Notification">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,7 +46,7 @@
                                     </connections>
                                 </button>
                                 <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="lnj-T4-sfz">
-                                    <rect key="frame" x="20" y="92" width="284" height="34"/>
+                                    <rect key="frame" x="20" y="92" width="284" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <connections>
                                         <action selector="sliderDurationChanged:" destination="-1" eventType="valueChanged" id="bHo-Bt-cG4"/>
@@ -65,7 +65,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Notification Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VqG-wR-oYI">
-                                    <rect key="frame" x="22" y="356" width="280" height="30"/>
+                                    <rect key="frame" x="22" y="390" width="280" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -81,7 +81,7 @@
                                     </segments>
                                 </segmentedControl>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Db2-zb-fY5">
-                                    <rect key="frame" x="22" y="320" width="280" height="29"/>
+                                    <rect key="frame" x="22" y="354" width="280" height="29"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <segments>
                                         <segment title="Align Left"/>
@@ -121,28 +121,33 @@
                                     <rect key="frame" x="251" y="203" width="51" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </switch>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Spring Physics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxp-aZ-TuJ">
-                                    <rect key="frame" x="22" y="247" width="112" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fsd-qC-jh8">
-                                    <rect key="frame" x="251" y="242" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                </switch>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Slide Over Status and Nav Bar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ksr-kg-WF0">
-                                    <rect key="frame" x="21" y="286" width="203" height="21"/>
+                                    <rect key="frame" x="21" y="247" width="203" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xEk-iN-Qop">
-                                    <rect key="frame" x="250" y="281" width="51" height="31"/>
+                                    <rect key="frame" x="250" y="242" width="51" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </switch>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="woe-q8-hb2">
+                                    <rect key="frame" x="22" y="310" width="280" height="29"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <segments>
+                                        <segment title="Linear"/>
+                                        <segment title="Spring"/>
+                                        <segment title="Gravity"/>
+                                    </segments>
+                                </segmentedControl>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Animation Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9I-wl-POo">
+                                    <rect key="frame" x="0.0" y="281" width="320" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>

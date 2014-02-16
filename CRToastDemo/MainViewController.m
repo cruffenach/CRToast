@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segFromStyle;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToStyle;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *animationTypeSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
@@ -58,6 +59,8 @@
                                      forState:UIControlStateNormal];
     [self.segToStyle setTitleTextAttributes:@{NSFontAttributeName : font}
                                    forState:UIControlStateNormal];
+    [self.animationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
+                                                      forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
@@ -104,22 +107,25 @@
 
 #pragma mark - Overrides
 
+CRToastAnimationType toastAnimationTypeFromSegmentedControl(UISegmentedControl *segmentedControl) {
+    return segmentedControl.selectedSegmentIndex == 0 ? CRToastAnimationTypeLinear :
+           segmentedControl.selectedSegmentIndex == 1 ? CRToastAnimationTypeSpring :
+           CRToastAnimationTypeGravity;
+}
+
 - (NSDictionary*)options {
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
-                                      kCRToastTextMaxNumberOfLinesKey           : @(0),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
+                                      kCRToastAnimationInTypeKey                : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
+                                      kCRToastAnimationOutTypeKey               : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
                                       kCRToastAnimationInStyleKey               : @(self.segFromStyle.selectedSegmentIndex),
                                       kCRToastAnimationOutStyleKey              : @(self.segToStyle.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
-    }
-    
-    if (self.springPhysicsSwitch.on) {
-        options[kCRToastAnimationTypeKey] = @(CRToastAnimationTypeSpring);
     }
     
     return [NSDictionary dictionaryWithDictionary:options];
