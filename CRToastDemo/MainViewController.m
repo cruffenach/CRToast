@@ -50,6 +50,11 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
                                              CGRectGetMaxY(self.showNotificationButton.frame));
 
@@ -102,6 +107,16 @@
     self.scrollView.contentInset = UIEdgeInsetsMake([self.topLayoutGuide length],
                                                     0,
                                                     CGRectGetHeight([notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue]),
+                                                    0);
+    self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
+    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
+                                             CGRectGetMaxY(self.showNotificationButton.frame));
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification {
+    self.scrollView.contentInset = UIEdgeInsetsMake([self.topLayoutGuide length],
+                                                    0,
+                                                    [self.bottomLayoutGuide length],
                                                     0);
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
