@@ -30,8 +30,8 @@ NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
                           kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
                           kCRToastBackgroundColorKey : [UIColor redColor],
                           kCRToastAnimationTypeKey : @(CRToastAnimationTypeSpring),
-                          kCRToastAnimationInStyleKey : @(CRToastAnimationStyleLeft),
-                          kCRToastAnimationOutStyleKey : @(CRToastAnimationStyleRight),
+                          kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
+                          kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight),
                           kCRToastAnimationInTimeIntervalKey : @(0.5),
                           kCRToastAnimationOutTimeIntervalKey: @(0.5)};
 [CRToastManager showNotificationWithOptions:options
