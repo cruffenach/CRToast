@@ -460,7 +460,6 @@ static CGFloat kCRCollisionTweak = 0.5;
 - (CGPoint)outCollisionPoint1 {
     CGFloat x;
     CGFloat y;
-    CGFloat factor = self.presentationType == CRToastPresentationTypeCover ?: 2;
     switch (self.outAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
@@ -485,7 +484,6 @@ static CGFloat kCRCollisionTweak = 0.5;
 - (CGPoint)outCollisionPoint2 {
     CGFloat x;
     CGFloat y;
-    CGFloat factor = self.presentationType == CRToastPresentationTypeCover ?: 2;
     switch (self.outAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = 0;
