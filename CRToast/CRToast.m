@@ -54,6 +54,15 @@
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 
+@property (nonatomic, readonly) CGVector inGravityDirection;
+@property (nonatomic, readonly) CGVector outGravityDirection;
+
+@property (nonatomic, readonly) CGPoint inCollisionPoint1;
+@property (nonatomic, readonly) CGPoint inCollisionPoint2;
+@property (nonatomic, readonly) CGPoint outCollisionPoint1;
+@property (nonatomic, readonly) CGPoint outCollisionPoint2;
+
+
 @end
 
 @interface CRToastView : UIView
@@ -362,6 +371,128 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     kCRTextMaxNumberOfLinesDefault;
 }
 
+BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
+    return (animationDirection == CRToastAnimationDirectionTop || animationDirection == CRToastAnimationDirectionBottom);
+}
+
+BOOL CRToastAnimationDirectionIsHorizontal(CRToastAnimationDirection animationDirection) {
+    return !CRToastAnimationDirectionIsVertical(animationDirection);
+}
+
+static CGFloat kCRCollisionTweak = 0.5;
+
+- (CGVector)inGravityDirection {
+    CGFloat xVector = CRToastAnimationDirectionIsVertical(self.inAnimationDirection) ? 0.0 :
+    1.0 * (self.inAnimationDirection == CRToastAnimationDirectionLeft ?: -1.0);
+    CGFloat yVector = xVector != 0 ? 0.0 :
+    1.0 * (self.inAnimationDirection == CRToastAnimationDirectionTop ?: -1.0);
+    return CGVectorMake(xVector, yVector);
+}
+
+- (CGVector)outGravityDirection {
+    CGFloat xVector = CRToastAnimationDirectionIsVertical(self.outAnimationDirection) ? 0.0 :
+    1.0 * (self.outAnimationDirection != CRToastAnimationDirectionLeft ?: -1.0);
+    CGFloat yVector = xVector != 0 ? 0.0 :
+    1.0 * (self.outAnimationDirection != CRToastAnimationDirectionTop ?: -1.0);
+    return CGVectorMake(xVector, yVector);
+}
+
+- (CGPoint)inCollisionPoint1 {
+    CGFloat x;
+    CGFloat y;
+    switch (self.inAnimationDirection) {
+        case CRToastAnimationDirectionTop:
+            x = 0;
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionLeft:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1);
+            break;
+        case CRToastAnimationDirectionBottom:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1);
+            y = -kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionRight:
+            x = -kCRCollisionTweak;
+            y = 0;
+            break;
+    }
+    return (CGPoint){x, y};
+}
+
+- (CGPoint)inCollisionPoint2 {
+    CGFloat x;
+    CGFloat y;
+    switch (self.inAnimationDirection) {
+        case CRToastAnimationDirectionTop:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1);
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionLeft:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            y = 0;
+            break;
+        case CRToastAnimationDirectionBottom:
+            x = 0;
+            y = -kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionRight:
+            x = -kCRCollisionTweak;
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1);
+            break;
+    }
+    return (CGPoint){x, y};
+}
+
+- (CGPoint)outCollisionPoint1 {
+    CGFloat x;
+    CGFloat y;
+    switch (self.outAnimationDirection) {
+        case CRToastAnimationDirectionTop:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1);
+            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionLeft:
+            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            y = 0;
+            break;
+        case CRToastAnimationDirectionBottom:
+            x = 0;
+            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionRight:
+            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1);
+            break;
+    }
+    return (CGPoint){x, y};
+}
+
+- (CGPoint)outCollisionPoint2 {
+    CGFloat x;
+    CGFloat y;
+    switch (self.outAnimationDirection) {
+        case CRToastAnimationDirectionTop:
+            x = 0;
+            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionLeft:
+            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            y = CGRectGetHeight(self.notificationViewAnimationFrame1);
+            break;
+        case CRToastAnimationDirectionBottom:
+            x = CGRectGetWidth(self.notificationViewAnimationFrame1);
+            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            break;
+        case CRToastAnimationDirectionRight:
+            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            y = 0;
+            break;
+    }
+    return (CGPoint){x, y};
+}
+
 @end
 
 #pragma mark - CRToastView
@@ -554,11 +685,12 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
             case CRToastAnimationTypeGravity: {
                 [_animator removeAllBehaviors];
                 UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];            ;
+                gravity.gravityDirection = notification.outGravityDirection;
                 UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
                 collision.collisionDelegate = self;
                 [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
-                                           fromPoint:CGPointMake(CGRectGetMinX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)
-                                             toPoint:CGPointMake(CGRectGetMaxX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)];
+                                           fromPoint:notification.outCollisionPoint1
+                                             toPoint:notification.outCollisionPoint2];
                 [_animator addBehavior:gravity];
                 [_animator addBehavior:collision];
                 
@@ -587,11 +719,12 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
         case CRToastAnimationTypeGravity: {
             [_animator removeAllBehaviors];
             UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView]];
+            gravity.gravityDirection = notification.inGravityDirection;
             UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:@[notificationView]];
             collision.collisionDelegate = self;
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
-                                       fromPoint:CGPointMake(CGRectGetMinX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)
-                                         toPoint:CGPointMake(CGRectGetMaxX(notificationView.frame), CGRectGetMaxY(notificationView.frame)+CGRectGetHeight(notificationView.frame)+0.5)];
+                                       fromPoint:notification.inCollisionPoint1
+                                         toPoint:notification.inCollisionPoint2];
             [_animator addBehavior:gravity];
             [_animator addBehavior:collision];
             
@@ -614,9 +747,14 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 - (void)collisionBehavior:(UICollisionBehavior*)behavior
       endedContactForItem:(id <UIDynamicItem>)item
    withBoundaryIdentifier:(id <NSCopying>)identifier {
+    NSLog(@"contact");
     CRToastView *notificationView = (CRToastView*)item;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notificationView.toast.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (self.gravityAnimationCompletionBlock) self.gravityAnimationCompletionBlock(YES);
-    });
+    if (self.gravityAnimationCompletionBlock) {
+        void (^gravityCompletionBlock)(BOOL) = [self.gravityAnimationCompletionBlock copy];
+        self.gravityAnimationCompletionBlock = NULL;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notificationView.toast.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            gravityCompletionBlock(YES);
+        });
+    }
 }
 @end
