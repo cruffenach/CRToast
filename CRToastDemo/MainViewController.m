@@ -18,7 +18,8 @@
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segFromDirection;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToDirection;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *animationTypeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *inAnimationTypeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *outAnimationTypeSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
@@ -59,8 +60,10 @@
                                      forState:UIControlStateNormal];
     [self.segToDirection setTitleTextAttributes:@{NSFontAttributeName : font}
                                    forState:UIControlStateNormal];
-    [self.animationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
-                                                      forState:UIControlStateNormal];
+    [self.inAnimationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
+                                                        forState:UIControlStateNormal];
+    [self.outAnimationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
+                                                        forState:UIControlStateNormal];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
@@ -120,8 +123,8 @@ CRToastAnimationType toastAnimationTypeFromSegmentedControl(UISegmentedControl *
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
-                                      kCRToastAnimationInTypeKey                : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
-                                      kCRToastAnimationOutTypeKey               : @(toastAnimationTypeFromSegmentedControl(_animationTypeSegmentedControl)),
+                                      kCRToastAnimationInTypeKey                : @(toastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
+                                      kCRToastAnimationOutTypeKey               : @(toastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {

@@ -1,6 +1,6 @@
 # CRToast
 
-`CRToast` is a library that allows you to easily create notifications that appear on the status bar. `CRToast` was originally based on [CWStatusBarNotification](https://github.com/cezarywojcik/CWStatusBarNotification) but the direction I found helpful wasn't something CWStatusBarNotification wanted to embrace.
+`CRToast` is a library that allows you to easily create notifications that appear on top of or by pushing out the status bar or navigation bar. `CRToast` was originally based on [CWStatusBarNotification](https://github.com/cezarywojcik/CWStatusBarNotification).
 
 ![demo](screenshots/demo.gif)
 
