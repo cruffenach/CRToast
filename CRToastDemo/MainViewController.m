@@ -2,8 +2,6 @@
 //  MainViewController.m
 //  CRNotificationDemo
 //
-//  Created by Cezary Wojcik on 11/15/13.
-//  Copyright (c) 2013 Cezary Wojcik. All rights reserved.
 //
 
 #import "MainViewController.h"
@@ -125,7 +123,7 @@
 
 #pragma mark - Overrides
 
-CRToastAnimationType toastAnimationTypeFromSegmentedControl(UISegmentedControl *segmentedControl) {
+CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl *segmentedControl) {
     return segmentedControl.selectedSegmentIndex == 0 ? CRToastAnimationTypeLinear :
            segmentedControl.selectedSegmentIndex == 1 ? CRToastAnimationTypeSpring :
            CRToastAnimationTypeGravity;
@@ -138,8 +136,8 @@ CRToastAnimationType toastAnimationTypeFromSegmentedControl(UISegmentedControl *
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
-                                      kCRToastAnimationInTypeKey                : @(toastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
-                                      kCRToastAnimationOutTypeKey               : @(toastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
+                                      kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
+                                      kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
