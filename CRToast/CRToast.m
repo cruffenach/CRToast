@@ -761,7 +761,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 
 #pragma mark - Overrides
 
-- (BOOL)showingNotification {;
+- (BOOL)showingNotification {
     return self.notifications.count > 0;
 }
 
