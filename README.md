@@ -33,8 +33,6 @@ NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
                               kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
                               kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
                               kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight),
-                              kCRToastAnimationInTimeIntervalKey : @(0.5),
-                              kCRToastAnimationOutTimeIntervalKey: @(0.5)};
 [CRToastManager showNotificationWithOptions:options
                             completionBlock:^{
                                 NSLog(@"Completed");
