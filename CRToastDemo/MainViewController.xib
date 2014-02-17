@@ -28,7 +28,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csJ-tx-cXU">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csJ-tx-cXU">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
@@ -173,6 +173,12 @@
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="csJ-tx-cXU" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="ItG-jC-l7W"/>
+                <constraint firstAttribute="trailing" secondItem="csJ-tx-cXU" secondAttribute="trailing" id="ZsN-3f-7UC"/>
+                <constraint firstAttribute="bottom" secondItem="csJ-tx-cXU" secondAttribute="bottom" id="dYx-cc-gge"/>
+                <constraint firstItem="csJ-tx-cXU" firstAttribute="top" secondItem="1" secondAttribute="top" id="n9W-Gr-lrc"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
