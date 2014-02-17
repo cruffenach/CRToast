@@ -195,7 +195,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     return notification;
 }
 
-+ (id)sharedNotification {
++ (instancetype)sharedNotification {
     static dispatch_once_t once;
     static id sharedInstance;
     dispatch_once(&once, ^{
@@ -519,7 +519,7 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 @implementation CRToastView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
@@ -605,7 +605,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     return sharedInstance;
 }
 
-- (id)init {
+- (instancetype)init {
     self = [super init];
     if (self) {
         UIWindow *notificationWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -761,7 +761,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 
 #pragma mark - Overrides
 
-- (BOOL)showingNotification {;
+- (BOOL)showingNotification {
     return self.notifications.count > 0;
 }
 
