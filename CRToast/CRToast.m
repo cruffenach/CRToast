@@ -73,6 +73,8 @@
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
+NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
+
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
 NSString *const kCRToastAnimationInDirectionKey                 = @"kCRToastAnimationInDirectionKey";
@@ -101,6 +103,8 @@ NSString *const kCRToastImageKey                            = @"kCRToastImageKey
 
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
 static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
+
+static BOOL                         kCRUnderStatusBarDefault                = NO;
 
 static CRToastAnimationType         kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
 static CRToastAnimationType         kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
@@ -208,6 +212,8 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
     
+    if (defaultOptions[kCRToastUnderStatusBarKey])                  kCRUnderStatusBarDefault                = [defaultOptions[kCRToastUnderStatusBarKey] boolValue];
+    
     if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault              = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
@@ -277,6 +283,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     return _options[kCRToastNotificationPresentationTypeKey] ?
     [self.options[kCRToastNotificationPresentationTypeKey] integerValue] :
     kCRNotificationPresentationTypeDefault;
+}
+
+- (BOOL)underStatusBar {
+    return _options[kCRToastUnderStatusBarKey] ?
+    [self.options[kCRToastUnderStatusBarKey] boolValue] :
+    kCRUnderStatusBarDefault;
 }
 
 - (CRToastAnimationType)inAnimationType {
@@ -639,11 +651,15 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType);
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    _notificationWindow.windowLevel = notification.underStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
 
+    
+    
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     [_notificationWindow.rootViewController.view addSubview:statusBarView];
     statusBarView.hidden = notification.presentationType == CRToastPresentationTypeCover;
+    if (notification.underStatusBar) statusBarView.hidden = YES;
     
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
