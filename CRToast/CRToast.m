@@ -43,6 +43,7 @@
 @property (nonatomic, readonly) CGFloat animationGravityMagnitude;
 
 @property (nonatomic, readonly) NSString *text;
+@property (nonatomic, readonly) NSString *subTitle;
 @property (nonatomic, readonly) UIFont *font;
 @property (nonatomic, readonly) UIColor *textColor;
 @property (nonatomic, readonly) NSTextAlignment textAlignment;
@@ -87,6 +88,7 @@ NSString *const kCRToastAnimationSpringInitialVelocityKey   = @"kCRToastAnimateS
 NSString *const kCRToastAnimationGravityMagnitudeKey        = @"kCRToastAnimationGravityMagnitudeKey";
 
 NSString *const kCRToastTextKey                             = @"kCRToastTextKey";
+NSString *const kCRToastSubTitleKey                         = @"kCRToastSubTitleKey";
 NSString *const kCRToastFontKey                             = @"kCRToastFontKey";
 NSString *const kCRToastTextColorKey                        = @"kCRToastTextColorKey";
 NSString *const kCRToastTextAlignmentKey                    = @"kCRToastTextAlignmentKey";
@@ -115,6 +117,7 @@ static CGFloat                  	kCRSpringInitialVelocityDefault         = 1.0;
 static CGFloat                      kCRGravityMagnitudeDefault              = 1.0;
 
 static NSString *                   kCRTextDefault                          = @"";
+static NSString *                   kCRSubTitleDefault                      = @"";
 static UIFont   *                   kCRFontDefault                          = nil;
 static UIColor  *               	kCRTextColorDefault                     = nil;
 static NSTextAlignment          	kCRTextAlignmentDefault                 = NSTextAlignmentCenter;
@@ -222,6 +225,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     if (defaultOptions[kCRToastAnimationGravityMagnitudeKey])       kCRGravityMagnitudeDefault              = [defaultOptions[kCRToastAnimationGravityMagnitudeKey] floatValue];
     
     if (defaultOptions[kCRToastTextKey])                            kCRTextDefault                          = defaultOptions[kCRToastTextKey];
+    if (defaultOptions[kCRToastSubTitleKey])                        kCRSubTitleDefault                      = defaultOptions[kCRToastSubTitleKey];
     if (defaultOptions[kCRToastFontKey])                            kCRFontDefault                          = defaultOptions[kCRToastFontKey];
     if (defaultOptions[kCRToastTextColorKey])                       kCRTextColorDefault                     = defaultOptions[kCRToastTextColorKey];
     if (defaultOptions[kCRToastTextAlignmentKey])                   kCRTextAlignmentDefault                 = [defaultOptions[kCRToastTextAlignmentKey] integerValue];
@@ -341,6 +345,10 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 
 - (NSString*)text {
     return _options[kCRToastTextKey] ?: kCRTextDefault;
+}
+
+- (NSString*)subTitle {
+    return _options[kCRToastSubTitleKey] ?: kCRSubTitleDefault;
 }
 
 - (UIFont*)font {
@@ -512,6 +520,7 @@ static CGFloat kCRCollisionTweak = 0.5;
 @interface CRToastView ()
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UILabel *subTitle;
 @end
 
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
@@ -530,6 +539,10 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         [self addSubview:label];
         self.label = label;
+        
+        UILabel *subTitle = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self addSubview:subTitle];
+        self.subTitle = subTitle;
     }
     return self;
 }
@@ -547,10 +560,22 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
                                         0 :
                                         CGRectGetHeight(bounds));
     CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    self.label.frame = CGRectMake(x,
-                                  0,
-                                  CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
-                                  CGRectGetHeight(bounds));
+    
+    if (self.subTitle.text.length >= 1) {
+        self.label.frame = CGRectMake(x,
+                                      bounds.origin.y - 10,
+                                      CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                      CGRectGetHeight(bounds));
+        self.subTitle.frame = CGRectMake(x,
+                                         bounds.origin.y + 10,
+                                         CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                         CGRectGetHeight(bounds));
+    } else {
+        self.label.frame = CGRectMake(x,
+                                      0,
+                                      CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                      CGRectGetHeight(bounds));
+    }
 }
 
 #pragma mark - Overrides
@@ -562,6 +587,11 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
     _label.textColor = toast.textColor;
     _label.textAlignment = toast.textAlignment;
     _label.numberOfLines = toast.textMaxNumberOfLines;
+    _subTitle.text = toast.subTitle;
+    _subTitle.font = toast.font;
+    _subTitle.textColor = toast.textColor;
+    _subTitle.textAlignment = toast.textAlignment;
+    _subTitle.numberOfLines = toast.textMaxNumberOfLines;
     _imageView.image = toast.image;
     self.backgroundColor = toast.backgroundColor;
 }
