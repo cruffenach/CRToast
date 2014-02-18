@@ -128,7 +128,7 @@ static UIImage  *                   kCRImageDefault                         = ni
 #pragma mark - Layout Helper Functions
 
 static CGFloat const CRStatusBarDefaultHeight = 44.0f;
-static CGFloat const CRStatusBariPhoneLandscape = 30.0f;
+static CGFloat const CRStatusBariPhoneLandscape = 33.0f;
 
 static CGFloat CRGetStatusBarHeight() {
     return (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ?
@@ -638,7 +638,16 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 - (void)displayNotification:(CRToast*)notification {
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType);
-    _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    
+    if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
+        _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
+    } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
+        _notificationWindow.rootViewController.view.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-notificationSize.height, 0, notificationSize.height, notificationSize.width);
+    } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+        _notificationWindow.rootViewController.view.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height, notificationSize.width, notificationSize.height);
+    } else {
+        _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    }
 
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
