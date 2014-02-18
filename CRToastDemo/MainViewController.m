@@ -7,7 +7,7 @@
 #import "MainViewController.h"
 #import "CRToast.h"
 
-@interface MainViewController ()
+@interface MainViewController ()<UITextFieldDelegate>
 
 @property (weak, readonly) NSDictionary *options;
 
@@ -67,6 +67,8 @@
                                                         forState:UIControlStateNormal];
     [self.outAnimationTypeSegmentedControl setTitleTextAttributes:@{NSFontAttributeName : font}
                                                         forState:UIControlStateNormal];
+    
+    self.txtNotificationMessage.delegate = self;
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
@@ -158,6 +160,14 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
 
 - (void)scrollViewTapped:(UITapGestureRecognizer*)tapGestureRecognizer {
     [_txtNotificationMessage resignFirstResponder];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    // close the keyboard
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end
