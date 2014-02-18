@@ -50,6 +50,14 @@
 @property (nonatomic, readonly) CGSize textShadowOffset;
 @property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
 
+@property (nonatomic, readonly) NSString *subtitleText;
+@property (nonatomic, readonly) UIFont *subtitleFont;
+@property (nonatomic, readonly) UIColor *subtitleTextColor;
+@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
+@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
+@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
+@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
+
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 
@@ -94,6 +102,14 @@ NSString *const kCRToastTextShadowColorKey                  = @"kCRToastTextShad
 NSString *const kCRToastTextShadowOffsetKey                 = @"kCRToastTextShadowOffsetKey";
 NSString *const kCRToastTextMaxNumberOfLinesKey             = @"kCRToastTextMaxNumberOfLinesKey";
 
+NSString *const kCRToastSubtitleTextKey                     = @"kCRToastSubtitleTextKey";
+NSString *const kCRToastSubtitleFontKey                     = @"kCRToastSubtitleFontKey";
+NSString *const kCRToastSubtitleTextColorKey                = @"kCRToastSubtitleTextColorKey";
+NSString *const kCRToastSubtitleTextAlignmentKey            = @"kCRToastSubtitleTextAlignmentKey";
+NSString *const kCRToastSubtitleTextShadowColorKey          = @"kCRToastSubtitleTextShadowColorKey";
+NSString *const kCRToastSubtitleTextShadowOffsetKey         = @"kCRToastSubtitleTextShadowOffsetKey";
+NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey     = @"kCRToastSubtitleTextMaxNumberOfLinesKey";
+
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
 
@@ -121,6 +137,14 @@ static NSTextAlignment          	kCRTextAlignmentDefault                 = NSTex
 static UIColor  *               	kCRTextShadowColorDefault               = nil;
 static CGSize                   	kCRTextShadowOffsetDefault;
 static NSInteger                    kCRTextMaxNumberOfLinesDefault          = 0;
+
+static NSString *                   kCRSubtitleTextDefault                          = nil;
+static UIFont   *                   kCRSubtitleFontDefault                          = nil;
+static UIColor  *               	kCRSubtitleTextColorDefault                     = nil;
+static NSTextAlignment          	kCRSubtitleTextAlignmentDefault                 = NSTextAlignmentCenter;
+static UIColor  *               	kCRSubtitleTextShadowColorDefault               = nil;
+static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
+static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault          = 0;
 
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
@@ -185,6 +209,10 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
         kCRTextColorDefault = [UIColor whiteColor];
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor;
         kCRTextShadowOffsetDefault = CGSizeZero;
+        
+        kCRSubtitleFontDefault = [UIFont systemFontOfSize:12];
+        kCRSubtitleTextColorDefault = [UIColor whiteColor];
+        kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
     }
 }
 
@@ -228,6 +256,14 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     if (defaultOptions[kCRToastTextShadowColorKey])                 kCRTextShadowColorDefault               = defaultOptions[kCRToastTextShadowColorKey];
     if (defaultOptions[kCRToastTextShadowOffsetKey])                kCRTextShadowOffsetDefault              = [defaultOptions[kCRToastTextShadowOffsetKey] CGSizeValue];
     if (defaultOptions[kCRToastTextMaxNumberOfLinesKey])            kCRTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastTextMaxNumberOfLinesKey] integerValue];
+    
+    if (defaultOptions[kCRToastSubtitleTextKey])                            kCRSubtitleTextDefault                          = defaultOptions[kCRToastSubtitleTextKey];
+    if (defaultOptions[kCRToastSubtitleFontKey])                            kCRSubtitleFontDefault                          = defaultOptions[kCRToastSubtitleFontKey];
+    if (defaultOptions[kCRToastSubtitleTextColorKey])                       kCRSubtitleTextColorDefault                     = defaultOptions[kCRToastSubtitleTextColorKey];
+    if (defaultOptions[kCRToastSubtitleTextAlignmentKey])                   kCRSubtitleTextAlignmentDefault                 = [defaultOptions[kCRToastSubtitleTextAlignmentKey] integerValue];
+    if (defaultOptions[kCRToastSubtitleTextShadowColorKey])                 kCRSubtitleTextShadowColorDefault               = defaultOptions[kCRToastSubtitleTextShadowColorKey];
+    if (defaultOptions[kCRToastSubtitleTextShadowOffsetKey])                kCRSubtitleTextShadowOffsetDefault              = [defaultOptions[kCRToastSubtitleTextShadowOffsetKey] CGSizeValue];
+    if (defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey])            kCRSubtitleTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue];
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
@@ -365,6 +401,32 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     kCRTextShadowOffsetDefault;
 }
 
+- (NSString*)subtitleText {
+    return _options[kCRToastSubtitleTextKey] ?: kCRSubtitleTextDefault;
+}
+
+- (UIFont*)subtitleFont {
+    return _options[kCRToastSubtitleFontKey] ?: kCRSubtitleFontDefault;
+}
+
+- (UIColor*)subtitleTextColor {
+    return _options[kCRToastSubtitleTextColorKey] ?: kCRSubtitleTextColorDefault;
+}
+
+- (NSTextAlignment)subtitleTextAlignment {
+    return _options[kCRToastSubtitleTextAlignmentKey] ? [_options[kCRToastSubtitleTextAlignmentKey] integerValue] : kCRSubtitleTextAlignmentDefault;
+}
+
+- (UIColor*)subtitleTextShadowColor {
+    return _options[kCRToastSubtitleTextShadowColorKey] ?: kCRSubtitleTextShadowColorDefault;
+}
+
+- (CGSize)subtitleTextShadowOffset {
+    return _options[kCRToastSubtitleTextShadowOffsetKey] ?
+    [_options[kCRToastSubtitleTextShadowOffsetKey] CGSizeValue]:
+    kCRSubtitleTextShadowOffsetDefault;
+}
+
 - (UIColor*)backgroundColor {
     return _options[kCRToastBackgroundColorKey] ?: kCRBackgroundColorDefault;
 }
@@ -377,6 +439,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     return _options[kCRToastTextMaxNumberOfLinesKey] ?
     [_options[kCRToastTextMaxNumberOfLinesKey] integerValue] :
     kCRTextMaxNumberOfLinesDefault;
+}
+
+- (NSInteger)subtitleMaxNumberOfLines {
+    return _options[kCRToastSubtitleTextMaxNumberOfLinesKey] ?
+    [_options[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue] :
+    kCRSubtitleTextMaxNumberOfLinesDefault;
 }
 
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
@@ -512,6 +580,7 @@ static CGFloat kCRCollisionTweak = 0.5;
 @interface CRToastView ()
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UILabel *subtitleLabel;
 @end
 
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
@@ -530,6 +599,10 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         [self addSubview:label];
         self.label = label;
+        
+        UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self addSubview:subtitleLabel];
+        self.subtitleLabel = subtitleLabel;
     }
     return self;
 }
@@ -547,10 +620,39 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
                                         0 :
                                         CGRectGetHeight(bounds));
     CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    self.label.frame = CGRectMake(x,
-                                  0,
+    CGFloat width = CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset;
+    
+    if (self.toast.subtitleText == nil) {
+        self.label.frame = CGRectMake(x,
+                                      0,
+                                      width,
+                                      CGRectGetHeight(bounds));
+    } else {
+        CGFloat height = [self.toast.text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                    attributes:@{
+                                                 NSFontAttributeName : self.toast.font
+                                                 }
+                                      context:nil].size.height;
+        CGFloat subtitleHeight = [self.toast.subtitleText boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+                                                       options:NSStringDrawingUsesLineFragmentOrigin
+                                                    attributes:@{
+                                                                 NSFontAttributeName : self.toast.subtitleFont
+                                                                 }
+                                                       context:nil].size.height;
+        
+        CGFloat offset = (CGRectGetHeight(bounds) - (height + subtitleHeight))/2;
+        
+        self.label.frame = CGRectMake(x,
+                                      offset,
+                                      CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                      height);
+
+        self.subtitleLabel.frame = CGRectMake(x,
+                                  height+offset,
                                   CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
-                                  CGRectGetHeight(bounds));
+                                  subtitleHeight);
+    }
 }
 
 #pragma mark - Overrides
@@ -562,6 +664,13 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
     _label.textColor = toast.textColor;
     _label.textAlignment = toast.textAlignment;
     _label.numberOfLines = toast.textMaxNumberOfLines;
+    if (toast.subtitleText != nil) {
+        _subtitleLabel.text = toast.subtitleText;
+        _subtitleLabel.font = toast.subtitleFont;
+        _subtitleLabel.textColor = toast.subtitleTextColor;
+        _subtitleLabel.textAlignment = toast.subtitleTextAlignment;
+        _subtitleLabel.numberOfLines = toast.subtitleTextMaxNumberOfLines;
+    }
     _imageView.image = toast.image;
     self.backgroundColor = toast.backgroundColor;
 }
