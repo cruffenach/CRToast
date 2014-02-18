@@ -28,8 +28,10 @@
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
 
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
+@property (weak, nonatomic) IBOutlet UITextField *txtSubtitleMessage;
 @property (weak, nonatomic) IBOutlet UIButton *showNotificationButton;
 
 @property (assign, nonatomic) NSTextAlignment textAlignment;
@@ -69,6 +71,7 @@
                                                         forState:UIControlStateNormal];
     
     self.txtNotificationMessage.delegate = self;
+    self.txtSubtitleMessage.delegate = self;
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
@@ -146,11 +149,23 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
     
+    if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
+        options[kCRToastSubtitleTextKey] = self.txtSubtitleMessage.text;
+        options[kCRToastSubtitleTextAlignmentKey] = @(self.subtitleAlignment);
+    }
+    
     return [NSDictionary dictionaryWithDictionary:options];
 }
 
 - (NSTextAlignment)textAlignment {
     NSInteger selectedSegment = self.segAlignment.selectedSegmentIndex;
+    return selectedSegment == 0 ? NSTextAlignmentLeft :
+    selectedSegment == 1 ? NSTextAlignmentCenter :
+    NSTextAlignmentRight;
+}
+
+- (NSTextAlignment)subtitleAlignment {
+    NSInteger selectedSegment = self.segSubtitleAlignment.selectedSegmentIndex;
     return selectedSegment == 0 ? NSTextAlignmentLeft :
     selectedSegment == 1 ? NSTextAlignmentCenter :
     NSTextAlignmentRight;
