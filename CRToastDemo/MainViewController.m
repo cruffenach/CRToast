@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
+@property (weak, nonatomic) IBOutlet UITextField *txtSubTitleMessage;
 @property (weak, nonatomic) IBOutlet UIButton *showNotificationButton;
 
 @property (assign, nonatomic) NSTextAlignment textAlignment;
@@ -135,6 +136,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
+                                      kCRToastSubTitleKey                       : self.txtSubTitleMessage.text,
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
@@ -160,6 +162,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
 
 - (void)scrollViewTapped:(UITapGestureRecognizer*)tapGestureRecognizer {
     [_txtNotificationMessage resignFirstResponder];
+    [_txtSubTitleMessage resignFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate
