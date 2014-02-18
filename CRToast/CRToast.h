@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
 extern NSString *const kCRToastNotificationTypeKey;
 extern NSString *const kCRToastNotificationPresentationTypeKey;
 
+extern NSString *const kCRToastUnderStatusBarKey;
+
 extern NSString *const kCRToastAnimationInTypeKey;
 extern NSString *const kCRToastAnimationOutTypeKey;
 extern NSString *const kCRToastAnimationInDirectionKey;

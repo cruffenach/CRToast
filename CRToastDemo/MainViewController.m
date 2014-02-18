@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *springPhysicsSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 
@@ -134,6 +135,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
 - (NSDictionary*)options {
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
+                                      kCRToastUnderStatusBarKey                 : @(self.slideUnderSwitch.on),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
