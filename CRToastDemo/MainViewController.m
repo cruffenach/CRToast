@@ -53,6 +53,11 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
                                              CGRectGetMaxY(self.showNotificationButton.frame));
 
@@ -74,14 +79,18 @@
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+- (void)layoutSubviews {
     self.scrollView.contentInset = UIEdgeInsetsMake([self.topLayoutGuide length],
                                                     0,
                                                     [self.bottomLayoutGuide length],
                                                     0);
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
                                              CGRectGetMaxY(self.showNotificationButton.frame));
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self layoutSubviews];
 }
 
 - (void)updateDurationLabel {
@@ -121,6 +130,10 @@
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
                                              CGRectGetMaxY(self.showNotificationButton.frame));
+}
+
+- (void)orientationChanged:(NSNotification*)notification {
+    [self layoutSubviews];
 }
 
 #pragma mark - Overrides
