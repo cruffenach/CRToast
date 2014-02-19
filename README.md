@@ -12,7 +12,7 @@
 
 ### CocoaPods
 
-`pod 'CRToast', '~> 0.0.4'`
+`pod 'CRToast', '~> 0.0.5'`
 
 ### Manual
 
@@ -52,7 +52,10 @@ Generates this
 
 `CRToast` allows for setting of
 
-- Alert Text
+- Left aligned image
+
+Title and Subtitle text with:
+
 - Text Color
 - Text Font
 - Text Alignment
@@ -60,7 +63,6 @@ Generates this
 - Text Shadow Color
 - Text Shadow Offset
 - Text Max Number of Lines
-- Left aligned image
 
 ### Customizing Animation
 
@@ -69,6 +71,7 @@ Generates this
 - Animation Type (Linear, Spring or Gravity)
 - Animation Physics Coefficients (Spring Damping, Spring Initial Velocity, Gravity Magnitude)
 - Presentation Type (Slide over bars or push content out)
+- Status visibility (Status bar on top or below)
 - Direction (Enter and exit in any direction)
 - Enter, Stay on Screen and Exit Timing
 
