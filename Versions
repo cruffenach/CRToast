@@ -15,3 +15,10 @@
 0.0.4
 -----
 * CRToastPresentationTypePush support for CRToastAnimationTypeGravity
+
+0.0.5
+-----
+* Present notification under status bar (From @Ashton-W)
+* Notification subtitle setting with styling (From @vIiRuS)
+* Fixes for orientation (From @vIiRuS)
+* Demo project keyboard dismisses on return (From @mcglincy)
