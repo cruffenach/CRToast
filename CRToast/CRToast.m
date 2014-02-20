@@ -7,6 +7,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CRToast.h"
 
+@class CRToastView;
+
+#pragma mark - Block typedefs
+
+typedef void(^CRBlock)(void);
+typedef void(^CRCompletionBlock)(BOOL);
+
 #pragma mark - CRToast
 
 @interface CRToast : NSObject {
@@ -790,21 +797,61 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
-    __weak __block typeof(self) weakSelf = self;
+
+    CRBlock inwardAnimationsBlock = [self inwardAnimationBlockForNotification:notification];
+    inwardAnimationsBlock();
+}
+
+#pragma mark Animation Blocks
+
+/** 
+ *  Create a block object containing the changes to commit to the views.
+ *  @param notification
+ *  @return block
+ */
+- (CRBlock)inwardAnimationsForNotification:(CRToast*)notification {
+    UIView *statusBarView = notification.statusBarView;
+    UIView *notificationView = notification.notificationView;
     
-    void (^inwardAnimationsBlock)(void) = ^void(void) {
+    CRBlock block = ^void(void) {
         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
         statusBarView.frame = notification.statusBarViewAnimationFrame1;
     };
     
+    return block;
+}
+
+/**
+ *  Create a block object containing the changes to commit to the views.
+ *  @param notification
+ *  @return block
+ */
+- (CRBlock)outwardAnimationsForNotification:(CRToast*)notification {
+    UIView *statusBarView = notification.statusBarView;
+    UIView *notificationView = notification.notificationView;
     __weak __block typeof(self) blockSelf = self;
-    void (^outwardAnimationsBlock)(void) = ^void(void) {
+    
+    CRBlock block = ^void(void) {
         [blockSelf.animator removeAllBehaviors];
         notificationView.frame = notification.notificationViewAnimationFrame2;
         statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     };
     
-    void (^outwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
+    return block;
+}
+
+/**
+ *  Create a block object containing completion logic for outward animations
+ *  @param notification
+ *  @return completion block
+ */
+- (CRCompletionBlock)outwardAnimationsCompletionBlockForNotification:(CRToast*)notification {
+    UIView *statusBarView = notification.statusBarView;
+    UIView *notificationView = notification.notificationView;
+    __weak __block typeof(self) weakSelf = self;
+    
+    CRCompletionBlock block = ^void(BOOL finished) {
+        if (!finished) return;
         if (notification.completion) notification.completion();
         [weakSelf.notifications removeObject:notification];
         [notificationView removeFromSuperview];
@@ -817,88 +864,148 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
         }
     };
     
-    void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
-        switch (notification.outAnimationType) {
-            case CRToastAnimationTypeLinear: {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((notification.inAnimationType == CRToastAnimationTypeGravity ? notification.timeInterval : 0) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    statusBarView.frame = notification.statusBarViewAnimationFrame2;
-                    [UIView animateWithDuration:notification.animateOutTimeInterval
-                                          delay:notification.timeInterval
-                                        options:0
-                                     animations:outwardAnimationsBlock
-                                     completion:outwardAnimationsCompletionBlock];
-                });
-            } break;
-            case CRToastAnimationTypeSpring: {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)((notification.inAnimationType == CRToastAnimationTypeGravity ? notification.timeInterval : 0) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    statusBarView.frame = notification.statusBarViewAnimationFrame2;
-                    [UIView animateWithDuration:notification.animateOutTimeInterval
-                                          delay:notification.timeInterval
-                         usingSpringWithDamping:notification.animationSpringDamping
-                          initialSpringVelocity:notification.animationSpringInitialVelocity
-                                        options:0
-                                     animations:outwardAnimationsBlock
-                                     completion:outwardAnimationsCompletionBlock];
-                });
-            } break;
-            case CRToastAnimationTypeGravity: {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    statusBarView.frame = notification.statusBarViewAnimationFrame2;
-                    [_animator removeAllBehaviors];
-                    UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
-                    gravity.gravityDirection = notification.outGravityDirection;
-                    gravity.magnitude = notification.animationGravityMagnitude;
-                    NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
-                    if (notification.presentationType == CRToastPresentationTypePush) [collisionItems addObject:statusBarView];
-                    UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:collisionItems];
-                    collision.collisionDelegate = self;
-                    [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
-                                               fromPoint:notification.outCollisionPoint1
-                                                 toPoint:notification.outCollisionPoint2];
-                    [_animator addBehavior:gravity];
-                    [_animator addBehavior:collision];
-                    
-                    self.gravityAnimationCompletionBlock = outwardAnimationsCompletionBlock;
-                });
-            } break;
-        }
+    return block;
+}
+
+/**
+ *  Create a block object containing completion logic for inward animations
+ *  @param notification
+ *  @return completion block
+ */
+- (CRCompletionBlock)inwardAnimationsCompletionBlockForNotification:(CRToast*)notification {
+    CRBlock outwardAnimation = [self outwardAnimationBlockForNotification:notification];
+    
+    CRCompletionBlock block = ^void(BOOL finished) {
+        if (!finished) return;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            outwardAnimation();
+        });
     };
+    
+    return block;
+}
+
+/**
+ *  Create a block object containing the outward animation of the notification.
+ *  @param notification
+ *  @return block
+ */
+- (CRBlock)outwardAnimationBlockForNotification:(CRToast*)notification {
+    return [self outwardAnimationBlockForNotification:notification delay:notification.timeInterval];
+}
+
+- (CRBlock)outwardAnimationBlockForNotification:(CRToast*)notification delay:(NSTimeInterval)delay {
+    UIView *statusBarView = notification.statusBarView;
+    UIView *notificationView = notification.notificationView;
+    __weak __block typeof(self) weakSelf = self;
+    
+    CRBlock outwardAnimations = [self outwardAnimationsForNotification:notification];
+    CRCompletionBlock outwardAnimationsCompletionBlock = [self outwardAnimationsCompletionBlockForNotification:notification];
+    
+    CRBlock block;
+    
+    switch (notification.outAnimationType) {
+        case CRToastAnimationTypeLinear: {
+            block = ^{
+                statusBarView.frame = notification.statusBarViewAnimationFrame2;
+                [UIView animateWithDuration:notification.animateOutTimeInterval
+                                      delay:delay
+                                    options:0
+                                 animations:outwardAnimations
+                                 completion:outwardAnimationsCompletionBlock];
+            };
+        } break;
+        case CRToastAnimationTypeSpring: {
+            block = ^{
+                statusBarView.frame = notification.statusBarViewAnimationFrame2;
+                [UIView animateWithDuration:notification.animateOutTimeInterval
+                                      delay:delay
+                     usingSpringWithDamping:notification.animationSpringDamping
+                      initialSpringVelocity:notification.animationSpringInitialVelocity
+                                    options:0
+                                 animations:outwardAnimations
+                                 completion:outwardAnimationsCompletionBlock];
+            };
+        } break;
+        case CRToastAnimationTypeGravity: {
+            block = ^{
+                statusBarView.frame = notification.statusBarViewAnimationFrame2;
+                if (![_animator.referenceView.subviews containsObject:notificationView]) return;
+                [_animator removeAllBehaviors];
+                UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
+                gravity.gravityDirection = notification.outGravityDirection;
+                gravity.magnitude = notification.animationGravityMagnitude;
+                NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
+                if (notification.presentationType == CRToastPresentationTypePush) [collisionItems addObject:statusBarView];
+                UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:collisionItems];
+                collision.collisionDelegate = self;
+                [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
+                                           fromPoint:notification.outCollisionPoint1
+                                             toPoint:notification.outCollisionPoint2];
+                [_animator addBehavior:gravity];
+                [_animator addBehavior:collision];
+                
+                weakSelf.gravityAnimationCompletionBlock = outwardAnimationsCompletionBlock;
+            };
+        } break;
+    }
+    
+    return block;
+}
+
+/**
+ *  Create a block object containing the inward animation of the notification.
+ *  @param notification
+ *  @return block
+ */
+- (CRBlock)inwardAnimationBlockForNotification:(CRToast*)notification {
+    UIView *statusBarView = notification.statusBarView;
+    UIView *notificationView = notification.notificationView;
+    CRBlock inwardAnimations = [self inwardAnimationsForNotification:notification];
+    CRCompletionBlock inwardAnimationsCompletionBlock = [self inwardAnimationsCompletionBlockForNotification:notification];
+    
+    CRBlock block;
     
     switch (notification.inAnimationType) {
         case CRToastAnimationTypeLinear: {
-            [UIView animateWithDuration:notification.animateInTimeInterval
-                             animations:inwardAnimationsBlock
-                             completion:inwardAnimationsCompletionBlock];
-        }
-            break;
+            block = ^{
+                [UIView animateWithDuration:notification.animateInTimeInterval
+                                 animations:inwardAnimations
+                                 completion:inwardAnimationsCompletionBlock];
+            };
+        } break;
         case CRToastAnimationTypeSpring: {
-            [UIView animateWithDuration:notification.animateInTimeInterval
-                                  delay:0.0
-                 usingSpringWithDamping:notification.animationSpringDamping
-                  initialSpringVelocity:notification.animationSpringInitialVelocity
-                                options:0
-                             animations:inwardAnimationsBlock
-                             completion:inwardAnimationsCompletionBlock];
-        }
-            break;
+            block = ^{
+                [UIView animateWithDuration:notification.animateInTimeInterval
+                                      delay:0.0
+                     usingSpringWithDamping:notification.animationSpringDamping
+                      initialSpringVelocity:notification.animationSpringInitialVelocity
+                                    options:0
+                                 animations:inwardAnimations
+                                 completion:inwardAnimationsCompletionBlock];
+            };
+        } break;
         case CRToastAnimationTypeGravity: {
-            [_animator removeAllBehaviors];
-            UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
-            gravity.gravityDirection = notification.inGravityDirection;
-            gravity.magnitude = notification.animationGravityMagnitude;
-            NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
-            if (notification.presentationType == CRToastPresentationTypePush) [collisionItems addObject:statusBarView];
-            UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:collisionItems];
-            collision.collisionDelegate = self;
-            [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
-                                       fromPoint:notification.inCollisionPoint1
-                                         toPoint:notification.inCollisionPoint2];
-            [_animator addBehavior:gravity];
-            [_animator addBehavior:collision];
-            self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
-        }
-            break;
+            block = ^{
+                [_animator removeAllBehaviors];
+                UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
+                gravity.gravityDirection = notification.inGravityDirection;
+                gravity.magnitude = notification.animationGravityMagnitude;
+                NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
+                if (notification.presentationType == CRToastPresentationTypePush) [collisionItems addObject:statusBarView];
+                UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:collisionItems];
+                collision.collisionDelegate = self;
+                [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
+                                           fromPoint:notification.inCollisionPoint1
+                                             toPoint:notification.inCollisionPoint2];
+                [_animator addBehavior:gravity];
+                [_animator addBehavior:collision];
+                self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
+            };
+        } break;
     }
+    
+    return block;
 }
 
 #pragma mark - Overrides
