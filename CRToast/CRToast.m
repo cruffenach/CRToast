@@ -294,7 +294,19 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 
 - (UIView*)statusBarView {
     UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
+    if ([self underStatusBar]) {
+        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        UIGraphicsBeginImageContextWithOptions(window.frame.size, NO, 0);
+        CGRect rect = CGRectMake(0, 0, window.frame.size.width, window.frame.size.height);
+        [window drawViewHierarchyInRect:rect afterScreenUpdates:YES];
+        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:screenshot];
+        [statusBarView addSubview:imageView];
+    }
+    else {
+        [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
+    }
     statusBarView.clipsToBounds = YES;
     return statusBarView;
 }
@@ -776,7 +788,6 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     [_notificationWindow.rootViewController.view addSubview:statusBarView];
     statusBarView.hidden = notification.presentationType == CRToastPresentationTypeCover;
-    if (notification.underStatusBar) statusBarView.hidden = YES;
     
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
