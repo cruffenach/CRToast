@@ -113,6 +113,10 @@
                                                 }];
 }
 
+- (IBAction)btnDismissPressed:(UIButton *)sender {
+    [CRToastManager dismissNotification];
+}
+
 #pragma mark - Notifications
 
 - (void)keyboardWillShow:(NSNotification*)notification {
