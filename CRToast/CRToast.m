@@ -9,7 +9,10 @@
 
 #pragma mark - CRToast
 
-@interface CRToast : NSObject
+@interface CRToast : NSObject {
+    UIView *_notificationView;
+    UIView *_statusBarView;
+}
 
 //Top Level Properties
 
@@ -278,10 +281,23 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 #pragma mark - Notification View Helpers
 
 - (UIView*)notificationView {
+    if (_notificationView) return _notificationView;
+    
     CGSize size = CRNotificationViewSize(self.notificationType);
     CRToastView *notificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     notificationView.toast = self;
-    return notificationView;
+    _notificationView = notificationView;
+    return _notificationView;
+}
+
+- (UIView*)statusBarView {
+    if (_statusBarView) return _statusBarView;
+    
+    UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
+    [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
+    statusBarView.clipsToBounds = YES;
+    _statusBarView = statusBarView;
+    return _statusBarView;
 }
 
 - (CGRect)notificationViewAnimationFrame1 {
@@ -290,13 +306,6 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 
 - (CGRect)notificationViewAnimationFrame2 {
     return CRNotificationViewFrame(self.notificationType, self.outAnimationDirection);
-}
-
-- (UIView*)statusBarView {
-    UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
-    statusBarView.clipsToBounds = YES;
-    return statusBarView;
 }
 
 - (CGRect)statusBarViewAnimationFrame1 {
