@@ -733,6 +733,10 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
                       completionBlock:completion];
 }
 
++ (void)dismissNotification {
+    [[CRToastManager manager] dismissNotification];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;
@@ -1006,6 +1010,22 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     }
     
     return block;
+}
+
+#pragma mark dismiss
+
+- (void)dismissNotification {
+    CRToast *notification = self.notifications.firstObject;
+    if (notification) {
+        UIView *statusBarView = notification.statusBarView;
+        UIView *notificationView = notification.notificationView;
+        
+        [statusBarView.layer removeAllAnimations];
+        [notificationView.layer removeAllAnimations];
+        
+        CRBlock outwardAnimationBlock = [self outwardAnimationBlockForNotification:notification delay:0];
+        outwardAnimationBlock();
+    }
 }
 
 #pragma mark - Overrides
