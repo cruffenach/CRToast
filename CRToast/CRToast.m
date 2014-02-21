@@ -623,8 +623,11 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
     [super layoutSubviews];
     CGRect bounds = self.bounds;
     CGSize imageSize = self.imageView.image.size;
+    CGFloat statusBarOffset = self.toast.underStatusBar ? CRGetStatusBarHeight() : 0;
+    bounds.size.height = CGRectGetHeight(bounds) - statusBarOffset;
+    
     self.imageView.frame = CGRectMake(0,
-                                      0,
+                                      statusBarOffset,
                                       imageSize.width == 0 ?
                                         0 :
                                         CGRectGetHeight(bounds),
@@ -636,7 +639,7 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
-                                      0,
+                                      statusBarOffset,
                                       width,
                                       CGRectGetHeight(bounds));
     } else {
@@ -661,12 +664,12 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
         CGFloat offset = (CGRectGetHeight(bounds) - (height + subtitleHeight))/2;
         
         self.label.frame = CGRectMake(x,
-                                      offset,
+                                      offset+statusBarOffset,
                                       CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
                                       height);
 
         self.subtitleLabel.frame = CGRectMake(x,
-                                  height+offset,
+                                  height+offset+statusBarOffset,
                                   CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
                                   subtitleHeight);
     }
