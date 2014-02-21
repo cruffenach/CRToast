@@ -646,13 +646,18 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
                                                  NSFontAttributeName : self.toast.font
                                                  }
                                       context:nil].size.height;
+        if (height > CGRectGetHeight(bounds)) {
+            height = CGRectGetHeight(bounds);
+        }
         CGFloat subtitleHeight = [self.toast.subtitleText boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                     attributes:@{
                                                                  NSFontAttributeName : self.toast.subtitleFont
                                                                  }
                                                        context:nil].size.height;
-        
+        if ((CGRectGetHeight(bounds) - (height + subtitleHeight)) < 5) {
+            subtitleHeight = (CGRectGetHeight(bounds) - (height))-10;
+        }
         CGFloat offset = (CGRectGetHeight(bounds) - (height + subtitleHeight))/2;
         
         self.label.frame = CGRectMake(x,
