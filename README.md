@@ -26,13 +26,15 @@ Notifications can be created through `CRToastManager`'s `showNotificationWithOpt
 This code
 
 ```	objc
-NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
-                              kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
-                              kCRToastBackgroundColorKey : [UIColor redColor],
-                              kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
-                              kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
-                              kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
-                              kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight),
+NSDictionary *options = @{
+                          kCRToastTextKey : @"Hello World!",
+                          kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
+                          kCRToastBackgroundColorKey : [UIColor redColor],
+                          kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
+                          kCRToastAnimationOutTypeKey : @(CRToastAnimationTypeGravity),
+                          kCRToastAnimationInDirectionKey : @(CRToastAnimationDirectionLeft),
+                          kCRToastAnimationOutDirectionKey : @(CRToastAnimationDirectionRight)
+                          };
 [CRToastManager showNotificationWithOptions:options
                             completionBlock:^{
                                 NSLog(@"Completed");
