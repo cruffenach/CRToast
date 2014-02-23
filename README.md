@@ -26,7 +26,8 @@ Notifications can be created through `CRToastManager`'s `showNotificationWithOpt
 This code
 
 ```	objc
-NSDictionary *options = @{kCRToastTextKey : @"Hello World!",
+NSDictionary *options = @{
+                          kCRToastTextKey : @"Hello World!",
                           kCRToastTextAlignmentKey : @(NSTextAlignmentCenter),
                           kCRToastBackgroundColorKey : [UIColor redColor],
                           kCRToastAnimationInTypeKey : @(CRToastAnimationTypeGravity),
