@@ -80,6 +80,9 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped:)];
     [_scrollView addGestureRecognizer:tapGestureRecognizer];
+    
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeAll;
 }
 
 - (void)layoutSubviews {
