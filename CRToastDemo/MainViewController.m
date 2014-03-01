@@ -90,8 +90,6 @@
                                                     0,
                                                     [self.bottomLayoutGuide length],
                                                     0);
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.showNotificationButton.frame));
 }
 
 - (void)viewWillLayoutSubviews {
