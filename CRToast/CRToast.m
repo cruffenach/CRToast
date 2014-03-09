@@ -205,6 +205,12 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
                                    CRToastAnimationDirectionLeft);
 }
 
+static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
+    return underStatusBar ?
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:YES] :
+    [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
+}
+
 @implementation CRToast
 
 + (void)initialize {
@@ -244,8 +250,8 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     
     if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
-    if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault              = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
-    if (defaultOptions[kCRToastAnimationOutDirectionKey])           kCROutAnimationDirectionDefault             = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
+    if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault          = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
+    if (defaultOptions[kCRToastAnimationOutDirectionKey])           kCROutAnimationDirectionDefault         = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
     
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
@@ -263,13 +269,13 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
     if (defaultOptions[kCRToastTextShadowOffsetKey])                kCRTextShadowOffsetDefault              = [defaultOptions[kCRToastTextShadowOffsetKey] CGSizeValue];
     if (defaultOptions[kCRToastTextMaxNumberOfLinesKey])            kCRTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastTextMaxNumberOfLinesKey] integerValue];
     
-    if (defaultOptions[kCRToastSubtitleTextKey])                            kCRSubtitleTextDefault                          = defaultOptions[kCRToastSubtitleTextKey];
-    if (defaultOptions[kCRToastSubtitleFontKey])                            kCRSubtitleFontDefault                          = defaultOptions[kCRToastSubtitleFontKey];
-    if (defaultOptions[kCRToastSubtitleTextColorKey])                       kCRSubtitleTextColorDefault                     = defaultOptions[kCRToastSubtitleTextColorKey];
-    if (defaultOptions[kCRToastSubtitleTextAlignmentKey])                   kCRSubtitleTextAlignmentDefault                 = [defaultOptions[kCRToastSubtitleTextAlignmentKey] integerValue];
-    if (defaultOptions[kCRToastSubtitleTextShadowColorKey])                 kCRSubtitleTextShadowColorDefault               = defaultOptions[kCRToastSubtitleTextShadowColorKey];
-    if (defaultOptions[kCRToastSubtitleTextShadowOffsetKey])                kCRSubtitleTextShadowOffsetDefault              = [defaultOptions[kCRToastSubtitleTextShadowOffsetKey] CGSizeValue];
-    if (defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey])            kCRSubtitleTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue];
+    if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
+    if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
+    if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
+    if (defaultOptions[kCRToastSubtitleTextAlignmentKey])           kCRSubtitleTextAlignmentDefault         = [defaultOptions[kCRToastSubtitleTextAlignmentKey] integerValue];
+    if (defaultOptions[kCRToastSubtitleTextShadowColorKey])         kCRSubtitleTextShadowColorDefault       = defaultOptions[kCRToastSubtitleTextShadowColorKey];
+    if (defaultOptions[kCRToastSubtitleTextShadowOffsetKey])        kCRSubtitleTextShadowOffsetDefault      = [defaultOptions[kCRToastSubtitleTextShadowOffsetKey] CGSizeValue];
+    if (defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey])    kCRSubtitleTextMaxNumberOfLinesDefault  = [defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue];
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
@@ -294,19 +300,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 
 - (UIView*)statusBarView {
     UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    if ([self underStatusBar]) {
-        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-        UIGraphicsBeginImageContextWithOptions(window.frame.size, NO, 0);
-        CGRect rect = CGRectMake(0, 0, window.frame.size.width, window.frame.size.height);
-        [window drawViewHierarchyInRect:rect afterScreenUpdates:YES];
-        UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:screenshot];
-        [statusBarView addSubview:imageView];
-    }
-    else {
-        [statusBarView addSubview:[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES]];
-    }
+    [statusBarView addSubview:CRStatusBarSnapShotView([self underStatusBar])];
     statusBarView.clipsToBounds = YES;
     return statusBarView;
 }
