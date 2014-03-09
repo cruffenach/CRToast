@@ -142,13 +142,13 @@ static UIColor  *               	kCRTextShadowColorDefault               = nil;
 static CGSize                   	kCRTextShadowOffsetDefault;
 static NSInteger                    kCRTextMaxNumberOfLinesDefault          = 0;
 
-static NSString *                   kCRSubtitleTextDefault                          = nil;
-static UIFont   *                   kCRSubtitleFontDefault                          = nil;
-static UIColor  *               	kCRSubtitleTextColorDefault                     = nil;
-static NSTextAlignment          	kCRSubtitleTextAlignmentDefault                 = NSTextAlignmentCenter;
-static UIColor  *               	kCRSubtitleTextShadowColorDefault               = nil;
+static NSString *                   kCRSubtitleTextDefault                  = nil;
+static UIFont   *                   kCRSubtitleFontDefault                  = nil;
+static UIColor  *               	kCRSubtitleTextColorDefault             = nil;
+static NSTextAlignment          	kCRSubtitleTextAlignmentDefault         = NSTextAlignmentCenter;
+static UIColor  *               	kCRSubtitleTextShadowColorDefault       = nil;
 static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
-static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault          = 0;
+static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
 
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
@@ -598,6 +598,13 @@ static CGFloat kCRCollisionTweak = 0.5;
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
 static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
+// UIApplication's statusBarFrame will return a height for the status bar that includes
+// a 5 pixel vertical padding. This frame height is inappropriate to use when centering content
+// vertically under the status bar. This adjustment is uesd to correc the frame height when centering
+// content under the status bar.
+
+static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
+
 @implementation CRToastView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -621,57 +628,52 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    CGRect bounds = self.bounds;
+    CGRect contentFrame = self.bounds;
     CGSize imageSize = self.imageView.image.size;
-    CGFloat statusBarOffset = self.toast.underStatusBar ? CRGetStatusBarHeight() : 0;
-    bounds.size.height = CGRectGetHeight(bounds) - statusBarOffset;
+    
+    CGFloat statusBarYOffset = self.toast.underStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
+    contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
     self.imageView.frame = CGRectMake(0,
-                                      statusBarOffset,
+                                      statusBarYOffset,
                                       imageSize.width == 0 ?
                                         0 :
-                                        CGRectGetHeight(bounds),
+                                        CGRectGetHeight(contentFrame),
                                       imageSize.height == 0 ?
                                         0 :
-                                        CGRectGetHeight(bounds));
+                                        CGRectGetHeight(contentFrame));
     CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    CGFloat width = CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset;
+    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
-                                      statusBarOffset,
+                                      statusBarYOffset,
                                       width,
-                                      CGRectGetHeight(bounds));
+                                      CGRectGetHeight(contentFrame));
     } else {
-        CGFloat height = [self.toast.text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+        CGFloat height = MIN([self.toast.text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                    attributes:@{
-                                                 NSFontAttributeName : self.toast.font
-                                                 }
-                                      context:nil].size.height;
-        if (height > CGRectGetHeight(bounds)) {
-            height = CGRectGetHeight(bounds);
-        }
+                                    attributes:@{NSFontAttributeName : self.toast.font}
+                                                           context:nil].size.height,
+                             CGRectGetHeight(contentFrame));
         CGFloat subtitleHeight = [self.toast.subtitleText boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                                        options:NSStringDrawingUsesLineFragmentOrigin
-                                                    attributes:@{
-                                                                 NSFontAttributeName : self.toast.subtitleFont
-                                                                 }
+                                                    attributes:@{NSFontAttributeName : self.toast.subtitleFont }
                                                        context:nil].size.height;
-        if ((CGRectGetHeight(bounds) - (height + subtitleHeight)) < 5) {
-            subtitleHeight = (CGRectGetHeight(bounds) - (height))-10;
+        if ((CGRectGetHeight(contentFrame) - (height + subtitleHeight)) < 5) {
+            subtitleHeight = (CGRectGetHeight(contentFrame) - (height))-10;
         }
-        CGFloat offset = (CGRectGetHeight(bounds) - (height + subtitleHeight))/2;
+        CGFloat offset = (CGRectGetHeight(contentFrame) - (height + subtitleHeight))/2;
         
         self.label.frame = CGRectMake(x,
-                                      offset+statusBarOffset,
-                                      CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
+                                      offset+statusBarYOffset,
+                                      CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
                                       height);
 
         self.subtitleLabel.frame = CGRectMake(x,
-                                  height+offset+statusBarOffset,
-                                  CGRectGetWidth(bounds)-x-kCRStatusBarViewNoImageRightContentInset,
-                                  subtitleHeight);
+                                              height+offset+statusBarYOffset,
+                                              CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
+                                              subtitleHeight);
     }
 }
 
