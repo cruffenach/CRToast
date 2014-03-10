@@ -946,17 +946,20 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType);
     
+    CGRect containerFrame;
+    
     if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
-        _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
+        containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-        _notificationWindow.rootViewController.view.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width-notificationSize.height, 0, notificationSize.height, notificationSize.width);
+        containerFrame = CGRectMake([[UIScreen mainScreen] bounds].size.width-notificationSize.height, 0, notificationSize.height, notificationSize.width);
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        _notificationWindow.rootViewController.view.frame = CGRectMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height, notificationSize.width, notificationSize.height);
+        containerFrame = CGRectMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height, notificationSize.width, notificationSize.height);
     } else {
-        _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+        containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     }
     
-    _notificationWindow.frame = _notificationWindow.rootViewController.view.bounds;
+    _notificationWindow.frame = containerFrame;
+    _notificationWindow.rootViewController.view.bounds = containerFrame;
     _notificationWindow.windowLevel = notification.underStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;
