@@ -109,7 +109,7 @@
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender {
     [CRToastManager showNotificationWithOptions:[self options]
-                                                completionBlock:^{
+                                                completionBlock:^(void) {
                                                     NSLog(@"Completed");
                                                 }];
 }
@@ -159,7 +159,12 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
-                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
+                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
+                                      kCRToastInteractionRespondersKey          : @[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTapOnce
+                                                                                                                                    automaticallyDismiss:NO
+                                                                                                                                                   block:^{
+                                                                                                                                                       NSLog(@"Tapped");
+                                                                                                                                                   }]]} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }

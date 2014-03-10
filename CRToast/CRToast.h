@@ -6,6 +6,26 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
+    CRToastInteractionTypeSwipeUp,
+    CRToastInteractionTypeSwipeLeft,
+    CRToastInteractionTypeSwipeDown,
+    CRToastInteractionTypeSwipeRight,
+    CRToastInteractionTypeSwipe = (CRToastInteractionTypeSwipeUp | CRToastInteractionTypeSwipeLeft | CRToastInteractionTypeSwipeDown | CRToastInteractionTypeSwipeRight),
+    CRToastInteractionTypeTapOnce,
+    CRToastInteractionTypeTapTwice,
+    CRToastInteractionTypeTwoFingerTapOnce,
+    CRToastInteractionTypeTwoFingerTapTwice,
+    CRToastInteractionTypeTap = (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTapTwice | CRToastInteractionTypeTwoFingerTapOnce | CRToastInteractionTypeTwoFingerTapTwice),
+    CRToastInteractionTypeAll = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
+};
+
+@interface CRToastInteractionResponder : NSObject
++ (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
+                                   automaticallyDismiss:(BOOL)automaticallyDismiss
+                                                  block:(void (^)(void))block;
+@end
+
 ///--------------------
 /// @name Notification Option Types
 ///--------------------
@@ -242,6 +262,12 @@ extern NSString *const kCRToastBackgroundColorKey;
 extern NSString *const kCRToastImageKey;
 
 /**
+ An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`
+ */
+
+extern NSString *const kCRToastInteractionRespondersKey;
+
+/**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
  */
 
@@ -272,5 +298,12 @@ extern NSString *const kCRToastImageKey;
  */
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion;
+
+/**
+ Immidiately begins the (un)animated dismisal of a notification
+ @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
+ */
+
++ (void)dismissNotification:(BOOL)animated;
 
 @end
