@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 //Interactions
 
-@property (nonatomic, retain) NSArray *gestureRecognizers;
+@property (nonatomic, strong) NSArray *gestureRecognizers;
 
 //Views and Layout Data
 
@@ -269,11 +269,11 @@ static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
 #pragma mark - Interaction Setup Helpers
 
 BOOL CRToastInteractionResponderIsSwipe(CRToastInteractionResponder *interactionResponder) {
-    return interactionResponder.interactionType & CRToastInteractionTypeSwipe;
+    return CRToastInteractionTypeSwipe & interactionResponder.interactionType;
 }
 
 BOOL CRToastInteractionResponderIsTap(CRToastInteractionResponder *interactionResponder) {
-    return interactionResponder.interactionType & CRToastInteractionTypeTap;
+    return CRToastInteractionTypeTap & interactionResponder.interactionType;
 }
 
 UIGestureRecognizer * CRToastSwipeGestureRecognizerMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
@@ -731,14 +731,6 @@ static CGFloat kCRCollisionTweak = 0.5;
     return YES;
 }
 
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    return NO;
-//}
-//
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-//    return YES;
-//}
-
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     return YES;
 }
@@ -768,16 +760,21 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        self.userInteractionEnabled = YES;
+        
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        imageView.userInteractionEnabled = NO;
         imageView.contentMode = UIViewContentModeCenter;
         [self addSubview:imageView];
         self.imageView = imageView;
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.userInteractionEnabled = NO;
         [self addSubview:label];
         self.label = label;
         
         UILabel *subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        subtitleLabel.userInteractionEnabled = NO;        
         [self addSubview:subtitleLabel];
         self.subtitleLabel = subtitleLabel;
     }
@@ -960,7 +957,6 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
     _notificationWindow.windowLevel = notification.underStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
     
-    
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
     [_notificationWindow.rootViewController.view addSubview:statusBarView];
@@ -968,9 +964,15 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
-    notificationView.gestureRecognizers = notification.gestureRecognizers;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     __weak __block typeof(self) weakSelf = self;
+    
+    for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
+        subview.userInteractionEnabled = NO;
+    }
+    
+    _notificationWindow.rootViewController.view.userInteractionEnabled = YES;
+    _notificationWindow.rootViewController.view.gestureRecognizers = notification.gestureRecognizers;
     
     void (^inwardAnimationsBlock)(void) = ^void(void) {
         notificationView.frame = _notificationWindow.rootViewController.view.bounds;
@@ -986,6 +988,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     };
     
     void (^outwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
+        blockSelf.notificationWindow.rootViewController.view.gestureRecognizers = nil;
         notification.state = CRToastStateCompleted;
         if (notification.completion) notification.completion();
         [weakSelf.notifications removeObject:notification];
