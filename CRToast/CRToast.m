@@ -946,21 +946,20 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType);
     
-    CGRect containerFrame;
+    CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     
     if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
         containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-        containerFrame = CGRectMake([[UIScreen mainScreen] bounds].size.width-notificationSize.height, 0, notificationSize.height, notificationSize.width);
+        containerFrame = CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-notificationSize.height, 0, notificationSize.height, notificationSize.width);
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        containerFrame = CGRectMake([[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height, notificationSize.width, notificationSize.height);
-    } else {
-        containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+        containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
     }
     
     _notificationWindow.frame = containerFrame;
-    _notificationWindow.rootViewController.view.bounds = containerFrame;
+    _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
     _notificationWindow.windowLevel = notification.underStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
+    
     
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
