@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D8F2E0918CED50A0077A7F6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB6F18367C01003333F8 /* XCTest.framework */; };
+		2D8F2E0A18CED50A0077A7F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
+		2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
+		2D8F2E1118CED50A0077A7F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */; };
+		2D8F2E1318CED50A0077A7F6 /* CRToastTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */; };
 		5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D045D1838AE0D00CBFC35 /* CRToast.m */; };
 		5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
 		5E2FFB5918367C01003333F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5818367C01003333F8 /* CoreGraphics.framework */; };
@@ -15,24 +20,26 @@
 		5E2FFB6318367C01003333F8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB6218367C01003333F8 /* main.m */; };
 		5E2FFB6718367C01003333F8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB6618367C01003333F8 /* AppDelegate.m */; };
 		5E2FFB6918367C01003333F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB6818367C01003333F8 /* Images.xcassets */; };
-		5E2FFB7018367C01003333F8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB6F18367C01003333F8 /* XCTest.framework */; };
-		5E2FFB7118367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
-		5E2FFB7218367C01003333F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
 		5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8C18367CA3003333F8 /* MainViewController.m */; };
 		5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8D18367CA3003333F8 /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5E2FFB7318367C01003333F8 /* PBXContainerItemProxy */ = {
+		2D8F2E1518CED50A0077A7F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E2FFB4B18367C01003333F8 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 5E2FFB5218367C01003333F8;
-			remoteInfo = CWNotificationDemo;
+			remoteInfo = CRToastDemo;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D8F2E0E18CED50A0077A7F6 /* CRToastTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRToastTests-Info.plist"; sourceTree = "<group>"; };
+		2D8F2E1018CED50A0077A7F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRToastTests.m; sourceTree = "<group>"; };
+		2D8F2E1418CED50A0077A7F6 /* CRToastTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRToastTests-Prefix.pch"; sourceTree = "<group>"; };
 		5E0D045C1838AE0D00CBFC35 /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRToast.h; path = CRToast/CRToast.h; sourceTree = SOURCE_ROOT; };
 		5E0D045D1838AE0D00CBFC35 /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRToast.m; path = CRToast/CRToast.m; sourceTree = SOURCE_ROOT; };
 		5E2FFB5318367C01003333F8 /* CRToastDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRToastDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -46,7 +53,6 @@
 		5E2FFB6518367C01003333F8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5E2FFB6618367C01003333F8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5E2FFB6818367C01003333F8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB6F18367C01003333F8 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -54,6 +60,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2D8F2E0518CED50A0077A7F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D8F2E0918CED50A0077A7F6 /* XCTest.framework in Frameworks */,
+				2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */,
+				2D8F2E0A18CED50A0077A7F6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E2FFB5018367C01003333F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -64,24 +80,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5E2FFB6B18367C01003333F8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5E2FFB7018367C01003333F8 /* XCTest.framework in Frameworks */,
-				5E2FFB7218367C01003333F8 /* UIKit.framework in Frameworks */,
-				5E2FFB7118367C01003333F8 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D8F2E0C18CED50A0077A7F6 /* CRToastTests */ = {
+			isa = PBXGroup;
+			children = (
+				2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */,
+				2D8F2E0D18CED50A0077A7F6 /* Supporting Files */,
+			);
+			path = CRToastTests;
+			sourceTree = "<group>";
+		};
+		2D8F2E0D18CED50A0077A7F6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2D8F2E0E18CED50A0077A7F6 /* CRToastTests-Info.plist */,
+				2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */,
+				2D8F2E1418CED50A0077A7F6 /* CRToastTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5E2FFB4A18367C01003333F8 = {
 			isa = PBXGroup;
 			children = (
 				5E2FFB8518367C1B003333F8 /* CRToast */,
 				5E2FFB5C18367C01003333F8 /* CRToastDemo */,
+				2D8F2E0C18CED50A0077A7F6 /* CRToastTests */,
 				5E2FFB5518367C01003333F8 /* Frameworks */,
 				5E2FFB5418367C01003333F8 /* Products */,
 			);
@@ -91,7 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				5E2FFB5318367C01003333F8 /* CRToastDemo.app */,
-				5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */,
+				2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +186,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2D8F2E0718CED50A0077A7F6 /* CRToastTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D8F2E1718CED50A0077A7F6 /* Build configuration list for PBXNativeTarget "CRToastTests" */;
+			buildPhases = (
+				2D8F2E0418CED50A0077A7F6 /* Sources */,
+				2D8F2E0518CED50A0077A7F6 /* Frameworks */,
+				2D8F2E0618CED50A0077A7F6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D8F2E1618CED50A0077A7F6 /* PBXTargetDependency */,
+			);
+			name = CRToastTests;
+			productName = CRToastTests;
+			productReference = 2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5E2FFB5218367C01003333F8 /* CRToastDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemo" */;
@@ -177,24 +221,6 @@
 			productReference = 5E2FFB5318367C01003333F8 /* CRToastDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5E2FFB6D18367C01003333F8 /* CRToastDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemoTests" */;
-			buildPhases = (
-				5E2FFB6A18367C01003333F8 /* Sources */,
-				5E2FFB6B18367C01003333F8 /* Frameworks */,
-				5E2FFB6C18367C01003333F8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5E2FFB7418367C01003333F8 /* PBXTargetDependency */,
-			);
-			name = CRToastDemoTests;
-			productName = CWNotificationDemoTests;
-			productReference = 5E2FFB6E18367C01003333F8 /* CRToastDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -204,11 +230,11 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Collin Ruffenach";
 				TargetAttributes = {
+					2D8F2E0718CED50A0077A7F6 = {
+						TestTargetID = 5E2FFB5218367C01003333F8;
+					};
 					5E2FFB5218367C01003333F8 = {
 						DevelopmentTeam = QMZH6X9D3C;
-					};
-					5E2FFB6D18367C01003333F8 = {
-						TestTargetID = 5E2FFB5218367C01003333F8;
 					};
 				};
 			};
@@ -225,12 +251,20 @@
 			projectRoot = "";
 			targets = (
 				5E2FFB5218367C01003333F8 /* CRToastDemo */,
-				5E2FFB6D18367C01003333F8 /* CRToastDemoTests */,
+				2D8F2E0718CED50A0077A7F6 /* CRToastTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D8F2E0618CED50A0077A7F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D8F2E1118CED50A0077A7F6 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E2FFB5118367C01003333F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -241,16 +275,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5E2FFB6C18367C01003333F8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2D8F2E0418CED50A0077A7F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D8F2E1318CED50A0077A7F6 /* CRToastTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5E2FFB4F18367C01003333F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -262,24 +297,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5E2FFB6A18367C01003333F8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		5E2FFB7418367C01003333F8 /* PBXTargetDependency */ = {
+		2D8F2E1618CED50A0077A7F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5E2FFB5218367C01003333F8 /* CRToastDemo */;
-			targetProxy = 5E2FFB7318367C01003333F8 /* PBXContainerItemProxy */;
+			targetProxy = 2D8F2E1518CED50A0077A7F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D8F2E1018CED50A0077A7F6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		5E2FFB5F18367C01003333F8 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -291,6 +327,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2D8F2E1818CED50A0077A7F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CRToastDemo.app/CRToastDemo";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRToastTests/CRToastTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "CRToastTests/CRToastTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		2D8F2E1918CED50A0077A7F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CRToastDemo.app/CRToastDemo";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRToastTests/CRToastTests-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "CRToastTests/CRToastTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		5E2FFB7D18367C01003333F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -395,49 +477,17 @@
 			};
 			name = Release;
 		};
-		5E2FFB8318367C01003333F8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CWNotificationDemo.app/CWNotificationDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CWNotificationDemo/CWNotificationDemo-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "CWNotificationDemoTests/CWNotificationDemoTests-Info.plist";
-				PRODUCT_NAME = CRToastDemoTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		5E2FFB8418367C01003333F8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CWNotificationDemo.app/CWNotificationDemo";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CWNotificationDemo/CWNotificationDemo-Prefix.pch";
-				INFOPLIST_FILE = "CWNotificationDemoTests/CWNotificationDemoTests-Info.plist";
-				PRODUCT_NAME = CRToastDemoTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2D8F2E1718CED50A0077A7F6 /* Build configuration list for PBXNativeTarget "CRToastTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D8F2E1818CED50A0077A7F6 /* Debug */,
+				2D8F2E1918CED50A0077A7F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -452,15 +502,6 @@
 			buildConfigurations = (
 				5E2FFB8018367C01003333F8 /* Debug */,
 				5E2FFB8118367C01003333F8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5E2FFB8218367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5E2FFB8318367C01003333F8 /* Debug */,
-				5E2FFB8418367C01003333F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
