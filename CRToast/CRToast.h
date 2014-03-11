@@ -6,6 +6,10 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ CRToastInteractionType defines the types of interactions that can be injected into a CRToastIneractionResponder.
+ */
+
 typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
     CRToastInteractionTypeSwipeUp = 1 << 0,
     CRToastInteractionTypeSwipeLeft = 1 << 1,
@@ -20,7 +24,21 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
     CRToastInteractionTypeAll = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
 };
 
+/**
+ CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the 
+ options for any given notification or in defaults.
+ */
+
 @interface CRToastInteractionResponder : NSObject
+
+/**
+ Creates an interaction responder for a given interaction type.
+ @param interactionType The kind of interaction that will trigger the responder
+ @param automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
+ animation will begin immidiately upon encountering the interaction.
+ @param block A block of code to be called immidiately upon the interaction being encountered.
+ */
+
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
                                    automaticallyDismiss:(BOOL)automaticallyDismiss
                                                   block:(void (^)(void))block;
