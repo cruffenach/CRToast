@@ -549,7 +549,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 - (NSArray*)gestureRecognizers {
     return _options[kCRToastInteractionRespondersKey] ?
     _gestureRecognizers ?: [self gestureRecognizersForInteractionResponder:_options[kCRToastInteractionRespondersKey]] :
-    kCRInteractionResponders;
+    [self gestureRecognizersForInteractionResponder:kCRInteractionResponders];
 }
 
 - (CRToastType)notificationType {
