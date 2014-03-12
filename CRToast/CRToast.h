@@ -11,17 +11,26 @@
  */
 
 typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
-    CRToastInteractionTypeSwipeUp = 1 << 0,
-    CRToastInteractionTypeSwipeLeft = 1 << 1,
-    CRToastInteractionTypeSwipeDown = 1 << 2,
-    CRToastInteractionTypeSwipeRight = 1 << 3,
-    CRToastInteractionTypeTapOnce = 1 << 4,
-    CRToastInteractionTypeTapTwice = 1 << 5,
-    CRToastInteractionTypeTwoFingerTapOnce = 1 << 6,
+    CRToastInteractionTypeSwipeUp           = 1 << 0,
+    CRToastInteractionTypeSwipeLeft         = 1 << 1,
+    CRToastInteractionTypeSwipeDown         = 1 << 2,
+    CRToastInteractionTypeSwipeRight        = 1 << 3,
+    CRToastInteractionTypeTapOnce           = 1 << 4,
+    CRToastInteractionTypeTapTwice          = 1 << 5,
+    CRToastInteractionTypeTwoFingerTapOnce  = 1 << 6,
     CRToastInteractionTypeTwoFingerTapTwice = 1 << 7,
-    CRToastInteractionTypeSwipe = (CRToastInteractionTypeSwipeUp | CRToastInteractionTypeSwipeLeft | CRToastInteractionTypeSwipeDown | CRToastInteractionTypeSwipeRight),
-    CRToastInteractionTypeTap = (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTapTwice | CRToastInteractionTypeTwoFingerTapOnce | CRToastInteractionTypeTwoFingerTapTwice),
-    CRToastInteractionTypeAll = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
+    
+    CRToastInteractionTypeSwipe             = (CRToastInteractionTypeSwipeUp    |
+                                               CRToastInteractionTypeSwipeLeft  |
+                                               CRToastInteractionTypeSwipeDown  |
+                                               CRToastInteractionTypeSwipeRight),
+    
+    CRToastInteractionTypeTap               = (CRToastInteractionTypeTapOnce            |
+                                               CRToastInteractionTypeTapTwice           |
+                                               CRToastInteractionTypeTwoFingerTapOnce   |
+                                               CRToastInteractionTypeTwoFingerTapTwice),
+    
+    CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
 };
 
 /**
