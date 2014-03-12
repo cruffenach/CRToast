@@ -1076,7 +1076,7 @@ void (^CRToastOutwardAnimationsBlock(CRToastManager *weakSelf))(void) {
     };
 }
 
-void (^CRToastInwardAnimationsCompletionBlock(CRToastManager *weakSelf))(void) {
+void (^CRToastOutwardAnimationsSetupBlock(CRToastManager *weakSelf))(void) {
     return ^{
         CRToast *notification = weakSelf.notification;
         weakSelf.notification.state = CRToastStateExiting;
@@ -1127,7 +1127,7 @@ void (^CRToastInwardAnimationsCompletionBlock(CRToastManager *weakSelf))(void) {
     
     if (animated && (self.notification.state == CRToastStateEntering || self.notification.state == CRToastStateDisplaying)) {
         __weak __block typeof(self) weakSelf = self;
-        CRToastInwardAnimationsCompletionBlock(weakSelf)();
+        CRToastOutwardAnimationsSetupBlock(weakSelf)();
     } else {
         [[(CRToast*)_notifications.firstObject notificationView] removeFromSuperview];
     }
@@ -1186,12 +1186,14 @@ void (^CRToastInwardAnimationsCompletionBlock(CRToastManager *weakSelf))(void) {
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
     void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
-        notification.state = CRToastStateDisplaying;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
-                CRToastInwardAnimationsCompletionBlock(weakSelf)();
-            }
-        });
+        if (notification.state == CRToastStateEntering) {
+            notification.state = CRToastStateDisplaying;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
+                    CRToastOutwardAnimationsSetupBlock(weakSelf)();
+                }
+            });
+        }
     };
     
     notification.state = CRToastStateEntering;
