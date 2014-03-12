@@ -389,16 +389,12 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 + (void)initialize {
     if (self == [CRToast class]) {
 
-        kCRTextDefault = @"";
         kCRFontDefault = [UIFont systemFontOfSize:12];
         kCRTextColorDefault = [UIColor whiteColor];
         kCRTextShadowOffsetDefault = CGSizeZero;
-        kCRTextShadowColorDefault = [UIColor clearColor];
-        kCRSubtitleTextDefault = @"";
         kCRSubtitleFontDefault = [UIFont systemFontOfSize:12];
         kCRSubtitleTextColorDefault = [UIColor whiteColor];
         kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
-        kCRSubtitleTextShadowColorDefault = [UIColor clearColor];
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
         kCRGestureRecognizers = @[];
         
@@ -415,15 +411,15 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastAnimationSpringDampingKey           : NSStringFromClass([@(kCRSpringDampingDefault) class]),
                                 kCRToastAnimationSpringInitialVelocityKey   : NSStringFromClass([@(kCRSpringInitialVelocityDefault) class]),
                                 kCRToastAnimationGravityMagnitudeKey        : NSStringFromClass([@(kCRGravityMagnitudeDefault) class]),
-                                kCRToastTextKey                             : NSStringFromClass([kCRTextDefault class]),
-                                kCRToastFontKey                             : NSStringFromClass([kCRFontDefault class]),
+                                kCRToastTextKey                             : NSStringFromClass([NSString class]),
+                                kCRToastFontKey                             : NSStringFromClass([UIFont class]),
                                 kCRToastTextColorKey                        : NSStringFromClass([UIColor class]),
                                 kCRToastTextAlignmentKey                    : NSStringFromClass([@(kCRTextAlignmentDefault) class]),
                                 kCRToastTextShadowColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastTextShadowOffsetKey                 : NSStringFromClass([[NSValue valueWithCGSize:kCRTextShadowOffsetDefault] class]),
                                 kCRToastTextMaxNumberOfLinesKey             : NSStringFromClass([@(kCRTextMaxNumberOfLinesDefault) class]),
-                                kCRToastSubtitleTextKey                     : NSStringFromClass([kCRSubtitleTextDefault class]),
-                                kCRToastSubtitleFontKey                     : NSStringFromClass([kCRSubtitleFontDefault class]),
+                                kCRToastSubtitleTextKey                     : NSStringFromClass([NSString class]),
+                                kCRToastSubtitleFontKey                     : NSStringFromClass([UIFont class]),
                                 kCRToastSubtitleTextColorKey                : NSStringFromClass([UIColor class]),
                                 kCRToastSubtitleTextAlignmentKey            : NSStringFromClass([@(kCRSubtitleTextAlignmentDefault) class]),
                                 kCRToastSubtitleTextShadowColorKey          : NSStringFromClass([UIColor class]),
@@ -431,7 +427,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastSubtitleTextMaxNumberOfLinesKey     : NSStringFromClass([@(kCRSubtitleTextMaxNumberOfLinesDefault) class]),
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
-                                kCRToastInteractionRespondersKey            : NSStringFromClass([kCRGestureRecognizers class])};
+                                kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class])};
     }
 }
 
@@ -838,7 +834,7 @@ static CGFloat kCRCollisionTweak = 0.5;
                   key,
                   obj);
             [cleanOptions removeObjectForKey:key];
-        } else if (![obj isKindOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {            
+        } else if (![obj isKindOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {
             NSLog(@"[CRToast] : ERROR given %@ for key %@ was expecting Class %@ but got Class %@, passing default on instead",
                   obj,
                   key,
