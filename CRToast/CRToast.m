@@ -441,6 +441,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 }
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
+    //TODO Validate Types of Default Options    
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
     
@@ -477,6 +478,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
+    
+    if (defaultOptions[kCRToastInteractionRespondersKey])           kCRGestureRecognizers                   = defaultOptions[kCRToastInteractionRespondersKey];
 }
 
 #pragma mark - Notification View Helpers
@@ -540,7 +543,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
             [gestureRecognizers addObject:gestureRecognizer];
         }
     }
-    return [NSArray arrayWithArray:gestureRecognizers];
+    return [NSArray arrayWithArray:[kCRGestureRecognizers arrayByAddingObjectsFromArray:gestureRecognizers]];
 }
 
 - (NSArray*)gestureRecognizers {
