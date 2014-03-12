@@ -237,7 +237,7 @@ static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
 
-static NSArray  *                   kCRGestureRecognizers                   = nil;
+static NSArray  *                   kCRInteractionResponders                = nil;
 
 static NSDictionary *               kCRToastKeyClassMap                     = nil;
 
@@ -396,7 +396,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRSubtitleTextColorDefault = [UIColor whiteColor];
         kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
-        kCRGestureRecognizers = @[];
+        kCRInteractionResponders = @[];
         
         kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
@@ -441,7 +441,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 }
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
-    //TODO Validate Types of Default Options    
+    //TODO Validate Types of Default Options
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
     
@@ -479,7 +479,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
     
-    if (defaultOptions[kCRToastInteractionRespondersKey])           kCRGestureRecognizers                   = defaultOptions[kCRToastInteractionRespondersKey];
+    if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                   = defaultOptions[kCRToastInteractionRespondersKey];
 }
 
 #pragma mark - Notification View Helpers
@@ -534,7 +534,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (NSArray*)gestureRecognizersForInteractionResponder:(NSArray*)interactionResponders {
     NSMutableArray *gestureRecognizers = [@[] mutableCopy];
-    for (CRToastInteractionResponder *interactionResponder in interactionResponders) {
+    for (CRToastInteractionResponder *interactionResponder in [kCRInteractionResponders arrayByAddingObjectsFromArray:interactionResponders]) {
         if (CRToastInteractionResponderIsGenertic(interactionResponder)) {
             gestureRecognizers = [CRToastGenericRecognizersMake(self, interactionResponder) mutableCopy];
         } else {
@@ -543,13 +543,13 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
             [gestureRecognizers addObject:gestureRecognizer];
         }
     }
-    return [NSArray arrayWithArray:[kCRGestureRecognizers arrayByAddingObjectsFromArray:gestureRecognizers]];
+    return [NSArray arrayWithArray:gestureRecognizers];
 }
 
 - (NSArray*)gestureRecognizers {
     return _options[kCRToastInteractionRespondersKey] ?
     _gestureRecognizers ?: [self gestureRecognizersForInteractionResponder:_options[kCRToastInteractionRespondersKey]] :
-    kCRGestureRecognizers;
+    kCRInteractionResponders;
 }
 
 - (CRToastType)notificationType {
