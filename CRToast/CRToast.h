@@ -20,16 +20,19 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
     CRToastInteractionTypeTwoFingerTapOnce  = 1 << 6,
     CRToastInteractionTypeTwoFingerTapTwice = 1 << 7,
     
+    //An interaction responder with a CRToastInteractionTypeSwipe interaction type will fire on all swipe interactions
     CRToastInteractionTypeSwipe             = (CRToastInteractionTypeSwipeUp    |
                                                CRToastInteractionTypeSwipeLeft  |
                                                CRToastInteractionTypeSwipeDown  |
                                                CRToastInteractionTypeSwipeRight),
     
+    //An interaction responder with a CRToastInteractionTypeTap interaction type will fire on all tap interactions
     CRToastInteractionTypeTap               = (CRToastInteractionTypeTapOnce            |
                                                CRToastInteractionTypeTapTwice           |
                                                CRToastInteractionTypeTwoFingerTapOnce   |
                                                CRToastInteractionTypeTwoFingerTapTwice),
     
+    //An interaction responder with a CRToastInteractionTypeAll interaction type will fire on all swipe and tap interactions
     CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
 };
 
