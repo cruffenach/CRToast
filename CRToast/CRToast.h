@@ -47,7 +47,8 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  @param interactionType The kind of interaction that will trigger the responder
  @param automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
  animation will begin immidiately upon encountering the interaction.
- @param block A block of code to be called immidiately upon the interaction being encountered.
+ @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the 
+ block firing
  */
 
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType

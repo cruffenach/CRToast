@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
@@ -159,12 +160,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
-                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
-                                      kCRToastInteractionRespondersKey          : @[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTapOnce
-                                                                                                                                    automaticallyDismiss:NO
-                                                                                                                                                   block:^{
-                                                                                                                                                       NSLog(@"Tapped");
-                                                                                                                                                   }]]} mutableCopy];
+                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
@@ -172,6 +168,14 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
         options[kCRToastSubtitleTextKey] = self.txtSubtitleMessage.text;
         options[kCRToastSubtitleTextAlignmentKey] = @(self.subtitleAlignment);
+    }
+    
+    if (_dismissibleWithTapSwitch.on) {
+        options[kCRToastInteractionRespondersKey] = @[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTap
+                                                                                                      automaticallyDismiss:YES
+                                                                                                                     block:^(CRToastInteractionType interactionType){
+                                                                                                                         NSLog(@"Dismissed with %@ interaction", NSStringFromCRToastInteractionType(interactionType));
+                                                                                                                     }]];
     }
     
     return [NSDictionary dictionaryWithDictionary:options];
