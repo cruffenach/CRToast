@@ -271,6 +271,12 @@ static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
 
 #pragma mark - Interaction Setup Helpers
 
+BOOL CRToastInteractionResponderIsGenertic(CRToastInteractionResponder *interactionResponder) {
+    return (interactionResponder.interactionType == CRToastInteractionTypeSwipe ||
+            interactionResponder.interactionType == CRToastInteractionTypeTap   ||
+            interactionResponder.interactionType == CRToastInteractionTypeAll);
+}
+
 BOOL CRToastInteractionResponderIsSwipe(CRToastInteractionResponder *interactionResponder) {
     return CRToastInteractionTypeSwipe & interactionResponder.interactionType;
 }
@@ -279,15 +285,15 @@ BOOL CRToastInteractionResponderIsTap(CRToastInteractionResponder *interactionRe
     return CRToastInteractionTypeTap & interactionResponder.interactionType;
 }
 
-UIGestureRecognizer * CRToastSwipeGestureRecognizerMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
+UIGestureRecognizer * CRToastSwipeGestureRecognizerMake(id target, SEL action, CRToastInteractionType interactionType, CRToastInteractionResponder *interactionResponder) {
     CRToastSwipeGestureRecognizer *swipeGestureRecognizer = [[CRToastSwipeGestureRecognizer alloc] initWithTarget:target action:action];
-    if (interactionResponder.interactionType == CRToastInteractionTypeSwipeUp) {
+    if (interactionType == CRToastInteractionTypeSwipeUp) {
         swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
-    } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipeLeft) {
+    } else if (interactionType == CRToastInteractionTypeSwipeLeft) {
         swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
-    } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipeDown) {
+    } else if (interactionType == CRToastInteractionTypeSwipeDown) {
         swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipeRight) {
+    } else if (interactionType == CRToastInteractionTypeSwipeRight) {
         swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
     }
     swipeGestureRecognizer.automaticallyDismiss = interactionResponder.automaticallyDismiss;
@@ -295,10 +301,10 @@ UIGestureRecognizer * CRToastSwipeGestureRecognizerMake(id target, SEL action, C
     return swipeGestureRecognizer;
 }
 
-UIGestureRecognizer * CRToastTapGestureRecognizerMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
+UIGestureRecognizer * CRToastTapGestureRecognizerMake(id target, SEL action, CRToastInteractionType interactionType, CRToastInteractionResponder *interactionResponder) {
     CRToastTapGestureRecognizer *tapGestureRecognizer = [[CRToastTapGestureRecognizer alloc] initWithTarget:target action:action];
-    tapGestureRecognizer.numberOfTouchesRequired = (interactionResponder.interactionType & (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTapTwice)) ? 1 : 2;
-    tapGestureRecognizer.numberOfTapsRequired = (interactionResponder.interactionType & (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTwoFingerTapOnce)) ? 1 : 2;
+    tapGestureRecognizer.numberOfTouchesRequired = (interactionType & (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTapTwice)) ? 1 : 2;
+    tapGestureRecognizer.numberOfTapsRequired = (interactionType & (CRToastInteractionTypeTapOnce | CRToastInteractionTypeTwoFingerTapOnce)) ? 1 : 2;
     tapGestureRecognizer.automaticallyDismiss = interactionResponder.automaticallyDismiss;
     tapGestureRecognizer.block = interactionResponder.block;
     return tapGestureRecognizer;
@@ -306,13 +312,46 @@ UIGestureRecognizer * CRToastTapGestureRecognizerMake(id target, SEL action, CRT
 
 UIGestureRecognizer * CRToastGestureRecognizerMake(id target, CRToastInteractionResponder *interactionResponder) {
     if (CRToastInteractionResponderIsSwipe(interactionResponder)) {
-        return CRToastSwipeGestureRecognizerMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
+        return CRToastSwipeGestureRecognizerMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder.interactionType, interactionResponder);
     } else if (CRToastInteractionResponderIsTap(interactionResponder)) {
-        return CRToastTapGestureRecognizerMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder);
+        return CRToastTapGestureRecognizerMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder.interactionType, interactionResponder);
     } else {
         //FIXME
         return nil;
     }
+}
+
+NSArray * CRToastGenericSwipeRecognizersMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
+    NSMutableArray *gestureRecognizers = [@[] mutableCopy];
+    [@[@(CRToastInteractionTypeSwipeUp),
+       @(CRToastInteractionTypeSwipeLeft),
+       @(CRToastInteractionTypeSwipeDown),
+       @(CRToastInteractionTypeSwipeRight)] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+           [gestureRecognizers addObject:CRToastSwipeGestureRecognizerMake(target, action, [obj integerValue], interactionResponder)];
+       }];
+    return gestureRecognizers;
+}
+
+NSArray * CRToastGenericTapRecognizersMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
+    NSMutableArray *gestureRecognizers = [@[] mutableCopy];
+    [@[@(CRToastInteractionTypeTapOnce),
+       @(CRToastInteractionTypeTapTwice),
+       @(CRToastInteractionTypeTwoFingerTapOnce),
+       @(CRToastInteractionTypeTwoFingerTapTwice)] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+           [gestureRecognizers addObject:CRToastTapGestureRecognizerMake(target, action, [obj integerValue], interactionResponder)];
+       }];
+    return gestureRecognizers;
+}
+
+NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *interactionResponder) {
+    if (interactionResponder.interactionType == CRToastInteractionTypeAll) {
+        return [CRToastGenericTapRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder) arrayByAddingObjectsFromArray:CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder)];
+    } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipe) {
+        return CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
+    } else if (interactionResponder.interactionType == CRToastInteractionTypeTap) {
+        return CRToastGenericTapRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
+    }
+    return nil;
 }
 
 @implementation CRToast
@@ -433,9 +472,13 @@ UIGestureRecognizer * CRToastGestureRecognizerMake(id target, CRToastInteraction
 - (NSArray*)gestureRecognizersForInteractionResponder:(NSArray*)interactionResponders {
     NSMutableArray *gestureRecognizers = [@[] mutableCopy];
     for (CRToastInteractionResponder *interactionResponder in interactionResponders) {
-        UIGestureRecognizer *gestureRecognizer = CRToastGestureRecognizerMake(self, interactionResponder);
-        gestureRecognizer.delegate = self;
-        [gestureRecognizers addObject:gestureRecognizer];
+        if (CRToastInteractionResponderIsGenertic(interactionResponder)) {
+            gestureRecognizers = [CRToastGenericRecognizersMake(self, interactionResponder) mutableCopy];
+        } else {
+            UIGestureRecognizer *gestureRecognizer = CRToastGestureRecognizerMake(self, interactionResponder);
+            gestureRecognizer.delegate = self;
+            [gestureRecognizers addObject:gestureRecognizer];
+        }
     }
     return [NSArray arrayWithArray:gestureRecognizers];
 }
