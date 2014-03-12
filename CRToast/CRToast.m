@@ -838,7 +838,7 @@ static CGFloat kCRCollisionTweak = 0.5;
                   key,
                   obj);
             [cleanOptions removeObjectForKey:key];
-        } else if (![NSStringFromClass([obj class]) isEqualToString:kCRToastKeyClassMap[key]]) {
+        } else if (![obj isKindOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {            
             NSLog(@"[CRToast] : ERROR given %@ for key %@ was expecting Class %@ but got Class %@, passing default on instead",
                   obj,
                   key,
