@@ -347,10 +347,8 @@ UIGestureRecognizer * CRToastGestureRecognizerMake(id target, CRToastInteraction
         return CRToastSwipeGestureRecognizerMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder.interactionType, interactionResponder);
     } else if (CRToastInteractionResponderIsTap(interactionResponder)) {
         return CRToastTapGestureRecognizerMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder.interactionType, interactionResponder);
-    } else {
-        //FIXME
-        return nil;
     }
+    return nil;
 }
 
 NSArray * CRToastGenericSwipeRecognizersMake(id target, SEL action, CRToastInteractionResponder *interactionResponder) {
