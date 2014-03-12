@@ -63,7 +63,7 @@ NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionT
 
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
                                    automaticallyDismiss:(BOOL)automaticallyDismiss
-                                                  block:(void (^)(CRToastInteractionType))block {
+                                                  block:(void (^)(CRToastInteractionType interactionType))block {
     CRToastInteractionResponder *responder = [[self alloc] init];
     responder.interactionType = interactionType;
     responder.automaticallyDismiss = automaticallyDismiss;

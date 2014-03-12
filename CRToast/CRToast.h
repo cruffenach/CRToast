@@ -53,7 +53,7 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
 
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
                                    automaticallyDismiss:(BOOL)automaticallyDismiss
-                                                  block:(void (^)(CRToastInteractionType))block;
+                                                  block:(void (^)(CRToastInteractionType interactionType))block;
 @end
 
 ///--------------------
