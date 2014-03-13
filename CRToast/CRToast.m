@@ -33,10 +33,12 @@ NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionT
     return nil;
 }
 
+typedef void (^CRToastInteractionResponderBlock) (CRToastInteractionType interactionType);
+
 @interface CRToastSwipeGestureRecognizer : UISwipeGestureRecognizer
 @property (nonatomic, assign) BOOL automaticallyDismiss;
 @property (nonatomic, assign) CRToastInteractionType interactionType;
-@property (nonatomic, copy) void (^block)(CRToastInteractionType);
+@property (nonatomic, copy) CRToastInteractionResponderBlock block;
 @end
 
 @implementation CRToastSwipeGestureRecognizer
@@ -46,7 +48,7 @@ NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionT
 @interface CRToastTapGestureRecognizer : UITapGestureRecognizer
 @property (nonatomic, assign) BOOL automaticallyDismiss;
 @property (nonatomic, assign) CRToastInteractionType interactionType;
-@property (nonatomic, copy) void (^block)(CRToastInteractionType);
+@property (nonatomic, copy) CRToastInteractionResponderBlock block;
 @end
 
 @implementation CRToastTapGestureRecognizer
@@ -56,14 +58,14 @@ NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionT
 @interface CRToastInteractionResponder ()
 @property (nonatomic, assign) CRToastInteractionType interactionType;
 @property (nonatomic, assign) BOOL automaticallyDismiss;
-@property (nonatomic, copy) void (^block)(CRToastInteractionType);
+@property (nonatomic, copy) CRToastInteractionResponderBlock block;
 @end
 
 @implementation CRToastInteractionResponder
 
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
                                    automaticallyDismiss:(BOOL)automaticallyDismiss
-                                                  block:(void (^)(CRToastInteractionType interactionType))block {
+                                                  block:(CRToastInteractionResponderBlock)block {
     CRToastInteractionResponder *responder = [[self alloc] init];
     responder.interactionType = interactionType;
     responder.automaticallyDismiss = automaticallyDismiss;
@@ -997,6 +999,9 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastManagerCollisionBoundryIdentifier";
 
+typedef void (^CRToastAnimationCompltionBlock)(BOOL animated);
+typedef void (^CRToastAnimationStepBlock)(void);
+
 @implementation CRToastManager
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
@@ -1047,7 +1052,7 @@ static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastMan
 
 #pragma mark - Notification Management
 
-void (^CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf))(BOOL) {
+CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
     return ^void(BOOL completed){
         weakSelf.notificationWindow.rootViewController.view.gestureRecognizers = nil;
         weakSelf.notification.state = CRToastStateCompleted;
@@ -1064,7 +1069,7 @@ void (^CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf))(BOOL) 
     };
 }
 
-void (^CRToastOutwardAnimationsBlock(CRToastManager *weakSelf))(void) {
+CRToastAnimationStepBlock CRToastOutwardAnimationsBlock(CRToastManager *weakSelf) {
     return ^{
         weakSelf.notification.state = CRToastStateExiting;
         [weakSelf.animator removeAllBehaviors];
@@ -1073,7 +1078,7 @@ void (^CRToastOutwardAnimationsBlock(CRToastManager *weakSelf))(void) {
     };
 }
 
-void (^CRToastOutwardAnimationsSetupBlock(CRToastManager *weakSelf))(void) {
+CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *weakSelf) {
     return ^{
         CRToast *notification = weakSelf.notification;
         weakSelf.notification.state = CRToastStateExiting;
@@ -1176,13 +1181,13 @@ void (^CRToastOutwardAnimationsSetupBlock(CRToastManager *weakSelf))(void) {
     _notificationWindow.rootViewController.view.gestureRecognizers = notification.gestureRecognizers;
     
     __weak __block typeof(self) weakSelf = self;
-    void (^inwardAnimationsBlock)(void) = ^void(void) {
+    CRToastAnimationStepBlock inwardAnimationsBlock = ^void(void) {
         weakSelf.notificationView.frame = weakSelf.notificationWindow.rootViewController.view.bounds;
         weakSelf.statusBarView.frame = notification.statusBarViewAnimationFrame1;
     };
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
-    void (^inwardAnimationsCompletionBlock)(BOOL) = ^void(BOOL finished) {
+    CRToastAnimationCompltionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
         if (notification.state == CRToastStateEntering) {
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
