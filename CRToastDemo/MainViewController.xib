@@ -302,10 +302,10 @@
                                     </constraints>
                                 </switch>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odt-G2-rFU">
-                                    <rect key="frame" x="88" y="753" width="145" height="49"/>
+                                    <rect key="frame" x="88" y="753" width="145" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="49" id="DvO-bE-OwX"/>
+                                        <constraint firstAttribute="height" constant="44" id="DvO-bE-OwX"/>
                                         <constraint firstAttribute="width" constant="145" id="RnL-aj-heQ"/>
                                     </constraints>
                                     <state key="normal" title="Dismiss Notification">
