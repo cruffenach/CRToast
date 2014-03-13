@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
 @property (weak, nonatomic) IBOutlet UITextField *txtSubtitleMessage;
 @property (weak, nonatomic) IBOutlet UIButton *showNotificationButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissNotificationButton;
 
 @property (assign, nonatomic) NSTextAlignment textAlignment;
 
@@ -113,6 +114,10 @@
                                                 completionBlock:^(void) {
                                                     NSLog(@"Completed");
                                                 }];
+}
+
+- (IBAction)btnDismissNotificationPressed:(UIButton *)sender {
+    [CRToastManager dismissNotification:YES];
 }
 
 #pragma mark - Notifications
