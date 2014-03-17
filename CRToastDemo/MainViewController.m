@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
 @property (weak, nonatomic) IBOutlet UITextField *txtSubtitleMessage;
 @property (weak, nonatomic) IBOutlet UIButton *showNotificationButton;
+@property (weak, nonatomic) IBOutlet UIButton *dismissNotificationButton;
 
 @property (assign, nonatomic) NSTextAlignment textAlignment;
 
@@ -109,9 +111,13 @@
 
 - (IBAction)btnShowNotificationPressed:(UIButton *)sender {
     [CRToastManager showNotificationWithOptions:[self options]
-                                                completionBlock:^{
+                                                completionBlock:^(void) {
                                                     NSLog(@"Completed");
                                                 }];
+}
+
+- (IBAction)btnDismissNotificationPressed:(UIButton *)sender {
+    [CRToastManager dismissNotification:YES];
 }
 
 #pragma mark - Notifications
@@ -153,7 +159,6 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
                                       kCRToastUnderStatusBarKey                 : @(self.slideUnderSwitch.on),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
-                                      kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
@@ -167,6 +172,14 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
         options[kCRToastSubtitleTextKey] = self.txtSubtitleMessage.text;
         options[kCRToastSubtitleTextAlignmentKey] = @(self.subtitleAlignment);
+    }
+    
+    if (_dismissibleWithTapSwitch.on) {
+        options[kCRToastInteractionRespondersKey] = @[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTap
+                                                                                                      automaticallyDismiss:YES
+                                                                                                                     block:^(CRToastInteractionType interactionType){
+                                                                                                                         NSLog(@"Dismissed with %@ interaction", NSStringFromCRToastInteractionType(interactionType));
+                                                                                                                     }]];
     }
     
     return [NSDictionary dictionaryWithDictionary:options];

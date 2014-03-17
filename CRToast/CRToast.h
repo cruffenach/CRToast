@@ -6,6 +6,59 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ CRToastInteractionType defines the types of interactions that can be injected into a CRToastIneractionResponder.
+ */
+
+typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
+    CRToastInteractionTypeSwipeUp           = 1 << 0,
+    CRToastInteractionTypeSwipeLeft         = 1 << 1,
+    CRToastInteractionTypeSwipeDown         = 1 << 2,
+    CRToastInteractionTypeSwipeRight        = 1 << 3,
+    CRToastInteractionTypeTapOnce           = 1 << 4,
+    CRToastInteractionTypeTapTwice          = 1 << 5,
+    CRToastInteractionTypeTwoFingerTapOnce  = 1 << 6,
+    CRToastInteractionTypeTwoFingerTapTwice = 1 << 7,
+    
+    //An interaction responder with a CRToastInteractionTypeSwipe interaction type will fire on all swipe interactions
+    CRToastInteractionTypeSwipe             = (CRToastInteractionTypeSwipeUp    |
+                                               CRToastInteractionTypeSwipeLeft  |
+                                               CRToastInteractionTypeSwipeDown  |
+                                               CRToastInteractionTypeSwipeRight),
+    
+    //An interaction responder with a CRToastInteractionTypeTap interaction type will fire on all tap interactions
+    CRToastInteractionTypeTap               = (CRToastInteractionTypeTapOnce            |
+                                               CRToastInteractionTypeTapTwice           |
+                                               CRToastInteractionTypeTwoFingerTapOnce   |
+                                               CRToastInteractionTypeTwoFingerTapTwice),
+    
+    //An interaction responder with a CRToastInteractionTypeAll interaction type will fire on all swipe and tap interactions
+    CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
+};
+
+extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType);
+
+/**
+ CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the 
+ options for any given notification or in defaults.
+ */
+
+@interface CRToastInteractionResponder : NSObject
+
+/**
+ Creates an interaction responder for a given interaction type.
+ @param interactionType The kind of interaction that will trigger the responder
+ @param automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
+ animation will begin immidiately upon encountering the interaction.
+ @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the 
+ block firing
+ */
+
++ (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
+                                   automaticallyDismiss:(BOOL)automaticallyDismiss
+                                                  block:(void (^)(CRToastInteractionType interactionType))block;
+@end
+
 ///--------------------
 /// @name Notification Option Types
 ///--------------------
@@ -242,6 +295,12 @@ extern NSString *const kCRToastBackgroundColorKey;
 extern NSString *const kCRToastImageKey;
 
 /**
+ An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`
+ */
+
+extern NSString *const kCRToastInteractionRespondersKey;
+
+/**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
  */
 
@@ -272,5 +331,12 @@ extern NSString *const kCRToastImageKey;
  */
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion;
+
+/**
+ Immidiately begins the (un)animated dismisal of a notification
+ @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
+ */
+
++ (void)dismissNotification:(BOOL)animated;
 
 @end
