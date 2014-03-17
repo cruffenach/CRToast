@@ -159,7 +159,6 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
                                       kCRToastUnderStatusBarKey                 : @(self.slideUnderSwitch.on),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
-                                      kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),

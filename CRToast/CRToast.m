@@ -830,6 +830,30 @@ static CGFloat kCRCollisionTweak = 0.5;
     return (CGPoint){x, y};
 }
 
+- (void)warnAboutSensibility {
+    if (self.notificationType == CRToastTypeStatusBar) {
+        if (self.displayUnderStatusBar) {
+            NSLog(@"[CRToast] : WARNING - It is not sensible to have set kCRToastNotificationTypeKey to @(CRToastTypeStatusBar) while setting kCRToastUnderStatusBarKey to @(YES). I'll do what you ask, but it'll probably work weird");
+        }
+        
+        if (self.subtitleText) {
+            NSLog(@"[CRToast] : WARNING - It is not sensible to have set kCRToastNotificationTypeKey to @(CRToastTypeStatusBar) and configuring subtitle text to show. I'll do what you ask, but it'll probably work weird");
+        }
+    }
+    
+    if (self.inAnimationType == CRToastAnimationTypeGravity) {
+        if (self.animateInTimeInterval != kCRAnimateInTimeIntervalDefault) {
+            NSLog(@"[CRToast] : WARNING - It is not sensible to have set kCRToastAnimationInTypeKey to @(CRToastAnimationTypeGravity) and configure a kCRToastAnimationInTimeIntervalKey. Gravity and distance will be driving the in animation duration here. kCRToastAnimationGravityMagnitudeKey can be modified to change the in animation duration.");
+        }
+    }
+    
+    if (self.outAnimationType == CRToastAnimationTypeGravity) {
+        if (self.animateOutTimeInterval != kCRAnimateOutTimeIntervalDefault) {
+            NSLog(@"[CRToast] : WARNING - It is not sensible to have set kCRToastAnimationOutTypeKey to @(CRToastAnimationTypeGravity) and configure a kCRToastAnimationOutTimeIntervalKey. Gravity and distance will be driving the in animation duration here. kCRToastAnimationGravityMagnitudeKey can be modified to change the in animation duration.");
+        }
+    }
+}
+
 - (void)setOptions:(NSDictionary *)options {
     NSMutableDictionary *cleanOptions = [options mutableCopy];
     [options enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -849,6 +873,7 @@ static CGFloat kCRCollisionTweak = 0.5;
         }
     }];
     _options = [NSDictionary dictionaryWithDictionary:cleanOptions];
+    [self warnAboutSensibility];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -1188,7 +1213,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
     CRToastAnimationCompltionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
-        if (notification.state == CRToastStateEntering) {
+        if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
