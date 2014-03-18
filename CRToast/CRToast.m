@@ -1084,6 +1084,7 @@ CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastMa
         [weakSelf.statusBarView removeFromSuperview];
         if (weakSelf.notifications.count > 0) {
             CRToast *notification = weakSelf.notifications.firstObject;
+            weakSelf.gravityAnimationCompletionBlock = NULL;
             [weakSelf displayNotification:notification];
         } else {
             weakSelf.notificationWindow.hidden = YES;
@@ -1217,6 +1218,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
+                    self.gravityAnimationCompletionBlock = NULL;
                     CRToastOutwardAnimationsSetupBlock(weakSelf)();
                 }
             });
@@ -1275,7 +1277,6 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
    withBoundaryIdentifier:(id <NSCopying>)identifier {
     if (self.gravityAnimationCompletionBlock) {
         self.gravityAnimationCompletionBlock(YES);
-        self.gravityAnimationCompletionBlock = NULL;
     }
 }
 
