@@ -82,6 +82,10 @@ typedef NS_ENUM(NSInteger, CRToastState) {
     CRToastStateCompleted
 };
 
+@interface CRToastViewController : UIViewController
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+@end
+
 #pragma mark - CRToast
 
 @interface CRToast : NSObject <UIGestureRecognizerDelegate>
@@ -106,6 +110,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) UIView *statusBarView;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
 
 //Read Only Convinence Properties Providing Default Values or Values from Options
 
@@ -167,6 +172,7 @@ NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotifica
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
+NSString *const kCRToastStatusBarStyle                      = @"kCRToastStatusBarStyle";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
@@ -242,6 +248,8 @@ static UIImage  *                   kCRImageDefault                         = ni
 static NSArray  *                   kCRInteractionResponders                = nil;
 
 static NSDictionary *               kCRToastKeyClassMap                     = nil;
+
+static UIStatusBarStyle             kCRStatusBarStyleDefault                = UIStatusBarStyleDefault;
 
 #pragma mark - Layout Helper Functions
 
@@ -443,6 +451,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 }
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
+    if (defaultOptions[kCRToastStatusBarStyle])                 kCRStatusBarStyleDefault               = [defaultOptions[kCRToastStatusBarStyle] integerValue];
+    
     //TODO Validate Types of Default Options
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
@@ -702,6 +712,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastSubtitleTextMaxNumberOfLinesKey] ?
     [_options[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue] :
     kCRSubtitleTextMaxNumberOfLinesDefault;
+}
+
+- (UIStatusBarStyle)statusBarStyle {
+    return _options[kCRToastStatusBarStyle] ? [_options[kCRToastStatusBarStyle] integerValue] : kCRStatusBarStyleDefault;
 }
 
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
@@ -1009,6 +1023,22 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastViewController
+
+@implementation CRToastViewController
+UIStatusBarStyle statusBarStyle;
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return statusBarStyle;
+}
+
+-(void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
+    statusBarStyle = newStatusBarStyle;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+@end
+
 #pragma mark - CRToastManager
 
 @interface CRToastManager () <UICollisionBehaviorDelegate>
@@ -1063,7 +1093,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
-        notificationWindow.rootViewController = [UIViewController new];
+        notificationWindow.rootViewController = [CRToastViewController new];
         notificationWindow.rootViewController.view.clipsToBounds = YES;
         self.notificationWindow = notificationWindow;
         
@@ -1184,6 +1214,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     _notificationWindow.frame = containerFrame;
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
+    
+    CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
+    [rootViewController statusBarStyle:notification.statusBarStyle];
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;

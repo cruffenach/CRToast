@@ -119,6 +119,8 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
 
 extern NSString *const kCRToastNotificationTypeKey;
 
+extern NSString *const kCRToastStatusBarStyle;
+
 /**
  The presentation type for the notification. Expects type `CRToastPresentationType`.
  */
