@@ -155,7 +155,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 - (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
-
+- (void)initiateAnimator:(UIView *)view;
 @end
 
 @interface CRToastView : UIView
@@ -891,6 +891,10 @@ static CGFloat kCRCollisionTweak = 0.5;
     return YES;
 }
 
+- (void)initiateAnimator:(UIView*)view {
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:view];
+}
+
 @end
 
 #pragma mark - CRToastView
@@ -1128,7 +1132,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                                  completion:CRToastOutwardAnimationsCompletionBlock(weakSelf)];
             } break;
             case CRToastAnimationTypeGravity: {
-                [notification.animator removeAllBehaviors];
+                if (weakSelf.notification.animator == nil) {
+                    [weakSelf.notification initiateAnimator:weakSelf.notificationWindow.rootViewController.view];
+                }
+                [weakSelf.notification.animator removeAllBehaviors];
                 UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[weakSelf.notificationView, weakSelf.statusBarView]];
                 gravity.gravityDirection = notification.outGravityDirection;
                 gravity.magnitude = notification.animationGravityMagnitude;
@@ -1183,9 +1190,6 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.frame = containerFrame;
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
-    
-    UIDynamicAnimator *animator = [[UIDynamicAnimator alloc] initWithReferenceView:_notificationWindow.rootViewController.view];
-    notification.animator = animator;
     
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
@@ -1242,6 +1246,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                              completion:inwardAnimationsCompletionBlock];
         } break;
         case CRToastAnimationTypeGravity: {
+            [notification initiateAnimator:_notificationWindow.rootViewController.view];
             [notification.animator removeAllBehaviors];
             UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
             gravity.gravityDirection = notification.inGravityDirection;
