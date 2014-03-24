@@ -1156,7 +1156,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         __weak __block typeof(self) weakSelf = self;
         CRToastOutwardAnimationsSetupBlock(weakSelf)();
     } else {
-        [[(CRToast*)_notifications.firstObject notificationView] removeFromSuperview];
+        __weak __block typeof(self) weakSelf = self;
+        CRToastOutwardAnimationsCompletionBlock(weakSelf)(YES);
     }
 }
 
