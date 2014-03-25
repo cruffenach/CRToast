@@ -19,19 +19,19 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
     CRToastInteractionTypeTapTwice          = 1 << 5,
     CRToastInteractionTypeTwoFingerTapOnce  = 1 << 6,
     CRToastInteractionTypeTwoFingerTapTwice = 1 << 7,
-
+    
     //An interaction responder with a CRToastInteractionTypeSwipe interaction type will fire on all swipe interactions
     CRToastInteractionTypeSwipe             = (CRToastInteractionTypeSwipeUp    |
                                                CRToastInteractionTypeSwipeLeft  |
                                                CRToastInteractionTypeSwipeDown  |
                                                CRToastInteractionTypeSwipeRight),
-
+    
     //An interaction responder with a CRToastInteractionTypeTap interaction type will fire on all tap interactions
     CRToastInteractionTypeTap               = (CRToastInteractionTypeTapOnce            |
                                                CRToastInteractionTypeTapTwice           |
                                                CRToastInteractionTypeTwoFingerTapOnce   |
                                                CRToastInteractionTypeTwoFingerTapTwice),
-
+    
     //An interaction responder with a CRToastInteractionTypeAll interaction type will fire on all swipe and tap interactions
     CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
 };
@@ -39,7 +39,7 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
 extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType);
 
 /**
- CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the
+ CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the 
  options for any given notification or in defaults.
  */
 
@@ -50,7 +50,7 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  @param interactionType The kind of interaction that will trigger the responder
  @param automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
  animation will begin immidiately upon encountering the interaction.
- @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the
+ @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the 
  block firing
  */
 
@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
 ///--------------------
 
 /**
- These are the keys that define the options that can be set for a notifaction. All primitive types mentioned should
+ These are the keys that define the options that can be set for a notifaction. All primitive types mentioned should 
  be wrapped as `NSNumber`s or `NSValue`s
  */
 
@@ -177,7 +177,7 @@ extern NSString *const kCRToastTimeIntervalKey;
 extern NSString *const kCRToastAnimationOutTimeIntervalKey;
 
 /**
- The spring damping coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to
+ The spring damping coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to 
  `CRToastAnimationTypeSpring`. Currently you can't define separate damping for in and out. Expects type `CGFloat`.
  */
 
