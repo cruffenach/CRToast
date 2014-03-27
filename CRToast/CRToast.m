@@ -1014,6 +1014,20 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastViewController
+
+@interface CRToastViewController : UIViewController
+
+@end
+
+@implementation CRToastViewController
+
+- (BOOL)prefersStatusBarHidden {
+    return [UIApplication sharedApplication].statusBarHidden;
+}
+
+@end
+
 #pragma mark - CRToastManager
 
 @interface CRToastManager () <UICollisionBehaviorDelegate>
@@ -1067,7 +1081,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
-        notificationWindow.rootViewController = [UIViewController new];
+        notificationWindow.rootViewController = [CRToastViewController new];
         notificationWindow.rootViewController.view.clipsToBounds = YES;
         self.notificationWindow = notificationWindow;
         
