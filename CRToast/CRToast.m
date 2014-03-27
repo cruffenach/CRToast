@@ -1009,6 +1009,20 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastViewController
+
+@interface CRToastViewController : UIViewController
+
+@end
+
+@implementation CRToastViewController
+
+- (BOOL)prefersStatusBarHidden {
+    return [UIApplication sharedApplication].statusBarHidden;
+}
+
+@end
+
 #pragma mark - CRToastManager
 
 @interface CRToastManager () <UICollisionBehaviorDelegate>
@@ -1063,7 +1077,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
-        notificationWindow.rootViewController = [UIViewController new];
+        notificationWindow.rootViewController = [CRToastViewController new];
         notificationWindow.rootViewController.view.clipsToBounds = YES;
         self.notificationWindow = notificationWindow;
         
@@ -1141,8 +1155,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                 [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                            fromPoint:notification.outCollisionPoint1
                                              toPoint:notification.outCollisionPoint2];
+                UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+                rotationLock.allowsRotation = NO;
                 [weakSelf.animator addBehavior:gravity];
                 [weakSelf.animator addBehavior:collision];
+                [weakSelf.animator addBehavior:rotationLock];
                 weakSelf.gravityAnimationCompletionBlock = CRToastOutwardAnimationsCompletionBlock(weakSelf);
             } break;
         }
@@ -1251,8 +1268,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                        fromPoint:notification.inCollisionPoint1
                                          toPoint:notification.inCollisionPoint2];
+            UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+            rotationLock.allowsRotation = NO;
             [_animator addBehavior:gravity];
             [_animator addBehavior:collision];
+            [_animator addBehavior:rotationLock];
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
     }
