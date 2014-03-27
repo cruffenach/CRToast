@@ -2,3 +2,6 @@ language: objective-c
 xcode_project: CRToastDemo.xcodeproj
 xcode_scheme: CRToastTests
 xcode_sdk: iphonesimulator7.0
+before_script:
+  - brew update
+  - brew upgrade xctool
