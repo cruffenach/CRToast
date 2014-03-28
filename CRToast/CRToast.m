@@ -1041,7 +1041,7 @@ UIStatusBarStyle statusBarStyle;
     return statusBarStyle;
 }
 
--(void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
     statusBarStyle = newStatusBarStyle;
     [self setNeedsStatusBarAppearanceUpdate];
 }
