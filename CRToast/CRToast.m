@@ -141,7 +141,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
 @property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
 @property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
-
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 
@@ -197,6 +197,7 @@ NSString *const kCRToastSubtitleTextAlignmentKey            = @"kCRToastSubtitle
 NSString *const kCRToastSubtitleTextShadowColorKey          = @"kCRToastSubtitleTextShadowColorKey";
 NSString *const kCRToastSubtitleTextShadowOffsetKey         = @"kCRToastSubtitleTextShadowOffsetKey";
 NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey     = @"kCRToastSubtitleTextMaxNumberOfLinesKey";
+NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBarStyleKey";
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
@@ -236,6 +237,7 @@ static NSTextAlignment          	kCRSubtitleTextAlignmentDefault         = NSTex
 static UIColor  *               	kCRSubtitleTextShadowColorDefault       = nil;
 static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
 static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
+static UIStatusBarStyle             kCRStatusBarStyleDefault                = UIStatusBarStyleDefault;
 
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
@@ -428,6 +430,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastSubtitleTextShadowColorKey          : NSStringFromClass([UIColor class]),
                                 kCRToastSubtitleTextShadowOffsetKey         : NSStringFromClass([[NSValue valueWithCGSize:kCRSubtitleTextShadowOffsetDefault] class]),
                                 kCRToastSubtitleTextMaxNumberOfLinesKey     : NSStringFromClass([@(kCRSubtitleTextMaxNumberOfLinesDefault) class]),
+                                kCRToastStatusBarStyleKey                   : NSStringFromClass([@(kCRStatusBarStyleDefault) class]),
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class])};
@@ -470,7 +473,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastTextShadowColorKey])                 kCRTextShadowColorDefault               = defaultOptions[kCRToastTextShadowColorKey];
     if (defaultOptions[kCRToastTextShadowOffsetKey])                kCRTextShadowOffsetDefault              = [defaultOptions[kCRToastTextShadowOffsetKey] CGSizeValue];
     if (defaultOptions[kCRToastTextMaxNumberOfLinesKey])            kCRTextMaxNumberOfLinesDefault          = [defaultOptions[kCRToastTextMaxNumberOfLinesKey] integerValue];
-    
+
+    if (defaultOptions[kCRToastStatusBarStyleKey])                     kCRStatusBarStyleDefault                = [defaultOptions[kCRToastStatusBarStyleKey] integerValue];
+
     if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
     if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
     if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
@@ -703,6 +708,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastSubtitleTextMaxNumberOfLinesKey] ?
     [_options[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue] :
     kCRSubtitleTextMaxNumberOfLinesDefault;
+}
+
+- (UIStatusBarStyle)statusBarStyle {
+    return _options[kCRToastStatusBarStyleKey] ? [_options[kCRToastStatusBarStyleKey] integerValue] : kCRStatusBarStyleDefault;
 }
 
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
@@ -1017,13 +1026,24 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 #pragma mark - CRToastViewController
 
 @interface CRToastViewController : UIViewController
-
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
 @end
 
 @implementation CRToastViewController
 
+UIStatusBarStyle statusBarStyle;
+
 - (BOOL)prefersStatusBarHidden {
     return [UIApplication sharedApplication].statusBarHidden;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return statusBarStyle;
+}
+
+-(void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
+    statusBarStyle = newStatusBarStyle;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 @end
@@ -1201,7 +1221,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
     }
-    
+
+    CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
+    [rootViewController statusBarStyle:notification.statusBarStyle];
+
     _notificationWindow.frame = containerFrame;
     _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
