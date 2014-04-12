@@ -1042,7 +1042,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 static NSString *const kCRToastManagerCollisionBoundryIdentifier = @"kCRToastManagerCollisionBoundryIdentifier";
 
-typedef void (^CRToastAnimationCompltionBlock)(BOOL animated);
+typedef void (^CRToastAnimationCompletionBlock)(BOOL animated);
 typedef void (^CRToastAnimationStepBlock)(void);
 
 @implementation CRToastManager
@@ -1092,7 +1092,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 
 #pragma mark - Notification Management
 
-CRToastAnimationCompltionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
+CRToastAnimationCompletionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
     return ^void(BOOL completed){
         weakSelf.notificationWindow.rootViewController.view.gestureRecognizers = nil;
         weakSelf.notification.state = CRToastStateCompleted;
@@ -1232,7 +1232,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     };
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
-    CRToastAnimationCompltionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
+    CRToastAnimationCompletionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
         if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
