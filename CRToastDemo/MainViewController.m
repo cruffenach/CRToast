@@ -129,7 +129,7 @@
                                                     0);
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.showNotificationButton.frame));
+                                             CGRectGetMaxY(self.dismissNotificationButton.frame));
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {
@@ -139,7 +139,7 @@
                                                     0);
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.showNotificationButton.frame));
+                                             CGRectGetMaxY(self.dismissNotificationButton.frame));
 }
 
 - (void)orientationChanged:(NSNotification*)notification {
