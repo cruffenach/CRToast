@@ -283,6 +283,12 @@ extern NSString *const kCRToastSubtitleTextShadowOffsetKey;
 extern NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey;
 
 /**
+ The status bar style for the navigation bar.  Expects type `NSInteger`.
+ */
+
+extern NSString *const kCRToastStatusBarStyleKey;
+
+/**
  The background color for the notification. Expects type `UIColor`.
  */
 
