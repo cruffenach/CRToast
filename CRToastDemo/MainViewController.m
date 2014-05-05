@@ -34,8 +34,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *txtNotificationMessage;
 @property (weak, nonatomic) IBOutlet UITextField *txtSubtitleMessage;
-@property (weak, nonatomic) IBOutlet UIButton *showNotificationButton;
-@property (weak, nonatomic) IBOutlet UIButton *dismissNotificationButton;
 
 @property (assign, nonatomic) NSTextAlignment textAlignment;
 
@@ -62,9 +60,6 @@
                                              selector:@selector(orientationChanged:)
                                                  name:UIDeviceOrientationDidChangeNotification
                                                object:nil];
-    
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.showNotificationButton.frame));
 
     self.title = @"CRToast";
     [self updateDurationLabel];
@@ -129,8 +124,6 @@
                                                     CGRectGetHeight([notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue]),
                                                     0);
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.dismissNotificationButton.frame));
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {
@@ -139,8 +132,6 @@
                                                     [self.bottomLayoutGuide length],
                                                     0);
     self.scrollView.scrollIndicatorInsets = self.scrollView.contentInset;
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.contentView.frame),
-                                             CGRectGetMaxY(self.dismissNotificationButton.frame));
 }
 
 - (void)orientationChanged:(NSNotification*)notification {
