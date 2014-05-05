@@ -1180,8 +1180,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                 [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                            fromPoint:notification.outCollisionPoint1
                                              toPoint:notification.outCollisionPoint2];
+                UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+                rotationLock.allowsRotation = NO;
                 [weakSelf.notification.animator addBehavior:gravity];
                 [weakSelf.notification.animator addBehavior:collision];
+                [weakSelf.notification.animator addBehavior:rotationLock];
                 weakSelf.gravityAnimationCompletionBlock = CRToastOutwardAnimationsCompletionBlock(weakSelf);
             } break;
         }
@@ -1296,8 +1299,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
                                        fromPoint:notification.inCollisionPoint1
                                          toPoint:notification.inCollisionPoint2];
+            UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
+            rotationLock.allowsRotation = NO;
             [notification.animator addBehavior:gravity];
             [notification.animator addBehavior:collision];
+            [notification.animator addBehavior:rotationLock];
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
     }
