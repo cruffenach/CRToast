@@ -15,7 +15,7 @@
 
 ### CocoaPods
 
-`pod 'CRToast', '~> 0.0.6'`
+`pod 'CRToast', '~> 0.0.7'`
 
 ### Manual
 
