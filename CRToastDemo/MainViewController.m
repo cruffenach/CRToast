@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *statusBarSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *navigationBarSwitch;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
@@ -111,6 +112,10 @@
 
 - (IBAction)statusBarChanged:(UISwitch *)sender {
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (IBAction)navigationBarChanged:(UISwitch *)sender {
+    [[self navigationController] setNavigationBarHidden:!sender.on animated:YES];
 }
 
 # pragma mark - Show Notification
