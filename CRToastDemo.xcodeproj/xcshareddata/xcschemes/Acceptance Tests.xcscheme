@@ -8,15 +8,15 @@
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
-            buildForRunning = "NO"
+            buildForRunning = "YES"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5E2FFB5218367C01003333F8"
-               BuildableName = "CRToastDemo.app"
-               BlueprintName = "CRToastDemo"
+               BlueprintIdentifier = "2D240E3419235A280079F079"
+               BuildableName = "Acceptance Tests.xctest"
+               BlueprintName = "Acceptance Tests"
                ReferencedContainer = "container:CRToastDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D8F2E0718CED50A0077A7F6"
-               BuildableName = "CRToastTests.xctest"
-               BlueprintName = "CRToastTests"
+               BlueprintIdentifier = "5E2FFB5218367C01003333F8"
+               BuildableName = "CRToastDemo.app"
+               BlueprintName = "CRToastDemo"
                ReferencedContainer = "container:CRToastDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,16 +46,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D8F2E0718CED50A0077A7F6"
-               BuildableName = "CRToastTests.xctest"
-               BlueprintName = "CRToastTests"
-               ReferencedContainer = "container:CRToastDemo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D240E3419235A280079F079"
                BuildableName = "Acceptance Tests.xctest"
                BlueprintName = "Acceptance Tests"
@@ -63,6 +53,15 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5E2FFB5218367C01003333F8"
+            BuildableName = "CRToastDemo.app"
+            BlueprintName = "CRToastDemo"
+            ReferencedContainer = "container:CRToastDemo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
