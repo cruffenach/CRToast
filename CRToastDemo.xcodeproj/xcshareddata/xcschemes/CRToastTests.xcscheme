@@ -52,16 +52,6 @@
                ReferencedContainer = "container:CRToastDemo.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D240E3419235A280079F079"
-               BuildableName = "Acceptance Tests.xctest"
-               BlueprintName = "Acceptance Tests"
-               ReferencedContainer = "container:CRToastDemo.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
