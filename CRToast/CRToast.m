@@ -930,6 +930,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
+        self.accessibilityLabel = NSStringFromClass([self class]);
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         imageView.userInteractionEnabled = NO;
