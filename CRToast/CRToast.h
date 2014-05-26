@@ -307,6 +307,13 @@ extern NSString *const kCRToastImageKey;
 extern NSString *const kCRToastInteractionRespondersKey;
 
 /**
+ An BOOL setting whether the CRToast's should autorotate. Expects type `BOOL` defaults to `YES`
+ */
+
+extern NSString *const kCRToastAutorotateKey;
+
+
+/**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
  */
 
