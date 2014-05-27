@@ -29,6 +29,9 @@
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
 
+@property (weak, nonatomic) IBOutlet UISwitch *statusBarSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *navigationBarSwitch;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
 
@@ -95,12 +98,24 @@
     [self layoutSubviews];
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return self.statusBarSwitch ? !self.statusBarSwitch.on : NO;
+}
+
 - (void)updateDurationLabel {
     self.lblDuration.text = [NSString stringWithFormat:@"%f seconds", self.sliderDuration.value];
 }
 
 - (IBAction)sliderDurationChanged:(UISlider *)sender {
     [self updateDurationLabel];
+}
+
+- (IBAction)statusBarChanged:(UISwitch *)sender {
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (IBAction)navigationBarChanged:(UISwitch *)sender {
+    [[self navigationController] setNavigationBarHidden:!sender.on animated:YES];
 }
 
 # pragma mark - Show Notification
