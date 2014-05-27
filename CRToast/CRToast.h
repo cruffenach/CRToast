@@ -124,7 +124,7 @@ extern NSString *const kCRToastNotificationTypeKey;
  The preferred height for the notificaiton, this will only be used for notifications with CRToastTypeCustom set for kCRToastNotificationTypeKey
  */
 
-extern NSString *const kCRToastNotificationPreferredHeight;
+extern NSString *const kCRToastNotificationPreferredHeightKey;
 
 /**
  The presentation type for the notification. Expects type `CRToastPresentationType`.

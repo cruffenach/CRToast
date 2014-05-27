@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 #pragma mark - Option Constant Definitions
 
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
-NSString *const kCRToastNotificationPreferredHeight         = @"kCRToastNotificationPreferredHeight";
+NSString *const kCRToastNotificationPreferredHeightKey         = @"kCRToastNotificationPreferredHeightKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
@@ -419,7 +419,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRInteractionResponders = @[];
         
         kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
-                                kCRToastNotificationPreferredHeight         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
+                                kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
                                 kCRToastAnimationInTypeKey                  : NSStringFromClass([@(kCRAnimationTypeDefaultIn) class]),
@@ -466,7 +466,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
     //TODO Validate Types of Default Options
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
-    if (defaultOptions[kCRToastNotificationPreferredHeight])        kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeight] floatValue];
+    if (defaultOptions[kCRToastNotificationPreferredHeightKey])        kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
     
     if (defaultOptions[kCRToastUnderStatusBarKey])                  kCRDisplayUnderStatusBarDefault         = [defaultOptions[kCRToastUnderStatusBarKey] boolValue];
@@ -586,8 +586,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 }
 
 - (CGFloat)preferredHeight {
-    return _options[kCRToastNotificationPreferredHeight] ?
-    [_options[kCRToastNotificationPreferredHeight] floatValue] :
+    return _options[kCRToastNotificationPreferredHeightKey] ?
+    [_options[kCRToastNotificationPreferredHeightKey] floatValue] :
     kCRNotificationPreferredHeightDefault;
 }
 
