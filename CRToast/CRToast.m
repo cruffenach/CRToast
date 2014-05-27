@@ -321,18 +321,18 @@ static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
 
 #pragma mark - Interaction Setup Helpers
 
-BOOL CRToastInteractionResponderIsGenertic(CRToastInteractionResponder *interactionResponder) {
-    return (interactionResponder.interactionType == CRToastInteractionTypeSwipe ||
-            interactionResponder.interactionType == CRToastInteractionTypeTap   ||
-            interactionResponder.interactionType == CRToastInteractionTypeAll);
+BOOL CRToastInteractionResponderIsGenertic(CRToastInteractionType interactionType) {
+    return (interactionType == CRToastInteractionTypeSwipe ||
+            interactionType == CRToastInteractionTypeTap   ||
+            interactionType == CRToastInteractionTypeAll);
 }
 
-BOOL CRToastInteractionResponderIsSwipe(CRToastInteractionResponder *interactionResponder) {
-    return CRToastInteractionTypeSwipe & interactionResponder.interactionType;
+BOOL CRToastInteractionResponderIsSwipe(CRToastInteractionType interactionType) {
+    return CRToastInteractionTypeSwipe & interactionType;
 }
 
-BOOL CRToastInteractionResponderIsTap(CRToastInteractionResponder *interactionResponder) {
-    return CRToastInteractionTypeTap & interactionResponder.interactionType;
+BOOL CRToastInteractionResponderIsTap(interactionType) {
+    return CRToastInteractionTypeTap & interactionType;
 }
 
 UIGestureRecognizer * CRToastSwipeGestureRecognizerMake(id target, SEL action, CRToastInteractionType interactionType, CRToastInteractionResponder *interactionResponder) {
@@ -363,9 +363,9 @@ UIGestureRecognizer * CRToastTapGestureRecognizerMake(id target, SEL action, CRT
 }
 
 UIGestureRecognizer * CRToastGestureRecognizerMake(id target, CRToastInteractionResponder *interactionResponder) {
-    if (CRToastInteractionResponderIsSwipe(interactionResponder)) {
+    if (CRToastInteractionResponderIsSwipe(interactionResponder.interactionType)) {
         return CRToastSwipeGestureRecognizerMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder.interactionType, interactionResponder);
-    } else if (CRToastInteractionResponderIsTap(interactionResponder)) {
+    } else if (CRToastInteractionResponderIsTap(interactionResponder.interactionType)) {
         return CRToastTapGestureRecognizerMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder.interactionType, interactionResponder);
     }
     return nil;
@@ -562,7 +562,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 - (NSArray*)gestureRecognizersForInteractionResponder:(NSArray*)interactionResponders {
     NSMutableArray *gestureRecognizers = [@[] mutableCopy];
     for (CRToastInteractionResponder *interactionResponder in [kCRInteractionResponders arrayByAddingObjectsFromArray:interactionResponders]) {
-        if (CRToastInteractionResponderIsGenertic(interactionResponder)) {
+        if (CRToastInteractionResponderIsGenertic(interactionResponder.interactionType)) {
             gestureRecognizers = [CRToastGenericRecognizersMake(self, interactionResponder) mutableCopy];
         } else {
             UIGestureRecognizer *gestureRecognizer = CRToastGestureRecognizerMake(self, interactionResponder);
