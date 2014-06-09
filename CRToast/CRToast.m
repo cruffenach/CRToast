@@ -1053,6 +1053,25 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastWindow
+
+@interface CRToastWindow : UIWindow
+
+@end
+
+@implementation CRToastWindow
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event {
+    for (UIView *subview in self.subviews) {
+        if ([subview hitTest:[self convertPoint:point toView:subview] withEvent:event] != nil) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+@end
+
 #pragma mark - CRToastViewController
 
 @interface CRToastViewController : UIViewController
@@ -1132,7 +1151,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIWindow *notificationWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        UIWindow *notificationWindow = [[CRToastWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
