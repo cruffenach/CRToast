@@ -1264,8 +1264,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     [rootViewController statusBarStyle:notification.statusBarStyle];
     rootViewController.autorotate = notification.autorotate;
     
-    _notificationWindow.frame = containerFrame;
-    _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
+    _notificationWindow.rootViewController.view.frame = containerFrame;
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;
