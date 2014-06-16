@@ -547,14 +547,20 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (swipeGestureRecognizer.automaticallyDismiss) {
         [CRToastManager dismissNotification:YES];
     }
-    swipeGestureRecognizer.block(swipeGestureRecognizer.interactionType);
+    
+    if (swipeGestureRecognizer.block) {
+        swipeGestureRecognizer.block(swipeGestureRecognizer.interactionType);
+    }
 }
 
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer {
     if (tapGestureRecognizer.automaticallyDismiss) {
         [CRToastManager dismissNotification:YES];
     }
-    tapGestureRecognizer.block(tapGestureRecognizer.interactionType);
+    
+    if (tapGestureRecognizer.block) {
+        tapGestureRecognizer.block(tapGestureRecognizer.interactionType);
+    }
 }
 
 #pragma mark - Overrides
