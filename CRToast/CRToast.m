@@ -547,14 +547,20 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (swipeGestureRecognizer.automaticallyDismiss) {
         [CRToastManager dismissNotification:YES];
     }
-    swipeGestureRecognizer.block(swipeGestureRecognizer.interactionType);
+    
+    if (swipeGestureRecognizer.block) {
+        swipeGestureRecognizer.block(swipeGestureRecognizer.interactionType);
+    }
 }
 
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer {
     if (tapGestureRecognizer.automaticallyDismiss) {
         [CRToastManager dismissNotification:YES];
     }
-    tapGestureRecognizer.block(tapGestureRecognizer.interactionType);
+    
+    if (tapGestureRecognizer.block) {
+        tapGestureRecognizer.block(tapGestureRecognizer.interactionType);
+    }
 }
 
 #pragma mark - Overrides
@@ -1139,6 +1145,10 @@ typedef void (^CRToastAnimationStepBlock)(void);
     [[self manager] dismissNotification:animated];
 }
 
++ (void)dismissAllNotifications:(BOOL)animated {
+    [[self manager] dismissAllNotifications:YES];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;
@@ -1255,6 +1265,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         __weak __block typeof(self) weakSelf = self;
         CRToastOutwardAnimationsCompletionBlock(weakSelf)(YES);
     }
+}
+
+- (void)dismissAllNotifications:(BOOL)animated {
+    [self dismissNotification:animated];
+    [self.notifications removeAllObjects];
 }
 
 - (void)addNotification:(CRToast*)notification {
