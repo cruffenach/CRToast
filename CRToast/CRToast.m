@@ -965,6 +965,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         imageView.userInteractionEnabled = NO;
@@ -1078,11 +1079,34 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastContainerView
+
+@interface CRToastContainerView : UIView
+
+@end
+
+@implementation CRToastContainerView
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event {
+    for (UIView *subview in self.subviews) {
+        if ([subview hitTest:[self convertPoint:point toView:subview] withEvent:event] != nil) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+@end
+
 #pragma mark - CRToastViewController
 
 @interface CRToastViewController : UIViewController
-- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+
 @property (nonatomic, assign) BOOL autorotate;
+@property (nonatomic, weak) CRToast *notification;
+
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+
 @end
 
 @implementation CRToastViewController
@@ -1104,6 +1128,19 @@ UIStatusBarStyle statusBarStyle;
 
 - (BOOL)shouldAutorotate {
     return _autorotate;
+}
+
+- (void)loadView {
+    self.view = [[CRToastContainerView alloc] init];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (self.notification) {
+        CGSize notificationSize = CRNotificationViewSize(self.notification.notificationType, self.notification.preferredHeight);
+        self.notification.notificationView.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    }
 }
 
 @end
@@ -1297,6 +1334,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
     [rootViewController statusBarStyle:notification.statusBarStyle];
     rootViewController.autorotate = notification.autorotate;
+    rootViewController.notification = notification;
     
     _notificationWindow.rootViewController.view.frame = containerFrame;
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
