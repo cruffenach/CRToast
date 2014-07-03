@@ -1070,6 +1070,14 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 UIStatusBarStyle statusBarStyle;
 
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        _autorotate = YES;
+    }
+    return self;
+}
+
 - (BOOL)prefersStatusBarHidden {
     return [UIApplication sharedApplication].statusBarHidden;
 }
