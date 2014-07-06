@@ -1128,6 +1128,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @property (nonatomic, assign) BOOL autorotate;
 @property (nonatomic, weak) CRToast *notification;
+@property (nonatomic, weak) UIView *toastView;
 
 - (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
 
@@ -1161,9 +1162,9 @@ UIStatusBarStyle statusBarStyle;
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
-    if (self.notification) {
-        CGSize notificationSize = CRNotificationViewSize(self.notification.notificationType, self.notification.preferredHeight);
-        self.notification.notificationView.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    if (self.toastView) {
+        CGSize notificationSize = CRNotificationViewSizeForOrientation(self.notification.notificationType, self.notification.preferredHeight, toInterfaceOrientation);
+        self.toastView.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     }
 }
 
@@ -1373,6 +1374,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     self.notificationView = notificationView;
+    rootViewController.toastView = notificationView;
     self.statusBarView = statusBarView;
     
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
