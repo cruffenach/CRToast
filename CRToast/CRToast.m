@@ -259,38 +259,62 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 #pragma mark - Layout Helper Functions
 
-static CGFloat const CRStatusBarDefaultHeight = 44.0f;
-static CGFloat const CRStatusBariPhoneLandscape = 33.0f;
+static CGFloat const CRNavigationBarDefaultHeight = 45.0f;
+static CGFloat const CRNavigationBarDefaultHeightiPhoneLandscape = 33.0f;
 
-static CGFloat CRGetStatusBarHeight() {
-    return (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ?
+static UIInterfaceOrientation CRGetDeviceOrientation() {
+    return [UIApplication sharedApplication].statusBarOrientation;
+}
+
+static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
+    return (UIDeviceOrientationIsLandscape(orientation)) ?
     [[UIApplication sharedApplication] statusBarFrame].size.width :
     [[UIApplication sharedApplication] statusBarFrame].size.height;
 }
 
-static CGFloat CRGetStatusBarWidth() {
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+static CGFloat CRGetStatusBarHeight() {
+    return CRGetStatusBarHeightForOrientation(CRGetDeviceOrientation());
+}
+
+static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
+    if (UIDeviceOrientationIsPortrait(orientation)) {
         return [UIScreen mainScreen].bounds.size.width;
     }
     return [UIScreen mainScreen].bounds.size.height;
 }
 
-static CGFloat CRGetNavigationBarHeight() {
-    return (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
-            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
-    CRStatusBarDefaultHeight :
-    CRStatusBariPhoneLandscape;
+static CGFloat CRGetStatusBarWidth() {
+    return CRGetStatusBarWidthForOrientation(CRGetDeviceOrientation());
 }
 
-static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
+static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
+    return (UIDeviceOrientationIsPortrait(orientation) ||
+            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
+    CRNavigationBarDefaultHeight :
+    CRNavigationBarDefaultHeightiPhoneLandscape;
+}
+
+static CGFloat CRGetNavigationBarHeight() {
+    return CRGetNavigationBarHeightForOrientation(CRGetDeviceOrientation());
+}
+
+static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
     switch (type) {
         case CRToastTypeStatusBar:
-            return CRGetStatusBarHeight();
+            return CRGetStatusBarHeightForOrientation(orientation);
         case CRToastTypeNavigationBar:
-            return CRGetStatusBarHeight() + CRGetNavigationBarHeight();
+            return CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
         case CRToastTypeCustom:
             return preferredNotificationHeight;
     }
+}
+
+static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
+    return CRGetNotificationViewHeightForOrientation(type, preferredNotificationHeight, CRGetDeviceOrientation());
+}
+
+static CGSize CRNotificationViewSizeForOrientation(CRToastType notificationType, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
+    return CGSizeMake(CRGetStatusBarWidthForOrientation(orientation), CRGetNotificationViewHeightForOrientation(notificationType, preferredNotificationHeight, orientation));
 }
 
 static CGSize CRNotificationViewSize(CRToastType notificationType, CGFloat preferredNotificationHeight) {
