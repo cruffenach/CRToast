@@ -1127,7 +1127,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (void)dismissAllNotifications:(BOOL)animated {
-    [[self manager] dismissAllNotifications:YES];
+    [[self manager] dismissAllNotifications:animated];
 }
 
 + (instancetype)manager {
