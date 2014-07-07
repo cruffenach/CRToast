@@ -8,6 +8,6 @@ Fork and create a new branch. *It is best to leave `master` for keeping your for
 # Bugs
 
 Please be clear and as detailed as possible in your description of the bug.
-- version you are using. *just post your Podfile.lock if unsure*
+- version you are using. *just post your Podfile.lock if unsure*.
 - Steps to reproduce.
 - <3 a demo app on git or zip.
