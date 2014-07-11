@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 #pragma mark - CRToast
 
-@interface CRToast : NSObject <UIGestureRecognizerDelegate>
+@interface CRToast () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSUUID *uuid;
 @property (nonatomic, assign) CRToastState state;
@@ -98,10 +98,6 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 @property (nonatomic, strong) NSArray *gestureRecognizers;
 
-//Autorotate
-
-@property (nonatomic, assign) BOOL autorotate;
-
 //Views and Layout Data
 
 @property (nonatomic, readonly) UIView *notificationView;
@@ -111,44 +107,6 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
 @property (nonatomic, retain) UIDynamicAnimator *animator;
-
-//Read Only Convinence Properties Providing Default Values or Values from Options
-
-@property (nonatomic, readonly) CRToastType notificationType;
-@property (nonatomic, assign) CGFloat preferredHeight;
-@property (nonatomic, readonly) CRToastPresentationType presentationType;
-@property (nonatomic, readonly) BOOL displayUnderStatusBar;
-
-@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
-@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
-@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
-@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
-@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
-@property (nonatomic, readonly) NSTimeInterval timeInterval;
-@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
-
-@property (nonatomic, readonly) CGFloat animationSpringDamping;
-@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
-@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
-
-@property (nonatomic, readonly) NSString *text;
-@property (nonatomic, readonly) UIFont *font;
-@property (nonatomic, readonly) UIColor *textColor;
-@property (nonatomic, readonly) NSTextAlignment textAlignment;
-@property (nonatomic, readonly) UIColor *textShadowColor;
-@property (nonatomic, readonly) CGSize textShadowOffset;
-@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
-
-@property (nonatomic, readonly) NSString *subtitleText;
-@property (nonatomic, readonly) UIFont *subtitleFont;
-@property (nonatomic, readonly) UIColor *subtitleTextColor;
-@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
-@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
-@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
-@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
-@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
-@property (nonatomic, readonly) UIColor *backgroundColor;
-@property (nonatomic, readonly) UIImage *image;
 
 @property (nonatomic, readonly) CGVector inGravityDirection;
 @property (nonatomic, readonly) CGVector outGravityDirection;
@@ -161,10 +119,6 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 - (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
 - (void)initiateAnimator:(UIView *)view;
-@end
-
-@interface CRToastView : UIView
-@property (nonatomic, strong) CRToast *toast;
 @end
 
 #pragma mark - Option Constant Definitions
