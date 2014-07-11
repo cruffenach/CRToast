@@ -123,6 +123,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 #pragma mark - Option Constant Definitions
 
+NSString *const kCRToastNotificationViewClassKey            = @"kCRToastNotificationViewClassKey";
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
 NSString *const kCRToastNotificationPreferredHeightKey         = @"kCRToastNotificationPreferredHeightKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
@@ -168,6 +169,7 @@ NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorota
 
 #pragma mark - Option Defaults
 
+static Class                        kCRNotificationViewClassDefault         = nil;
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
 static CGFloat                      kCRNotificationPreferredHeightDefault   = 0;
 static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
@@ -363,6 +365,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 + (void)initialize {
     if (self == [CRToast class]) {
         
+        kCRNotificationViewClassDefault = [CRToastView class];
         kCRFontDefault = [UIFont systemFontOfSize:12];
         kCRTextColorDefault = [UIColor whiteColor];
         kCRTextShadowOffsetDefault = CGSizeZero;
@@ -371,8 +374,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
         kCRInteractionResponders = @[];
-        
-        kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
+        kCRToastKeyClassMap = @{kCRToastNotificationViewClassKey            : NSStringFromClass([NSObject class]),
+                                kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
@@ -419,6 +422,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
     //TODO Validate Types of Default Options
+    if (defaultOptions[kCRToastNotificationViewClassKey])           kCRNotificationViewClassDefault         = defaultOptions[kCRToastNotificationViewClassKey];
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPreferredHeightKey])        kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
@@ -467,7 +471,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (UIView*)notificationView {
     CGSize size = CRNotificationViewSize(self.notificationType, self.preferredHeight);
-    CRToastView *notificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    CRToastView *notificationView = [[[self notificationViewClass] alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     notificationView.toast = self;
     return notificationView;
 }
@@ -537,6 +541,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastInteractionRespondersKey] ?
     _gestureRecognizers ?: [self gestureRecognizersForInteractionResponder:_options[kCRToastInteractionRespondersKey]] :
     [self gestureRecognizersForInteractionResponder:kCRInteractionResponders];
+}
+
+- (Class)notificationViewClass {
+    return _options[kCRToastNotificationViewClassKey] ?: kCRNotificationViewClassDefault;
 }
 
 - (CRToastType)notificationType {

@@ -115,6 +115,12 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
  */
 
 /**
+ A custom view class for the notification. Expects a Class object.
+ */
+
+extern NSString *const kCRToastNotificationViewClassKey;
+
+/**
  The notification type for the notification. Expects type `CRToastType`.
  */
 
@@ -374,6 +380,12 @@ extern NSString *const kCRToastAutorotateKey;
  */
 
 @interface CRToast : NSObject
+
+/**
+ User value or default for the kCRToastNotificationViewClassKey option.
+ */
+
+@property (nonatomic, readonly) Class notificationViewClass;
 
 /**
  User value or default for the kCRToastNotificationTypeKey option.
