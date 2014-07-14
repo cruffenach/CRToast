@@ -374,7 +374,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
         kCRInteractionResponders = @[];
-        kCRToastKeyClassMap = @{kCRToastNotificationViewClassKey            : NSStringFromClass([NSObject class]),
+        kCRToastKeyClassMap = @{kCRToastNotificationViewClassKey            : NSStringFromClass([CRToastView class]),
                                 kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
@@ -870,7 +870,7 @@ static CGFloat kCRCollisionTweak = 0.5;
                   key,
                   obj);
             [cleanOptions removeObjectForKey:key];
-        } else if (![obj isKindOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {
+        } else if (![[obj class] isSubclassOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {
             NSLog(@"[CRToast] : ERROR given %@ for key %@ was expecting Class %@ but got Class %@, passing default on instead",
                   obj,
                   key,
