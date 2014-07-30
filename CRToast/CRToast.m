@@ -903,7 +903,7 @@ static CGFloat kCRCollisionTweak = 0.5;
     NSMutableDictionary *cleanOptions = [options mutableCopy];
     [options enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         //Check keys validity followed by checking objects type validity
-        if ([kCRToastKeyClassMap.allKeys indexOfObjectIdenticalTo:key] == NSNotFound) {
+        if ([kCRToastKeyClassMap.allKeys indexOfObject:key] == NSNotFound) {
             NSLog(@"[CRToast] : ERROR given unrecognized key %@ in options with object %@",
                   key,
                   obj);
