@@ -927,7 +927,7 @@ static CGFloat kCRCollisionTweak = 0.5;
     NSMutableDictionary *cleanOptions = [options mutableCopy];
     [options enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         //Check keys validity followed by checking objects type validity
-        if ([kCRToastKeyClassMap.allKeys indexOfObjectIdenticalTo:key] == NSNotFound) {
+        if ([kCRToastKeyClassMap.allKeys indexOfObject:key] == NSNotFound) {
             NSLog(@"[CRToast] : ERROR given unrecognized key %@ in options with object %@",
                   key,
                   obj);
@@ -1208,7 +1208,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (void)dismissAllNotifications:(BOOL)animated {
-    [[self manager] dismissAllNotifications:YES];
+    [[self manager] dismissAllNotifications:animated];
 }
 
 + (instancetype)manager {
@@ -1362,7 +1362,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     rootViewController.notification = notification;
     
     _notificationWindow.rootViewController.view.frame = containerFrame;
-    _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal : UIWindowLevelStatusBar;
+    _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal + 1 : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;
     statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
