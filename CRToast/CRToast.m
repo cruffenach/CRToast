@@ -259,38 +259,62 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 #pragma mark - Layout Helper Functions
 
-static CGFloat const CRStatusBarDefaultHeight = 44.0f;
-static CGFloat const CRStatusBariPhoneLandscape = 33.0f;
+static CGFloat const CRNavigationBarDefaultHeight = 45.0f;
+static CGFloat const CRNavigationBarDefaultHeightiPhoneLandscape = 33.0f;
 
-static CGFloat CRGetStatusBarHeight() {
-    return (UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ?
+static UIInterfaceOrientation CRGetDeviceOrientation() {
+    return [UIApplication sharedApplication].statusBarOrientation;
+}
+
+static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
+    return (UIDeviceOrientationIsLandscape(orientation)) ?
     [[UIApplication sharedApplication] statusBarFrame].size.width :
     [[UIApplication sharedApplication] statusBarFrame].size.height;
 }
 
-static CGFloat CRGetStatusBarWidth() {
-    if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+static CGFloat CRGetStatusBarHeight() {
+    return CRGetStatusBarHeightForOrientation(CRGetDeviceOrientation());
+}
+
+static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
+    if (UIDeviceOrientationIsPortrait(orientation)) {
         return [UIScreen mainScreen].bounds.size.width;
     }
     return [UIScreen mainScreen].bounds.size.height;
 }
 
-static CGFloat CRGetNavigationBarHeight() {
-    return (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation) ||
-            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
-    CRStatusBarDefaultHeight :
-    CRStatusBariPhoneLandscape;
+static CGFloat CRGetStatusBarWidth() {
+    return CRGetStatusBarWidthForOrientation(CRGetDeviceOrientation());
 }
 
-static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
+static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
+    return (UIDeviceOrientationIsPortrait(orientation) ||
+            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
+    CRNavigationBarDefaultHeight :
+    CRNavigationBarDefaultHeightiPhoneLandscape;
+}
+
+static CGFloat CRGetNavigationBarHeight() {
+    return CRGetNavigationBarHeightForOrientation(CRGetDeviceOrientation());
+}
+
+static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
     switch (type) {
         case CRToastTypeStatusBar:
-            return CRGetStatusBarHeight();
+            return CRGetStatusBarHeightForOrientation(orientation);
         case CRToastTypeNavigationBar:
-            return CRGetStatusBarHeight() + CRGetNavigationBarHeight();
+            return CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
         case CRToastTypeCustom:
             return preferredNotificationHeight;
     }
+}
+
+static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
+    return CRGetNotificationViewHeightForOrientation(type, preferredNotificationHeight, CRGetDeviceOrientation());
+}
+
+static CGSize CRNotificationViewSizeForOrientation(CRToastType notificationType, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
+    return CGSizeMake(CRGetStatusBarWidthForOrientation(orientation), CRGetNotificationViewHeightForOrientation(notificationType, preferredNotificationHeight, orientation));
 }
 
 static CGSize CRNotificationViewSize(CRToastType notificationType, CGFloat preferredNotificationHeight) {
@@ -965,6 +989,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         imageView.userInteractionEnabled = NO;
@@ -1059,11 +1084,45 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
 @end
 
+#pragma mark - CRToastWindow
+
+@interface CRToastWindow : UIWindow
+
+@end
+
+@implementation CRToastWindow
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event {
+    for (UIView *subview in self.subviews) {
+        if ([subview hitTest:[self convertPoint:point toView:subview] withEvent:event] != nil) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+@end
+
+#pragma mark - CRToastContainerView
+
+@interface CRToastContainerView : UIView
+
+@end
+
+@implementation CRToastContainerView
+
+@end
+
 #pragma mark - CRToastViewController
 
 @interface CRToastViewController : UIViewController
-- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+
 @property (nonatomic, assign) BOOL autorotate;
+@property (nonatomic, weak) CRToast *notification;
+@property (nonatomic, weak) UIView *toastView;
+
+- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+
 @end
 
 @implementation CRToastViewController
@@ -1085,6 +1144,19 @@ UIStatusBarStyle statusBarStyle;
 
 - (BOOL)shouldAutorotate {
     return _autorotate;
+}
+
+- (void)loadView {
+    self.view = [[CRToastContainerView alloc] init];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (self.toastView) {
+        CGSize notificationSize = CRNotificationViewSizeForOrientation(self.notification.notificationType, self.notification.preferredHeight, toInterfaceOrientation);
+        self.toastView.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    }
 }
 
 @end
@@ -1142,7 +1214,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIWindow *notificationWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        UIWindow *notificationWindow = [[CRToastWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
@@ -1278,9 +1350,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
     [rootViewController statusBarStyle:notification.statusBarStyle];
     rootViewController.autorotate = notification.autorotate;
+    rootViewController.notification = notification;
     
-    _notificationWindow.frame = containerFrame;
-    _notificationWindow.rootViewController.view.frame = CGRectMake(0, 0, CGRectGetWidth(containerFrame), CGRectGetHeight(containerFrame));
+    _notificationWindow.rootViewController.view.frame = containerFrame;
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal + 1 : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;
@@ -1293,6 +1365,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     self.notificationView = notificationView;
+    rootViewController.toastView = notificationView;
     self.statusBarView = statusBarView;
     
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
