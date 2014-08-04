@@ -4,7 +4,5 @@ xcode_scheme: CRToastTests
 xcode_sdk: iphonesimulator7.0
 before_script:
   - export LANG=en_US.UTF-8
-  - brew update
-  - brew upgrade xctool
 before_install:
-  - gem install cocoapods -v '0.32.1'
+  - gem install cocoapods -v '0.33.1'

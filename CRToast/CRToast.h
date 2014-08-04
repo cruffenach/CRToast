@@ -39,7 +39,7 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
 extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType);
 
 /**
- CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the 
+ CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the
  options for any given notification or in defaults.
  */
 
@@ -50,7 +50,7 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  @param interactionType The kind of interaction that will trigger the responder
  @param automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
  animation will begin immidiately upon encountering the interaction.
- @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the 
+ @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the
  block firing
  */
 
@@ -70,7 +70,8 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
 
 typedef NS_ENUM(NSInteger, CRToastType){
     CRToastTypeStatusBar,
-    CRToastTypeNavigationBar
+    CRToastTypeNavigationBar,
+    CRToastTypeCustom
 };
 
 /**
@@ -109,7 +110,7 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
 ///--------------------
 
 /**
- These are the keys that define the options that can be set for a notifaction. All primitive types mentioned should 
+ These are the keys that define the options that can be set for a notifaction. All primitive types mentioned should
  be wrapped as `NSNumber`s or `NSValue`s
  */
 
@@ -118,6 +119,12 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
  */
 
 extern NSString *const kCRToastNotificationTypeKey;
+
+/**
+ The preferred height for the notificaiton, this will only be used for notifications with CRToastTypeCustom set for kCRToastNotificationTypeKey
+ */
+
+extern NSString *const kCRToastNotificationPreferredHeightKey;
 
 /**
  The presentation type for the notification. Expects type `CRToastPresentationType`.
@@ -177,7 +184,7 @@ extern NSString *const kCRToastTimeIntervalKey;
 extern NSString *const kCRToastAnimationOutTimeIntervalKey;
 
 /**
- The spring damping coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to 
+ The spring damping coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to
  `CRToastAnimationTypeSpring`. Currently you can't define separate damping for in and out. Expects type `CGFloat`.
  */
 
@@ -283,7 +290,7 @@ extern NSString *const kCRToastSubtitleTextShadowOffsetKey;
 extern NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey;
 
 /**
- The status bar style for the navigation bar.  Expects type `NSInteger`.
+ The status bar style for the navigation bar.  Expects type `UIStatusBarStyle`.
  */
 
 extern NSString *const kCRToastStatusBarStyleKey;
@@ -305,6 +312,13 @@ extern NSString *const kCRToastImageKey;
  */
 
 extern NSString *const kCRToastInteractionRespondersKey;
+
+/**
+ An BOOL setting whether the CRToast's should autorotate. Expects type `BOOL` defaults to `YES`
+ */
+
+extern NSString *const kCRToastAutorotateKey;
+
 
 /**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
@@ -344,5 +358,11 @@ extern NSString *const kCRToastInteractionRespondersKey;
  */
 
 + (void)dismissNotification:(BOOL)animated;
+
+/**
+ Immidiately begins the (un)animated dismisal of a notification and canceling all others
+ @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
+ */
++ (void)dismissAllNotifications:(BOOL)animated;
 
 @end
