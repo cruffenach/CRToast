@@ -296,6 +296,20 @@ extern NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey;
 extern NSString *const kCRToastStatusBarStyleKey;
 
 /**
+ Controls whether or not the cover background should be shown.
+ The cover background is a view behind the notification, preventing the user
+ from interacting with the app until the notification is dismissed.
+ Defaults to `NO`
+ */
+extern NSString *const kCRToastShowCoverBackgroundKey;
+
+/**
+ The background color for the cover behind the notification. Expects type `UIColor`.
+ Defaults to [UIColor blackColor] with an alpha of 0.5f
+ */
+extern NSString *const kCRToastCoverBackgroundColorKey;
+
+/**
  The background color for the notification. Expects type `UIColor`.
  */
 
