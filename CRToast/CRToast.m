@@ -300,14 +300,8 @@ static CGFloat CRGetNavigationBarHeight() {
 }
 
 static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
-    switch (type) {
-        case CRToastTypeStatusBar:
-            return CRGetStatusBarHeightForOrientation(orientation);
-        case CRToastTypeNavigationBar:
-            return CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
-        case CRToastTypeCustom:
-            return preferredNotificationHeight;
-    }
+    
+    return preferredNotificationHeight;
 }
 
 static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
@@ -1022,6 +1016,9 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
+    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
+    
     self.imageView.frame = CGRectMake(0,
                                       statusBarYOffset,
                                       imageSize.width == 0 ?
@@ -1030,8 +1027,6 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
                                       imageSize.height == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame));
-    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
@@ -1366,7 +1361,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
-    CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    CGRect containerFrame = CGRectMake(0, CRGetNavigationBarHeight() + CRGetStatusBarHeight(), notificationSize.width, notificationSize.height);
     
     if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
         containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
