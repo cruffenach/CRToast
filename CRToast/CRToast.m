@@ -128,6 +128,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
 @property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
+@property (nonatomic, readonly) CRToastImageAllignment imageAllignment;
 
 @property (nonatomic, readonly) CGFloat animationSpringDamping;
 @property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
@@ -180,8 +181,10 @@ NSString *const kCRToastBelowNavBarKey                      = @"kCRToastBelowNav
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
-NSString *const kCRToastAnimationInDirectionKey                 = @"kCRToastAnimationInDirectionKey";
-NSString *const kCRToastAnimationOutDirectionKey                = @"kCRToastAnimationOutDirectionKey";
+NSString *const kCRToastAnimationInDirectionKey             = @"kCRToastAnimationInDirectionKey";
+NSString *const kCRToastAnimationOutDirectionKey            = @"kCRToastAnimationOutDirectionKey";
+
+NSString *const kCRToastImageAllignmentKey                  = @"kCRToastImageAllignmentKey";
 
 NSString *const kCRToastAnimationInTimeIntervalKey          = @"kCRToastAnimateInTimeInterval";
 NSString *const kCRToastTimeIntervalKey                     = @"kCRToastTimeIntervalKey";
@@ -231,6 +234,7 @@ static NSTimeInterval               kCRAnimateInTimeIntervalDefault         = 0.
 static NSTimeInterval               kCRTimeIntervalDefault                  = 2.0f;
 static NSTimeInterval               kCRAnimateOutTimeIntervalDefault        = 0.4;
 
+static CRToastImageAllignment       kCRToastImageAllignmentDefault          = CRToastImageRight;
 static CGFloat                      kCRSpringDampingDefault                 = 0.6;
 static CGFloat                  	kCRSpringInitialVelocityDefault         = 1.0;
 static CGFloat                      kCRGravityMagnitudeDefault              = 1.0;
@@ -457,6 +461,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastAnimationInDirectionKey             : NSStringFromClass([@(kCRInAnimationDirectionDefault) class]),
                                 kCRToastAnimationOutDirectionKey            : NSStringFromClass([@(kCROutAnimationDirectionDefault) class]),
                                 kCRToastAnimationInTimeIntervalKey          : NSStringFromClass([@(kCRAnimateInTimeIntervalDefault) class]),
+                                kCRToastImageAllignmentKey                  : NSStringFromClass([@(kCRToastImageAllignmentDefault) class]),
                                 kCRToastTimeIntervalKey                     : NSStringFromClass([@(kCRTimeIntervalDefault) class]),
                                 kCRToastAnimationOutTimeIntervalKey         : NSStringFromClass([@(kCRAnimateOutTimeIntervalDefault) class]),
                                 kCRToastAnimationSpringDampingKey           : NSStringFromClass([@(kCRSpringDampingDefault) class]),
@@ -507,6 +512,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault          = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutDirectionKey])           kCROutAnimationDirectionDefault         = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
+    
+    if (defaultOptions[kCRToastImageAllignmentKey])                 kCRToastImageAllignmentDefault          = [defaultOptions[kCRToastImageAllignmentKey] integerValue];
+                                                                                                            
     
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
@@ -657,6 +665,15 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastAnimationOutTypeKey] ?
     [_options[kCRToastAnimationOutTypeKey] integerValue] :
     kCRAnimationTypeDefaultOut;
+}
+
+- (CRToastImageAllignment)imageAllignment {
+    
+    CRToastImageAllignment allignment = _options[kCRToastImageAllignmentKey] ?
+    [_options[kCRToastImageAllignmentKey] integerValue] :
+    kCRToastImageAllignmentDefault;
+    
+    return allignment;
 }
 
 - (CRToastAnimationDirection)inAnimationDirection {
@@ -1034,10 +1051,27 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
-    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
+    //Don't know what this is for!!!
+    CGFloat x = (imageSize.width == 0) ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    CGFloat width = CGRectGetWidth(contentFrame);//-x-kCRStatusBarViewNoImageRightContentInset;
+
+    CRToastImageAllignment allignment = self.toast.imageAllignment;
+    CGFloat imageOffset = 0;
     
-    self.imageView.frame = CGRectMake(0,
+    if (allignment == CRToastImageLeft) {
+        imageOffset = 40;
+    }
+    
+    else if (allignment == CRToastImageCenter) {
+        imageOffset = width / 2;
+    }
+    
+    else {
+        imageOffset = width - 40;
+    }
+    
+    //To Do: Need to figure out why I need to offset by 20 here
+    self.imageView.frame = CGRectMake(imageOffset - 20,
                                       statusBarYOffset,
                                       imageSize.width == 0 ?
                                       0 :
