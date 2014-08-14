@@ -105,6 +105,8 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 //Views and Layout Data
 
 @property (nonatomic, readonly) UIView *notificationView;
+@property (nonatomic, readonly) UIView *coverBackgroundView;
+@property (nonatomic, readonly) BOOL shouldCoverNotification;
 @property (nonatomic, readonly) CGRect notificationViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect notificationViewAnimationFrame2;
 @property (nonatomic, readonly) UIView *statusBarView;
@@ -205,6 +207,9 @@ NSString *const kCRToastSubtitleTextShadowOffsetKey         = @"kCRToastSubtitle
 NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey     = @"kCRToastSubtitleTextMaxNumberOfLinesKey";
 NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBarStyleKey";
 
+NSString *const kCRToastShowCoverBackgroundKey              = @"kCRToastShowCoverBackgroundKey";
+NSString *const kCRToastCoverBackgroundColorKey             = @"kCRToastCoverBackgroundColorKey";
+
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
 
@@ -248,6 +253,8 @@ static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
 static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
 static UIStatusBarStyle             kCRStatusBarStyleDefault                = UIStatusBarStyleDefault;
 
+static BOOL                         kCRShowCoverBackgroundDefault           = NO;
+static UIColor *                    kCRCoverBackgroundColorDefault          = nil;
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
 
@@ -442,6 +449,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
         kCRInteractionResponders = @[];
         
+        kCRCoverBackgroundColorDefault = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
+
         kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
@@ -471,6 +480,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastSubtitleTextShadowOffsetKey         : NSStringFromClass([[NSValue valueWithCGSize:kCRSubtitleTextShadowOffsetDefault] class]),
                                 kCRToastSubtitleTextMaxNumberOfLinesKey     : NSStringFromClass([@(kCRSubtitleTextMaxNumberOfLinesDefault) class]),
                                 kCRToastStatusBarStyleKey                   : NSStringFromClass([@(kCRStatusBarStyleDefault) class]),
+                                kCRToastShowCoverBackgroundKey              : NSStringFromClass([@(kCRShowCoverBackgroundDefault) class]),
+                                kCRToastCoverBackgroundColorKey             : NSStringFromClass([UIColor class]),
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
@@ -518,6 +529,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     
     if (defaultOptions[kCRToastStatusBarStyleKey])                  kCRStatusBarStyleDefault                = [defaultOptions[kCRToastStatusBarStyleKey] integerValue];
     
+    if (defaultOptions[kCRToastShowCoverBackgroundKey])             kCRShowCoverBackgroundDefault           = [defaultOptions[kCRToastShowCoverBackgroundKey] boolValue];
+    if (defaultOptions[kCRToastCoverBackgroundColorKey])            kCRCoverBackgroundColorDefault          = defaultOptions[kCRToastCoverBackgroundColorKey];
+
     if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
     if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
     if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
@@ -548,6 +562,13 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (CGRect)notificationViewAnimationFrame2 {
     return CRNotificationViewFrame(self.notificationType, self.outAnimationDirection, self.preferredHeight);
+}
+
+- (UIView *)coverBackgroundView {
+  // frame is set by notificationWindow
+  UIView *coverBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+  coverBackgroundView.backgroundColor = self.coverBackgroundColor;
+  return coverBackgroundView;
 }
 
 - (UIView*)statusBarView {
@@ -619,6 +640,16 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastNotificationPreferredHeightKey] ?
     [_options[kCRToastNotificationPreferredHeightKey] floatValue] :
     kCRNotificationPreferredHeightDefault;
+}
+
+- (BOOL)shouldCoverNotification {
+    return _options[kCRToastShowCoverBackgroundKey] ?
+    [self.options[kCRToastShowCoverBackgroundKey] boolValue] :
+    kCRShowCoverBackgroundDefault;
+}
+
+- (UIColor *)coverBackgroundColor {
+    return _options[kCRToastCoverBackgroundColorKey] ?: kCRCoverBackgroundColorDefault;
 }
 
 - (CRToastPresentationType)presentationType {
@@ -1176,6 +1207,7 @@ UIStatusBarStyle statusBarStyle;
 @property (nonatomic, strong) UIWindow *notificationWindow;
 @property (nonatomic, strong) UIView *statusBarView;
 @property (nonatomic, strong) UIView *notificationView;
+@property (nonatomic, strong) UIView *coverBackgroundView;
 @property (nonatomic, readonly) CRToast *notification;
 @property (nonatomic, strong) NSMutableArray *notifications;
 @property (nonatomic, copy) void (^gravityAnimationCompletionBlock)(BOOL finished);
@@ -1245,6 +1277,7 @@ CRToastAnimationCompletionBlock CRToastOutwardAnimationsCompletionBlock(CRToastM
         [weakSelf.notifications removeObject:weakSelf.notification];
         [weakSelf.notificationView removeFromSuperview];
         [weakSelf.statusBarView removeFromSuperview];
+        [weakSelf.coverBackgroundView removeFromSuperview];
         if (weakSelf.notifications.count > 0) {
             CRToast *notification = weakSelf.notifications.firstObject;
             weakSelf.gravityAnimationCompletionBlock = NULL;
@@ -1271,6 +1304,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         weakSelf.statusBarView.frame = notification.statusBarViewAnimationFrame2;
         [weakSelf.notificationWindow.rootViewController.view.gestureRecognizers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [(UIGestureRecognizer*)obj setEnabled:NO];
+        }];
+        
+        [UIView animateWithDuration:notification.animateInTimeInterval animations:^{
+            weakSelf.coverBackgroundView.alpha = 0.0f;
         }];
         
         switch (weakSelf.notification.outAnimationType) {
@@ -1360,7 +1397,26 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     rootViewController.autorotate = notification.autorotate;
     rootViewController.notification = notification;
     
-    _notificationWindow.rootViewController.view.frame = containerFrame;
+    if (notification.shouldCoverNotification) {
+        self.coverBackgroundView = notification.coverBackgroundView;
+        CGSize backgroundSize;
+        if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.width, _notificationWindow.bounds.size.height);
+        }
+        else {
+          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.height, _notificationWindow.bounds.size.width);
+        }
+        CGRect cbFrame = CGRectZero;
+        cbFrame.size = backgroundSize;
+        _coverBackgroundView.frame = cbFrame;
+        _coverBackgroundView.alpha = 0.0f;
+        [_notificationWindow.rootViewController.view addSubview:_coverBackgroundView];
+        _notificationWindow.rootViewController.view.frame = _notificationWindow.bounds;
+    }
+    else {
+        _notificationWindow.rootViewController.view.frame = containerFrame;
+    }
+    
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal + 1 : UIWindowLevelStatusBar;
     
     UIView *statusBarView = notification.statusBarView;
@@ -1375,7 +1431,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     self.notificationView = notificationView;
     rootViewController.toastView = notificationView;
     self.statusBarView = statusBarView;
-    
+
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
         subview.userInteractionEnabled = NO;
     }
@@ -1401,6 +1457,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             });
         }
     };
+    
+    [UIView animateWithDuration:notification.animateOutTimeInterval animations:^{
+        _coverBackgroundView.alpha = 1.0f;
+    }];
     
     notification.state = CRToastStateEntering;
     switch (notification.inAnimationType) {
