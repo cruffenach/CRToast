@@ -1399,10 +1399,19 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     if (notification.shouldCoverNotification) {
         self.coverBackgroundView = notification.coverBackgroundView;
-        _coverBackgroundView.frame = _notificationWindow.bounds;
+        CGSize backgroundSize;
+        if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.width, _notificationWindow.bounds.size.height);
+        }
+        else {
+          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.height, _notificationWindow.bounds.size.width);
+        }
+        CGRect cbFrame = CGRectZero;
+        cbFrame.size = backgroundSize;
+        _coverBackgroundView.frame = cbFrame;
         _coverBackgroundView.alpha = 0.0f;
         [_notificationWindow.rootViewController.view addSubview:_coverBackgroundView];
-            _notificationWindow.rootViewController.view.frame = _notificationWindow.bounds;
+        _notificationWindow.rootViewController.view.frame = _notificationWindow.bounds;
     }
     else {
         _notificationWindow.rootViewController.view.frame = containerFrame;
