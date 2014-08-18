@@ -248,6 +248,12 @@ extern NSString *const kCRToastTextShadowOffsetKey;
 extern NSString *const kCRToastTextMaxNumberOfLinesKey;
 
 /**
+ The left offset from the image and the text (`kCRToastTextKey`). Expects type `NSInteger`.
+ */
+
+extern NSString *const kCRToastTextLeftOffsetKey;
+
+/**
  The subtitle text to be shown in the notification. Expects type `NSString`.
  */
 
@@ -306,6 +312,12 @@ extern NSString *const kCRToastBackgroundColorKey;
  */
 
 extern NSString *const kCRToastImageKey;
+
+/**
+ The offset from the left border and the image (`kCRToastImageKey`). Expects type `NSInteger`.
+ */
+
+extern NSString *const kCRToastImageLeftOffsetKey;
 
 /**
  An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`
