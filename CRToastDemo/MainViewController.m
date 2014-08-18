@@ -125,8 +125,8 @@
                                                 completionBlock:^(void) {
                                                     NSLog(@"Completed");
                                                 } showBeginBlock:^{
-													NSLog(@"Going to show notification!");
-												}];
+                                                    NSLog(@"Going to show notification!");
+                                                }];
 }
 
 - (IBAction)btnDismissNotificationPressed:(UIButton *)sender {

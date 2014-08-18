@@ -485,7 +485,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     notification.completion = completion;
     notification.state = CRToastStateWaiting;
     notification.uuid = [NSUUID UUID];
-	notification.showBegin = showBegin;
+    notification.showBegin = showBegin;
 	
     return notification;
 }
@@ -1198,7 +1198,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
     [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
                                                                completionBlock:completion
-																showBeginBlock:nil]];
+                                                               showBeginBlock:nil]];
 }
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
@@ -1207,12 +1207,12 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (void)showNotificationWithOptions:(NSDictionary*)options
-					completionBlock:(void (^)(void))completion
-					 showBeginBlock:(void (^)(void))showBegin
+                    completionBlock:(void (^)(void))completion
+                     showBeginBlock:(void (^)(void))showBegin
 {
-	[[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
+    [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
                                                                completionBlock:completion
-																showBeginBlock:showBegin]];
+                                                                showBeginBlock:showBegin]];
 }
 
 
@@ -1356,7 +1356,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 }
 
 - (void)displayNotification:(CRToast*)notification {
-	notification.showBegin();
+    notification.showBegin();
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
