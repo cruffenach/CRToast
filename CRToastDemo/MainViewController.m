@@ -124,7 +124,9 @@
     [CRToastManager showNotificationWithOptions:[self options]
                                                 completionBlock:^(void) {
                                                     NSLog(@"Completed");
-                                                }];
+                                                } showBeginBlock:^{
+													NSLog(@"Going to show notification!");
+												}];
 }
 
 - (IBAction)btnDismissNotificationPressed:(UIButton *)sender {
