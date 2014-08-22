@@ -1006,6 +1006,8 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         subtitleLabel.userInteractionEnabled = NO;
         [self addSubview:subtitleLabel];
         self.subtitleLabel = subtitleLabel;
+        
+        self.isAccessibilityElement = YES;
     }
     return self;
 }
@@ -1439,6 +1441,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
     }
+    
+    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text, notification.subtitleText]);
 }
 
 #pragma mark - Overrides
