@@ -1442,7 +1442,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         } break;
     }
     
-    UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text, notification.subtitleText]);
+    if (notification.text.length > 0 || notification.subtitleText.length > 0) {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
+    }
 }
 
 #pragma mark - Overrides
