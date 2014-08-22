@@ -1006,6 +1006,8 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         subtitleLabel.userInteractionEnabled = NO;
         [self addSubview:subtitleLabel];
         self.subtitleLabel = subtitleLabel;
+        
+        self.isAccessibilityElement = YES;
     }
     return self;
 }
@@ -1438,6 +1440,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             [notification.animator addBehavior:rotationLock];
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
+    }
+    
+    if (notification.text.length > 0 || notification.subtitleText.length > 0) {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
     }
 }
 
