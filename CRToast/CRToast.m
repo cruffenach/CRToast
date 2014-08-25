@@ -207,6 +207,7 @@ NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBa
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
+NSString *const kCRToastCustomViewKey                       = @"kCRToastCustomViewKey";
 
 NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteractionRespondersKey";
 
@@ -474,7 +475,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
-                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class])};
+                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
+                                kCRToastCustomViewKey                       : NSStringFromClass([UIView class])};
     }
 }
 
@@ -753,6 +755,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastImageKey] ?: kCRImageDefault;
 }
 
+- (UIView*)customView {
+    return _options[kCRToastCustomViewKey];
+}
+
 - (NSInteger)maxNumberOfLines {
     return _options[kCRToastTextMaxNumberOfLinesKey] ?
     [_options[kCRToastTextMaxNumberOfLinesKey] integerValue] :
@@ -968,6 +974,7 @@ static CGFloat kCRCollisionTweak = 0.5;
 #pragma mark - CRToastView
 
 @interface CRToastView ()
+@property (nonatomic, strong) UIView *customView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UILabel *subtitleLabel;
@@ -1082,6 +1089,12 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     }
     _imageView.image = toast.image;
     self.backgroundColor = toast.backgroundColor;
+    if (toast.customView) {
+        _customView = toast.customView;
+        if (!_customView.superview) {
+            [self addSubview:_customView];
+        }
+    }
 }
 
 @end
@@ -1379,7 +1392,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     self.statusBarView = statusBarView;
     
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
-        subview.userInteractionEnabled = NO;
+        if (subview != notificationView) {
+            subview.userInteractionEnabled = NO;
+        }
     }
     
     _notificationWindow.rootViewController.view.userInteractionEnabled = YES;

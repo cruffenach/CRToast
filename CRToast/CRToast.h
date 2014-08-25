@@ -308,6 +308,11 @@ extern NSString *const kCRToastBackgroundColorKey;
 extern NSString *const kCRToastImageKey;
 
 /**
+ *  A custom view to be overlaid ontop of the notification
+ */
+extern NSString *const kCRToastCustomViewKey;
+
+/**
  An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`
  */
 
