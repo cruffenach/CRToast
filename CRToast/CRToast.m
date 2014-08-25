@@ -1443,7 +1443,10 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     }
     
     if (notification.text.length > 0 || notification.subtitleText.length > 0) {
-        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
+        // Synchronous notifications (say, tapping a button that presents a toast) cause VoiceOver to read the button immediately, which interupts the toast. A short delay (not the best solution :/) allows the toast to interupt the button.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
+        });
     }
 }
 
