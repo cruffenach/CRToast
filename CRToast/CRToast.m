@@ -82,6 +82,13 @@ typedef NS_ENUM(NSInteger, CRToastState) {
     CRToastStateCompleted
 };
 
+// Manually define the foundation version number for iOS 7.1, used to check if
+// device is running iOS 8 or later, in order to pass Travis CI. Can be removed
+// once Travis CI is updated to support Xcode 6 and iOS 8 SDK.
+#ifndef NSFoundationVersionNumber_iOS_7_1
+	#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+
 #pragma mark - CRToast
 
 @interface CRToast : NSObject <UIGestureRecognizerDelegate>
