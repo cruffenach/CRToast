@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 @property (nonatomic, strong) NSDictionary *options;
 @property (nonatomic, copy) void(^completion)(void);
-@property (nonatomic, copy) void(^showBegin)(void);
+@property (nonatomic, copy) void(^appearance)(void);
 
 //Interactions
 
@@ -478,14 +478,13 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class])};
     }
 }
-
-+ (instancetype)notificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion showBeginBlock:(void (^)(void))showBegin {
++ (instancetype)notificationWithOptions:(NSDictionary*)options appearanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion {
     CRToast *notification = [[self alloc] init];
     notification.options = options;
     notification.completion = completion;
     notification.state = CRToastStateWaiting;
     notification.uuid = [NSUUID UUID];
-    notification.showBegin = showBegin;
+    notification.appearance = appearance;
 	
     return notification;
 }
@@ -1199,8 +1198,9 @@ typedef void (^CRToastAnimationStepBlock)(void);
 
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
     [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
+                                                               appearanceBlock:nil
                                                                completionBlock:completion
-                                                               showBeginBlock:nil]];
+                                                               ]];
 }
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
@@ -1209,12 +1209,12 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (void)showNotificationWithOptions:(NSDictionary*)options
+                    apperanceBlock:(void (^)(void))appearance
                     completionBlock:(void (^)(void))completion
-                     showBeginBlock:(void (^)(void))showBegin
 {
     [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
-                                                               completionBlock:completion
-                                                                showBeginBlock:showBegin]];
+                                                               appearanceBlock:appearance
+                                                               completionBlock:completion]];
 }
 
 
@@ -1358,7 +1358,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 }
 
 - (void)displayNotification:(CRToast*)notification {
-    notification.showBegin();
+    notification.appearance();
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
