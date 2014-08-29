@@ -1358,7 +1358,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 }
 
 - (void)displayNotification:(CRToast*)notification {
-    notification.appearance();
+    if (notification.appearance != nil)
+    {
+        notification.appearance();
+    }
+    
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
