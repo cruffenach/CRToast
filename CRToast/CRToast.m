@@ -84,7 +84,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 #pragma mark - CRToast
 
-@interface CRToast : NSObject <UIGestureRecognizerDelegate>
+@interface CRToast () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSUUID *uuid;
 @property (nonatomic, assign) CRToastState state;
@@ -99,10 +99,6 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 
 @property (nonatomic, strong) NSArray *gestureRecognizers;
 
-//Autorotate
-
-@property (nonatomic, assign) BOOL autorotate;
-
 //Views and Layout Data
 
 @property (nonatomic, readonly) UIView *notificationView;
@@ -112,44 +108,6 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
 @property (nonatomic, retain) UIDynamicAnimator *animator;
-
-//Read Only Convinence Properties Providing Default Values or Values from Options
-
-@property (nonatomic, readonly) CRToastType notificationType;
-@property (nonatomic, assign) CGFloat preferredHeight;
-@property (nonatomic, readonly) CRToastPresentationType presentationType;
-@property (nonatomic, readonly) BOOL displayUnderStatusBar;
-
-@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
-@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
-@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
-@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
-@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
-@property (nonatomic, readonly) NSTimeInterval timeInterval;
-@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
-
-@property (nonatomic, readonly) CGFloat animationSpringDamping;
-@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
-@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
-
-@property (nonatomic, readonly) NSString *text;
-@property (nonatomic, readonly) UIFont *font;
-@property (nonatomic, readonly) UIColor *textColor;
-@property (nonatomic, readonly) NSTextAlignment textAlignment;
-@property (nonatomic, readonly) UIColor *textShadowColor;
-@property (nonatomic, readonly) CGSize textShadowOffset;
-@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
-
-@property (nonatomic, readonly) NSString *subtitleText;
-@property (nonatomic, readonly) UIFont *subtitleFont;
-@property (nonatomic, readonly) UIColor *subtitleTextColor;
-@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
-@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
-@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
-@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
-@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
-@property (nonatomic, readonly) UIColor *backgroundColor;
-@property (nonatomic, readonly) UIImage *image;
 
 @property (nonatomic, readonly) CGVector inGravityDirection;
 @property (nonatomic, readonly) CGVector outGravityDirection;
@@ -164,12 +122,9 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 - (void)initiateAnimator:(UIView *)view;
 @end
 
-@interface CRToastView : UIView
-@property (nonatomic, strong) CRToast *toast;
-@end
-
 #pragma mark - Option Constant Definitions
 
+NSString *const kCRToastNotificationViewClassKey            = @"kCRToastNotificationViewClassKey";
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
 NSString *const kCRToastNotificationPreferredHeightKey         = @"kCRToastNotificationPreferredHeightKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
@@ -215,6 +170,7 @@ NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorota
 
 #pragma mark - Option Defaults
 
+static Class                        kCRNotificationViewClassDefault         = nil;
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
 static CGFloat                      kCRNotificationPreferredHeightDefault   = 0;
 static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
@@ -434,6 +390,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 + (void)initialize {
     if (self == [CRToast class]) {
         
+        kCRNotificationViewClassDefault = [CRToastView class];
         kCRFontDefault = [UIFont systemFontOfSize:12];
         kCRTextColorDefault = [UIColor whiteColor];
         kCRTextShadowOffsetDefault = CGSizeZero;
@@ -442,8 +399,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRSubtitleTextShadowOffsetDefault = CGSizeZero;
         kCRBackgroundColorDefault = [[UIApplication sharedApplication] delegate].window.tintColor ?: [UIColor redColor];
         kCRInteractionResponders = @[];
-        
-        kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
+        kCRToastKeyClassMap = @{kCRToastNotificationViewClassKey            : NSStringFromClass([CRToastView class]),
+                                kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
@@ -491,6 +448,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
     //TODO Validate Types of Default Options
+    if (defaultOptions[kCRToastNotificationViewClassKey])           kCRNotificationViewClassDefault         = defaultOptions[kCRToastNotificationViewClassKey];
     if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
     if (defaultOptions[kCRToastNotificationPreferredHeightKey])        kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
@@ -539,7 +497,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (UIView*)notificationView {
     CGSize size = CRNotificationViewSize(self.notificationType, self.preferredHeight);
-    CRToastView *notificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    CRToastView *notificationView = [[[self notificationViewClass] alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
     notificationView.toast = self;
     return notificationView;
 }
@@ -609,6 +567,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastInteractionRespondersKey] ?
     _gestureRecognizers ?: [self gestureRecognizersForInteractionResponder:_options[kCRToastInteractionRespondersKey]] :
     [self gestureRecognizersForInteractionResponder:kCRInteractionResponders];
+}
+
+- (Class)notificationViewClass {
+    return _options[kCRToastNotificationViewClassKey] ?: kCRNotificationViewClassDefault;
 }
 
 - (CRToastType)notificationType {
@@ -934,7 +896,7 @@ static CGFloat kCRCollisionTweak = 0.5;
                   key,
                   obj);
             [cleanOptions removeObjectForKey:key];
-        } else if (![obj isKindOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {
+        } else if (![[obj class] isSubclassOfClass:NSClassFromString(kCRToastKeyClassMap[key])]) {
             NSLog(@"[CRToast] : ERROR given %@ for key %@ was expecting Class %@ but got Class %@, passing default on instead",
                   obj,
                   key,

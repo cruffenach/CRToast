@@ -115,6 +115,12 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
  */
 
 /**
+ A custom view class for the notification. Expects a Class object.
+ */
+
+extern NSString *const kCRToastNotificationViewClassKey;
+
+/**
  The notification type for the notification. Expects type `CRToastType`.
  */
 
@@ -376,5 +382,245 @@ extern NSString *const kCRToastAutorotateKey;
  @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
  */
 + (void)dismissAllNotifications:(BOOL)animated;
+
+@end
+
+@class CRToastView;
+
+/**
+ Manages toast notification configuration & defaults.
+ */
+
+@interface CRToast : NSObject
+
+/**
+ User value or default for the kCRToastNotificationViewClassKey option.
+ */
+
+@property (nonatomic, readonly) Class notificationViewClass;
+
+/**
+ User value or default for the kCRToastNotificationTypeKey option.
+ */
+
+@property (nonatomic, readonly) CRToastType notificationType;
+
+/**
+ User value or default for the kCRToastNotificationPresentationTypeKey option.
+ */
+
+@property (nonatomic, readonly) CRToastPresentationType presentationType;
+
+/**
+ User value or default for the kCRToastUnderStatusBarKey option.
+ */
+
+@property (nonatomic, readonly) BOOL displayUnderStatusBar;
+
+/**
+ User value or default for the kCRToastAnimationInTypeKey option.
+ */
+
+@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
+
+/**
+ User value or default for the kCRToastAnimationOutTypeKey option.
+ */
+
+@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
+
+/**
+ User value or default for the kCRToastAnimationInDirectionKey option.
+ */
+
+@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
+
+/**
+ User value or default for the kCRToastAnimationOutDirectionKey option.
+ */
+
+@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
+
+/**
+ User value or default for the kCRToastAnimationInTimeIntervalKey option.
+ */
+
+@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
+
+/**
+ User value or default for the kCRToastTimeIntervalKey option.
+ */
+
+@property (nonatomic, readonly) NSTimeInterval timeInterval;
+
+/**
+ User value or default for the kCRToastAnimationOutTimeIntervalKey option.
+ */
+
+@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
+
+/**
+ User value or default for the kCRToastAnimationSpringDampingKey option.
+ */
+
+@property (nonatomic, readonly) CGFloat animationSpringDamping;
+
+/**
+ User value or default for the kCRToastAnimationSpringInitialVelocityKey option.
+ */
+
+@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
+
+/**
+ User value or default for the kCRToastAnimationGravityMagnitudeKey option.
+ */
+
+@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
+
+/**
+ User value or default for the kCRToastTextKey option.
+ */
+
+@property (nonatomic, readonly) NSString *text;
+
+/**
+ User value or default for the kCRToastFontKey option.
+ */
+
+@property (nonatomic, readonly) UIFont *font;
+
+/**
+ User value or default for the kCRToastTextColorKey option.
+ */
+
+@property (nonatomic, readonly) UIColor *textColor;
+
+/**
+ User value or default for the kCRToastTextAlignmentKey option.
+ */
+
+@property (nonatomic, readonly) NSTextAlignment textAlignment;
+
+/**
+ User value or default for the kCRToastTextShadowColorKey option.
+ */
+
+@property (nonatomic, readonly) UIColor *textShadowColor;
+
+/**
+ User value or default for the kCRToastTextShadowOffsetKey option.
+ */
+
+@property (nonatomic, readonly) CGSize textShadowOffset;
+
+/**
+ User value or default for the kCRToastTextMaxNumberOfLinesKey option.
+ */
+
+@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
+
+/**
+ User value or default for the kCRToastSubtitleTextKey option.
+ */
+
+@property (nonatomic, readonly) NSString *subtitleText;
+
+/**
+ User value or default for the kCRToastSubtitleFontKey option.
+ */
+
+@property (nonatomic, readonly) UIFont *subtitleFont;
+
+/**
+ User value or default for the kCRToastSubtitleTextColorKey option.
+ */
+
+@property (nonatomic, readonly) UIColor *subtitleTextColor;
+
+/**
+ User value or default for the kCRToastSubtitleTextAlignmentKey option.
+ */
+
+@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
+
+/**
+ User value or default for the kCRToastSubtitleTextColorKey option.
+ */
+
+@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
+
+/**
+ User value or default for the kCRToastSubtitleTextShadowOffsetKey option.
+ */
+
+@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
+
+/**
+ User value or default for the kCRToastSubtitleTextMaxNumberOfLinesKey option.
+ */
+
+@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
+
+/**
+ User value or default for the kCRToastStatusBarStyleKey option.
+ */
+
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
+
+/**
+ User value or default for the kCRToastBackgroundColorKey option.
+ */
+
+@property (nonatomic, readonly) UIColor *backgroundColor;
+
+/**
+ User value or default for the kCRToastImageKey option.
+ */
+
+@property (nonatomic, readonly) UIImage *image;
+
+/**
+ User value or default for the kCRToastInteractionRespondersKey option.
+ */
+
+@property (nonatomic, readonly) NSArray *gestureRecognizers;
+
+/**
+ User value or default for the kCRToastAutorotateKey option.
+ */
+
+@property (nonatomic, readonly) BOOL autorotate;
+
+@end
+
+/**
+ View class used to render toast notifications.
+ */
+
+@interface CRToastView : UIView
+
+/**
+ The CRToast instance for this notification view.
+ */
+
+@property (nonatomic, strong) CRToast *toast;
+
+/**
+ View object for the notification image.
+ */
+
+@property (nonatomic, readonly) UIImageView *imageView;
+
+/**
+ Label for the notification text.
+ */
+
+@property (nonatomic, readonly) UILabel *label;
+
+/**
+ Label for the notification subtitle.
+ */
+
+@property (nonatomic, readonly) UILabel *subtitleLabel;
 
 @end
