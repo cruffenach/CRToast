@@ -168,6 +168,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
                                       kCRToastUnderStatusBarKey                 : @(self.slideUnderSwitch.on),
+                                      kCRToastBelowNavBarKey                    : @(YES),
                                       kCRToastTextKey                           : self.txtNotificationMessage.text,
                                       kCRToastTextAlignmentKey                  : @(self.textAlignment),
                                       kCRToastTimeIntervalKey                   : @(self.sliderDuration.value),

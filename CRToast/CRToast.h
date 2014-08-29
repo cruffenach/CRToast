@@ -141,6 +141,12 @@ extern NSString *const kCRToastNotificationPresentationTypeKey;
 extern NSString *const kCRToastUnderStatusBarKey;
 
 /**
+ Indicates whether the notification should slide out from under the navigation bar. Excepts type `BOOL`.
+*/
+
+extern NSString *const kCRToastBelowNavBarKey;
+
+/**
  The animation in type for the notification. Expects type `CRToastAnimationType`.
  */
 

@@ -119,6 +119,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, assign) CGFloat preferredHeight;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
+@property (nonatomic, readonly) BOOL displayBelowNavBar;
 
 @property (nonatomic, readonly) CRToastAnimationType inAnimationType;
 @property (nonatomic, readonly) CRToastAnimationType outAnimationType;
@@ -175,6 +176,7 @@ NSString *const kCRToastNotificationPreferredHeightKey         = @"kCRToastNotif
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
+NSString *const kCRToastBelowNavBarKey                      = @"kCRToastBelowNavBarKey";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
@@ -219,6 +221,7 @@ static CRToastType                  kCRNotificationTypeDefault              = CR
 static CGFloat                      kCRNotificationPreferredHeightDefault   = 0;
 static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
 static BOOL                         kCRDisplayUnderStatusBarDefault         = NO;
+static BOOL                         kCRDisplayBelowNavBarDefault            = NO;
 
 static CRToastAnimationType         kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
 static CRToastAnimationType         kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
@@ -300,7 +303,14 @@ static CGFloat CRGetNavigationBarHeight() {
 }
 
 static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
-    
+    switch (type) {
+        case CRToastTypeStatusBar:
+            return CRGetStatusBarHeightForOrientation(orientation);
+        case CRToastTypeNavigationBar:
+            return CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
+        case CRToastTypeCustom:
+            return preferredNotificationHeight;
+    }
     return preferredNotificationHeight;
 }
 
@@ -438,9 +448,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRInteractionResponders = @[];
         
         kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
-                                kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
+                                kCRToastNotificationPreferredHeightKey      : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
+                                kCRToastBelowNavBarKey                      : NSStringFromClass([@(kCRDisplayBelowNavBarDefault) class]),
                                 kCRToastAnimationInTypeKey                  : NSStringFromClass([@(kCRAnimationTypeDefaultIn) class]),
                                 kCRToastAnimationOutTypeKey                 : NSStringFromClass([@(kCRAnimationTypeDefaultOut) class]),
                                 kCRToastAnimationInDirectionKey             : NSStringFromClass([@(kCRInAnimationDirectionDefault) class]),
@@ -490,6 +501,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
     
     if (defaultOptions[kCRToastUnderStatusBarKey])                  kCRDisplayUnderStatusBarDefault         = [defaultOptions[kCRToastUnderStatusBarKey] boolValue];
+    if (defaultOptions[kCRToastBelowNavBarKey])                     kCRDisplayBelowNavBarDefault            = [defaultOptions[kCRToastBelowNavBarKey] boolValue];
     
     if (defaultOptions[kCRToastAnimationInTypeKey])                 kCRAnimationTypeDefaultIn               = [defaultOptions[kCRToastAnimationInTypeKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutTypeKey])                kCRAnimationTypeDefaultOut              = [defaultOptions[kCRToastAnimationOutTypeKey] integerValue];
@@ -627,6 +639,12 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return _options[kCRToastUnderStatusBarKey] ?
     [self.options[kCRToastUnderStatusBarKey] boolValue] :
     kCRDisplayUnderStatusBarDefault;
+}
+
+- (BOOL)displayBelowNavBar {
+    return _options[kCRToastBelowNavBarKey] ?
+    [self.options[kCRToastBelowNavBarKey] boolValue] :
+    kCRDisplayBelowNavBarDefault;
 }
 
 - (CRToastAnimationType)inAnimationType {
@@ -1361,7 +1379,13 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
-    CGRect containerFrame = CGRectMake(0, CRGetNavigationBarHeight() + CRGetStatusBarHeight(), notificationSize.width, notificationSize.height);
+    
+    CGFloat y = 0.0f;
+    if (notification.displayBelowNavBar) {
+        y = CRGetNavigationBarHeight() + CRGetStatusBarHeight() - 1;
+    }
+    
+    CGRect containerFrame = CGRectMake(0, y, notificationSize.width, notificationSize.height);
     
     if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
         containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
