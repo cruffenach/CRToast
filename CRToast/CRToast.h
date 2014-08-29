@@ -339,6 +339,18 @@ extern NSString *const kCRToastAutorotateKey;
  @param options A dictionary of the options that are to be used when showing the notification, defaults
  will be used for all non present options. Options passed in will override defaults
  @param completion A completion block to be fired at the completion of the dismisall of the notification
+ @param appearance A  block to be fired when the notification is actually shown -- notifications can queue,
+ and this block will only fire when the notification actually becomes visible to the user. Useful for
+ synchronizing sound / vibration.
+ */
+
++ (void)showNotificationWithOptions:(NSDictionary*)options apperanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion;
+
+/**
+ Queues a notification to be shown with a collection of options.
+ @param options A dictionary of the options that are to be used when showing the notification, defaults
+ will be used for all non present options. Options passed in will override defaults
+ @param completion A completion block to be fired at the completion of the dismisall of the notification
  */
 
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion;
