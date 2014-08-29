@@ -128,7 +128,7 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
 @property (nonatomic, readonly) NSTimeInterval timeInterval;
 @property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
-@property (nonatomic, readonly) CRToastImageAllignment imageAllignment;
+@property (nonatomic, readonly) CRToastImageAlignment imageAlignment;
 
 @property (nonatomic, readonly) CGFloat animationSpringDamping;
 @property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
@@ -184,7 +184,7 @@ NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimatio
 NSString *const kCRToastAnimationInDirectionKey             = @"kCRToastAnimationInDirectionKey";
 NSString *const kCRToastAnimationOutDirectionKey            = @"kCRToastAnimationOutDirectionKey";
 
-NSString *const kCRToastImageAllignmentKey                  = @"kCRToastImageAllignmentKey";
+NSString *const kCRToastImageAlignmentKey                  = @"kCRToastImageAlignmentKey";
 
 NSString *const kCRToastAnimationInTimeIntervalKey          = @"kCRToastAnimateInTimeInterval";
 NSString *const kCRToastTimeIntervalKey                     = @"kCRToastTimeIntervalKey";
@@ -234,7 +234,7 @@ static NSTimeInterval               kCRAnimateInTimeIntervalDefault         = 0.
 static NSTimeInterval               kCRTimeIntervalDefault                  = 2.0f;
 static NSTimeInterval               kCRAnimateOutTimeIntervalDefault        = 0.4;
 
-static CRToastImageAllignment       kCRToastImageAllignmentDefault          = CRToastImageRight;
+static CRToastImageAlignment        kCRToastImageAlignmentDefault           = CRToastImageRight;
 static CGFloat                      kCRSpringDampingDefault                 = 0.6;
 static CGFloat                  	kCRSpringInitialVelocityDefault         = 1.0;
 static CGFloat                      kCRGravityMagnitudeDefault              = 1.0;
@@ -461,7 +461,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastAnimationInDirectionKey             : NSStringFromClass([@(kCRInAnimationDirectionDefault) class]),
                                 kCRToastAnimationOutDirectionKey            : NSStringFromClass([@(kCROutAnimationDirectionDefault) class]),
                                 kCRToastAnimationInTimeIntervalKey          : NSStringFromClass([@(kCRAnimateInTimeIntervalDefault) class]),
-                                kCRToastImageAllignmentKey                  : NSStringFromClass([@(kCRToastImageAllignmentDefault) class]),
+                                kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRToastImageAlignmentDefault) class]),
                                 kCRToastTimeIntervalKey                     : NSStringFromClass([@(kCRTimeIntervalDefault) class]),
                                 kCRToastAnimationOutTimeIntervalKey         : NSStringFromClass([@(kCRAnimateOutTimeIntervalDefault) class]),
                                 kCRToastAnimationSpringDampingKey           : NSStringFromClass([@(kCRSpringDampingDefault) class]),
@@ -513,8 +513,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastAnimationInDirectionKey])            kCRInAnimationDirectionDefault          = [defaultOptions[kCRToastAnimationInDirectionKey] integerValue];
     if (defaultOptions[kCRToastAnimationOutDirectionKey])           kCROutAnimationDirectionDefault         = [defaultOptions[kCRToastAnimationOutDirectionKey] integerValue];
     
-    if (defaultOptions[kCRToastImageAllignmentKey])                 kCRToastImageAllignmentDefault          = [defaultOptions[kCRToastImageAllignmentKey] integerValue];
-                                                                                                            
+    if (defaultOptions[kCRToastImageAlignmentKey])                  kCRToastImageAlignmentDefault           = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
     
     if (defaultOptions[kCRToastAnimationInTimeIntervalKey])         kCRAnimateInTimeIntervalDefault         = [defaultOptions[kCRToastAnimationInTimeIntervalKey] doubleValue];
     if (defaultOptions[kCRToastTimeIntervalKey])                    kCRTimeIntervalDefault                  = [defaultOptions[kCRToastTimeIntervalKey] doubleValue];
@@ -667,13 +666,11 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     kCRAnimationTypeDefaultOut;
 }
 
-- (CRToastImageAllignment)imageAllignment {
-    
-    CRToastImageAllignment allignment = _options[kCRToastImageAllignmentKey] ?
-    [_options[kCRToastImageAllignmentKey] integerValue] :
-    kCRToastImageAllignmentDefault;
-    
-    return allignment;
+- (CRToastImageAlignment)imageAlignment {
+    CRToastImageAlignment alignment = _options[kCRToastImageAlignmentKey] ?
+    [_options[kCRToastImageAlignmentKey] integerValue] :
+    kCRToastImageAlignmentDefault;
+    return alignment;
 }
 
 - (CRToastAnimationDirection)inAnimationDirection {
@@ -1004,8 +1001,7 @@ static CGFloat kCRCollisionTweak = 0.5;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @end
 
-static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
-static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
+static CGFloat const kCRStatusBarViewNoImageContentInset = 10;
 
 // UIApplication's statusBarFrame will return a height for the status bar that includes
 // a 5 pixel vertical padding. This frame height is inappropriate to use when centering content
@@ -1048,67 +1044,64 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGRect contentFrame = self.bounds;
     CGSize imageSize = self.imageView.image.size;
     
-    CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
+    CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight() + CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
-    //Don't know what this is for!!!
-    CGFloat x = (imageSize.width == 0) ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    CGFloat width = CGRectGetWidth(contentFrame);//-x-kCRStatusBarViewNoImageRightContentInset;
+    CRToastImageAlignment alignment = self.toast.imageAlignment;
 
-    CRToastImageAllignment allignment = self.toast.imageAllignment;
-    CGFloat imageOffset = 0;
-    
-    if (allignment == CRToastImageLeft) {
-        imageOffset = 40;
-    }
-    
-    else if (allignment == CRToastImageCenter) {
-        imageOffset = width / 2;
-    }
-    
-    else {
-        imageOffset = width - 40;
-    }
-    
-    //To Do: Need to figure out why I need to offset by 20 here
-    self.imageView.frame = CGRectMake(imageOffset - 20,
-                                      statusBarYOffset,
-                                      imageSize.width == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame),
-                                      imageSize.height == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame));
-    
-    if (self.toast.subtitleText == nil) {
-        self.label.frame = CGRectMake(x,
-                                      statusBarYOffset,
-                                      width,
-                                      CGRectGetHeight(contentFrame));
+    CGFloat labelX;
+    CGFloat labelWidth;
+
+    if (imageSize.width == 0) {
+        labelX = kCRStatusBarViewNoImageContentInset;
+        labelWidth = CGRectGetWidth(contentFrame) - labelX - kCRStatusBarViewNoImageContentInset;
     } else {
-        CGFloat height = MIN([self.toast.text boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+        labelX = alignment == CRToastImageLeft ? imageSize.width : kCRStatusBarViewNoImageContentInset;
+        labelWidth = CGRectGetWidth(contentFrame) - labelX - kCRStatusBarViewNoImageContentInset;
+    }
+
+    self.imageView.frame = CGRectMake(0, 0, imageSize.width == 0 ? 0 : CGRectGetHeight(contentFrame), imageSize.height == 0 ? 0 : CGRectGetHeight(contentFrame));
+
+    CGFloat imageX = 0;
+
+    if (alignment == CRToastImageCenter) {
+        imageX = CGRectGetWidth(contentFrame)/2 - CGRectGetWidth(self.imageView.frame)/2;
+    } else if (alignment == CRToastImageRight) {
+        imageX = CGRectGetWidth(contentFrame) - CGRectGetWidth(self.imageView.frame);
+    }
+    
+    CGRect newImageFrame = self.imageView.frame;
+    newImageFrame.origin.x = imageX;
+    self.imageView.frame = newImageFrame;
+
+    if (self.toast.subtitleText == nil) {
+        self.label.frame = CGRectMake(labelX, statusBarYOffset, labelWidth, CGRectGetHeight(contentFrame));
+    } else {
+        CGFloat height = MIN([self.toast.text boundingRectWithSize:CGSizeMake(labelWidth, MAXFLOAT)
                                                            options:NSStringDrawingUsesLineFragmentOrigin
                                                         attributes:@{NSFontAttributeName : self.toast.font}
                                                            context:nil].size.height,
                              CGRectGetHeight(contentFrame));
-        CGFloat subtitleHeight = [self.toast.subtitleText boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+        CGFloat subtitleHeight = [self.toast.subtitleText boundingRectWithSize:CGSizeMake(labelWidth, MAXFLOAT)
                                                                        options:NSStringDrawingUsesLineFragmentOrigin
                                                                     attributes:@{NSFontAttributeName : self.toast.subtitleFont }
                                                                        context:nil].size.height;
+        
         if ((CGRectGetHeight(contentFrame) - (height + subtitleHeight)) < 5) {
             subtitleHeight = (CGRectGetHeight(contentFrame) - (height))-10;
         }
+        
         CGFloat offset = (CGRectGetHeight(contentFrame) - (height + subtitleHeight))/2;
         
-        self.label.frame = CGRectMake(x,
-                                      offset+statusBarYOffset,
-                                      CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
+        self.label.frame = CGRectMake(labelX,
+                                      offset + statusBarYOffset,
+                                      CGRectGetWidth(contentFrame) - labelX - kCRStatusBarViewNoImageContentInset,
                                       height);
         
         
-        self.subtitleLabel.frame = CGRectMake(x,
-                                              height+offset+statusBarYOffset,
-                                              CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
+        self.subtitleLabel.frame = CGRectMake(labelX,
+                                              height + offset + statusBarYOffset,
+                                              CGRectGetWidth(contentFrame) - labelX - kCRStatusBarViewNoImageContentInset,
                                               subtitleHeight);
     }
 }

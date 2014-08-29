@@ -175,14 +175,7 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
-                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)
-                                      ,
-                                      kCRToastNotificationPreferredHeightKey    : @40.0f
-                                      ,
-                                      kCRToastImageAllignmentKey                : @(CRToastImageCenter)
-                                      
-                                      
-                                      
+                                      kCRToastImageAlignmentKey                 : @(CRToastImageRight)
                                       } mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];

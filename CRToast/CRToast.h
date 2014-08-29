@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
  'CRToastImageAllignment' defines how the image should be alligned on the notification
 */
 
-typedef NS_ENUM(NSInteger, CRToastImageAllignment) {
+typedef NS_ENUM(NSInteger, CRToastImageAlignment) {
     CRToastImageLeft,
     CRToastImageCenter,
     CRToastImageRight
@@ -318,7 +318,7 @@ extern NSString *const kCRToastStatusBarStyleKey;
 extern NSString *const kCRToastBackgroundColorKey;
 
 /**
- The image to be shown on the left side of the notification. Expects type `UIImage`.
+ The image to be shown in the notification. Expects type `UIImage`.
  */
 
 extern NSString *const kCRToastImageKey;
@@ -335,7 +335,11 @@ extern NSString *const kCRToastInteractionRespondersKey;
 
 extern NSString *const kCRToastAutorotateKey;
 
-extern NSString *const kCRToastImageAllignmentKey;
+/**
+ The image alignment to be used for the `kCRToastImageKey` value . Expects type `CRToastImageAlignment`.
+ */
+
+extern NSString *const kCRToastImageAlignmentKey;
 
 /**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
