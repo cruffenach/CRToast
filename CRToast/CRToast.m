@@ -82,6 +82,13 @@ typedef NS_ENUM(NSInteger, CRToastState) {
     CRToastStateCompleted
 };
 
+// Manually define the foundation version number for iOS 7.1, used to check if
+// device is running iOS 8 or later, in order to pass Travis CI. Can be removed
+// once Travis CI is updated to support Xcode 6 and iOS 8 SDK.
+#ifndef NSFoundationVersionNumber_iOS_7_1
+	#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+
 #pragma mark - CRToast
 
 @interface CRToast : NSObject <UIGestureRecognizerDelegate>
@@ -171,15 +178,15 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 #pragma mark - Option Constant Definitions
 
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";
-NSString *const kCRToastNotificationPreferredHeightKey         = @"kCRToastNotificationPreferredHeightKey";
+NSString *const kCRToastNotificationPreferredHeightKey      = @"kCRToastNotificationPreferredHeightKey";
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
-NSString *const kCRToastAnimationInDirectionKey                 = @"kCRToastAnimationInDirectionKey";
-NSString *const kCRToastAnimationOutDirectionKey                = @"kCRToastAnimationOutDirectionKey";
+NSString *const kCRToastAnimationInDirectionKey             = @"kCRToastAnimationInDirectionKey";
+NSString *const kCRToastAnimationOutDirectionKey            = @"kCRToastAnimationOutDirectionKey";
 
 NSString *const kCRToastAnimationInTimeIntervalKey          = @"kCRToastAnimateInTimeInterval";
 NSString *const kCRToastTimeIntervalKey                     = @"kCRToastTimeIntervalKey";
@@ -260,6 +267,8 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 #pragma mark - Layout Helper Functions
 
+static BOOL kCRFrameAutoAdjustedForOrientation = NO;
+
 static CGFloat const CRNavigationBarDefaultHeight = 45.0f;
 static CGFloat const CRNavigationBarDefaultHeightiPhoneLandscape = 33.0f;
 
@@ -268,9 +277,15 @@ static UIInterfaceOrientation CRGetDeviceOrientation() {
 }
 
 static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
+	CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+	
+	if (kCRFrameAutoAdjustedForOrientation) {
+		return CGRectGetHeight(statusBarFrame);
+	}
+	
     return (UIDeviceOrientationIsLandscape(orientation)) ?
-    [[UIApplication sharedApplication] statusBarFrame].size.width :
-    [[UIApplication sharedApplication] statusBarFrame].size.height;
+    CGRectGetWidth(statusBarFrame) :
+    CGRectGetHeight(statusBarFrame);
 }
 
 static CGFloat CRGetStatusBarHeight() {
@@ -278,10 +293,15 @@ static CGFloat CRGetStatusBarHeight() {
 }
 
 static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
-    if (UIDeviceOrientationIsPortrait(orientation)) {
-        return [UIScreen mainScreen].bounds.size.width;
-    }
-    return [UIScreen mainScreen].bounds.size.height;
+	CGRect mainScreenBounds = [UIScreen mainScreen].bounds;
+	
+	if (kCRFrameAutoAdjustedForOrientation) {
+		return CGRectGetWidth(mainScreenBounds);
+	}
+	
+    return (UIDeviceOrientationIsPortrait(orientation)) ?
+	CGRectGetWidth(mainScreenBounds) :
+	CGRectGetHeight(mainScreenBounds);
 }
 
 static CGFloat CRGetStatusBarWidth() {
@@ -293,10 +313,6 @@ static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation ori
             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
     CRNavigationBarDefaultHeight :
     CRNavigationBarDefaultHeightiPhoneLandscape;
-}
-
-static CGFloat CRGetNavigationBarHeight() {
-    return CRGetNavigationBarHeightForOrientation(CRGetDeviceOrientation());
 }
 
 static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFloat preferredNotificationHeight, UIInterfaceOrientation orientation) {
@@ -433,7 +449,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 + (void)initialize {
     if (self == [CRToast class]) {
-        
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+#endif
+		
         kCRFontDefault = [UIFont systemFontOfSize:12];
         kCRTextColorDefault = [UIColor whiteColor];
         kCRTextShadowOffsetDefault = CGSizeZero;
@@ -1367,14 +1386,27 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
     CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
-    
-    if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
-        containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
-    } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
-        containerFrame = CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-notificationSize.height, 0, notificationSize.height, notificationSize.width);
-    } else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortraitUpsideDown) {
-        containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
-    }
+	
+	if (!kCRFrameAutoAdjustedForOrientation) {
+		UIInterfaceOrientation statusBarOrientation = CRGetDeviceOrientation();
+		switch (statusBarOrientation) {
+			case UIInterfaceOrientationLandscapeLeft: {
+				containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
+				break;
+			}
+			case UIInterfaceOrientationLandscapeRight: {
+				containerFrame = CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-notificationSize.height, 0, notificationSize.height, notificationSize.width);
+				break;
+			}
+			case UIInterfaceOrientationPortraitUpsideDown: {
+				containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
+				break;
+			}
+			default: {
+				break;
+			}
+		}
+	}
     
     CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
     [rootViewController statusBarStyle:notification.statusBarStyle];
