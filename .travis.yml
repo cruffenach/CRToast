@@ -1,4 +1,8 @@
 language: objective-c
-xcode_project: CRToastDemo.xcodeproj
+xcode_workspace: CRToastDemo.xcworkspace
 xcode_scheme: CRToastTests
 xcode_sdk: iphonesimulator7.0
+before_script:
+  - export LANG=en_US.UTF-8
+before_install:
+  - gem install cocoapods -v '0.33.1'
