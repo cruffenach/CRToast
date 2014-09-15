@@ -1385,8 +1385,14 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
-    CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
-	
+    CGRect containerFrame;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 7.1f && [UIScreen mainScreen].nativeScale > 2) {
+        containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height + 11);
+        
+    } else {
+        containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    }
+    
 	if (!kCRFrameAutoAdjustedForOrientation) {
 		UIInterfaceOrientation statusBarOrientation = CRGetDeviceOrientation();
 		switch (statusBarOrientation) {
