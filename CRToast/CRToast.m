@@ -1422,18 +1422,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.rootViewController.view.frame = containerFrame;
     _notificationWindow.windowLevel = notification.displayUnderStatusBar ? UIWindowLevelNormal + 1 : UIWindowLevelStatusBar;
     
-    UIView *statusBarView = notification.statusBarView;
-    statusBarView.frame = _notificationWindow.rootViewController.view.bounds;
-    [_notificationWindow.rootViewController.view addSubview:statusBarView];
-    self.statusBarView = statusBarView;
-    statusBarView.hidden = notification.presentationType == CRToastPresentationTypeCover;
-    
     UIView *notificationView = notification.notificationView;
     notificationView.frame = notification.notificationViewAnimationFrame1;
     [_notificationWindow.rootViewController.view addSubview:notificationView];
     self.notificationView = notificationView;
     rootViewController.toastView = notificationView;
-    self.statusBarView = statusBarView;
     
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
         subview.userInteractionEnabled = NO;
@@ -1480,11 +1473,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         case CRToastAnimationTypeGravity: {
             [notification initiateAnimator:_notificationWindow.rootViewController.view];
             [notification.animator removeAllBehaviors];
-            UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
-            gravity.gravityDirection = notification.inGravityDirection;
-            gravity.magnitude = notification.animationGravityMagnitude;
             NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
-            if (notification.presentationType == CRToastPresentationTypePush) [collisionItems addObject:statusBarView];
             UICollisionBehavior *collision = [[UICollisionBehavior alloc] initWithItems:collisionItems];
             collision.collisionDelegate = self;
             [collision addBoundaryWithIdentifier:kCRToastManagerCollisionBoundryIdentifier
@@ -1492,7 +1481,6 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                                          toPoint:notification.inCollisionPoint2];
             UIDynamicItemBehavior *rotationLock = [[UIDynamicItemBehavior alloc] initWithItems:collisionItems];
             rotationLock.allowsRotation = NO;
-            [notification.animator addBehavior:gravity];
             [notification.animator addBehavior:collision];
             [notification.animator addBehavior:rotationLock];
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
