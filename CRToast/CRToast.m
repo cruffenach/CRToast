@@ -274,9 +274,12 @@ static UIInterfaceOrientation CRGetDeviceOrientation() {
 }
 
 static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
-    return (UIDeviceOrientationIsLandscape(orientation)) ?
-    [[UIApplication sharedApplication] statusBarFrame].size.width :
-    [[UIApplication sharedApplication] statusBarFrame].size.height;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+        return (UIDeviceOrientationIsLandscape(orientation)) ?
+        [[UIApplication sharedApplication] statusBarFrame].size.width :
+        [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    return [[UIApplication sharedApplication] statusBarFrame].size.height;
 }
 
 static CGFloat CRGetStatusBarHeight() {
@@ -284,10 +287,12 @@ static CGFloat CRGetStatusBarHeight() {
 }
 
 static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
-    if (UIDeviceOrientationIsPortrait(orientation)) {
-        return [UIScreen mainScreen].bounds.size.width;
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+        if (UIDeviceOrientationIsLandscape(orientation)) {
+            return [UIScreen mainScreen].bounds.size.height;
+        }
     }
-    return [UIScreen mainScreen].bounds.size.height;
+    return [UIScreen mainScreen].bounds.size.width;
 }
 
 static CGFloat CRGetStatusBarWidth() {
@@ -1399,12 +1404,16 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     if (notification.shouldCoverNotification) {
         self.coverBackgroundView = notification.coverBackgroundView;
-        CGSize backgroundSize;
-        if (UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
-          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.width, _notificationWindow.bounds.size.height);
+        CGSize backgroundSize = CGSizeMake(_notificationWindow.bounds.size.width, _notificationWindow.bounds.size.height);
+        // in iOS7, the notification window bounds doesn't change with orientation
+        // in iOS8, this seems to have been fixed so we don't need to switch the width/height
+        if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
+            if (UIDeviceOrientationIsLandscape(CRGetDeviceOrientation())) {
+                backgroundSize = CGSizeMake(backgroundSize.height, backgroundSize.width);
+            }
         }
         else {
-          backgroundSize = CGSizeMake(_notificationWindow.bounds.size.height, _notificationWindow.bounds.size.width);
+            // do nothing, background size doesn't need to be adjusted
         }
         CGRect cbFrame = CGRectZero;
         cbFrame.size = backgroundSize;
