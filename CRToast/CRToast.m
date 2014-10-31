@@ -501,7 +501,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
-                                kCRToastContentViewConfigurationBlockKey    : @"__NSGlobalBlock__"
+                                kCRToastContentViewConfigurationBlockKey    : @"NSBlock"
                                 };
     }
 }
