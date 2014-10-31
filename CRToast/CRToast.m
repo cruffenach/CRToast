@@ -166,6 +166,8 @@ typedef NS_ENUM(NSInteger, CRToastState) {
 @property (nonatomic, readonly) CGPoint outCollisionPoint1;
 @property (nonatomic, readonly) CGPoint outCollisionPoint2;
 
+@property (nonatomic, readonly) CRToastContentViewConfigurationBlock contentViewConfigurationBlock;
+
 - (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
 - (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
 - (void)initiateAnimator:(UIView *)view;
@@ -220,6 +222,8 @@ NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteract
 
 NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorotateKey";
 
+NSString *const kCRToastContentViewConfigurationBlockKey    = @"kCRToastContentViewConfigurationBlockKey";
+
 #pragma mark - Option Defaults
 
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
@@ -264,6 +268,8 @@ static NSArray  *                   kCRInteractionResponders                = ni
 static BOOL                         kCRAutoRotateDefault                    = YES;
 
 static NSDictionary *               kCRToastKeyClassMap                     = nil;
+
+static CRToastContentViewConfigurationBlock kCRToastContentViewConfigurationBlockDefault = nil;
 
 #pragma mark - Layout Helper Functions
 
@@ -494,7 +500,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
-                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class])};
+                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
+                                kCRToastContentViewConfigurationBlockKey    : @"__NSGlobalBlock__"
+                                };
     }
 }
 + (instancetype)notificationWithOptions:(NSDictionary*)options appearanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion {
@@ -794,6 +802,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     return (_options[kCRToastAutorotateKey] ? [_options[kCRToastAutorotateKey] boolValue] : kCRAutoRotateDefault);
 }
 
+- (CRToastContentViewConfigurationBlock)contentViewConfigurationBlock {
+    return (_options[kCRToastContentViewConfigurationBlockKey] ? _options[kCRToastContentViewConfigurationBlockKey] : nil);
+}
+
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
     return (animationDirection == CRToastAnimationDirectionTop || animationDirection == CRToastAnimationDirectionBottom);
 }
@@ -992,6 +1004,7 @@ static CGFloat kCRCollisionTweak = 0.5;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UILabel *subtitleLabel;
+@property (nonatomic, strong) UIView *contentView;
 @end
 
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
@@ -1028,6 +1041,11 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         [self addSubview:subtitleLabel];
         self.subtitleLabel = subtitleLabel;
         
+        UIView *contentView = [[UIView alloc] initWithFrame:CGRectZero];
+        contentView.userInteractionEnabled = NO;
+        [self addSubview:contentView];
+        self.contentView = contentView;
+        
         self.isAccessibilityElement = YES;
     }
     return self;
@@ -1052,6 +1070,14 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
     CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
     
+    if (self.toast.contentViewConfigurationBlock) {
+        self.contentView.frame = CGRectMake(CGRectGetWidth(contentFrame)-CGRectGetHeight(contentFrame)-kCRStatusBarViewNoImageRightContentInset,
+                                            statusBarYOffset,
+                                            CGRectGetHeight(contentFrame),
+                                            CGRectGetHeight(contentFrame));
+        self.toast.contentViewConfigurationBlock(self.contentView);
+    }
+    
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
                                       statusBarYOffset,
@@ -1074,13 +1100,13 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         
         self.label.frame = CGRectMake(x,
                                       offset+statusBarYOffset,
-                                      CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
+                                      CGRectGetWidth(contentFrame)-x-CGRectGetWidth(self.contentView.frame)-kCRStatusBarViewNoImageRightContentInset,
                                       height);
         
         
         self.subtitleLabel.frame = CGRectMake(x,
                                               height+offset+statusBarYOffset,
-                                              CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
+                                              CGRectGetWidth(contentFrame)-x-CGRectGetWidth(self.contentView.frame)-kCRStatusBarViewNoImageRightContentInset,
                                               subtitleHeight);
     }
 }
