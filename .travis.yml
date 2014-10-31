@@ -1,4 +1,4 @@
 language: objective-c
-xcode_project: CRToastDemo.xcworkspace
+xcode_workspace: CRToastDemo.xcworkspace
 xcode_scheme: CRToastTests
 xcode_sdk: iphonesimulator7.0
