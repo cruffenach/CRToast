@@ -6,7 +6,6 @@
 
 #import "MainViewController.h"
 #import "CRToast.h"
-#import <PureLayout/PureLayout.h>
 
 @interface MainViewController ()<UITextFieldDelegate>
 
@@ -204,8 +203,9 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
             UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
             [indicator startAnimating];
             [view addSubview:indicator];
-            [indicator autoPinEdgeToSuperviewEdge:ALEdgeRight];
-            [indicator autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+            indicator.frame = CGRectOffset(indicator.frame,
+                                           CGRectGetWidth(view.frame) - CGRectGetWidth(indicator.frame),
+                                           CGRectGetHeight(view.frame) / 2 - CGRectGetHeight(indicator.frame) / 2);
         };
         
         options[kCRToastContentViewConfigurationBlockKey] = block;
