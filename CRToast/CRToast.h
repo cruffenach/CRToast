@@ -7,6 +7,11 @@
 #import <Foundation/Foundation.h>
 
 /**
+ CRToastContentViewConfigurationBlock defines the block that is used to configure the content view that can be optionally added to the toast.
+ */
+typedef void(^CRToastContentViewConfigurationBlock)(UIView *view);
+
+/**
  CRToastInteractionType defines the types of interactions that can be injected into a CRToastIneractionResponder.
  */
 
@@ -319,6 +324,11 @@ extern NSString *const kCRToastInteractionRespondersKey;
 
 extern NSString *const kCRToastAutorotateKey;
 
+/**
+ A block that is given a pre-sized UIView to configure with its own views. Expects type `CRToastContentViewConfigurationBlock` defaults to `nil`
+ */
+
+extern NSString *const kCRToastContentViewConfigurationBlockKey;
 
 /**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options

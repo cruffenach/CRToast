@@ -57,6 +57,7 @@
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		5E2FFB8D18367CA3003333F8 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		82B4D444EBEE32CCD36D1417 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +130,7 @@
 				5E2FFB5818367C01003333F8 /* CoreGraphics.framework */,
 				5E2FFB5A18367C01003333F8 /* UIKit.framework */,
 				5E2FFB6F18367C01003333F8 /* XCTest.framework */,
+				82B4D444EBEE32CCD36D1417 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -487,6 +489,7 @@
 				2D8F2E1918CED50A0077A7F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */ = {
 			isa = XCConfigurationList;

@@ -32,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UISwitch *statusBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *navigationBarSwitch;
 
+@property (weak, nonatomic) IBOutlet UISwitch *stickySwitch;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segAlignment;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segSubtitleAlignment;
 
@@ -174,7 +176,8 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationInTypeKey                : @(CRToastAnimationTypeFromSegmentedControl(_inAnimationTypeSegmentedControl)),
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
-                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
+                                      kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
+                                      } mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
     }
@@ -190,6 +193,22 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                                                                                                      block:^(CRToastInteractionType interactionType){
                                                                                                                          NSLog(@"Dismissed with %@ interaction", NSStringFromCRToastInteractionType(interactionType));
                                                                                                                      }]];
+    }
+    
+    if (self.stickySwitch.on) {
+        options[kCRToastTimeIntervalKey] = @(DBL_MAX);
+        
+        CRToastContentViewConfigurationBlock block = ^(UIView *view) {
+//            view.backgroundColor = [UIColor redColor];
+            UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [indicator startAnimating];
+            [view addSubview:indicator];
+            indicator.frame = CGRectOffset(indicator.frame,
+                                           CGRectGetWidth(view.frame) - CGRectGetWidth(indicator.frame),
+                                           CGRectGetHeight(view.frame) / 2 - CGRectGetHeight(indicator.frame) / 2);
+        };
+        
+        options[kCRToastContentViewConfigurationBlockKey] = block;
     }
     
     return [NSDictionary dictionaryWithDictionary:options];
