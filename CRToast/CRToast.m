@@ -1067,8 +1067,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
                                       imageSize.height == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame));
-    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
-    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
+
     
     if (self.toast.contentViewConfigurationBlock) {
         self.contentView.frame = CGRectMake(CGRectGetWidth(contentFrame)-CGRectGetHeight(contentFrame)-kCRStatusBarViewNoImageRightContentInset,
@@ -1077,6 +1076,9 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
                                             CGRectGetHeight(contentFrame));
         self.toast.contentViewConfigurationBlock(self.contentView);
     }
+    
+    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    CGFloat width = CGRectGetWidth(contentFrame)-x-CGRectGetWidth(self.contentView.frame)-kCRStatusBarViewNoImageRightContentInset;
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
@@ -1100,13 +1102,13 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         
         self.label.frame = CGRectMake(x,
                                       offset+statusBarYOffset,
-                                      CGRectGetWidth(contentFrame)-x-CGRectGetWidth(self.contentView.frame)-kCRStatusBarViewNoImageRightContentInset,
+                                      width,
                                       height);
         
         
         self.subtitleLabel.frame = CGRectMake(x,
                                               height+offset+statusBarYOffset,
-                                              CGRectGetWidth(contentFrame)-x-CGRectGetWidth(self.contentView.frame)-kCRStatusBarViewNoImageRightContentInset,
+                                              width,
                                               subtitleHeight);
     }
 }
