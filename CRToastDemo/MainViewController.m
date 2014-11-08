@@ -6,6 +6,7 @@
 
 #import "MainViewController.h"
 #import "CRToast.h"
+#import "CRToastDemo-Swift.h"
 
 @interface MainViewController ()<UITextFieldDelegate>
 

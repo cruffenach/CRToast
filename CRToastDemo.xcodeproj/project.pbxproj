@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BF9498019B292970054661C /* CRToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9497F19B292970054661C /* CRToast.swift */; };
 		2D8F2E0918CED50A0077A7F6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB6F18367C01003333F8 /* XCTest.framework */; };
 		2D8F2E0A18CED50A0077A7F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
 		2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
@@ -35,6 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BF9497E19B292970054661C /* CRToastDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRToastDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		0BF9497F19B292970054661C /* CRToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CRToast.swift; sourceTree = "<group>"; };
 		2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8F2E0E18CED50A0077A7F6 /* CRToastTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRToastTests-Info.plist"; sourceTree = "<group>"; };
 		2D8F2E1018CED50A0077A7F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -161,6 +164,8 @@
 			children = (
 				5E0D045C1838AE0D00CBFC35 /* CRToast.h */,
 				5E0D045D1838AE0D00CBFC35 /* CRToast.m */,
+				0BF9497F19B292970054661C /* CRToast.swift */,
+				0BF9497E19B292970054661C /* CRToastDemo-Bridging-Header.h */,
 			);
 			path = CRToast;
 			sourceTree = "<group>";
@@ -291,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */,
+				0BF9498019B292970054661C /* CRToast.swift in Sources */,
 				5E2FFB6718367C01003333F8 /* AppDelegate.m in Sources */,
 				5E2FFB6318367C01003333F8 /* main.m in Sources */,
 				5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */,
@@ -391,6 +397,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -407,6 +414,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = CRToastDemo;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -430,6 +438,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -439,6 +448,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_MODULE_NAME = CRToastDemo;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -450,13 +460,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CRToast/CRToastDemo-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -466,13 +480,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "CRToast/CRToastDemo-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -487,6 +504,7 @@
 				2D8F2E1918CED50A0077A7F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */ = {
 			isa = XCConfigurationList;
