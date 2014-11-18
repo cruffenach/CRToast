@@ -5,6 +5,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 #import "CRToast.h"
 
 NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType) {
