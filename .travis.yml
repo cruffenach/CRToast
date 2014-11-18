@@ -1,4 +1,10 @@
 language: objective-c
+before_install:
+  - brew update
+  - brew upgrade xctool
 xcode_project: CRToastDemo.xcodeproj
 xcode_scheme: CRToastTests
-xcode_sdk: iphonesimulator7.0
+xcode_sdk:
+  - iphonesimulator7.0
+  - iphonesimulator7.1
+  - iphonesimulator8.0
