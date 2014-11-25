@@ -1,6 +1,7 @@
 language: objective-c
 before_install:
-  - brew outdated xctool && brew upgrade xctool
+  - brew update
+  - brew reinstall xctool
 xcode_project: CRToastDemo.xcodeproj
 xcode_scheme: CRToastTests
 xcode_sdk:
