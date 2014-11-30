@@ -437,11 +437,11 @@ NSArray * CRToastGenericTapRecognizersMake(id target, SEL action, CRToastInterac
 
 NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *interactionResponder) {
     if (interactionResponder.interactionType == CRToastInteractionTypeAll) {
-        return [CRToastGenericTapRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder) arrayByAddingObjectsFromArray:CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder)];
+        return [CRToastGenericTapRecognizersMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder) arrayByAddingObjectsFromArray:CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder)];
     } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipe) {
         return CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
     } else if (interactionResponder.interactionType == CRToastInteractionTypeTap) {
-        return CRToastGenericTapRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
+        return CRToastGenericTapRecognizersMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder);
     }
     return nil;
 }
