@@ -436,12 +436,12 @@ NSArray * CRToastGenericTapRecognizersMake(id target, SEL action, CRToastInterac
 }
 
 NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *interactionResponder) {
-    if (interactionResponder.interactionType == CRToastInteractionTypeAll) {
-        return [CRToastGenericTapRecognizersMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder) arrayByAddingObjectsFromArray:CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder)];
-    } else if (interactionResponder.interactionType == CRToastInteractionTypeSwipe) {
+    if (interactionResponder.interactionType == CRToastInteractionTypeSwipe) {
         return CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder);
     } else if (interactionResponder.interactionType == CRToastInteractionTypeTap) {
         return CRToastGenericTapRecognizersMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder);
+    } else if (interactionResponder.interactionType == CRToastInteractionTypeAll) {
+        return [CRToastGenericTapRecognizersMake(target, @selector(tapGestureRecognizerTapped:), interactionResponder) arrayByAddingObjectsFromArray:CRToastGenericSwipeRecognizersMake(target, @selector(swipeGestureRecognizerSwiped:), interactionResponder)];
     }
     return nil;
 }
@@ -615,7 +615,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     NSMutableArray *gestureRecognizers = [@[] mutableCopy];
     for (CRToastInteractionResponder *interactionResponder in [kCRInteractionResponders arrayByAddingObjectsFromArray:interactionResponders]) {
         if (CRToastInteractionResponderIsGenertic(interactionResponder.interactionType)) {
-            gestureRecognizers = [CRToastGenericRecognizersMake(self, interactionResponder) mutableCopy];
+            [gestureRecognizers addObjectsFromArray:CRToastGenericRecognizersMake(self, interactionResponder)];
         } else {
             UIGestureRecognizer *gestureRecognizer = CRToastGestureRecognizerMake(self, interactionResponder);
             gestureRecognizer.delegate = self;
