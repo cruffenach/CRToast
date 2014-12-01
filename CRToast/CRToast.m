@@ -238,7 +238,7 @@ static NSTimeInterval               kCRAnimateOutTimeIntervalDefault        = 0.
 
 static CGFloat                      kCRSpringDampingDefault                 = 0.6;
 static CGFloat                  	kCRSpringInitialVelocityDefault         = 1.0;
-static CGFloat                      kCRGravityMagnitudeDefault              = 1.0;
+static CGFloat                      kCRGravityMagnitudeDefault              = 1.5;
 
 static NSString *                   kCRTextDefault                          = @"";
 static UIFont   *                   kCRFontDefault                          = nil;
@@ -1449,7 +1449,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
-                    self.gravityAnimationCompletionBlock = NULL;
+                    weakSelf.gravityAnimationCompletionBlock = NULL;
                     CRToastOutwardAnimationsSetupBlock(weakSelf)();
                 }
             });
