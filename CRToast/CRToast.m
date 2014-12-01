@@ -1095,12 +1095,16 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     _label.textColor = toast.textColor;
     _label.textAlignment = toast.textAlignment;
     _label.numberOfLines = toast.textMaxNumberOfLines;
+    _label.shadowOffset = toast.textShadowOffset;
+    _label.shadowColor = toast.textShadowColor;
     if (toast.subtitleText != nil) {
         _subtitleLabel.text = toast.subtitleText;
         _subtitleLabel.font = toast.subtitleFont;
         _subtitleLabel.textColor = toast.subtitleTextColor;
         _subtitleLabel.textAlignment = toast.subtitleTextAlignment;
         _subtitleLabel.numberOfLines = toast.subtitleTextMaxNumberOfLines;
+        _subtitleLabel.shadowOffset = toast.subtitleTextShadowOffset;
+        _subtitleLabel.shadowColor = toast.subtitleTextShadowColor;
     }
     _imageView.image = toast.image;
     self.backgroundColor = toast.backgroundColor;
