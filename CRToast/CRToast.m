@@ -269,6 +269,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 #pragma mark - Layout Helper Functions
 
 static BOOL kCRFrameAutoAdjustedForOrientation = NO;
+static BOOL kCRUseSizeClass = NO;
 
 static CGFloat const CRNavigationBarDefaultHeight = 45.0f;
 static CGFloat const CRNavigationBarDefaultHeightiPhoneLandscape = 33.0f;
@@ -310,8 +311,13 @@ static CGFloat CRGetStatusBarWidth() {
 }
 
 static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
+    BOOL regularHorizontalSizeClass = NO;
+    if (kCRUseSizeClass) {
+        UITraitCollection *traitCollection = [[UIScreen mainScreen] traitCollection];
+        regularHorizontalSizeClass = traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    }
     return (UIDeviceOrientationIsPortrait(orientation) ||
-            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
+            UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || regularHorizontalSizeClass) ?
     CRNavigationBarDefaultHeight :
     CRNavigationBarDefaultHeightiPhoneLandscape;
 }
@@ -452,6 +458,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (self == [CRToast class]) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
 		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+        kCRUseSizeClass = kCRFrameAutoAdjustedForOrientation;
 #endif
 		
         kCRFontDefault = [UIFont systemFontOfSize:12];
@@ -1449,7 +1456,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             notification.state = CRToastStateDisplaying;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
-                    self.gravityAnimationCompletionBlock = NULL;
+                    weakSelf.gravityAnimationCompletionBlock = NULL;
                     CRToastOutwardAnimationsSetupBlock(weakSelf)();
                 }
             });
