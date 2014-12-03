@@ -308,9 +308,14 @@ extern NSString *const kCRToastBackgroundColorKey;
 extern NSString *const kCRToastImageKey;
 
 /**
- a BOOL setting whether the CRToast should show a loading indicator in the leftimage location. This option @b cannot be used with @c kCRToastImageKey
+ BOOL setting whether the CRToast should show a loading indicator in the left image location.
  */
 extern NSString *const kCRToastShowActivityIndicatorKey;
+
+/**
+ The activity indicator view style. Expects type `UIActivityIndicatorViewStyle`
+ */
+extern NSString *const kCRToastActivityIndicatorViewStyleKey;
 
 /**
  An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`

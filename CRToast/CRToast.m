@@ -218,6 +218,7 @@ NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBa
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
+NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
 
 NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteractionRespondersKey";
 
@@ -262,6 +263,7 @@ static UIStatusBarStyle             kCRStatusBarStyleDefault                = UI
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
 static BOOL                         kCRShowActivityIndicatorDefault         = NO;
+static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault           = UIActivityIndicatorViewStyleWhite;
 
 static NSArray  *                   kCRInteractionResponders                = nil;
 
@@ -498,6 +500,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
+                                kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),};
     }
@@ -555,6 +558,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = defaultOptions[kCRToastShowActivityIndicatorKey];
+    if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault           = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                = defaultOptions[kCRToastInteractionRespondersKey];
     if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                    = [defaultOptions[kCRToastAutorotateKey] boolValue];
@@ -782,6 +786,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (BOOL)showActivityIndicator {
     return _options[kCRToastShowActivityIndicatorKey] ? [_options[kCRToastShowActivityIndicatorKey] boolValue] : kCRShowActivityIndicatorDefault;
+}
+- (UIActivityIndicatorViewStyle)activityIndicatorViewStyle {
+    return _options[kCRToastActivityIndicatorViewStyleKey] ? [_options[kCRToastActivityIndicatorViewStyleKey] integerValue] : kCRActivityIndicatorViewStyleDefault;
 }
 
 - (NSInteger)maxNumberOfLines {
@@ -1068,9 +1075,13 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
     
     if (self.toast.showActivityIndicator) {
-        self.activityIndicator.center = CGPointMake(CGRectGetMidX(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset, CGRectGetMidY(contentFrame));
+        
+        self.activityIndicator.center = imageSize.width == 0 ?
+                CGPointMake(CGRectGetMidX(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset, CGRectGetMidY(contentFrame))
+                : self.imageView.center;
         [self.activityIndicator startAnimating];
-        x += CGRectGetWidth(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset;
+        x = MAX(CGRectGetMaxX(self.activityIndicator.frame), CGRectGetMaxX(_imageView.frame)) + kCRStatusBarViewNoImageLeftContentInset;
+        [self bringSubviewToFront:self.activityIndicator];
     }
     
     CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
@@ -1125,6 +1136,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
         _subtitleLabel.numberOfLines = toast.subtitleTextMaxNumberOfLines;
     }
     _imageView.image = toast.image;
+    _activityIndicator.activityIndicatorViewStyle = toast.activityIndicatorViewStyle;
     self.backgroundColor = toast.backgroundColor;
 }
 
