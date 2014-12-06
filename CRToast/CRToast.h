@@ -329,6 +329,10 @@ extern NSString *const kCRToastInteractionRespondersKey;
 
 extern NSString *const kCRToastAutorotateKey;
 
+/**
+ Key for the Identifier for a notification.
+ */
+extern NSString *const kCRToastIdentifier;
 
 /**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
@@ -386,5 +390,11 @@ extern NSString *const kCRToastAutorotateKey;
  @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
  */
 + (void)dismissAllNotifications:(BOOL)animated;
+
+/**
+ Gets the array of notification identifiers currently in the @c CRToastManager notifications queue.
+ If no identifier is specified for the @c kCRToastIdentifier when created, it will be excluded from this collection.
+ */
++ (NSArray *)notificationIdentifiersInQueue;
 
 @end
