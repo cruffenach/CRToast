@@ -221,6 +221,8 @@ NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteract
 
 NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorotateKey";
 
+NSString *const kCRToastIdentifier                          = @"kCRToastIdentifier";
+
 #pragma mark - Option Defaults
 
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
@@ -495,7 +497,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
-                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class])};
+                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
+                                kCRToastIdentifier                          : NSStringFromClass([NSString class])};
     }
 }
 + (instancetype)notificationWithOptions:(NSDictionary*)options appearanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion {
@@ -1246,6 +1249,10 @@ typedef void (^CRToastAnimationStepBlock)(void);
     [[self manager] dismissAllNotifications:animated];
 }
 
++ (NSArray *)notificationIdentifiersInQueue {
+    return [[self manager] notificationIdentifiersInQueue];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;
@@ -1350,6 +1357,11 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             } break;
         }
     };
+}
+
+- (NSArray *)notificationIdentifiersInQueue {
+    if (_notifications.count == 0) { return @[]; }
+    return [[_notifications valueForKeyPath:@"options.kCRToastIdentifier"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != nil"]];
 }
 
 - (void)dismissNotification:(BOOL)animated {
