@@ -23,7 +23,9 @@
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
 
+
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *showActivityIndicatorSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
@@ -177,6 +179,9 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+    }
+    if (self.showActivityIndicatorSwitch.on) {
+        options[kCRToastShowActivityIndicatorKey] = @YES;
     }
     
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
