@@ -221,6 +221,8 @@ NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteract
 
 NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorotateKey";
 
+NSString *const kCRToastCaptureDefaultWindowKey             = @"kCRToastCaptureDefaultWindowKey";
+
 #pragma mark - Option Defaults
 
 static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
@@ -263,6 +265,8 @@ static UIImage  *                   kCRImageDefault                         = ni
 static NSArray  *                   kCRInteractionResponders                = nil;
 
 static BOOL                         kCRAutoRotateDefault                    = YES;
+
+static BOOL                         kCRCaptureDefaultWindowDefault          = YES;
 
 static NSDictionary *               kCRToastKeyClassMap                     = nil;
 
@@ -495,7 +499,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
-                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class])};
+                                kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
+                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class])};
     }
 }
 + (instancetype)notificationWithOptions:(NSDictionary*)options appearanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion {
@@ -553,6 +558,8 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders               = defaultOptions[kCRToastInteractionRespondersKey];
     if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                   = [defaultOptions[kCRToastAutorotateKey] boolValue];
+
+    if (defaultOptions[kCRToastCaptureDefaultWindowKey])            kCRCaptureDefaultWindowDefault         = [defaultOptions[kCRToastCaptureDefaultWindowKey] boolValue];
 }
 
 #pragma mark - Notification View Helpers
@@ -574,7 +581,9 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 - (UIView*)statusBarView {
     UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    [statusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+    if ([_options[kCRToastCaptureDefaultWindowKey] boolValue]) {
+        [statusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+    }
     statusBarView.clipsToBounds = YES;
     return statusBarView;
 }
