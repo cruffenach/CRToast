@@ -335,6 +335,11 @@ extern NSString *const kCRToastAutorotateKey;
 extern NSString *const kCRToastIdentifier;
 
 /**
+ A BOOL setting whether the CRToast's should capture the screen behind the default UIWindow. Expects type `BOOL` defaults to `YES`
+ */
+extern NSString *const kCRToastCaptureDefaultWindowKey;
+
+/**
  A toast manager providing Class level API's for the presentation of notifications with a variery of options
  */
 
