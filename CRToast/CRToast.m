@@ -1038,6 +1038,7 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
+        self.accessibilityLabel = NSStringFromClass([self class]);
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectZero];

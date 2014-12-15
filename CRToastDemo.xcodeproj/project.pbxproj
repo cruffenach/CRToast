@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D10DF4419235FE90087C18A /* RotationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D10DF4319235FE90087C18A /* RotationTests.m */; };
+		2D240E3619235A280079F079 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB6F18367C01003333F8 /* XCTest.framework */; };
+		2D240E3719235A280079F079 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
+		2D240E3819235A280079F079 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
+		2D240E3E19235A280079F079 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D240E3C19235A280079F079 /* InfoPlist.strings */; };
 		2D8F2E0918CED50A0077A7F6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB6F18367C01003333F8 /* XCTest.framework */; };
 		2D8F2E0A18CED50A0077A7F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
 		2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
@@ -22,9 +27,17 @@
 		5E2FFB6918367C01003333F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB6818367C01003333F8 /* Images.xcassets */; };
 		5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8C18367CA3003333F8 /* MainViewController.m */; };
 		5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8D18367CA3003333F8 /* MainViewController.xib */; };
+		AAF56E40E966478D95F1083B /* libPods-Acceptance Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2D240E4219235A280079F079 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5E2FFB4B18367C01003333F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E2FFB5218367C01003333F8;
+			remoteInfo = CRToastDemo;
+		};
 		2D8F2E1518CED50A0077A7F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E2FFB4B18367C01003333F8 /* Project object */;
@@ -35,6 +48,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D10DF4219235FE90087C18A /* RotationTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotationTests.h; sourceTree = "<group>"; };
+		2D10DF4319235FE90087C18A /* RotationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotationTests.m; sourceTree = "<group>"; };
+		2D240E3519235A280079F079 /* Acceptance Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Acceptance Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D240E3B19235A280079F079 /* Acceptance Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Acceptance Tests-Info.plist"; sourceTree = "<group>"; };
+		2D240E3D19235A280079F079 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2D240E4119235A280079F079 /* Acceptance Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Acceptance Tests-Prefix.pch"; sourceTree = "<group>"; };
 		2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8F2E0E18CED50A0077A7F6 /* CRToastTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRToastTests-Info.plist"; sourceTree = "<group>"; };
 		2D8F2E1018CED50A0077A7F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -57,9 +76,22 @@
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		5E2FFB8D18367CA3003333F8 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		A6D6DD82DC7341D7AD4DA33F /* Pods-Acceptance Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Acceptance Tests.xcconfig"; path = "Pods/Pods-Acceptance Tests.xcconfig"; sourceTree = "<group>"; };
+		BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Acceptance Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2D240E3219235A280079F079 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D240E3619235A280079F079 /* XCTest.framework in Frameworks */,
+				2D240E3819235A280079F079 /* UIKit.framework in Frameworks */,
+				2D240E3719235A280079F079 /* Foundation.framework in Frameworks */,
+				AAF56E40E966478D95F1083B /* libPods-Acceptance Tests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D8F2E0518CED50A0077A7F6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -83,13 +115,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2D8F2E0C18CED50A0077A7F6 /* CRToastTests */ = {
+		2D10DF49192888F40087C18A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2D8F2E0C18CED50A0077A7F6 /* Unit Tests */,
+				2D240E3919235A280079F079 /* Acceptance Tests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		2D240E3919235A280079F079 /* Acceptance Tests */ = {
+			isa = PBXGroup;
+			children = (
+				2D10DF4219235FE90087C18A /* RotationTests.h */,
+				2D10DF4319235FE90087C18A /* RotationTests.m */,
+				2D240E3A19235A280079F079 /* Supporting Files */,
+			);
+			path = "Acceptance Tests";
+			sourceTree = "<group>";
+		};
+		2D240E3A19235A280079F079 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				2D240E3B19235A280079F079 /* Acceptance Tests-Info.plist */,
+				2D240E3C19235A280079F079 /* InfoPlist.strings */,
+				2D240E4119235A280079F079 /* Acceptance Tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		2D8F2E0C18CED50A0077A7F6 /* Unit Tests */ = {
 			isa = PBXGroup;
 			children = (
 				2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */,
 				2D8F2E0D18CED50A0077A7F6 /* Supporting Files */,
 			);
-			path = CRToastTests;
+			path = "Unit Tests";
 			sourceTree = "<group>";
 		};
 		2D8F2E0D18CED50A0077A7F6 /* Supporting Files */ = {
@@ -107,9 +168,10 @@
 			children = (
 				5E2FFB8518367C1B003333F8 /* CRToast */,
 				5E2FFB5C18367C01003333F8 /* CRToastDemo */,
-				2D8F2E0C18CED50A0077A7F6 /* CRToastTests */,
+				2D10DF49192888F40087C18A /* Tests */,
 				5E2FFB5518367C01003333F8 /* Frameworks */,
 				5E2FFB5418367C01003333F8 /* Products */,
+				A6D6DD82DC7341D7AD4DA33F /* Pods-Acceptance Tests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,6 +180,7 @@
 			children = (
 				5E2FFB5318367C01003333F8 /* CRToastDemo.app */,
 				2D8F2E0818CED50A0077A7F6 /* CRToastTests.xctest */,
+				2D240E3519235A280079F079 /* Acceptance Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,6 +192,7 @@
 				5E2FFB5818367C01003333F8 /* CoreGraphics.framework */,
 				5E2FFB5A18367C01003333F8 /* UIKit.framework */,
 				5E2FFB6F18367C01003333F8 /* XCTest.framework */,
+				BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -186,6 +250,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2D240E3419235A280079F079 /* Acceptance Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D240E4619235A280079F079 /* Build configuration list for PBXNativeTarget "Acceptance Tests" */;
+			buildPhases = (
+				84095A9B6D2D472DB5FBB6E1 /* Check Pods Manifest.lock */,
+				2D240E3119235A280079F079 /* Sources */,
+				2D240E3219235A280079F079 /* Frameworks */,
+				2D240E3319235A280079F079 /* Resources */,
+				43ED98BCD1F943D3B72E14E0 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2D240E4319235A280079F079 /* PBXTargetDependency */,
+			);
+			name = "Acceptance Tests";
+			productName = "Acceptance Tests";
+			productReference = 2D240E3519235A280079F079 /* Acceptance Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2D8F2E0718CED50A0077A7F6 /* CRToastTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D8F2E1718CED50A0077A7F6 /* Build configuration list for PBXNativeTarget "CRToastTests" */;
@@ -230,6 +314,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Collin Ruffenach";
 				TargetAttributes = {
+					2D240E3419235A280079F079 = {
+						TestTargetID = 5E2FFB5218367C01003333F8;
+					};
 					2D8F2E0718CED50A0077A7F6 = {
 						TestTargetID = 5E2FFB5218367C01003333F8;
 					};
@@ -252,11 +339,20 @@
 			targets = (
 				5E2FFB5218367C01003333F8 /* CRToastDemo */,
 				2D8F2E0718CED50A0077A7F6 /* CRToastTests */,
+				2D240E3419235A280079F079 /* Acceptance Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D240E3319235A280079F079 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D240E3E19235A280079F079 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D8F2E0618CED50A0077A7F6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,7 +373,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		43ED98BCD1F943D3B72E14E0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-Acceptance Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84095A9B6D2D472DB5FBB6E1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		2D240E3119235A280079F079 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D10DF4419235FE90087C18A /* RotationTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D8F2E0418CED50A0077A7F6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -300,6 +437,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2D240E4319235A280079F079 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E2FFB5218367C01003333F8 /* CRToastDemo */;
+			targetProxy = 2D240E4219235A280079F079 /* PBXContainerItemProxy */;
+		};
 		2D8F2E1618CED50A0077A7F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5E2FFB5218367C01003333F8 /* CRToastDemo */;
@@ -308,6 +450,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2D240E3C19235A280079F079 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2D240E3D19235A280079F079 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -327,6 +477,53 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2D240E4419235A280079F079 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6D6DD82DC7341D7AD4DA33F /* Pods-Acceptance Tests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CRToastDemo.app/CRToastDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Acceptance Tests/Acceptance Tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				INFOPLIST_FILE = "Tests/Acceptance Tests/Acceptance Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		2D240E4519235A280079F079 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A6D6DD82DC7341D7AD4DA33F /* Pods-Acceptance Tests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CRToastDemo.app/CRToastDemo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Acceptance Tests/Acceptance Tests-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "Tests/Acceptance Tests/Acceptance Tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		2D8F2E1818CED50A0077A7F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -338,13 +535,13 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CRToastTests/CRToastTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Tests/Unit Tests/CRToastTests-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "CRToastTests/CRToastTests-Info.plist";
+				INFOPLIST_FILE = "Tests/Unit Tests/CRToastTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -363,9 +560,9 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CRToastTests/CRToastTests-Prefix.pch";
+				GCC_PREFIX_HEADER = "Tests/Unit Tests/CRToastTests-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = "CRToastTests/CRToastTests-Info.plist";
+				INFOPLIST_FILE = "Tests/Unit Tests/CRToastTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -480,6 +677,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2D240E4619235A280079F079 /* Build configuration list for PBXNativeTarget "Acceptance Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D240E4419235A280079F079 /* Debug */,
+				2D240E4519235A280079F079 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2D8F2E1718CED50A0077A7F6 /* Build configuration list for PBXNativeTarget "CRToastTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -487,6 +693,7 @@
 				2D8F2E1918CED50A0077A7F6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */ = {
 			isa = XCConfigurationList;
