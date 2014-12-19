@@ -83,7 +83,8 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     if (self.toast.showActivityIndicator) {
         
         self.activityIndicator.center = imageSize.width == 0 ?
-        CGPointMake(CGRectGetMidX(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset, CGRectGetMidY(contentFrame))
+            CGPointMake(CGRectGetMidX(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset,
+                        CGRectGetMidY(contentFrame) + statusBarYOffset)
         : self.imageView.center;
         [self.activityIndicator startAnimating];
         x = MAX(CGRectGetMaxX(self.activityIndicator.frame), CGRectGetMaxX(_imageView.frame)) + kCRStatusBarViewNoImageLeftContentInset;
