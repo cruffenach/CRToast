@@ -5,7 +5,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CRToastManager.h"
+@import UIKit;
 
+@class CRToastSwipeGestureRecognizer, CRToastTapGestureRecognizer;
 /**
  CRToastInteractionType defines the types of interactions that can be injected into a CRToastIneractionResponder.
  */
@@ -103,6 +106,17 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
     CRToastAnimationTypeLinear,
     CRToastAnimationTypeSpring,
     CRToastAnimationTypeGravity
+};
+
+/**
+  `CRToastState` defines the current state of the CRToast. Used for internal state management in the manager 
+ */
+typedef NS_ENUM(NSInteger, CRToastState){
+    CRToastStateWaiting,
+    CRToastStateEntering,
+    CRToastStateDisplaying,
+    CRToastStateExiting,
+    CRToastStateCompleted
 };
 
 ///--------------------
@@ -339,67 +353,86 @@ extern NSString *const kCRToastIdentifier;
  */
 extern NSString *const kCRToastCaptureDefaultWindowKey;
 
-/**
- A toast manager providing Class level API's for the presentation of notifications with a variery of options
- */
+#pragma mark - CRToast Interface
+@interface CRToast : NSObject <UIGestureRecognizerDelegate>
 
-@interface CRToastManager : NSObject
+@property (nonatomic, strong) NSUUID *uuid;
+@property (nonatomic, assign) CRToastState state;
 
-/**
- Sets the default options that CRToast will use when displaying a notification
- @param defaultOptions A dictionary of the options that are to be used as defaults for all subsequent
- showNotificationWithOptions:completionBlock and showNotificationWithMessage:completionBlock: calls
- */
+//Top Level Properties
 
-+ (void)setDefaultOptions:(NSDictionary*)defaultOptions;
+@property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, copy) void(^completion)(void);
+@property (nonatomic, copy) void(^appearance)(void);
 
-/**
- Queues a notification to be shown with a collection of options.
- @param options A dictionary of the options that are to be used when showing the notification, defaults
- will be used for all non present options. Options passed in will override defaults
- @param completion A completion block to be fired at the completion of the dismisall of the notification
- @param appearance A  block to be fired when the notification is actually shown -- notifications can queue,
- and this block will only fire when the notification actually becomes visible to the user. Useful for
- synchronizing sound / vibration.
- */
+//Interactions
 
-+ (void)showNotificationWithOptions:(NSDictionary*)options apperanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion;
+@property (nonatomic, strong) NSArray *gestureRecognizers;
 
-/**
- Queues a notification to be shown with a collection of options.
- @param options A dictionary of the options that are to be used when showing the notification, defaults
- will be used for all non present options. Options passed in will override defaults
- @param completion A completion block to be fired at the completion of the dismisall of the notification
- */
+//Autorotate
 
-+ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion;
+@property (nonatomic, assign) BOOL autorotate;
 
-/**
- Queues a notification to be shown with a given message
- @param options The notification message to be shown. Defaults will be used for all other notification
- properties
- @param completion A completion block to be fired at the completion of the dismisall of the notification
- */
+//Views and Layout Data
 
-+ (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion;
+@property (nonatomic, readonly) UIView *notificationView;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame2;
+@property (nonatomic, readonly) UIView *statusBarView;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
+@property (nonatomic, retain) UIDynamicAnimator *animator;
 
-/**
- Immidiately begins the (un)animated dismisal of a notification
- @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
- */
+//Read Only Convinence Properties Providing Default Values or Values from Options
 
-+ (void)dismissNotification:(BOOL)animated;
+@property (nonatomic, readonly) CRToastType notificationType;
+@property (nonatomic, assign) CGFloat preferredHeight;
+@property (nonatomic, readonly) CRToastPresentationType presentationType;
+@property (nonatomic, readonly) BOOL displayUnderStatusBar;
 
-/**
- Immidiately begins the (un)animated dismisal of a notification and canceling all others
- @param animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear
- */
-+ (void)dismissAllNotifications:(BOOL)animated;
+@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
+@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
+@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
+@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
+@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
+@property (nonatomic, readonly) NSTimeInterval timeInterval;
+@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
 
-/**
- Gets the array of notification identifiers currently in the @c CRToastManager notifications queue.
- If no identifier is specified for the @c kCRToastIdentifier when created, it will be excluded from this collection.
- */
-+ (NSArray *)notificationIdentifiersInQueue;
+@property (nonatomic, readonly) CGFloat animationSpringDamping;
+@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
+@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
+
+@property (nonatomic, readonly) NSString *text;
+@property (nonatomic, readonly) UIFont *font;
+@property (nonatomic, readonly) UIColor *textColor;
+@property (nonatomic, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, readonly) UIColor *textShadowColor;
+@property (nonatomic, readonly) CGSize textShadowOffset;
+@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
+
+@property (nonatomic, readonly) NSString *subtitleText;
+@property (nonatomic, readonly) UIFont *subtitleFont;
+@property (nonatomic, readonly) UIColor *subtitleTextColor;
+@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
+@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
+@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
+@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
+@property (nonatomic, readonly) UIColor *backgroundColor;
+@property (nonatomic, readonly) UIImage *image;
+@property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
+@property (nonatomic, readonly) BOOL showActivityIndicator;
+
+@property (nonatomic, readonly) CGVector inGravityDirection;
+@property (nonatomic, readonly) CGVector outGravityDirection;
+
+@property (nonatomic, readonly) CGPoint inCollisionPoint1;
+@property (nonatomic, readonly) CGPoint inCollisionPoint2;
+@property (nonatomic, readonly) CGPoint outCollisionPoint1;
+@property (nonatomic, readonly) CGPoint outCollisionPoint2;
+
+- (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
+- (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
+- (void)initiateAnimator:(UIView *)view;
 
 @end
