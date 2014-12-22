@@ -98,8 +98,31 @@ typedef void (^CRToastAnimationStepBlock)(void);
     return self;
 }
 
-#pragma mark - Notification Management
+#pragma mark - -- Notification Management --
+#pragma mark - Notification Animation Blocks
+#pragma mark Inward Animations
+CRToastAnimationStepBlock CRToastInwardAnimationsBlock(CRToastManager *weakSelf, CRToast *notification) {
+    return ^void(void) {
+        weakSelf.notificationView.frame = weakSelf.notificationWindow.rootViewController.view.bounds;
+        weakSelf.statusBarView.frame = notification.statusBarViewAnimationFrame1;
+    };
+}
 
+CRToastAnimationCompletionBlock CRToastInwardAnimationsCompletionBlock(CRToastManager *weakSelf, CRToast *notification, NSString *notificationUUIDString) {
+    return ^void(BOOL finished) {
+        if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
+            notification.state = CRToastStateDisplaying;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
+                    weakSelf.gravityAnimationCompletionBlock = NULL;
+                    CRToastOutwardAnimationsSetupBlock(weakSelf)();
+                }
+            });
+        }
+    };
+}
+
+#pragma mark Outward Animations
 CRToastAnimationCompletionBlock CRToastOutwardAnimationsCompletionBlock(CRToastManager *weakSelf) {
     return ^void(BOOL completed){
         if (weakSelf.notification.showActivityIndicator) {
@@ -182,6 +205,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     };
 }
 
+#pragma mark -
+
 - (NSArray *)notificationIdentifiersInQueue {
     if (_notifications.count == 0) { return @[]; }
     return [[_notifications valueForKeyPath:@"options.kCRToastIdentifier"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != nil"]];
@@ -252,25 +277,27 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.rootViewController.view.gestureRecognizers = notification.gestureRecognizers;
     
     __weak __block typeof(self) weakSelf = self;
-    CRToastAnimationStepBlock inwardAnimationsBlock = ^void(void) {
-        weakSelf.notificationView.frame = weakSelf.notificationWindow.rootViewController.view.bounds;
-        weakSelf.statusBarView.frame = notification.statusBarViewAnimationFrame1;
-    };
+    CRToastAnimationStepBlock inwardAnimationsBlock = CRToastInwardAnimationsBlock(weakSelf, notification);
     
     NSString *notificationUUIDString = notification.uuid.UUIDString;
-    CRToastAnimationCompletionBlock inwardAnimationsCompletionBlock = ^void(BOOL finished) {
-        if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
-            notification.state = CRToastStateDisplaying;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
-                    weakSelf.gravityAnimationCompletionBlock = NULL;
-                    CRToastOutwardAnimationsSetupBlock(weakSelf)();
-                }
-            });
-        }
-    };
+    CRToastAnimationCompletionBlock inwardAnimationsCompletionBlock = CRToastInwardAnimationsCompletionBlock(weakSelf, notification, notificationUUIDString);
     
     notification.state = CRToastStateEntering;
+    
+    [self showNotification:notification inwardAnimationBlock:inwardAnimationsBlock inwardCompletionAnimationBlock:inwardAnimationsCompletionBlock];
+    
+    if (notification.text.length > 0 || notification.subtitleText.length > 0) {
+        // Synchronous notifications (say, tapping a button that presents a toast) cause VoiceOver to read the button immediately, which interupts the toast. A short delay (not the best solution :/) allows the toast to interupt the button.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
+        });
+    }
+}
+
+- (void)showNotification:(CRToast *)notification
+     inwardAnimationBlock:(CRToastAnimationStepBlock)inwardAnimationsBlock
+inwardCompletionAnimationBlock:(CRToastAnimationCompletionBlock)inwardAnimationsCompletionBlock {
+    
     switch (notification.inAnimationType) {
         case CRToastAnimationTypeLinear: {
             [UIView animateWithDuration:notification.animateInTimeInterval
@@ -287,6 +314,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
                              completion:inwardAnimationsCompletionBlock];
         } break;
         case CRToastAnimationTypeGravity: {
+            UIView *notificationView = notification.notificationView;
+            UIView *statusBarView = notification.statusBarView;
+            
             [notification initiateAnimator:_notificationWindow.rootViewController.view];
             [notification.animator removeAllBehaviors];
             UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
@@ -307,14 +337,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
             self.gravityAnimationCompletionBlock = inwardAnimationsCompletionBlock;
         } break;
     }
-    
-    if (notification.text.length > 0 || notification.subtitleText.length > 0) {
-        // Synchronous notifications (say, tapping a button that presents a toast) cause VoiceOver to read the button immediately, which interupts the toast. A short delay (not the best solution :/) allows the toast to interupt the button.
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, [NSString stringWithFormat:@"Alert: %@, %@", notification.text ?: @"", notification.subtitleText ?: @""]);
-        });
-    }
 }
+
 
 #pragma mark - Overrides
 
