@@ -11,10 +11,6 @@
 #import "CRToastLayoutHelpers.h"
 
 @interface CRToastView ()
-//@property (nonatomic, strong) UIImageView *imageView;
-//@property (nonatomic, strong) UILabel *label;
-//@property (nonatomic, strong) UILabel *subtitleLabel;
-//@property (nonatomic, strong) UIActivityIndicatorView *activityIndicator;
 @end
 
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;

@@ -173,7 +173,6 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 
 #pragma mark - CRToast
 
-
 #pragma mark - Option Constant Definitions
 
 NSString *const kCRToastNotificationTypeKey                 = @"kCRToastNotificationTypeKey";

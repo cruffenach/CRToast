@@ -381,7 +381,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIView *statusBarView;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
 @property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
-@property (nonatomic, retain) UIDynamicAnimator *animator;
+@property (nonatomic, strong) UIDynamicAnimator *animator;
 
 //Read Only Convinence Properties Providing Default Values or Values from Options
 

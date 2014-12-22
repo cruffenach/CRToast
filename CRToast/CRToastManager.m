@@ -43,8 +43,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
     [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
                                                                appearanceBlock:nil
-                                                               completionBlock:completion
-                                               ]];
+                                                               completionBlock:completion]];
 }
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
@@ -222,28 +221,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
     
-    CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
-    
-    if (!kCRFrameAutoAdjustedForOrientation) {
-        UIInterfaceOrientation statusBarOrientation = CRGetDeviceOrientation();
-        switch (statusBarOrientation) {
-            case UIInterfaceOrientationLandscapeLeft: {
-                containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);
-                break;
-            }
-            case UIInterfaceOrientationLandscapeRight: {
-                containerFrame = CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-notificationSize.height, 0, notificationSize.height, notificationSize.width);
-                break;
-            }
-            case UIInterfaceOrientationPortraitUpsideDown: {
-                containerFrame = CGRectMake(0, CGRectGetHeight([[UIScreen mainScreen] bounds])-notificationSize.height, notificationSize.width, notificationSize.height);
-                break;
-            }
-            default: {
-                break;
-            }
-        }
-    }
+    CGRect containerFrame = CRGetNotificationContainerFrame(CRGetDeviceOrientation(), notificationSize);
     
     CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
     [rootViewController statusBarStyle:notification.statusBarStyle];
