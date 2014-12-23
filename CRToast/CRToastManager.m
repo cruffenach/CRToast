@@ -112,7 +112,7 @@ CRToastAnimationCompletionBlock CRToastInwardAnimationsCompletionBlock(CRToastMa
     return ^void(BOOL finished) {
         if (notification.timeInterval != DBL_MAX && notification.state == CRToastStateEntering) {
             notification.state = CRToastStateDisplaying;
-            if (!notification.options[kCRToastForceUserInteraction]) {
+            if (!notification.options[kCRToastForceUserInteractionKey]) {
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(notification.timeInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     if (weakSelf.notification.state == CRToastStateDisplaying && [weakSelf.notification.uuid.UUIDString isEqualToString:notificationUUIDString]) {
                         weakSelf.gravityAnimationCompletionBlock = NULL;
