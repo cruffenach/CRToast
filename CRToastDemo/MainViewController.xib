@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C68k" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C81f" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -10,6 +10,7 @@
                 <outlet property="contentView" destination="jNX-q4-3cu" id="d2u-Sj-LIA"/>
                 <outlet property="coverNavBarSwitch" destination="uOV-sj-WK6" id="Bas-cF-VRf"/>
                 <outlet property="dismissibleWithTapSwitch" destination="Qx0-KW-kuM" id="EwB-Jg-vhX"/>
+                <outlet property="forceUserInteractionSwitch" destination="AFS-uO-LHG" id="vnD-Wb-Xbo"/>
                 <outlet property="inAnimationTypeSegmentedControl" destination="woe-q8-hb2" id="M5l-yA-965"/>
                 <outlet property="lblDuration" destination="oAK-DR-B27" id="roa-nx-2td"/>
                 <outlet property="navigationBarSwitch" destination="9Gy-jY-LAd" id="gjz-UP-9C0"/>
@@ -122,7 +123,7 @@
                                     <rect key="frame" x="251" y="203" width="51" height="31"/>
                                 </switch>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Notification Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VqG-wR-oYI">
-                                    <rect key="frame" x="20" y="664" width="280" height="30"/>
+                                    <rect key="frame" x="20" y="700" width="280" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="LQP-bX-sOS"/>
                                     </constraints>
@@ -130,7 +131,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Db2-zb-fY5">
-                                    <rect key="frame" x="20" y="628" width="280" height="29"/>
+                                    <rect key="frame" x="20" y="664" width="280" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="28" id="Uel-0C-gZn"/>
                                     </constraints>
@@ -176,25 +177,14 @@
                                         <constraint firstAttribute="height" constant="31" id="mQf-g4-dQQ"/>
                                     </constraints>
                                 </switch>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="woe-q8-hb2">
-                                    <rect key="frame" x="20" y="498" width="280" height="29"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="28" id="PjR-8w-JC8"/>
-                                    </constraints>
-                                    <segments>
-                                        <segment title="Linear"/>
-                                        <segment title="Spring"/>
-                                        <segment title="Gravity"/>
-                                    </segments>
-                                </segmentedControl>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Entrance Animation Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9I-wl-POo">
-                                    <rect key="frame" x="0.0" y="474" width="320" height="19"/>
+                                    <rect key="frame" x="0.0" y="510" width="320" height="19"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WGz-mj-dax">
-                                    <rect key="frame" x="20" y="563" width="280" height="29"/>
+                                    <rect key="frame" x="20" y="599" width="280" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="28" id="DKa-Tl-wf5"/>
                                     </constraints>
@@ -205,7 +195,7 @@
                                     </segments>
                                 </segmentedControl>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exit Animation Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDz-5X-ME2">
-                                    <rect key="frame" x="0.0" y="534" width="320" height="21"/>
+                                    <rect key="frame" x="0.0" y="570" width="320" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="usq-EE-nQt"/>
                                     </constraints>
@@ -214,7 +204,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0NX-ad-VLf">
-                                    <rect key="frame" x="0.0" y="599" width="320" height="21"/>
+                                    <rect key="frame" x="0.0" y="635" width="320" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="06X-gO-1Me"/>
                                     </constraints>
@@ -223,7 +213,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle Text" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uzq-Vd-rWU">
-                                    <rect key="frame" x="0.0" y="702" width="320" height="21"/>
+                                    <rect key="frame" x="0.0" y="738" width="320" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="dUG-s9-8Om"/>
                                     </constraints>
@@ -232,7 +222,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Notification Subtitle" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K7g-oC-JeC">
-                                    <rect key="frame" x="20" y="767" width="280" height="30"/>
+                                    <rect key="frame" x="20" y="803" width="280" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="mCT-nb-dQa"/>
                                     </constraints>
@@ -240,7 +230,7 @@
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KMs-OI-tpo">
-                                    <rect key="frame" x="20" y="731" width="280" height="29"/>
+                                    <rect key="frame" x="20" y="767" width="280" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="28" id="0gR-Sp-9df"/>
                                     </constraints>
@@ -293,6 +283,15 @@
                                         <action selector="statusBarChanged:" destination="-1" eventType="valueChanged" id="yur-hY-BfO"/>
                                     </connections>
                                 </switch>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Force User Interaction" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Vq-s9-Mwf">
+                                    <rect key="frame" x="19" y="478" width="223" height="19"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="16"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AFS-uO-LHG">
+                                    <rect key="frame" x="250" y="474" width="51" height="31"/>
+                                </switch>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cover Nav Bar" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHs-LR-7jq">
                                     <rect key="frame" x="20" y="246" width="223" height="21"/>
                                     <constraints>
@@ -302,12 +301,24 @@
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="woe-q8-hb2">
+                                    <rect key="frame" x="20" y="534" width="280" height="29"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="28" id="PjR-8w-JC8"/>
+                                    </constraints>
+                                    <segments>
+                                        <segment title="Linear"/>
+                                        <segment title="Spring"/>
+                                        <segment title="Gravity"/>
+                                    </segments>
+                                </segmentedControl>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="Bbg-4G-IwZ" firstAttribute="top" secondItem="YNG-r4-yjU" secondAttribute="bottom" constant="6" id="1y5-pY-Gkd"/>
                                 <constraint firstItem="KMs-OI-tpo" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" symbolic="YES" id="28y-48-5qe"/>
                                 <constraint firstItem="C9I-wl-POo" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" id="2JJ-nm-DxL"/>
+                                <constraint firstItem="3Vq-s9-Mwf" firstAttribute="top" secondItem="zwK-0h-8pv" secondAttribute="bottom" constant="20" id="2Jr-ID-Qus"/>
                                 <constraint firstAttribute="trailing" secondItem="K7g-oC-JeC" secondAttribute="trailing" constant="20" symbolic="YES" id="2rV-Bj-52r"/>
                                 <constraint firstAttribute="trailing" secondItem="g8m-zX-J5t" secondAttribute="trailing" constant="20" id="3Zp-iv-thb"/>
                                 <constraint firstItem="Cr9-bY-clp" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" id="5Aa-1a-IJE"/>
@@ -344,7 +355,9 @@
                                 <constraint firstAttribute="trailing" secondItem="lnj-T4-sfz" secondAttribute="trailing" constant="20" symbolic="YES" id="NrY-d8-WgU"/>
                                 <constraint firstItem="fZz-sG-qoa" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" symbolic="YES" id="O4V-Dl-cQR"/>
                                 <constraint firstAttribute="height" constant="861" id="Q1p-pf-3FN"/>
+                                <constraint firstAttribute="trailing" secondItem="AFS-uO-LHG" secondAttribute="trailing" constant="21" id="QW3-eD-qIK"/>
                                 <constraint firstItem="vWx-wx-d32" firstAttribute="top" secondItem="jNX-q4-3cu" secondAttribute="top" constant="20" id="Rcy-9Y-ffx"/>
+                                <constraint firstItem="3Vq-s9-Mwf" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="19" id="SF9-XV-nWQ"/>
                                 <constraint firstItem="xEk-iN-Qop" firstAttribute="top" secondItem="uOV-sj-WK6" secondAttribute="bottom" constant="8" id="Tga-cN-1jW"/>
                                 <constraint firstItem="mex-FV-ccm" firstAttribute="top" secondItem="fZz-sG-qoa" secondAttribute="bottom" constant="18" id="Tsw-iC-OgU"/>
                                 <constraint firstAttribute="trailing" secondItem="Bza-7R-910" secondAttribute="trailing" constant="20" symbolic="YES" id="Vsa-oa-8wa"/>
@@ -354,15 +367,18 @@
                                 <constraint firstItem="K7g-oC-JeC" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" symbolic="YES" id="YGE-DE-N3u"/>
                                 <constraint firstAttribute="trailing" secondItem="uOV-sj-WK6" secondAttribute="trailing" constant="20" symbolic="YES" id="YZM-9n-zLW"/>
                                 <constraint firstAttribute="trailing" secondItem="xEk-iN-Qop" secondAttribute="trailing" constant="20" symbolic="YES" id="Z2X-wU-hjJ"/>
+                                <constraint firstItem="C9I-wl-POo" firstAttribute="top" secondItem="AFS-uO-LHG" secondAttribute="bottom" constant="5" id="ZBZ-od-8Ln"/>
+                                <constraint firstItem="AFS-uO-LHG" firstAttribute="top" secondItem="9Gy-jY-LAd" secondAttribute="bottom" constant="8" id="ZBr-qA-50k"/>
                                 <constraint firstAttribute="trailing" secondItem="oAK-DR-B27" secondAttribute="trailing" constant="21" id="Zzp-gV-wxt"/>
                                 <constraint firstAttribute="trailing" secondItem="yDz-5X-ME2" secondAttribute="trailing" id="bb2-A2-hLZ"/>
                                 <constraint firstItem="Qx0-KW-kuM" firstAttribute="top" secondItem="Maq-kR-XRL" secondAttribute="bottom" constant="8" id="bmJ-H4-qHp"/>
+                                <constraint firstItem="AFS-uO-LHG" firstAttribute="leading" secondItem="3Vq-s9-Mwf" secondAttribute="trailing" constant="8" id="cP6-Vc-j5L"/>
                                 <constraint firstItem="nHX-St-Osi" firstAttribute="top" secondItem="lnj-T4-sfz" secondAttribute="bottom" constant="2" id="ctm-T4-iez"/>
-                                <constraint firstItem="C9I-wl-POo" firstAttribute="top" secondItem="9Gy-jY-LAd" secondAttribute="bottom" constant="8" id="d4g-DL-LXI"/>
                                 <constraint firstItem="lnj-T4-sfz" firstAttribute="top" secondItem="Bza-7R-910" secondAttribute="bottom" constant="8" id="dQ4-Hx-jDz"/>
                                 <constraint firstItem="Ksr-kg-WF0" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" symbolic="YES" id="eUy-4k-kD8"/>
                                 <constraint firstItem="zwK-0h-8pv" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="19" id="eWG-Ul-FcK"/>
                                 <constraint firstAttribute="trailing" secondItem="KMs-OI-tpo" secondAttribute="trailing" constant="20" symbolic="YES" id="fEF-FX-CvU"/>
+                                <constraint firstItem="AFS-uO-LHG" firstAttribute="leading" secondItem="3Vq-s9-Mwf" secondAttribute="trailing" constant="8" id="ftN-aJ-Re3"/>
                                 <constraint firstAttribute="trailing" secondItem="Bbg-4G-IwZ" secondAttribute="trailing" constant="20" id="gcU-fy-0dI"/>
                                 <constraint firstItem="q5F-Tr-aZE" firstAttribute="leading" secondItem="jNX-q4-3cu" secondAttribute="leading" constant="20" symbolic="YES" id="guq-LL-vWb"/>
                                 <constraint firstItem="K7g-oC-JeC" firstAttribute="top" secondItem="KMs-OI-tpo" secondAttribute="bottom" constant="8" id="hKV-82-yiY"/>

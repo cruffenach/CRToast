@@ -425,6 +425,7 @@ OBJC_EXTERN NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIImage *image;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
+@property (nonatomic, readonly) BOOL forceUserInteraction;
 
 @property (nonatomic, readonly) CGVector inGravityDirection;
 @property (nonatomic, readonly) CGVector outGravityDirection;

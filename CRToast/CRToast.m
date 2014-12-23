@@ -266,7 +266,7 @@ static BOOL                         kCRShowActivityIndicatorDefault         = NO
 static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault    = UIActivityIndicatorViewStyleWhite;
 
 static NSArray  *                   kCRInteractionResponders                = nil;
-static BOOL                         kCRToastForceUserInteraction            = NO;
+static BOOL                         kCRForceUserInteractionDefault     = NO;
 
 static BOOL                         kCRAutoRotateDefault                    = YES;
 
@@ -328,7 +328,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
-                                kCRToastForceUserInteractionKey             : NSStringFromClass([@(kCRToastForceUserInteraction) class]),
+                                kCRToastForceUserInteractionKey             : NSStringFromClass([@(kCRForceUserInteractionDefault) class]),
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
                                 kCRToastIdentifier                          : NSStringFromClass([NSString class]),
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
@@ -391,7 +391,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault           = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders               = defaultOptions[kCRToastInteractionRespondersKey];
-    if (defaultOptions[kCRToastForceUserInteractionKey])            kCRToastForceUserInteraction           = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
+    if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault    = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
         
     if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                   = [defaultOptions[kCRToastAutorotateKey] boolValue];
 
@@ -641,6 +641,10 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 - (UIStatusBarStyle)statusBarStyle {
     return _options[kCRToastStatusBarStyleKey] ? [_options[kCRToastStatusBarStyleKey] integerValue] : kCRStatusBarStyleDefault;
+}
+
+- (BOOL)forceUserInteraction {
+    return _options[kCRToastForceUserInteractionKey] ? [_options[kCRToastForceUserInteractionKey] boolValue] : kCRForceUserInteractionDefault;
 }
 
 - (BOOL)autorotate {

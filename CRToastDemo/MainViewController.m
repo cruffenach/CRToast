@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *forceUserInteractionSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *statusBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *navigationBarSwitch;
@@ -182,6 +183,10 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     }
     if (self.showActivityIndicatorSwitch.on) {
         options[kCRToastShowActivityIndicatorKey] = @YES;
+    }
+    
+    if (self.forceUserInteractionSwitch.on) {
+        options[kCRToastForceUserInteractionKey] = @YES;
     }
     
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
