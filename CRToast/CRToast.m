@@ -221,7 +221,7 @@ NSString *const kCRToastForceUserInteractionKey             = @"kCRToastForceUse
 
 NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorotateKey";
 
-NSString *const kCRToastIdentifier                          = @"kCRToastIdentifier";
+NSString *const kCRToastIdentifierKey                       = @"kCRToastIdentifierKey";
 NSString *const kCRToastCaptureDefaultWindowKey             = @"kCRToastCaptureDefaultWindowKey";
 
 #pragma mark - Option Defaults
@@ -230,6 +230,7 @@ static CRToastType                  kCRNotificationTypeDefault              = CR
 static CGFloat                      kCRNotificationPreferredHeightDefault   = 0;
 static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
 static BOOL                         kCRDisplayUnderStatusBarDefault         = NO;
+static NSString *                   kCRToastIdentifer                       = nil;
 
 static CRToastAnimationType         kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
 static CRToastAnimationType         kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
@@ -266,7 +267,7 @@ static BOOL                         kCRShowActivityIndicatorDefault         = NO
 static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault    = UIActivityIndicatorViewStyleWhite;
 
 static NSArray  *                   kCRInteractionResponders                = nil;
-static BOOL                         kCRForceUserInteractionDefault     = NO;
+static BOOL                         kCRForceUserInteractionDefault          = NO;
 
 static BOOL                         kCRAutoRotateDefault                    = YES;
 
@@ -274,12 +275,11 @@ static BOOL                         kCRCaptureDefaultWindowDefault          = YE
 
 static NSDictionary *               kCRToastKeyClassMap                     = nil;
 
-#pragma mark - Layout Helper Functions
-
 @implementation CRToast
 
 + (void)initialize {
     if (self == [CRToast class]) {
+        
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
 		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
         kCRUseSizeClass = kCRFrameAutoAdjustedForOrientation;
@@ -298,6 +298,8 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastNotificationPreferredHeightKey      : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
+                                kCRToastIdentifierKey                       : NSStringFromClass([NSString class]),
+                                
                                 kCRToastAnimationInTypeKey                  : NSStringFromClass([@(kCRAnimationTypeDefaultIn) class]),
                                 kCRToastAnimationOutTypeKey                 : NSStringFromClass([@(kCRAnimationTypeDefaultOut) class]),
                                 kCRToastAnimationInDirectionKey             : NSStringFromClass([@(kCRInAnimationDirectionDefault) class]),
@@ -305,9 +307,11 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastAnimationInTimeIntervalKey          : NSStringFromClass([@(kCRAnimateInTimeIntervalDefault) class]),
                                 kCRToastTimeIntervalKey                     : NSStringFromClass([@(kCRTimeIntervalDefault) class]),
                                 kCRToastAnimationOutTimeIntervalKey         : NSStringFromClass([@(kCRAnimateOutTimeIntervalDefault) class]),
+                                
                                 kCRToastAnimationSpringDampingKey           : NSStringFromClass([@(kCRSpringDampingDefault) class]),
                                 kCRToastAnimationSpringInitialVelocityKey   : NSStringFromClass([@(kCRSpringInitialVelocityDefault) class]),
                                 kCRToastAnimationGravityMagnitudeKey        : NSStringFromClass([@(kCRGravityMagnitudeDefault) class]),
+                                
                                 kCRToastTextKey                             : NSStringFromClass([NSString class]),
                                 kCRToastFontKey                             : NSStringFromClass([UIFont class]),
                                 kCRToastTextColorKey                        : NSStringFromClass([UIColor class]),
@@ -323,18 +327,24 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastSubtitleTextShadowOffsetKey         : NSStringFromClass([[NSValue valueWithCGSize:kCRSubtitleTextShadowOffsetDefault] class]),
                                 kCRToastSubtitleTextMaxNumberOfLinesKey     : NSStringFromClass([@(kCRSubtitleTextMaxNumberOfLinesDefault) class]),
                                 kCRToastStatusBarStyleKey                   : NSStringFromClass([@(kCRStatusBarStyleDefault) class]),
+                                
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
+                                
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
                                 kCRToastForceUserInteractionKey             : NSStringFromClass([@(kCRForceUserInteractionDefault) class]),
+                                
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
-                                kCRToastIdentifier                          : NSStringFromClass([NSString class]),
+                                
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
-                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class])};
+                                
+                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class])
+                                };
     }
 }
+
 + (instancetype)notificationWithOptions:(NSDictionary*)options appearanceBlock:(void (^)(void))appearance completionBlock:(void (^)(void))completion {
     CRToast *notification = [[self alloc] init];
     notification.options = options;
@@ -348,9 +358,10 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 + (void)setDefaultOptions:(NSDictionary*)defaultOptions {
     //TODO Validate Types of Default Options
-    if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault               = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
-    if (defaultOptions[kCRToastNotificationPreferredHeightKey])        kCRNotificationPreferredHeightDefault = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
-    if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault   = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
+    if (defaultOptions[kCRToastNotificationTypeKey])                kCRNotificationTypeDefault              = [defaultOptions[kCRToastNotificationTypeKey] integerValue];
+    if (defaultOptions[kCRToastNotificationPreferredHeightKey])     kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
+    if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
+    if (defaultOptions[kCRToastIdentifierKey])                      kCRToastIdentifer                       = defaultOptions[kCRToastIdentifierKey];
     
     if (defaultOptions[kCRToastUnderStatusBarKey])                  kCRDisplayUnderStatusBarDefault         = [defaultOptions[kCRToastUnderStatusBarKey] boolValue];
     
@@ -388,14 +399,14 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
-    if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault           = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
+    if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     
-    if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders               = defaultOptions[kCRToastInteractionRespondersKey];
-    if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault    = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
+    if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                = defaultOptions[kCRToastInteractionRespondersKey];
+    if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault          = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
         
-    if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                   = [defaultOptions[kCRToastAutorotateKey] boolValue];
+    if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                    = [defaultOptions[kCRToastAutorotateKey] boolValue];
 
-    if (defaultOptions[kCRToastCaptureDefaultWindowKey])            kCRCaptureDefaultWindowDefault         = [defaultOptions[kCRToastCaptureDefaultWindowKey] boolValue];
+    if (defaultOptions[kCRToastCaptureDefaultWindowKey])            kCRCaptureDefaultWindowDefault          = [defaultOptions[kCRToastCaptureDefaultWindowKey] boolValue];
 }
 
 #pragma mark - Notification View Helpers

@@ -211,7 +211,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 
 - (NSArray *)notificationIdentifiersInQueue {
     if (_notifications.count == 0) { return @[]; }
-    return [[_notifications valueForKeyPath:@"options.kCRToastIdentifier"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != nil"]];
+    return [[_notifications valueForKeyPath:@"options.kCRToastIdentifierKey"] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != nil"]];
 }
 
 - (void)dismissNotification:(BOOL)animated {

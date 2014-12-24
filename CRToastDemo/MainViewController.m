@@ -132,6 +132,9 @@
                                     NSLog(@"Completed");
                                 }];
 }
+- (IBAction)btnPrintIdentifiersPressed:(UIButton *)sender {
+    NSLog(@"%@", [CRToastManager notificationIdentifiersInQueue]);
+}
 
 - (IBAction)btnDismissNotificationPressed:(UIButton *)sender {
     [CRToastManager dismissNotification:YES];
@@ -187,6 +190,10 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
     
     if (self.forceUserInteractionSwitch.on) {
         options[kCRToastForceUserInteractionKey] = @YES;
+    }
+    
+    if (![self.txtNotificationMessage.text isEqualToString:@""]) {
+        options[kCRToastIdentifierKey] = self.txtNotificationMessage.text;
     }
     
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {

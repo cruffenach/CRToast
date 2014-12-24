@@ -430,6 +430,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="23B-sk-DQD"/>
+                        <barButtonItem title="Print Identifiers" id="giO-ya-vGb">
+                            <connections>
+                                <action selector="btnPrintIdentifiersPressed:" destination="-1" id="HJV-Rk-Tcn"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="zDD-l9-IRy"/>
                         <barButtonItem title="Dismiss" id="6ps-bA-p9f">
                             <connections>
                                 <action selector="btnDismissNotificationPressed:" destination="-2" id="fFd-Vg-Gv4"/>

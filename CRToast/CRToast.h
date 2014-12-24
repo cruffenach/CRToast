@@ -349,7 +349,7 @@ OBJC_EXTERN NSString *const kCRToastAutorotateKey;
 /**
  Key for the Identifier for a notification.
  */
-OBJC_EXTERN NSString *const kCRToastIdentifier;
+OBJC_EXTERN NSString *const kCRToastIdentifierKey;
 
 /**
  A BOOL setting whether the CRToast's should capture the screen behind the default UIWindow. Expects type `BOOL` defaults to `YES`
