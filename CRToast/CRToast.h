@@ -322,6 +322,11 @@ OBJC_EXTERN NSString *const kCRToastBackgroundColorKey;
 OBJC_EXTERN NSString *const kCRToastImageKey;
 
 /**
+ The image content mode to use for `kCRToastImageKey` image. Exptects type `UIViewContentMode`
+ */
+OBJC_EXTERN NSString *const kCRToastImageContentModeKey;
+
+/**
  BOOL setting whether the CRToast should show a loading indicator in the left image location.
  */
 OBJC_EXTERN NSString *const kCRToastShowActivityIndicatorKey;
@@ -423,6 +428,7 @@ OBJC_EXTERN NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
+@property (nonatomic, readonly) UIViewContentMode imageContentMode;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
 @property (nonatomic, readonly) BOOL forceUserInteraction;

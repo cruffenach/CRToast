@@ -213,6 +213,7 @@ NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBa
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
+NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageContentModeKey";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
 NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
 
@@ -263,6 +264,7 @@ static UIStatusBarStyle             kCRStatusBarStyleDefault                = UI
 
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
+static UIViewContentMode            kCRImageContentModeDefault              = UIViewContentModeCenter;
 static BOOL                         kCRShowActivityIndicatorDefault         = NO;
 static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault    = UIActivityIndicatorViewStyleWhite;
 
@@ -330,6 +332,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
+                                kCRToastImageContentModeKey                 : NSStringFromClass([@(kCRImageContentModeDefault) class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
                                 
@@ -398,6 +401,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
+    if (defaultOptions[kCRToastImageContentModeKey])                kCRImageContentModeDefault              = [defaultOptions[kCRToastImageContentModeKey] integerValue];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     
@@ -629,6 +633,10 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 
 - (UIImage*)image {
     return _options[kCRToastImageKey] ?: kCRImageDefault;
+}
+
+- (UIViewContentMode)imageContentMode {
+    return _options[kCRToastImageContentModeKey] ? [_options[kCRToastImageContentModeKey] integerValue] : kCRImageContentModeDefault;
 }
 
 - (BOOL)showActivityIndicator {
