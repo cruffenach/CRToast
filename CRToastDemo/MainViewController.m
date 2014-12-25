@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToDirection;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *inAnimationTypeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *outAnimationTypeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *imageAlignmentSegmentedControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
@@ -170,6 +171,19 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
            CRToastAnimationTypeGravity;
 }
 
+CRToastImageAlignment CRToastImageAlignmentForSegmentedControl(UISegmentedControl *segmentedControl ) {
+    CRToastImageAlignment alignment;
+    
+    switch (segmentedControl.selectedSegmentIndex) {
+        case 0: alignment = CRToastImageAlignmentLeft; break;
+        case 1: alignment = CRToastImageAlignmentCenter; break;
+        case 2: alignment = CRToastImageAlignmentRight; break;
+        default: alignment = CRToastImageAlignmentLeft; break;
+    }
+    
+    return alignment;
+}
+
 - (NSDictionary*)options {
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
@@ -183,7 +197,9 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+        options[kCRToastImageAlignmentKey] = @(CRToastImageAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
     }
+    
     if (self.showActivityIndicatorSwitch.on) {
         options[kCRToastShowActivityIndicatorKey] = @YES;
     }

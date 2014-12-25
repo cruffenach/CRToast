@@ -23,6 +23,55 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
+static CGFloat CRImageViewFrameXOffsetForAlignment(CRToastImageAlignment alignment, CGSize contentSize) {
+    CGFloat imageSize = contentSize.height;
+    CGFloat xOffset = 0;
+
+    if (alignment == CRToastImageAlignmentLeft) {
+        xOffset = 0;
+    } else if (alignment == CRToastImageAlignmentCenter) {
+        // Calculate mid point of contentSize, then offset for x for full image width
+        // that way center of image will be center of content view
+        xOffset = (contentSize.width / 2) - (imageSize / 2);
+    } else if (alignment == CRToastImageAlignmentRight) {
+        xOffset = contentSize.width - imageSize;
+    }
+    
+    return xOffset;
+}
+
+static CGFloat CRContentXOffsetForImageAlignment(CRToastImageAlignment alignment, CGFloat imageSize) {
+    return (imageSize == 0 || alignment != CRToastImageAlignmentLeft) ?
+        kCRStatusBarViewNoImageLeftContentInset
+        : imageSize + kCRStatusBarViewNoImageLeftContentInset;
+}
+
+static CGFloat CRContentWidthForImageWithAlignment(CGFloat fullContentWidth, CGFloat fullContentHeight, CRToastImageAlignment alignment, BOOL showingImage, BOOL showingActivityIndicator) {
+    CGFloat width = fullContentWidth; // - (fullContentHeight + kCRStatusBarViewNoImageRightContentInset);
+    
+    CGFloat leftInset  = kCRStatusBarViewNoImageRightContentInset + ((showingActivityIndicator) ? fullContentHeight : 0);
+    CGFloat rightInset = kCRStatusBarViewNoImageRightContentInset + ((showingImage) ? fullContentHeight : 0);
+    
+    switch (alignment) {
+        case CRToastImageAlignmentLeft: {
+            if (showingActivityIndicator || showingImage) { width -= leftInset; }
+        } break;
+        case CRToastImageAlignmentCenter: {
+            if (showingActivityIndicator) { width -= leftInset; }
+            else { width -= (kCRStatusBarViewNoImageLeftContentInset + kCRStatusBarViewNoImageRightContentInset); }
+        } break;
+        case CRToastImageAlignmentRight: {
+            if (showingActivityIndicator) { width -= leftInset; }
+            else { width -= kCRStatusBarViewNoImageLeftContentInset; }
+            
+            if (showingImage) { width -= rightInset; }
+            else { width -= kCRStatusBarViewNoImageRightContentInset; }
+        } break;
+    }
+    
+    return width;
+}
+
 @implementation CRToastView
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -66,7 +115,8 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
-    self.imageView.frame = CGRectMake(0,
+    CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, contentFrame.size);
+    self.imageView.frame = CGRectMake(imageXOffset,
                                       statusBarYOffset,
                                       imageSize.width == 0 ?
                                       0 :
@@ -74,20 +124,21 @@ static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
                                       imageSize.height == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame));
-    CGFloat x = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    
+    CGFloat imageWidth = imageSize.width == 0 ? kCRStatusBarViewNoImageLeftContentInset : CGRectGetMaxX(_imageView.frame);
+    CGFloat x = CRContentXOffsetForImageAlignment(self.toast.imageAlignment, imageWidth);
     
     if (self.toast.showActivityIndicator) {
+        self.activityIndicator.center = CGPointMake(CGRectGetHeight(contentFrame) / 2,
+                                     CGRectGetMidY(contentFrame) + statusBarYOffset);
         
-        self.activityIndicator.center = imageSize.width == 0 ?
-            CGPointMake(CGRectGetMidX(self.activityIndicator.frame) + kCRStatusBarViewNoImageLeftContentInset,
-                        CGRectGetMidY(contentFrame) + statusBarYOffset)
-        : self.imageView.center;
         [self.activityIndicator startAnimating];
-        x = MAX(CGRectGetMaxX(self.activityIndicator.frame), CGRectGetMaxX(_imageView.frame)) + kCRStatusBarViewNoImageLeftContentInset;
+        x = MAX(CGRectGetHeight(contentFrame) + kCRStatusBarViewNoImageLeftContentInset, x);
         [self bringSubviewToFront:self.activityIndicator];
     }
     
-    CGFloat width = CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset;
+    BOOL showingImage = imageSize.width > 0;
+    CGFloat width = CRContentWidthForImageWithAlignment(CGRectGetWidth(contentFrame), CGRectGetHeight(contentFrame), self.toast.imageAlignment, showingImage, self.toast.showActivityIndicator);
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,

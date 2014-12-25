@@ -119,6 +119,15 @@ typedef NS_ENUM(NSInteger, CRToastState){
     CRToastStateCompleted
 };
 
+/**
+ `CRToastImageAlignment` defines the alignment of the image given to the CRToast.
+ */
+typedef NS_ENUM(NSInteger, CRToastImageAlignment){
+    CRToastImageAlignmentLeft,
+    CRToastImageAlignmentCenter,
+    CRToastImageAlignmentRight
+};
+
 ///--------------------
 /// @name Option Keys
 ///--------------------
@@ -131,19 +140,16 @@ typedef NS_ENUM(NSInteger, CRToastState){
 /**
  The notification type for the notification. Expects type `CRToastType`.
  */
-
 OBJC_EXTERN NSString *const kCRToastNotificationTypeKey;
 
 /**
  The preferred height for the notificaiton, this will only be used for notifications with CRToastTypeCustom set for kCRToastNotificationTypeKey
  */
-
 OBJC_EXTERN NSString *const kCRToastNotificationPreferredHeightKey;
 
 /**
  The presentation type for the notification. Expects type `CRToastPresentationType`.
  */
-
 OBJC_EXTERN NSString *const kCRToastNotificationPresentationTypeKey;
 
 /**
@@ -151,180 +157,156 @@ OBJC_EXTERN NSString *const kCRToastNotificationPresentationTypeKey;
  Making this YES with `kCRToastNotificationTypeKey` set to `CRToastTypeStatusBar` isn't sensible and will look
  odd. Expects type `BOOL`.
  */
-
 OBJC_EXTERN NSString *const kCRToastUnderStatusBarKey;
 
 /**
  The animation in type for the notification. Expects type `CRToastAnimationType`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationInTypeKey;
 
 /**
  The animation out type for the notification. Expects type `CRToastAnimationType`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationOutTypeKey;
 
 /**
  The animation in direction for the notification. Expects type `CRToastAnimationDirection`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationInDirectionKey;
 
 /**
  The animation out direction for the notification. Expects type `CRToastAnimationDirection`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationOutDirectionKey;
 
 /**
  The animation in time interval for the notification. Expects type `NSTimeInterval`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationInTimeIntervalKey;
 
 /**
  The notification presentation timeinterval of type for the notification. This is how long the notification
  will be on screen after its presentation but before its dismissal. Expects type `NSTimeInterval`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTimeIntervalKey;
 
 /**
  The animation out timeinterval for the notification. Expects type `NSTimeInterval`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationOutTimeIntervalKey;
 
 /**
  The spring damping coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to
  `CRToastAnimationTypeSpring`. Currently you can't define separate damping for in and out. Expects type `CGFloat`.
  */
-
-
 OBJC_EXTERN NSString *const kCRToastAnimationSpringDampingKey;
 
 /**
  The initial velocity coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to
  `CRToastAnimationTypeSpring`. Currently you can't define initial velocity for in and out. Expects type `CGFloat`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationSpringInitialVelocityKey;
 
 /**
  The gravity magnitude coefficient to be used when `kCRToastAnimationInTypeKey` or `kCRToastAnimationOutTypeKey` is set to
  `CRToastAnimationTypeGravity`. Currently you can't define gravity magnitude for in and out. Expects type `CGFloat`.
  */
-
 OBJC_EXTERN NSString *const kCRToastAnimationGravityMagnitudeKey;
 
 /**
  The main text to be shown in the notification. Expects type `NSString`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextKey;
 
 /**
  The font to be used for the `kCRToastTextKey` value . Expects type `UIFont`.
  */
-
 OBJC_EXTERN NSString *const kCRToastFontKey;
 
 /**
  The text color to be used for the `kCRToastTextKey` value . Expects type `UIColor`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextColorKey;
 
 /**
  The text alignment to be used for the `kCRToastTextKey` value . Expects type `NSTextAlignment`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextAlignmentKey;
 
 /**
  The shadow color to be used for the `kCRToastTextKey` value . Expects type `UIColor`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextShadowColorKey;
 
 /**
  The shadow offset to be used for the `kCRToastTextKey` value . Expects type `CGSize`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextShadowOffsetKey;
 
 /**
  The max number of lines to be used for the `kCRToastTextKey` value . Expects type `NSInteger`.
  */
-
 OBJC_EXTERN NSString *const kCRToastTextMaxNumberOfLinesKey;
 
 /**
  The subtitle text to be shown in the notification. Expects type `NSString`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextKey;
 
 /**
  The font to be used for the `kCRToastSubtitleTextKey` value . Expects type `UIFont`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleFontKey;
 
 /**
  The text color to be used for the `kCRToastSubtitleTextKey` value . Expects type `UIColor`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextColorKey;
 
 /**
  The text alignment to be used for the `kCRToastSubtitleTextKey` value . Expects type `NSTextAlignment`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextAlignmentKey;
 
 /**
  The shadow color to be used for the `kCRToastSubtitleTextKey` value . Expects type `UIColor`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextShadowColorKey;
 
 /**
  The shadow offset to be used for the `kCRToastSubtitleTextKey` value . Expects type `NSInteger`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextShadowOffsetKey;
 
 /**
  The max number of lines to be used for the `kCRToastSubtitleTextKey` value . Expects type `NSInteger`.
  */
-
 OBJC_EXTERN NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey;
 
 /**
  The status bar style for the navigation bar.  Expects type `UIStatusBarStyle`.
  */
-
 OBJC_EXTERN NSString *const kCRToastStatusBarStyleKey;
 
 /**
  The background color for the notification. Expects type `UIColor`.
  */
-
 OBJC_EXTERN NSString *const kCRToastBackgroundColorKey;
 
 /**
  The image to be shown on the left side of the notification. Expects type `UIImage`.
  */
-
 OBJC_EXTERN NSString *const kCRToastImageKey;
 
 /**
  The image content mode to use for `kCRToastImageKey` image. Exptects type `UIViewContentMode`
  */
 OBJC_EXTERN NSString *const kCRToastImageContentModeKey;
+
+/**
+ The image alignment to use. Expects type `NSInteger`.
+ */
+OBJC_EXTERN NSString *const kCRToastImageAlignmentKey;
 
 /**
  BOOL setting whether the CRToast should show a loading indicator in the left image location.
@@ -429,6 +411,7 @@ OBJC_EXTERN NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 @property (nonatomic, readonly) UIViewContentMode imageContentMode;
+@property (nonatomic, readonly) CRToastImageAlignment imageAlignment;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
 @property (nonatomic, readonly) BOOL forceUserInteraction;

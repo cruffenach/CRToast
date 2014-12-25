@@ -214,6 +214,7 @@ NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBa
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
 NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageContentModeKey";
+NSString *const kCRToastImageAlignmentKey                   = @"kCRToastImageAlignmentKey";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
 NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
 
@@ -265,6 +266,7 @@ static UIStatusBarStyle             kCRStatusBarStyleDefault                = UI
 static UIColor  *                   kCRBackgroundColorDefault               = nil;
 static UIImage  *                   kCRImageDefault                         = nil;
 static UIViewContentMode            kCRImageContentModeDefault              = UIViewContentModeCenter;
+static CRToastImageAlignment        kCRImageAlignmentDefault                = CRToastImageAlignmentLeft;
 static BOOL                         kCRShowActivityIndicatorDefault         = NO;
 static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault    = UIActivityIndicatorViewStyleWhite;
 
@@ -333,6 +335,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastImageContentModeKey                 : NSStringFromClass([@(kCRImageContentModeDefault) class]),
+                                kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRImageAlignmentDefault) class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
                                 
@@ -402,6 +405,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
     if (defaultOptions[kCRToastImageContentModeKey])                kCRImageContentModeDefault              = [defaultOptions[kCRToastImageContentModeKey] integerValue];
+    if (defaultOptions[kCRToastImageAlignmentKey])                  kCRImageAlignmentDefault                = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     
@@ -639,6 +643,10 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     return _options[kCRToastImageContentModeKey] ? [_options[kCRToastImageContentModeKey] integerValue] : kCRImageContentModeDefault;
 }
 
+- (CRToastImageAlignment)imageAlignment {
+    return _options[kCRToastImageAlignmentKey] ? [_options[kCRToastImageAlignmentKey] integerValue] : kCRImageAlignmentDefault;
+}
+
 - (BOOL)showActivityIndicator {
     return _options[kCRToastShowActivityIndicatorKey] ? [_options[kCRToastShowActivityIndicatorKey] boolValue] : kCRShowActivityIndicatorDefault;
 }
@@ -818,7 +826,6 @@ static CGFloat kCRCollisionTweak = 0.5;
             NSLog(@"[CRToast] : WARNING - It is not sensible to have set kCRToastAnimationOutTypeKey to @(CRToastAnimationTypeGravity) and configure a kCRToastAnimationOutTimeIntervalKey. Gravity and distance will be driving the in animation duration here. kCRToastAnimationGravityMagnitudeKey can be modified to change the in animation duration.");
         }
     }
-    
     
     if (self.forceUserInteraction) {
         if (self.gestureRecognizers.count == 0) {
