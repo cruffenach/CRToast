@@ -217,6 +217,7 @@ NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageCon
 NSString *const kCRToastImageAlignmentKey                   = @"kCRToastImageAlignmentKey";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
 NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
+NSString *const kCRToastActivityIndicatorAlignmentKey       = @"kCRToastActivityIndicatorAlignmentKey";
 
 NSString *const kCRToastInteractionRespondersKey            = @"kCRToastInteractionRespondersKey";
 NSString *const kCRToastForceUserInteractionKey             = @"kCRToastForceUserInteractionKey";
@@ -228,56 +229,57 @@ NSString *const kCRToastCaptureDefaultWindowKey             = @"kCRToastCaptureD
 
 #pragma mark - Option Defaults
 
-static CRToastType                  kCRNotificationTypeDefault              = CRToastTypeStatusBar;
-static CGFloat                      kCRNotificationPreferredHeightDefault   = 0;
-static CRToastPresentationType      kCRNotificationPresentationTypeDefault  = CRToastPresentationTypePush;
-static BOOL                         kCRDisplayUnderStatusBarDefault         = NO;
-static NSString *                   kCRToastIdentifer                       = nil;
+static CRToastType                   kCRNotificationTypeDefault             = CRToastTypeStatusBar;
+static CGFloat                       kCRNotificationPreferredHeightDefault  = 0;
+static CRToastPresentationType       kCRNotificationPresentationTypeDefault = CRToastPresentationTypePush;
+static BOOL                          kCRDisplayUnderStatusBarDefault        = NO;
+static NSString *                    kCRToastIdentifer                      = nil;
 
-static CRToastAnimationType         kCRAnimationTypeDefaultIn               = CRToastAnimationTypeLinear;
-static CRToastAnimationType         kCRAnimationTypeDefaultOut              = CRToastAnimationTypeLinear;
-static CRToastAnimationDirection    kCRInAnimationDirectionDefault          = CRToastAnimationDirectionTop;
-static CRToastAnimationDirection    kCROutAnimationDirectionDefault         = CRToastAnimationDirectionBottom;
-static NSTimeInterval               kCRAnimateInTimeIntervalDefault         = 0.4;
-static NSTimeInterval               kCRTimeIntervalDefault                  = 2.0f;
-static NSTimeInterval               kCRAnimateOutTimeIntervalDefault        = 0.4;
+static CRToastAnimationType          kCRAnimationTypeDefaultIn              = CRToastAnimationTypeLinear;
+static CRToastAnimationType          kCRAnimationTypeDefaultOut             = CRToastAnimationTypeLinear;
+static CRToastAnimationDirection     kCRInAnimationDirectionDefault         = CRToastAnimationDirectionTop;
+static CRToastAnimationDirection     kCROutAnimationDirectionDefault        = CRToastAnimationDirectionBottom;
+static NSTimeInterval                kCRAnimateInTimeIntervalDefault        = 0.4;
+static NSTimeInterval                kCRTimeIntervalDefault                 = 2.0f;
+static NSTimeInterval                kCRAnimateOutTimeIntervalDefault       = 0.4;
 
-static CGFloat                      kCRSpringDampingDefault                 = 0.6;
-static CGFloat                  	kCRSpringInitialVelocityDefault         = 1.0;
-static CGFloat                      kCRGravityMagnitudeDefault              = 1.0;
+static CGFloat                       kCRSpringDampingDefault                = 0.6;
+static CGFloat                  	 kCRSpringInitialVelocityDefault        = 1.0;
+static CGFloat                       kCRGravityMagnitudeDefault             = 1.0;
 
-static NSString *                   kCRTextDefault                          = @"";
-static UIFont   *                   kCRFontDefault                          = nil;
-static UIColor  *               	kCRTextColorDefault                     = nil;
-static NSTextAlignment          	kCRTextAlignmentDefault                 = NSTextAlignmentCenter;
-static UIColor  *               	kCRTextShadowColorDefault               = nil;
-static CGSize                   	kCRTextShadowOffsetDefault;
-static NSInteger                    kCRTextMaxNumberOfLinesDefault          = 0;
+static NSString *                    kCRTextDefault                         = @"";
+static UIFont   *                    kCRFontDefault                         = nil;
+static UIColor  *               	 kCRTextColorDefault                    = nil;
+static NSTextAlignment          	 kCRTextAlignmentDefault                = NSTextAlignmentCenter;
+static UIColor  *               	 kCRTextShadowColorDefault              = nil;
+static CGSize                   	 kCRTextShadowOffsetDefault;
+static NSInteger                     kCRTextMaxNumberOfLinesDefault         = 0;
 
-static NSString *                   kCRSubtitleTextDefault                  = nil;
-static UIFont   *                   kCRSubtitleFontDefault                  = nil;
-static UIColor  *               	kCRSubtitleTextColorDefault             = nil;
-static NSTextAlignment          	kCRSubtitleTextAlignmentDefault         = NSTextAlignmentCenter;
-static UIColor  *               	kCRSubtitleTextShadowColorDefault       = nil;
-static CGSize                   	kCRSubtitleTextShadowOffsetDefault;
-static NSInteger                    kCRSubtitleTextMaxNumberOfLinesDefault  = 0;
-static UIStatusBarStyle             kCRStatusBarStyleDefault                = UIStatusBarStyleDefault;
+static NSString *                    kCRSubtitleTextDefault                 = nil;
+static UIFont   *                    kCRSubtitleFontDefault                 = nil;
+static UIColor  *               	 kCRSubtitleTextColorDefault            = nil;
+static NSTextAlignment          	 kCRSubtitleTextAlignmentDefault        = NSTextAlignmentCenter;
+static UIColor  *               	 kCRSubtitleTextShadowColorDefault      = nil;
+static CGSize                   	 kCRSubtitleTextShadowOffsetDefault;
+static NSInteger                     kCRSubtitleTextMaxNumberOfLinesDefault = 0;
+static UIStatusBarStyle              kCRStatusBarStyleDefault               = UIStatusBarStyleDefault;
 
-static UIColor  *                   kCRBackgroundColorDefault               = nil;
-static UIImage  *                   kCRImageDefault                         = nil;
-static UIViewContentMode            kCRImageContentModeDefault              = UIViewContentModeCenter;
-static CRToastImageAlignment        kCRImageAlignmentDefault                = CRToastImageAlignmentLeft;
-static BOOL                         kCRShowActivityIndicatorDefault         = NO;
-static UIActivityIndicatorViewStyle kCRActivityIndicatorViewStyleDefault    = UIActivityIndicatorViewStyleWhite;
+static UIColor  *                    kCRBackgroundColorDefault              = nil;
+static UIImage  *                    kCRImageDefault                        = nil;
+static UIViewContentMode             kCRImageContentModeDefault             = UIViewContentModeCenter;
+static CRToastAccessoryViewAlignment kCRImageAlignmentDefault               = CRToastAccessoryViewAlignmentLeft;
+static BOOL                          kCRShowActivityIndicatorDefault        = NO;
+static UIActivityIndicatorViewStyle  kCRActivityIndicatorViewStyleDefault   = UIActivityIndicatorViewStyleWhite;
+static CRToastAccessoryViewAlignment kCRActivityIndicatorAlignmentDefault   = CRToastAccessoryViewAlignmentLeft;
 
-static NSArray  *                   kCRInteractionResponders                = nil;
-static BOOL                         kCRForceUserInteractionDefault          = NO;
+static NSArray  *                    kCRInteractionResponders               = nil;
+static BOOL                          kCRForceUserInteractionDefault         = NO;
 
-static BOOL                         kCRAutoRotateDefault                    = YES;
+static BOOL                          kCRAutoRotateDefault                   = YES;
 
-static BOOL                         kCRCaptureDefaultWindowDefault          = YES;
+static BOOL                          kCRCaptureDefaultWindowDefault         = YES;
 
-static NSDictionary *               kCRToastKeyClassMap                     = nil;
+static NSDictionary *                kCRToastKeyClassMap                    = nil;
 
 @implementation CRToast
 
@@ -338,6 +340,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
                                 kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRImageAlignmentDefault) class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
+                                kCRToastActivityIndicatorAlignmentKey       : NSStringFromClass([@(kCRActivityIndicatorAlignmentDefault) class]),
                                 
                                 kCRToastInteractionRespondersKey            : NSStringFromClass([NSArray class]),
                                 kCRToastForceUserInteractionKey             : NSStringFromClass([@(kCRForceUserInteractionDefault) class]),
@@ -408,6 +411,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     if (defaultOptions[kCRToastImageAlignmentKey])                  kCRImageAlignmentDefault                = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
+    if (defaultOptions[kCRToastActivityIndicatorAlignmentKey])      kCRActivityIndicatorAlignmentDefault    = [defaultOptions[kCRToastActivityIndicatorAlignmentKey] integerValue];
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                = defaultOptions[kCRToastInteractionRespondersKey];
     if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault          = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
@@ -643,7 +647,7 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
     return _options[kCRToastImageContentModeKey] ? [_options[kCRToastImageContentModeKey] integerValue] : kCRImageContentModeDefault;
 }
 
-- (CRToastImageAlignment)imageAlignment {
+- (CRToastAccessoryViewAlignment)imageAlignment {
     return _options[kCRToastImageAlignmentKey] ? [_options[kCRToastImageAlignmentKey] integerValue] : kCRImageAlignmentDefault;
 }
 
@@ -652,6 +656,10 @@ static NSDictionary *               kCRToastKeyClassMap                     = ni
 }
 - (UIActivityIndicatorViewStyle)activityIndicatorViewStyle {
     return _options[kCRToastActivityIndicatorViewStyleKey] ? [_options[kCRToastActivityIndicatorViewStyleKey] integerValue] : kCRActivityIndicatorViewStyleDefault;
+}
+
+- (CRToastAccessoryViewAlignment)activityViewAlignment {
+    return _options[kCRToastActivityIndicatorAlignmentKey] ? [_options[kCRToastActivityIndicatorAlignmentKey] integerValue] : kCRActivityIndicatorAlignmentDefault;
 }
 
 - (NSInteger)maxNumberOfLines {

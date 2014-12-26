@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *inAnimationTypeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *outAnimationTypeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *imageAlignmentSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *activityIndicatorAlignmentSegementControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
@@ -171,14 +172,14 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
            CRToastAnimationTypeGravity;
 }
 
-CRToastImageAlignment CRToastImageAlignmentForSegmentedControl(UISegmentedControl *segmentedControl ) {
-    CRToastImageAlignment alignment;
+CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmentedControl *segmentedControl ) {
+    CRToastAccessoryViewAlignment alignment;
     
     switch (segmentedControl.selectedSegmentIndex) {
-        case 0: alignment = CRToastImageAlignmentLeft; break;
-        case 1: alignment = CRToastImageAlignmentCenter; break;
-        case 2: alignment = CRToastImageAlignmentRight; break;
-        default: alignment = CRToastImageAlignmentLeft; break;
+        case 0: alignment = CRToastAccessoryViewAlignmentLeft; break;
+        case 1: alignment = CRToastAccessoryViewAlignmentCenter; break;
+        case 2: alignment = CRToastAccessoryViewAlignmentRight; break;
+        default: alignment = CRToastAccessoryViewAlignmentLeft; break;
     }
     
     return alignment;
@@ -197,11 +198,12 @@ CRToastImageAlignment CRToastImageAlignmentForSegmentedControl(UISegmentedContro
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
-        options[kCRToastImageAlignmentKey] = @(CRToastImageAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
+        options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
     }
     
     if (self.showActivityIndicatorSwitch.on) {
         options[kCRToastShowActivityIndicatorKey] = @YES;
+        options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.activityIndicatorAlignmentSegementControl));
     }
     
     if (self.forceUserInteractionSwitch.on) {

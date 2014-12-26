@@ -122,10 +122,10 @@ typedef NS_ENUM(NSInteger, CRToastState){
 /**
  `CRToastImageAlignment` defines the alignment of the image given to the CRToast.
  */
-typedef NS_ENUM(NSInteger, CRToastImageAlignment){
-    CRToastImageAlignmentLeft,
-    CRToastImageAlignmentCenter,
-    CRToastImageAlignmentRight
+typedef NS_ENUM(NSInteger, CRToastAccessoryViewAlignment){
+    CRToastAccessoryViewAlignmentLeft,
+    CRToastAccessoryViewAlignmentCenter,
+    CRToastAccessoryViewAlignmentRight
 };
 
 ///--------------------
@@ -304,7 +304,7 @@ OBJC_EXTERN NSString *const kCRToastImageKey;
 OBJC_EXTERN NSString *const kCRToastImageContentModeKey;
 
 /**
- The image alignment to use. Expects type `NSInteger`.
+ The image alignment to use. Expects type `CRToastAccessoryViewAlignment`.
  */
 OBJC_EXTERN NSString *const kCRToastImageAlignmentKey;
 
@@ -317,6 +317,11 @@ OBJC_EXTERN NSString *const kCRToastShowActivityIndicatorKey;
  The activity indicator view style. Expects type `UIActivityIndicatorViewStyle`
  */
 OBJC_EXTERN NSString *const kCRToastActivityIndicatorViewStyleKey;
+
+/**
+ The activity indicator alignment to use. Expects type `CRToastAccessoryViewAlignment`.
+ */
+OBJC_EXTERN NSString *const kCRToastActivityIndicatorAlignmentKey;
 
 /**
  An Array of Interaction Responders for the Notification. Expects type `NSArray` full of `CRToastInteractionResponders`
@@ -411,8 +416,9 @@ OBJC_EXTERN NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIColor *backgroundColor;
 @property (nonatomic, readonly) UIImage *image;
 @property (nonatomic, readonly) UIViewContentMode imageContentMode;
-@property (nonatomic, readonly) CRToastImageAlignment imageAlignment;
+@property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
+@property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
 @property (nonatomic, readonly) BOOL forceUserInteraction;
 
