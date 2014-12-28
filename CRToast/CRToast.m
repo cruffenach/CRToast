@@ -212,6 +212,7 @@ NSString *const kCRToastSubtitleTextMaxNumberOfLinesKey     = @"kCRToastSubtitle
 NSString *const kCRToastStatusBarStyleKey                   = @"kCRToastStatusBarStyleKey";
 
 NSString *const kCRToastBackgroundColorKey                  = @"kCRToastBackgroundColorKey";
+NSString *const kCRToastBackgroundViewKey                   = @"kCRToastBackgroundViewKey";
 NSString *const kCRToastImageKey                            = @"kCRToastImageKey";
 NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageContentModeKey";
 NSString *const kCRToastImageAlignmentKey                   = @"kCRToastImageAlignmentKey";
@@ -265,6 +266,7 @@ static NSInteger                     kCRSubtitleTextMaxNumberOfLinesDefault = 0;
 static UIStatusBarStyle              kCRStatusBarStyleDefault               = UIStatusBarStyleDefault;
 
 static UIColor  *                    kCRBackgroundColorDefault              = nil;
+static UIView   *                    kCRBackgroundView                      = nil;
 static UIImage  *                    kCRImageDefault                        = nil;
 static UIViewContentMode             kCRImageContentModeDefault             = UIViewContentModeCenter;
 static CRToastAccessoryViewAlignment kCRImageAlignmentDefault               = CRToastAccessoryViewAlignmentLeft;
@@ -335,6 +337,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastStatusBarStyleKey                   : NSStringFromClass([@(kCRStatusBarStyleDefault) class]),
                                 
                                 kCRToastBackgroundColorKey                  : NSStringFromClass([UIColor class]),
+                                kCRToastBackgroundViewKey                   : NSStringFromClass([UIView class]),
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastImageContentModeKey                 : NSStringFromClass([@(kCRImageContentModeDefault) class]),
                                 kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRImageAlignmentDefault) class]),
@@ -406,6 +409,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey])    kCRSubtitleTextMaxNumberOfLinesDefault  = [defaultOptions[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue];
     
     if (defaultOptions[kCRToastBackgroundColorKey])                 kCRBackgroundColorDefault               = defaultOptions[kCRToastBackgroundColorKey];
+    if (defaultOptions[kCRToastBackgroundViewKey])                  kCRBackgroundView                       = defaultOptions[kCRToastBackgroundViewKey];
     if (defaultOptions[kCRToastImageKey])                           kCRImageDefault                         = defaultOptions[kCRToastImageKey];
     if (defaultOptions[kCRToastImageContentModeKey])                kCRImageContentModeDefault              = [defaultOptions[kCRToastImageContentModeKey] integerValue];
     if (defaultOptions[kCRToastImageAlignmentKey])                  kCRImageAlignmentDefault                = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
@@ -637,6 +641,10 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (UIColor*)backgroundColor {
     return _options[kCRToastBackgroundColorKey] ?: kCRBackgroundColorDefault;
+}
+
+- (UIView *)backgroundView {
+    return _options[kCRToastBackgroundViewKey];
 }
 
 - (UIImage*)image {

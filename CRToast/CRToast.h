@@ -294,6 +294,11 @@ extern NSString *const kCRToastStatusBarStyleKey;
 extern NSString *const kCRToastBackgroundColorKey;
 
 /**
+ Custom view used as the background of the notification
+*/
+extern NSString *const kCRToastBackgroundViewKey;
+
+/**
  The image to be shown on the left side of the notification. Expects type `UIImage`.
  */
 extern NSString *const kCRToastImageKey;
@@ -414,6 +419,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
 @property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
 @property (nonatomic, readonly) UIColor *backgroundColor;
+@property (nonatomic, readonly) UIView *backgroundView;
 @property (nonatomic, readonly) UIImage *image;
 @property (nonatomic, readonly) UIViewContentMode imageContentMode;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;

@@ -128,6 +128,8 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
+    self.backgroundView.frame = self.bounds;
+    
     CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, contentFrame.size);
     self.imageView.frame = CGRectMake(imageXOffset,
                                       statusBarYOffset,
@@ -218,6 +220,13 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     _imageView.contentMode = toast.imageContentMode;
     _activityIndicator.activityIndicatorViewStyle = toast.activityIndicatorViewStyle;
     self.backgroundColor = toast.backgroundColor;
+    
+    if (toast.backgroundView) {
+        _backgroundView = toast.backgroundView;
+        if (!_backgroundView.superview) {
+            [self insertSubview:_backgroundView atIndex:0];
+        }
+    }
 }
 
 @end
