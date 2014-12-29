@@ -195,6 +195,7 @@ NSString *const kCRToastAnimationSpringInitialVelocityKey   = @"kCRToastAnimateS
 NSString *const kCRToastAnimationGravityMagnitudeKey        = @"kCRToastAnimationGravityMagnitudeKey";
 
 NSString *const kCRToastTextKey                             = @"kCRToastTextKey";
+NSString *const kCRToastAttributedStringKey                 = @"kCRToastAttributedStringKey";
 NSString *const kCRToastFontKey                             = @"kCRToastFontKey";
 NSString *const kCRToastTextColorKey                        = @"kCRToastTextColorKey";
 NSString *const kCRToastTextAlignmentKey                    = @"kCRToastTextAlignmentKey";
@@ -203,6 +204,7 @@ NSString *const kCRToastTextShadowOffsetKey                 = @"kCRToastTextShad
 NSString *const kCRToastTextMaxNumberOfLinesKey             = @"kCRToastTextMaxNumberOfLinesKey";
 
 NSString *const kCRToastSubtitleTextKey                     = @"kCRToastSubtitleTextKey";
+NSString *const kCRToastSubtitleAttributedStringKey         = @"kCRToastSubtitleAttributedStringKey";
 NSString *const kCRToastSubtitleFontKey                     = @"kCRToastSubtitleFontKey";
 NSString *const kCRToastSubtitleTextColorKey                = @"kCRToastSubtitleTextColorKey";
 NSString *const kCRToastSubtitleTextAlignmentKey            = @"kCRToastSubtitleTextAlignmentKey";
@@ -249,6 +251,7 @@ static CGFloat                  	 kCRSpringInitialVelocityDefault        = 1.0;
 static CGFloat                       kCRGravityMagnitudeDefault             = 1.0;
 
 static NSString *                    kCRTextDefault                         = @"";
+static NSAttributedString *          kCRAttributedStringDefault             = nil;
 static UIFont   *                    kCRFontDefault                         = nil;
 static UIColor  *               	 kCRTextColorDefault                    = nil;
 static NSTextAlignment          	 kCRTextAlignmentDefault                = NSTextAlignmentCenter;
@@ -257,6 +260,7 @@ static CGSize                   	 kCRTextShadowOffsetDefault;
 static NSInteger                     kCRTextMaxNumberOfLinesDefault         = 0;
 
 static NSString *                    kCRSubtitleTextDefault                 = nil;
+static NSAttributedString *          kCRSubtitleAttributedStringDefault     = nil;
 static UIFont   *                    kCRSubtitleFontDefault                 = nil;
 static UIColor  *               	 kCRSubtitleTextColorDefault            = nil;
 static NSTextAlignment          	 kCRSubtitleTextAlignmentDefault        = NSTextAlignmentCenter;
@@ -321,6 +325,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastAnimationGravityMagnitudeKey        : NSStringFromClass([@(kCRGravityMagnitudeDefault) class]),
                                 
                                 kCRToastTextKey                             : NSStringFromClass([NSString class]),
+                                kCRToastAttributedStringKey                 : NSStringFromClass([NSAttributedString class]),
                                 kCRToastFontKey                             : NSStringFromClass([UIFont class]),
                                 kCRToastTextColorKey                        : NSStringFromClass([UIColor class]),
                                 kCRToastTextAlignmentKey                    : NSStringFromClass([@(kCRTextAlignmentDefault) class]),
@@ -328,6 +333,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastTextShadowOffsetKey                 : NSStringFromClass([[NSValue valueWithCGSize:kCRTextShadowOffsetDefault] class]),
                                 kCRToastTextMaxNumberOfLinesKey             : NSStringFromClass([@(kCRTextMaxNumberOfLinesDefault) class]),
                                 kCRToastSubtitleTextKey                     : NSStringFromClass([NSString class]),
+                                kCRToastSubtitleAttributedStringKey         : NSClassFromString([NSAttributedString class]),
                                 kCRToastSubtitleFontKey                     : NSStringFromClass([UIFont class]),
                                 kCRToastSubtitleTextColorKey                : NSStringFromClass([UIColor class]),
                                 kCRToastSubtitleTextAlignmentKey            : NSStringFromClass([@(kCRSubtitleTextAlignmentDefault) class]),
@@ -391,6 +397,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastAnimationGravityMagnitudeKey])       kCRGravityMagnitudeDefault              = [defaultOptions[kCRToastAnimationGravityMagnitudeKey] floatValue];
     
     if (defaultOptions[kCRToastTextKey])                            kCRTextDefault                          = defaultOptions[kCRToastTextKey];
+    if (defaultOptions[kCRToastAttributedStringKey])                kCRAttributedStringDefault              = defaultOptions[kCRToastAttributedStringKey];
     if (defaultOptions[kCRToastFontKey])                            kCRFontDefault                          = defaultOptions[kCRToastFontKey];
     if (defaultOptions[kCRToastTextColorKey])                       kCRTextColorDefault                     = defaultOptions[kCRToastTextColorKey];
     if (defaultOptions[kCRToastTextAlignmentKey])                   kCRTextAlignmentDefault                 = [defaultOptions[kCRToastTextAlignmentKey] integerValue];
@@ -401,6 +408,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastStatusBarStyleKey])                  kCRStatusBarStyleDefault                = [defaultOptions[kCRToastStatusBarStyleKey] integerValue];
     
     if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
+    if (defaultOptions[kCRToastSubtitleAttributedStringKey])        kCRSubtitleAttributedStringDefault      = defaultOptions[kCRToastSubtitleAttributedStringKey];
     if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
     if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
     if (defaultOptions[kCRToastSubtitleTextAlignmentKey])           kCRSubtitleTextAlignmentDefault         = [defaultOptions[kCRToastSubtitleTextAlignmentKey] integerValue];
@@ -591,6 +599,10 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastTextKey] ?: kCRTextDefault;
 }
 
+- (NSAttributedString *)attributedString {
+    return _options[kCRToastAttributedStringKey];
+}
+
 - (UIFont*)font {
     return _options[kCRToastFontKey] ?: kCRFontDefault;
 }
@@ -615,6 +627,10 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (NSString*)subtitleText {
     return _options[kCRToastSubtitleTextKey] ?: kCRSubtitleTextDefault;
+}
+
+- (NSAttributedString *)subtitleAttributedString {
+    return _options[kCRToastSubtitleAttributedStringKey];
 }
 
 - (UIFont*)subtitleFont {
