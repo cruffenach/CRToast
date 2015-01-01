@@ -52,7 +52,7 @@ static CGFloat CRToastWidthOfViewWithAlignment(CGFloat height, BOOL showing, CRT
     height;
 }
 
-static CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth, CGFloat fullContentHeight, BOOL showingImage, CRToastAccessoryViewAlignment imageAlignment, BOOL showingActivityIndicator, CRToastAccessoryViewAlignment activityIndicatorAlignment) {
+CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth, CGFloat fullContentHeight, BOOL showingImage, CRToastAccessoryViewAlignment imageAlignment, BOOL showingActivityIndicator, CRToastAccessoryViewAlignment activityIndicatorAlignment) {
     CGFloat width = fullContentWidth;
     
     width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingImage, imageAlignment);
