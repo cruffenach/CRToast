@@ -219,11 +219,6 @@ extern NSString *const kCRToastAnimationGravityMagnitudeKey;
 extern NSString *const kCRToastTextKey;
 
 /**
- The title attributed string to be shown in the notification. This overrides `kCRToastTextKey`. Expects type `NSAttriubutedString`.
- */
-extern NSString *const kCRToastAttributedStringKey;
-
-/**
  The font to be used for the `kCRToastTextKey` value . Expects type `UIFont`.
  */
 extern NSString *const kCRToastFontKey;
@@ -257,11 +252,6 @@ extern NSString *const kCRToastTextMaxNumberOfLinesKey;
  The subtitle text to be shown in the notification. Expects type `NSString`.
  */
 extern NSString *const kCRToastSubtitleTextKey;
-
-/**
- The subtitle attributed string to be shown in the notification. This overrides `kCRToastSubtitleTextKey`. Expects type `NSAttriubutedString`.
- */
-extern NSString *const kCRToastSubtitleAttributedStringKey;
 
 /**
  The font to be used for the `kCRToastSubtitleTextKey` value . Expects type `UIFont`.
@@ -413,7 +403,6 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) CGFloat animationGravityMagnitude;
 
 @property (nonatomic, readonly) NSString *text;
-@property (nonatomic, readonly) NSAttributedString *attributedString;
 @property (nonatomic, readonly) UIFont *font;
 @property (nonatomic, readonly) UIColor *textColor;
 @property (nonatomic, readonly) NSTextAlignment textAlignment;
@@ -422,7 +411,6 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
 
 @property (nonatomic, readonly) NSString *subtitleText;
-@property (nonatomic, readonly) NSAttributedString *subtitleAttributedString;
 @property (nonatomic, readonly) UIFont *subtitleFont;
 @property (nonatomic, readonly) UIColor *subtitleTextColor;
 @property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;

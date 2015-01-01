@@ -201,7 +201,6 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
 - (void)setToast:(CRToast *)toast {
     _toast = toast;
     _label.text = toast.text;
-    _label.attributedText = toast.attributedString;
     _label.font = toast.font;
     _label.textColor = toast.textColor;
     _label.textAlignment = toast.textAlignment;
@@ -210,7 +209,6 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     _label.shadowColor = toast.textShadowColor;
     if (toast.subtitleText != nil) {
         _subtitleLabel.text = toast.subtitleText;
-        _subtitleLabel.attributedText = toast.subtitleAttributedString;
         _subtitleLabel.font = toast.subtitleFont;
         _subtitleLabel.textColor = toast.subtitleTextColor;
         _subtitleLabel.textAlignment = toast.subtitleTextAlignment;
