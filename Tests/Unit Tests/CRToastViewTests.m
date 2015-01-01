@@ -12,40 +12,131 @@
 #import "CRToast.h"
 
 @interface CRToastViewTests : XCTestCase
-
+@property (strong, nonatomic) CRToastView *view;
 @end
+
+CRToast * __TestToast(void) {
+    return [[CRToast alloc] init];
+}
 
 @implementation CRToastViewTests
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
-}
-
 #pragma mark Image Alignment
 - (void)testImageFrameLeftAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon"];
+    options[kCRToastImageAlignmentKey] = @(CRToastAccessoryViewAlignmentLeft);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGRect assumedRect = CGRectMake(0, 0, 100, 100);
+    
+    [self.view layoutSubviews];
+    
+    BOOL rectsEqual = CGRectEqualToRect(assumedRect, self.view.imageView.frame);
+    
+    XCTAssertTrue(rectsEqual, @"left aligned rect should be equal to assumed rect. Intead was %@", NSStringFromCGRect(self.view.imageView.frame));
 }
 
 - (void)testImageFrameCenterAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon"];
+    options[kCRToastImageAlignmentKey] = @(CRToastAccessoryViewAlignmentCenter);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGRect assumedRect = CGRectMake(100, 0, 100, 100);
+    
+    [self.view layoutSubviews];
+    
+    BOOL rectsEqual = CGRectEqualToRect(assumedRect, self.view.imageView.frame);
+    
+    XCTAssertTrue(rectsEqual, @"center aligned rect should be equal to assumed rect. Intead was %@", NSStringFromCGRect(self.view.imageView.frame));
 }
 
 - (void)testImageFrameRightAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon"];
+    options[kCRToastImageAlignmentKey] = @(CRToastAccessoryViewAlignmentRight);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGRect assumedRect = CGRectMake(200, 0, 100, 100);
+ 
+    [self.view layoutSubviews];
+    
+    BOOL rectsEqual = CGRectEqualToRect(assumedRect, self.view.imageView.frame);
+    
+    XCTAssertTrue(rectsEqual, @"right aligned rect should be equal to assumed rect. Intead was %@", NSStringFromCGRect(self.view.imageView.frame));
 }
 
 #pragma mark Activity Indicator Alignment
 - (void)testActivityFrameLeftAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastShowActivityIndicatorKey] = @YES;
+    options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastAccessoryViewAlignmentLeft);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGPoint assumedCenter = CGPointMake(50, 50);
+    
+    [self.view layoutSubviews];
+    
+    CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
+    BOOL centersEqual = CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
+    
+    XCTAssertTrue(centersEqual, @"left aligned activity indicator center shold equal assumed center. Instead was %@", NSStringFromCGPoint(self.view.activityIndicator.center));
 }
 
 - (void)testActivityFrameCenterAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastShowActivityIndicatorKey] = @YES;
+    options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastAccessoryViewAlignmentCenter);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGPoint assumedCenter = CGPointMake(100, 50);
+    
+    [self.view layoutSubviews];
+    
+    BOOL centersEqual = CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
+    
+    XCTAssertTrue(centersEqual, @"center aligned activity indicator center shold equal assumed center. Instead was %@", NSStringFromCGPoint(self.view.activityIndicator.center));
 }
 
 - (void)testActivityFrameRightAlignment {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
+    options[kCRToastShowActivityIndicatorKey] = @YES;
+    options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastAccessoryViewAlignmentRight);
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    CGPoint assumedCenter = CGPointMake(250, 50);
+    
+    [self.view layoutSubviews];
+    
+    CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
+    BOOL centersEqual = CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
+    
+    XCTAssertTrue(centersEqual, @"right aligned activity indicator center shold equal assumed center. Instead was %@", NSStringFromCGPoint(self.view.activityIndicator.center));
 }
 
 #pragma mark Width Calculations
@@ -69,7 +160,6 @@
     
 }
 
-
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
     [self measureBlock:^{
@@ -80,16 +170,12 @@
 #pragma mark - Setup
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.view = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    self.view = nil;
     [super tearDown];
-}
-
-- (CRToast *)testToast {
-    return [[CRToast alloc] init];
 }
 
 @end
