@@ -142,28 +142,38 @@ CRToast * __TestToast(void) {
 #pragma mark Width Calculations
 - (void)testWidthWithOnlyLeftItem {
     
+    CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentLeft, NO, CRToastAccessoryViewAlignmentLeft);
+    
+    XCTAssertTrue(width == 200, @"Width with only left item should be 200 (full width - (height x 1)). Instead was %f", width);
 }
 
 - (void)testWidthWithOnlyCenterItem {
+    CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentCenter, NO, CRToastAccessoryViewAlignmentLeft);
     
+    XCTAssertTrue(width == 300, @"Width with only center item should be 300 (full width). Instead was %f", width);
 }
 
 - (void)testWidthWithOnlyRightItem {
+    CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentRight, NO, CRToastAccessoryViewAlignmentLeft);
     
+    XCTAssertTrue(width == 200, @"Width with only center item should be 300 (full width - (height x 1)). Instead was %f", width);
 }
 
 - (void)testWidthWithLeftAndCenter {
+    CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentLeft, YES, CRToastAccessoryViewAlignmentCenter);
     
+    XCTAssertTrue(width == 200, @"Width with left & center item should be 200 (full width - (height x 1)). Instead was %f", width);
 }
 
 - (void)testWidthWithLeftAndRight {
+    CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentLeft, YES, CRToastAccessoryViewAlignmentRight);
     
+    XCTAssertTrue(width == 100, @"Width with left & right item should be 200 (full width - (height x 2)). Instead was %f", width);
 }
 
 - (void)testPerformanceExample {
-    // This is an example of a performance test case.
     [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+        CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentLeft, YES, CRToastAccessoryViewAlignmentRight);
     }];
 }
 
