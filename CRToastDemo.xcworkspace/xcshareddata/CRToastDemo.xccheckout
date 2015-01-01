@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5B26FB91-2F1F-42C2-BAAF-07810BDA2C80</string>
+	<key>IDESourceControlProjectName</key>
+	<string>CRToastDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3F9A727FD9689F0BE123288B6E82F17606DA2210</key>
+		<string>https://github.com/Ashton-W/CRToast.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CRToastDemo.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3F9A727FD9689F0BE123288B6E82F17606DA2210</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Ashton-W/CRToast.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3F9A727FD9689F0BE123288B6E82F17606DA2210</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3F9A727FD9689F0BE123288B6E82F17606DA2210</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CRToast</string>
+		</dict>
+	</array>
+</dict>
+</plist>

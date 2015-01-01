@@ -27,9 +27,4 @@
     [super tearDown];
 }
 
-- (void)testEmptyDefaultOptions
-{
-    [CRToastManager setDefaultOptions:@{}];
-}
-
 @end
