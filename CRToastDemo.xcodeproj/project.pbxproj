@@ -166,9 +166,9 @@
 			isa = PBXGroup;
 			children = (
 				2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */,
-				2D8F2E0D18CED50A0077A7F6 /* Supporting Files */,
 				547BC2411A4FCA42004C45FE /* CRToastViewTests.m */,
 				547BC2431A4FCA54004C45FE /* CRToastManagerTests.m */,
+				2D8F2E0D18CED50A0077A7F6 /* Supporting Files */,
 			);
 			path = "Unit Tests";
 			sourceTree = "<group>";
