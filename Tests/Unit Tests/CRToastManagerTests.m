@@ -14,6 +14,11 @@
 @interface CRToastManagerTests : XCTestCase
 @end
 
+
+NSMutableDictionary * __TestToastOptionsDictionary(void) {
+    return [@{} mutableCopy];
+}
+
 @implementation CRToastManagerTests
 
 - (void)testEmptyDefaultOptions
@@ -21,6 +26,26 @@
     [CRToastManager setDefaultOptions:@{}];
 }
 
+- (void)testNotificationIdentifiers {
+    NSMutableDictionary *options = __TestToastOptionsDictionary();
+    
+    for (NSString *str in @[@"1", @"2", @"3", @"3", @"4"]) {
+        options[kCRToastTimeIntervalKey] = @15;
+        options[kCRToastIdentifierKey] = str;
+        [CRToastManager showNotificationWithOptions:options completionBlock:nil];
+    }
+    
+    // Add another notification without identifier creating 6 items in queue
+    [CRToastManager showNotificationWithOptions:__TestToastOptionsDictionary() completionBlock:nil];
+    
+    NSArray *identifiers = [CRToastManager notificationIdentifiersInQueue];
+    
+    XCTAssertTrue(identifiers.count == 5, @"identifiers should contain 5 items. Instead contains %lu", (long)identifiers.count);
+    
+    XCTAssertTrue([identifiers containsObject:@"2"], @"identifiers should contain an identifier '2'.");
+    
+    XCTAssertFalse([identifiers containsObject:@"test"], @"identifiers should not contain an identifier 'test'.");
+}
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.
@@ -36,7 +61,8 @@
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    [CRToastManager dismissAllNotifications:NO];
+    
     [super tearDown];
 }
 
