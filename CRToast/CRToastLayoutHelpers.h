@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
 
+#ifndef NSFoundationVersionNumber_iOS_7_1
+#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+/* Taken from NSObjCRuntime.h */
+#define CR_NSFoundationVersionNumber_iOS_7_1 NSFoundationVersionNumber_iOS_7_1
+
 static BOOL CRHorizontalSizeClassRegular() {
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
+    if (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1) {
     /* What this is really doing 
        Also supress the warnings around possible leaks with those.
        This is super ugly.
@@ -26,9 +32,6 @@ static BOOL CRHorizontalSizeClassRegular() {
     }
     return NO;
 }
-
-/* Taken from NSObjCRuntime.h */
-#define CR_NSFoundationVersionNumber_iOS_7_1 1047.25
 
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
