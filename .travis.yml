@@ -2,6 +2,7 @@ language: objective-c
 before_install:
   - brew outdated xctool || brew upgrade xctool
 xcode_workspace: CRToastDemo.xcworkspace
+# xcode_project: CRToastDemo.xcodeproj
 xcode_scheme: CRToastTests
 xcode_sdk:
   - iphonesimulator7.0
