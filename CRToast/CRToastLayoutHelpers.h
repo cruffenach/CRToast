@@ -9,24 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
 
-/* Pulled from Availability.h since it's not defined under iOS 7 SDK. */
-#ifndef __IPHONE_7_1
-#define __IPHONE_7_1     70100
-#endif
-
 static BOOL CRHorizontalSizeClassRegular() {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1) {
     /* What this is really doing 
        Also supress the warnings around possible leaks with those.
        This is super ugly.
      */
     //    return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    NSInteger sizeClass = (NSInteger)[[[UIScreen mainScreen] performSelector:NSSelectorFromString(@"traitCollection")] performSelector:NSSelectorFromString(@"horizontalSizeClass")];
-#pragma clang diagnostic pop
-    return sizeClass == 2; // UIUserInterfaceSizeClassRegular = 2
-#endif
+    //		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+    //        kCRUseSizeClass = kCRFrameAutoAdjustedForOrientation;
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        NSInteger sizeClass = (NSInteger)[[[UIScreen mainScreen] performSelector:NSSelectorFromString(@"traitCollection")] performSelector:NSSelectorFromString(@"horizontalSizeClass")];
+        #pragma clang diagnostic pop
+        return sizeClass == 2; // UIUserInterfaceSizeClassRegular = 2
+    }
     return NO;
 }
 
@@ -35,7 +32,7 @@ static BOOL CRHorizontalSizeClassRegular() {
  If/when iOS 7 support is dropped this check will no longer be necessary
  */
 static inline BOOL CRFrameAutoAdjustedForOrientation() {
-    return __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1;
+    return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
 }
 
 /**
@@ -43,7 +40,7 @@ static inline BOOL CRFrameAutoAdjustedForOrientation() {
  Only available in iOS 8 so we don't want to attempt to use size classes if we're not running iOS 8
  */
 static inline BOOL CRUseSizeClass() {
-    return __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1;
+    return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
 }
 
 #pragma mark - Variables
