@@ -9,18 +9,47 @@
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
 
-#pragma mark - Variables
+#ifndef NSFoundationVersionNumber_iOS_7_1
+#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+/* Taken from NSObjCRuntime.h */
+#define CR_NSFoundationVersionNumber_iOS_7_1 NSFoundationVersionNumber_iOS_7_1
+
+static BOOL CRHorizontalSizeClassRegular() {
+    if (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1) {
+    /* What this is really doing 
+       Also supress the warnings around possible leaks with those.
+       This is super ugly.
+     */
+    //    return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    //		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+    //        kCRUseSizeClass = kCRFrameAutoAdjustedForOrientation;
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        NSInteger sizeClass = (NSInteger)[[[UIScreen mainScreen] performSelector:NSSelectorFromString(@"traitCollection")] performSelector:NSSelectorFromString(@"horizontalSizeClass")];
+        #pragma clang diagnostic pop
+        return sizeClass == 2; // UIUserInterfaceSizeClassRegular = 2
+    }
+    return NO;
+}
+
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
  If/when iOS 7 support is dropped this check will no longer be necessary
  */
-static BOOL kCRFrameAutoAdjustedForOrientation = NO;
+static inline BOOL CRFrameAutoAdjustedForOrientation() {
+    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
+}
+
 /**
- `BOOL` to determine if we can use size classes for determining layout. 
+ `BOOL` to determine if we can use size classes for determining layout.
  Only available in iOS 8 so we don't want to attempt to use size classes if we're not running iOS 8
  */
-static BOOL kCRUseSizeClass = NO;
+static inline BOOL CRUseSizeClass() {
+    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
+}
 
+#pragma mark - Variables
 /// Default height of the status bar + 1 pixel
 static CGFloat const CRNavigationBarDefaultHeight = 45.0f;
 /// Height of the status bar in landscape orientation/compact size class + 1 pixel
@@ -39,7 +68,7 @@ static UIInterfaceOrientation CRGetDeviceOrientation() {
 static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
     
-    if (kCRFrameAutoAdjustedForOrientation) {
+    if (CRFrameAutoAdjustedForOrientation()) {
         return CGRectGetHeight(statusBarFrame);
     }
     
@@ -52,7 +81,7 @@ static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orienta
 static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
     CGRect mainScreenBounds = [UIScreen mainScreen].bounds;
     
-    if (kCRFrameAutoAdjustedForOrientation) {
+    if (CRFrameAutoAdjustedForOrientation()) {
         return CGRectGetWidth(mainScreenBounds);
     }
     
@@ -74,9 +103,8 @@ static CGFloat CRGetStatusBarWidth() {
  */
 static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
     BOOL regularHorizontalSizeClass = NO;
-    if (kCRUseSizeClass) {
-        UITraitCollection *traitCollection = [[UIScreen mainScreen] traitCollection];
-        regularHorizontalSizeClass = traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    if (CRUseSizeClass()) {
+        regularHorizontalSizeClass = CRHorizontalSizeClassRegular();
     }
     return (UIDeviceOrientationIsPortrait(orientation) ||
             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || regularHorizontalSizeClass) ?
@@ -162,7 +190,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 static CGRect CRGetNotificationContainerFrame(UIInterfaceOrientation statusBarOrientation, CGSize notificationSize) {
     CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     
-    if (!kCRFrameAutoAdjustedForOrientation) {
+    if (!CRFrameAutoAdjustedForOrientation()) {
         switch (statusBarOrientation) {
             case UIInterfaceOrientationLandscapeLeft: {
                 containerFrame = CGRectMake(0, 0, notificationSize.height, notificationSize.width);

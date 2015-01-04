@@ -171,11 +171,14 @@ CRToast * __TestToast(void) {
     XCTAssertTrue(width == 100, @"Width with left & right item should be 200 (full width - (height x 2)). Instead was %f", width);
 }
 
+/*
+// Causes travis to fail against iOS 7/7.1 SDK
 - (void)testPerformanceExample {
     [self measureBlock:^{
         CRContentWidthForAccessoryViewsWithAlignments(300, 100, YES, CRToastAccessoryViewAlignmentLeft, YES, CRToastAccessoryViewAlignmentRight);
     }];
 }
+*/
 
 #pragma mark - Setup
 - (void)setUp {

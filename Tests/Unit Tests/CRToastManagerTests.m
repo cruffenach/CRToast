@@ -47,13 +47,6 @@ NSMutableDictionary * __TestToastOptionsDictionary(void) {
     XCTAssertFalse([identifiers containsObject:@"test"], @"identifiers should not contain an identifier 'test'.");
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
 #pragma mark - Setup
 - (void)setUp {
     [super setUp];

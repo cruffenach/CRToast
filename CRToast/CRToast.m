@@ -287,12 +287,6 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 + (void)initialize {
     if (self == [CRToast class]) {
-        
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-		kCRFrameAutoAdjustedForOrientation = (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
-        kCRUseSizeClass = kCRFrameAutoAdjustedForOrientation;
-#endif
-        
         kCRFontDefault = [UIFont systemFontOfSize:12];
         kCRTextColorDefault = [UIColor whiteColor];
         kCRTextShadowOffsetDefault = CGSizeZero;
