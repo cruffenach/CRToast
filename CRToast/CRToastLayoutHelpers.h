@@ -32,12 +32,14 @@ static BOOL CRHorizontalSizeClassRegular() {
 #define NSFoundationVersionNumber_iOS_7_1 1047.25
 #endif
 
+#define CR_NSFoundationVersionNumber_iOS_7_1 NSFoundationVersionNumber_iOS_7_1
+
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
  If/when iOS 7 support is dropped this check will no longer be necessary
  */
 static inline BOOL CRFrameAutoAdjustedForOrientation() {
-    return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
 }
 
 /**
@@ -45,7 +47,7 @@ static inline BOOL CRFrameAutoAdjustedForOrientation() {
  Only available in iOS 8 so we don't want to attempt to use size classes if we're not running iOS 8
  */
 static inline BOOL CRUseSizeClass() {
-    return (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1);
+    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
 }
 
 #pragma mark - Variables
