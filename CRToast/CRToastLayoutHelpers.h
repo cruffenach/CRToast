@@ -11,7 +11,16 @@
 
 static BOOL CRHorizontalSizeClassRegular() {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+    /* What this is really doing 
+       Also supress the warnings around possible leaks with those.
+       This is super ugly.
+     */
+    //    return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    NSInteger sizeClass = (NSInteger)[[[UIScreen mainScreen] performSelector:NSSelectorFromString(@"traitCollection")] performSelector:NSSelectorFromString(@"horizontalSizeClass")];
+#pragma clang diagnostic pop
+    return sizeClass == 2; // UIUserInterfaceSizeClassRegular = 2
 #endif
     return NO;
 }
