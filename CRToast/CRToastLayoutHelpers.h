@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
 
+static BOOL CRHorizontalSizeClassRegular() {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+#endif
+    return NO;
+}
+
 #pragma mark - Variables
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
@@ -75,8 +82,7 @@ static CGFloat CRGetStatusBarWidth() {
 static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
     BOOL regularHorizontalSizeClass = NO;
     if (kCRUseSizeClass) {
-        UITraitCollection *traitCollection = [[UIScreen mainScreen] traitCollection];
-        regularHorizontalSizeClass = traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
+        regularHorizontalSizeClass = CRHorizontalSizeClassRegular();
     }
     return (UIDeviceOrientationIsPortrait(orientation) ||
             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || regularHorizontalSizeClass) ?
