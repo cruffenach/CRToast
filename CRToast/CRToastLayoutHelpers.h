@@ -27,6 +27,11 @@ static BOOL CRHorizontalSizeClassRegular() {
     return NO;
 }
 
+/* Taken from NSObjCRuntime.h */
+#ifndef NSFoundationVersionNumber_iOS_7_1
+#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
  If/when iOS 7 support is dropped this check will no longer be necessary
