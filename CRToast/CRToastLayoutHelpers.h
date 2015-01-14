@@ -9,23 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
 
-#ifndef NSFoundationVersionNumber_iOS_7_1
-#define NSFoundationVersionNumber_iOS_7_1 1047.25
-#endif
-
-#ifndef __IPHONE_7_1
-#define __IPHONE_7_1     70100
-#endif
-
-/* Taken from NSObjCRuntime.h */
-#define CR_NSFoundationVersionNumber_iOS_7_1 NSFoundationVersionNumber_iOS_7_1
-
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
  If/when iOS 7 support is dropped this check will no longer be necessary
  */
 static inline BOOL CRFrameAutoAdjustedForOrientation() {
-    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
+#ifdef __IPHONE_8_0
+    return YES;
+#else
+    return NO;
+#endif
 }
 
 /**
@@ -33,12 +26,16 @@ static inline BOOL CRFrameAutoAdjustedForOrientation() {
  Only available in iOS 8 so we don't want to attempt to use size classes if we're not running iOS 8
  */
 static inline BOOL CRUseSizeClass() {
-    return (floor(NSFoundationVersionNumber) > CR_NSFoundationVersionNumber_iOS_7_1);
+#ifdef __IPHONE_8_0
+    return YES;
+#else
+    return NO;
+#endif
 }
 
 static BOOL CRHorizontalSizeClassRegular() {
     if (CRUseSizeClass()) {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+#ifdef __IPHONE_8_0
         return [UIScreen mainScreen].traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular;
 #endif
     }
