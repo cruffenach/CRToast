@@ -283,6 +283,10 @@ static BOOL                          kCRCaptureDefaultWindowDefault         = YE
 
 static NSDictionary *                kCRToastKeyClassMap                    = nil;
 
+@interface CRToast ()
+@property (nonatomic, readonly) BOOL snapshotWindow;
+@end
+
 @implementation CRToast
 
 + (void)initialize {
@@ -438,7 +442,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (UIView*)statusBarView {
     UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    if ([_options[kCRToastCaptureDefaultWindowKey] boolValue]) {
+    if (self.snapshotWindow) {
         [statusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
     }
     statusBarView.clipsToBounds = YES;
@@ -686,6 +690,10 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (BOOL)autorotate {
     return (_options[kCRToastAutorotateKey] ? [_options[kCRToastAutorotateKey] boolValue] : kCRAutoRotateDefault);
+}
+
+- (BOOL)snapshotWindow {
+    return (_options[kCRToastCaptureDefaultWindowKey] ? [_options[kCRToastCaptureDefaultWindowKey] boolValue] : kCRCaptureDefaultWindowDefault);
 }
 
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
