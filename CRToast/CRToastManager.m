@@ -69,6 +69,10 @@ typedef void (^CRToastAnimationStepBlock)(void);
     [[self manager] dismissAllNotifications:animated];
 }
 
++ (void)dismissAllNotificationsWithIdentifier:(NSString *)identifer animated:(BOOL)animated {
+    [[self manager] dismissAllNotificationsWithIdentifier:identifer animated:animated];
+}
+
 + (NSArray *)notificationIdentifiersInQueue {
     return [[self manager] notificationIdentifiersInQueue];
 }
@@ -231,6 +235,24 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     [self.notifications removeAllObjects];
 }
 
+- (void)dismissAllNotificationsWithIdentifier:(NSString *)identifer animated:(BOOL)animated {
+    if (_notifications.count == 0) { return; }
+    NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
+    
+    __block BOOL callDismiss = NO;
+    [self.notifications enumerateObjectsUsingBlock:^(CRToast *toast, NSUInteger idx, BOOL *stop) {
+        NSString *toastIdentifier = toast.options[kCRToastIdentifierKey];
+        if (toastIdentifier && [toastIdentifier isEqualToString:identifer]) {
+            if (idx == 0) { callDismiss = YES; }
+            else {
+                [indexes addIndex:idx];
+            }
+        }
+    }];
+    [self.notifications removeObjectsAtIndexes:indexes];
+    if (callDismiss) { [self dismissNotification:animated]; }
+}
+
 - (void)addNotification:(CRToast*)notification {
     BOOL showingNotification = self.showingNotification;
     [_notifications addObject:notification];
@@ -286,7 +308,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     notification.state = CRToastStateEntering;
     
-    [self showNotification:notification inwardAnimationBlock:inwardAnimationsBlock inwardCompletionAnimationBlock:inwardAnimationsCompletionBlock];
+    [self showNotification:notification notificationView:notificationView statusBarView:statusBarView inwardAnimationBlock:inwardAnimationsBlock inwardCompletionAnimationBlock:inwardAnimationsCompletionBlock];
     
     if (notification.text.length > 0 || notification.subtitleText.length > 0) {
         // Synchronous notifications (say, tapping a button that presents a toast) cause VoiceOver to read the button immediately, which interupts the toast. A short delay (not the best solution :/) allows the toast to interupt the button.
@@ -297,6 +319,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 }
 
 - (void)showNotification:(CRToast *)notification
+        notificationView:(UIView *)notificationView
+            statusBarView:(UIView *)statusBarView
      inwardAnimationBlock:(CRToastAnimationStepBlock)inwardAnimationsBlock
 inwardCompletionAnimationBlock:(CRToastAnimationCompletionBlock)inwardAnimationsCompletionBlock {
     
@@ -316,12 +340,9 @@ inwardCompletionAnimationBlock:(CRToastAnimationCompletionBlock)inwardAnimations
                              completion:inwardAnimationsCompletionBlock];
         } break;
         case CRToastAnimationTypeGravity: {
-            UIView *notificationView = notification.notificationView;
-            UIView *statusBarView = notification.statusBarView;
-            
             [notification initiateAnimator:_notificationWindow.rootViewController.view];
             [notification.animator removeAllBehaviors];
-            UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
+            UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[notificationView, statusBarView]];
             gravity.gravityDirection = notification.inGravityDirection;
             gravity.magnitude = notification.animationGravityMagnitude;
             NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
