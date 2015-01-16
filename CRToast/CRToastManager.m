@@ -308,7 +308,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     notification.state = CRToastStateEntering;
     
-    [self showNotification:notification inwardAnimationBlock:inwardAnimationsBlock inwardCompletionAnimationBlock:inwardAnimationsCompletionBlock];
+    [self showNotification:notification notificationView:notificationView statusBarView:statusBarView inwardAnimationBlock:inwardAnimationsBlock inwardCompletionAnimationBlock:inwardAnimationsCompletionBlock];
     
     if (notification.text.length > 0 || notification.subtitleText.length > 0) {
         // Synchronous notifications (say, tapping a button that presents a toast) cause VoiceOver to read the button immediately, which interupts the toast. A short delay (not the best solution :/) allows the toast to interupt the button.
@@ -319,6 +319,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
 }
 
 - (void)showNotification:(CRToast *)notification
+        notificationView:(UIView *)notificationView
+            statusBarView:(UIView *)statusBarView
      inwardAnimationBlock:(CRToastAnimationStepBlock)inwardAnimationsBlock
 inwardCompletionAnimationBlock:(CRToastAnimationCompletionBlock)inwardAnimationsCompletionBlock {
     
@@ -338,12 +340,9 @@ inwardCompletionAnimationBlock:(CRToastAnimationCompletionBlock)inwardAnimations
                              completion:inwardAnimationsCompletionBlock];
         } break;
         case CRToastAnimationTypeGravity: {
-            UIView *notificationView = notification.notificationView;
-            UIView *statusBarView = notification.statusBarView;
-            
             [notification initiateAnimator:_notificationWindow.rootViewController.view];
             [notification.animator removeAllBehaviors];
-            UIGravityBehavior *gravity = [[UIGravityBehavior alloc]initWithItems:@[notificationView, statusBarView]];
+            UIGravityBehavior *gravity = [[UIGravityBehavior alloc] initWithItems:@[notificationView, statusBarView]];
             gravity.gravityDirection = notification.inGravityDirection;
             gravity.magnitude = notification.animationGravityMagnitude;
             NSMutableArray *collisionItems = [@[notificationView] mutableCopy];
