@@ -285,6 +285,8 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 @interface CRToast ()
 @property (nonatomic, readonly) BOOL snapshotWindow;
+@property (strong, nonatomic) CRToastView *privateNotificationView;
+@property (strong, nonatomic) UIView *privateStatusBarView;
 @end
 
 @implementation CRToast
@@ -426,10 +428,16 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 #pragma mark - Notification View Helpers
 
 - (UIView*)notificationView {
-    CGSize size = CRNotificationViewSize(self.notificationType, self.preferredHeight);
-    CRToastView *notificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-    notificationView.toast = self;
-    return notificationView;
+    return self.privateNotificationView;
+}
+
+- (UIView *)privateNotificationView {
+    if (!_privateNotificationView) {
+        CGSize size = CRNotificationViewSize(self.notificationType, self.preferredHeight);
+        _privateNotificationView = [[CRToastView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+        _privateNotificationView.toast = self;
+    }
+    return _privateNotificationView;
 }
 
 - (CGRect)notificationViewAnimationFrame1 {
@@ -441,12 +449,18 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (UIView*)statusBarView {
-    UIView *statusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
-    if (self.snapshotWindow) {
-        [statusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+    return self.privateStatusBarView;
+}
+
+- (UIView *)privateStatusBarView {
+    if (!_privateStatusBarView) {
+        _privateStatusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
+        if (self.snapshotWindow) {
+            [_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+        }
+        _privateStatusBarView.clipsToBounds = YES;
     }
-    statusBarView.clipsToBounds = YES;
-    return statusBarView;
+    return _privateStatusBarView;
 }
 
 - (CGRect)statusBarViewAnimationFrame1 {
