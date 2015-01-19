@@ -19,15 +19,20 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segToDirection;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *inAnimationTypeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *outAnimationTypeSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *imageAlignmentSegmentedControl;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *activityIndicatorAlignmentSegementControl;
 
 @property (weak, nonatomic) IBOutlet UISlider *sliderDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
 
+
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *showActivityIndicatorSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideUnderSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *dismissibleWithTapSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *forceUserInteractionSwitch;
 
 @property (weak, nonatomic) IBOutlet UISwitch *statusBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *navigationBarSwitch;
@@ -129,6 +134,9 @@
                                     NSLog(@"Completed");
                                 }];
 }
+- (IBAction)btnPrintIdentifiersPressed:(UIButton *)sender {
+    NSLog(@"%@", [CRToastManager notificationIdentifiersInQueue]);
+}
 
 - (IBAction)btnDismissNotificationPressed:(UIButton *)sender {
     [CRToastManager dismissNotification:YES];
@@ -164,6 +172,19 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
            CRToastAnimationTypeGravity;
 }
 
+CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmentedControl *segmentedControl ) {
+    CRToastAccessoryViewAlignment alignment;
+    
+    switch (segmentedControl.selectedSegmentIndex) {
+        case 0: alignment = CRToastAccessoryViewAlignmentLeft; break;
+        case 1: alignment = CRToastAccessoryViewAlignmentCenter; break;
+        case 2: alignment = CRToastAccessoryViewAlignmentRight; break;
+        default: alignment = CRToastAccessoryViewAlignmentLeft; break;
+    }
+    
+    return alignment;
+}
+
 - (NSDictionary*)options {
     NSMutableDictionary *options = [@{kCRToastNotificationTypeKey               : self.coverNavBarSwitch.on ? @(CRToastTypeNavigationBar) : @(CRToastTypeStatusBar),
                                       kCRToastNotificationPresentationTypeKey   : self.slideOverSwitch.on ? @(CRToastPresentationTypeCover) : @(CRToastPresentationTypePush),
@@ -177,6 +198,20 @@ CRToastAnimationType CRToastAnimationTypeFromSegmentedControl(UISegmentedControl
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+        options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
+    }
+    
+    if (self.showActivityIndicatorSwitch.on) {
+        options[kCRToastShowActivityIndicatorKey] = @YES;
+        options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.activityIndicatorAlignmentSegementControl));
+    }
+    
+    if (self.forceUserInteractionSwitch.on) {
+        options[kCRToastForceUserInteractionKey] = @YES;
+    }
+    
+    if (![self.txtNotificationMessage.text isEqualToString:@""]) {
+        options[kCRToastIdentifierKey] = self.txtNotificationMessage.text;
     }
     
     if (![self.txtSubtitleMessage.text isEqualToString:@""]) {
