@@ -15,7 +15,7 @@
  */
 static inline BOOL CRFrameAutoAdjustedForOrientation() {
 #ifdef __IPHONE_8_0
-    return YES;
+    return [[UIScreen mainScreen] respondsToSelector:@selector(traitCollection)];
 #else
     return NO;
 #endif
@@ -27,7 +27,7 @@ static inline BOOL CRFrameAutoAdjustedForOrientation() {
  */
 static inline BOOL CRUseSizeClass() {
 #ifdef __IPHONE_8_0
-    return YES;
+    return [[UIScreen mainScreen] respondsToSelector:@selector(traitCollection)];
 #else
     return NO;
 #endif
