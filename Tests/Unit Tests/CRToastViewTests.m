@@ -110,7 +110,7 @@ CRToast * __TestToast(void) {
     toast.options = options;
     self.view.toast = toast;
     
-    CGPoint assumedCenter = CGPointMake(100, 50);
+    CGPoint assumedCenter = self.view.center;
     
     [self.view layoutSubviews];
     
