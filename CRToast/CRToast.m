@@ -682,13 +682,13 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastActivityIndicatorAlignmentKey] ? [_options[kCRToastActivityIndicatorAlignmentKey] integerValue] : kCRActivityIndicatorAlignmentDefault;
 }
 
-- (NSInteger)maxNumberOfLines {
+- (NSInteger)textMaxNumberOfLines {
     return _options[kCRToastTextMaxNumberOfLinesKey] ?
     [_options[kCRToastTextMaxNumberOfLinesKey] integerValue] :
     kCRTextMaxNumberOfLinesDefault;
 }
 
-- (NSInteger)subtitleMaxNumberOfLines {
+- (NSInteger)subtitleTextMaxNumberOfLines {
     return _options[kCRToastSubtitleTextMaxNumberOfLinesKey] ?
     [_options[kCRToastSubtitleTextMaxNumberOfLinesKey] integerValue] :
     kCRSubtitleTextMaxNumberOfLinesDefault;
