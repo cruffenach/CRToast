@@ -17,6 +17,7 @@
 		2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
 		2D8F2E1118CED50A0077A7F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */; };
 		2D8F2E1318CED50A0077A7F6 /* CRToastTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */; };
+		467291561ABBF1DD0035359D /* libPods-CRToastDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */; };
 		46DF1C161ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 46DF1C151ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig */; };
 		46DF1C181ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 46DF1C171ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig */; };
 		547BC2421A4FCA42004C45FE /* CRToastViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547BC2411A4FCA42004C45FE /* CRToastViewTests.m */; };
@@ -31,9 +32,7 @@
 		5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8C18367CA3003333F8 /* MainViewController.m */; };
 		5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8D18367CA3003333F8 /* MainViewController.xib */; };
 		AAF56E40E966478D95F1083B /* libPods-Acceptance Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */; };
-		D83A0D57216959730067800C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB1C17FDA2A1B9E6D98192B /* libPods.a */; };
 		DDE8941E4BE33746BB148B08 /* libPods-CRToastTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 020AEF901F7DE5ED0CEAC293 /* libPods-CRToastTests.a */; };
-		E5BDD93D16860D0B51550EFE /* libPods-CRToastDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F4F7E1A1743A67A1851677 /* libPods-CRToastDemo.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +71,7 @@
 		462283BD1ABBB80A00D89604 /* CRToast.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CRToast.podspec; sourceTree = "<group>"; };
 		462283BE1ABBB80A00D89604 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		462283BF1ABBB80A00D89604 /* Versions */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Versions; sourceTree = "<group>"; };
+		467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CRToastDemo.a"; path = "Pods/../build/Debug-iphoneos/libPods-CRToastDemo.a"; sourceTree = "<group>"; };
 		46DF1C151ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-CRToastDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CRToastDemo/Pods-CRToastDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		46DF1C171ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-CRToastDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CRToastDemo/Pods-CRToastDemo.release.xcconfig"; sourceTree = "<group>"; };
 		547BC2411A4FCA42004C45FE /* CRToastViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewTests.m; sourceTree = "<group>"; };
@@ -126,11 +126,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				467291561ABBF1DD0035359D /* libPods-CRToastDemo.a in Frameworks */,
 				5E2FFB5918367C01003333F8 /* CoreGraphics.framework in Frameworks */,
 				5E2FFB5B18367C01003333F8 /* UIKit.framework in Frameworks */,
 				5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */,
-				D83A0D57216959730067800C /* libPods.a in Frameworks */,
-				E5BDD93D16860D0B51550EFE /* libPods-CRToastDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +224,7 @@
 		5E2FFB5518367C01003333F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */,
 				5E2FFB5618367C01003333F8 /* Foundation.framework */,
 				5E2FFB5818367C01003333F8 /* CoreGraphics.framework */,
 				5E2FFB5A18367C01003333F8 /* UIKit.framework */,
@@ -755,6 +755,10 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -778,6 +782,10 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
