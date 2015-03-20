@@ -153,6 +153,15 @@ extern NSString *const kCRToastNotificationPresentationTypeKey;
 extern NSString *const kCRToastUnderStatusBarKey;
 
 /**
+ Keep toast within navigation bar border.
+ The standard navigation bar has a thin border on the bottom. Animations are
+ improved when the toast is within the border. Customized bars without the border
+ should have this set to NO.
+ Expects type `BOOL`. Defaults to YES.
+*/
+extern NSString *const kCRToastKeepNavigationBarBorder;
+
+/**
  The animation in type for the notification. Expects type `CRToastAnimationType`.
  */
 extern NSString *const kCRToastAnimationInTypeKey;
@@ -382,6 +391,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, assign) CGFloat preferredHeight;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
+@property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
 
 @property (nonatomic, readonly) CRToastAnimationType inAnimationType;
 @property (nonatomic, readonly) CRToastAnimationType outAnimationType;

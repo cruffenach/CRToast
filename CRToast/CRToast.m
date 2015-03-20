@@ -179,6 +179,7 @@ NSString *const kCRToastNotificationPreferredHeightKey      = @"kCRToastNotifica
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
+NSString *const kCRToastKeepNavigationBarBorder             = @"kCRToastKeepNavigationBarBorder";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
@@ -536,6 +537,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastUnderStatusBarKey] ?
     [self.options[kCRToastUnderStatusBarKey] boolValue] :
     kCRDisplayUnderStatusBarDefault;
+}
+
+- (BOOL)shouldKeepNavigationBarBorder {
+    return _options[kCRToastKeepNavigationBarBorder] ?
+    [_options[kCRToastKeepNavigationBarBorder] boolValue] :
+    YES;
 }
 
 - (CRToastAnimationType)inAnimationType {
