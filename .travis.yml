@@ -3,6 +3,7 @@ before_install:
   - brew update
   - brew reinstall xctool
   - gem update cocoapods
+podfile: Example/Podfile
 xcode_workspace: Example/CRToastDemo.xcworkspace
 xcode_scheme: CRToastTests
 xcode_sdk:
