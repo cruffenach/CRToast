@@ -426,7 +426,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 #pragma mark - Notification View Helpers
 
-- (UIView*)notificationView {
+- (UIView *)notificationView {
     return self.privateNotificationView;
 }
 
@@ -447,7 +447,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return CRNotificationViewFrame(self.notificationType, self.outAnimationDirection, self.preferredHeight);
 }
 
-- (UIView*)statusBarView {
+- (UIView *)statusBarView {
     return self.privateStatusBarView;
 }
 
@@ -494,7 +494,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 #pragma mark - Overrides
 
-- (NSArray*)gestureRecognizersForInteractionResponder:(NSArray*)interactionResponders {
+- (NSArray *)gestureRecognizersForInteractionResponder:(NSArray*)interactionResponders {
     NSMutableArray *gestureRecognizers = [@[] mutableCopy];
     for (CRToastInteractionResponder *interactionResponder in [kCRInteractionResponders arrayByAddingObjectsFromArray:interactionResponders]) {
         if (CRToastInteractionResponderIsGenertic(interactionResponder.interactionType)) {
@@ -508,7 +508,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return [NSArray arrayWithArray:gestureRecognizers];
 }
 
-- (NSArray*)gestureRecognizers {
+- (NSArray *)gestureRecognizers {
     return _options[kCRToastInteractionRespondersKey] ?
     _gestureRecognizers ?: [self gestureRecognizersForInteractionResponder:_options[kCRToastInteractionRespondersKey]] :
     [self gestureRecognizersForInteractionResponder:kCRInteractionResponders];
@@ -658,7 +658,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastBackgroundViewKey];
 }
 
-- (UIImage*)image {
+- (UIImage *)image {
     return _options[kCRToastImageKey] ?: kCRImageDefault;
 }
 
@@ -673,6 +673,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 - (BOOL)showActivityIndicator {
     return _options[kCRToastShowActivityIndicatorKey] ? [_options[kCRToastShowActivityIndicatorKey] boolValue] : kCRShowActivityIndicatorDefault;
 }
+
 - (UIActivityIndicatorViewStyle)activityIndicatorViewStyle {
     return _options[kCRToastActivityIndicatorViewStyleKey] ? [_options[kCRToastActivityIndicatorViewStyleKey] integerValue] : kCRActivityIndicatorViewStyleDefault;
 }

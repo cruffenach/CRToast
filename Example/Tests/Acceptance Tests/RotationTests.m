@@ -1,6 +1,6 @@
 #import "RotationTests.h"
 #import <KIF/KIFSystemTestActor.h>
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
 
 @implementation RotationTests
 

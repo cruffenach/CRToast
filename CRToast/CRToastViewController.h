@@ -11,7 +11,6 @@
 @property (nonatomic, assign) BOOL autorotate;
 @property (nonatomic, weak) CRToast *notification;
 @property (nonatomic, weak) UIView *toastView;
-
-- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle;
+@property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
 
 @end

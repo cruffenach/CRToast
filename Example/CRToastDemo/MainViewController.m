@@ -4,7 +4,7 @@
 //
 
 #import "MainViewController.h"
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
 
 @interface MainViewController ()<UITextFieldDelegate>
 

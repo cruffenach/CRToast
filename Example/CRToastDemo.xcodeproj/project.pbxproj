@@ -17,13 +17,8 @@
 		2D8F2E0B18CED50A0077A7F6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
 		2D8F2E1118CED50A0077A7F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */; };
 		2D8F2E1318CED50A0077A7F6 /* CRToastTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */; };
-		5419E0221A44AE0B004C073B /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5419E0211A44AE0B004C073B /* CRToastView.m */; };
-		5419E0251A44AE21004C073B /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5419E0241A44AE21004C073B /* CRToastWindow.m */; };
-		5419E0281A44AE33004C073B /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5419E0271A44AE33004C073B /* CRToastViewController.m */; };
-		5419E02B1A44AE5A004C073B /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5419E02A1A44AE5A004C073B /* CRToastManager.m */; };
 		547BC2421A4FCA42004C45FE /* CRToastViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547BC2411A4FCA42004C45FE /* CRToastViewTests.m */; };
 		547BC2441A4FCA54004C45FE /* CRToastManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547BC2431A4FCA54004C45FE /* CRToastManagerTests.m */; };
-		5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0D045D1838AE0D00CBFC35 /* CRToast.m */; };
 		5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
 		5E2FFB5918367C01003333F8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5818367C01003333F8 /* CoreGraphics.framework */; };
 		5E2FFB5B18367C01003333F8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5A18367C01003333F8 /* UIKit.framework */; };
@@ -34,6 +29,7 @@
 		5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8C18367CA3003333F8 /* MainViewController.m */; };
 		5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8D18367CA3003333F8 /* MainViewController.xib */; };
 		AAF56E40E966478D95F1083B /* libPods-Acceptance Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */; };
+		D83A0D57216959730067800C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB1C17FDA2A1B9E6D98192B /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,20 +61,14 @@
 		2D8F2E1018CED50A0077A7F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRToastTests.m; sourceTree = "<group>"; };
 		2D8F2E1418CED50A0077A7F6 /* CRToastTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRToastTests-Prefix.pch"; sourceTree = "<group>"; };
-		5419E0201A44AE0B004C073B /* CRToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastView.h; sourceTree = "<group>"; };
-		5419E0211A44AE0B004C073B /* CRToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastView.m; sourceTree = "<group>"; };
-		5419E0231A44AE21004C073B /* CRToastWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastWindow.h; sourceTree = "<group>"; };
-		5419E0241A44AE21004C073B /* CRToastWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastWindow.m; sourceTree = "<group>"; };
-		5419E0261A44AE33004C073B /* CRToastViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastViewController.h; sourceTree = "<group>"; };
-		5419E0271A44AE33004C073B /* CRToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewController.m; sourceTree = "<group>"; };
-		5419E0291A44AE5A004C073B /* CRToastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastManager.h; sourceTree = "<group>"; };
-		5419E02A1A44AE5A004C073B /* CRToastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastManager.m; sourceTree = "<group>"; };
+		462283BB1ABBB80A00D89604 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		462283BC1ABBB80A00D89604 /* CONTRIBUTING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CONTRIBUTING.md; sourceTree = "<group>"; };
+		462283BD1ABBB80A00D89604 /* CRToast.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CRToast.podspec; sourceTree = "<group>"; };
+		462283BE1ABBB80A00D89604 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		462283BF1ABBB80A00D89604 /* Versions */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Versions; sourceTree = "<group>"; };
 		547BC2411A4FCA42004C45FE /* CRToastViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewTests.m; sourceTree = "<group>"; };
 		547BC2431A4FCA54004C45FE /* CRToastManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastManagerTests.m; sourceTree = "<group>"; };
-		54893C321A44D803005653C6 /* CRToastLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastLayoutHelpers.h; sourceTree = "<group>"; };
 		56E21D16D0A5B551EC7F898B /* Pods-Acceptance Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Acceptance Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Acceptance Tests/Pods-Acceptance Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		5E0D045C1838AE0D00CBFC35 /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CRToast.h; path = CRToast/CRToast.h; sourceTree = SOURCE_ROOT; };
-		5E0D045D1838AE0D00CBFC35 /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CRToast.m; path = CRToast/CRToast.m; sourceTree = SOURCE_ROOT; };
 		5E2FFB5318367C01003333F8 /* CRToastDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRToastDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB5618367C01003333F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E2FFB5818367C01003333F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -94,7 +84,10 @@
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		5E2FFB8D18367CA3003333F8 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		6EB1C17FDA2A1B9E6D98192B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		79DA33C1BA40E2B7D0BAEEDB /* Pods-Acceptance Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Acceptance Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Acceptance Tests/Pods-Acceptance Tests.release.xcconfig"; sourceTree = "<group>"; };
+		85F9B6A6B83F20F30949FBCC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A5C34B8CE5D5385C9E763484 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Acceptance Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -127,6 +120,7 @@
 				5E2FFB5918367C01003333F8 /* CoreGraphics.framework in Frameworks */,
 				5E2FFB5B18367C01003333F8 /* UIKit.framework in Frameworks */,
 				5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */,
+				D83A0D57216959730067800C /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,14 +177,27 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		462283BA1ABBA77000D89604 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				462283BB1ABBB80A00D89604 /* README.md */,
+				462283BC1ABBB80A00D89604 /* CONTRIBUTING.md */,
+				462283BD1ABBB80A00D89604 /* CRToast.podspec */,
+				462283BE1ABBB80A00D89604 /* LICENSE */,
+				462283BF1ABBB80A00D89604 /* Versions */,
+			);
+			name = "Podspec Metadata";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		5E2FFB4A18367C01003333F8 = {
 			isa = PBXGroup;
 			children = (
-				5E2FFB8518367C1B003333F8 /* CRToast */,
 				5E2FFB5C18367C01003333F8 /* CRToastDemo */,
 				2D10DF49192888F40087C18A /* Tests */,
 				5E2FFB5518367C01003333F8 /* Frameworks */,
 				5E2FFB5418367C01003333F8 /* Products */,
+				462283BA1ABBA77000D89604 /* Podspec Metadata */,
 				E4E4AA5EC795FD2639745FD3 /* Pods */,
 			);
 			sourceTree = "<group>";
@@ -213,6 +220,7 @@
 				5E2FFB5A18367C01003333F8 /* UIKit.framework */,
 				5E2FFB6F18367C01003333F8 /* XCTest.framework */,
 				BB3C952144CC436CA47D11A2 /* libPods-Acceptance Tests.a */,
+				6EB1C17FDA2A1B9E6D98192B /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -222,7 +230,9 @@
 			children = (
 				5E2FFB6518367C01003333F8 /* AppDelegate.h */,
 				5E2FFB6618367C01003333F8 /* AppDelegate.m */,
-				5E2FFB8918367C75003333F8 /* View Controllers */,
+				5E2FFB8B18367CA3003333F8 /* MainViewController.h */,
+				5E2FFB8C18367CA3003333F8 /* MainViewController.m */,
+				5E2FFB8D18367CA3003333F8 /* MainViewController.xib */,
 				5E2FFB6818367C01003333F8 /* Images.xcassets */,
 				5E2FFB5D18367C01003333F8 /* Supporting Files */,
 			);
@@ -240,47 +250,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5E2FFB8518367C1B003333F8 /* CRToast */ = {
-			isa = PBXGroup;
-			children = (
-				5E0D045C1838AE0D00CBFC35 /* CRToast.h */,
-				5E0D045D1838AE0D00CBFC35 /* CRToast.m */,
-				5419E0291A44AE5A004C073B /* CRToastManager.h */,
-				5419E02A1A44AE5A004C073B /* CRToastManager.m */,
-				5419E0231A44AE21004C073B /* CRToastWindow.h */,
-				5419E0241A44AE21004C073B /* CRToastWindow.m */,
-				5419E0261A44AE33004C073B /* CRToastViewController.h */,
-				5419E0271A44AE33004C073B /* CRToastViewController.m */,
-				5419E0201A44AE0B004C073B /* CRToastView.h */,
-				5419E0211A44AE0B004C073B /* CRToastView.m */,
-				54893C321A44D803005653C6 /* CRToastLayoutHelpers.h */,
-			);
-			path = CRToast;
-			sourceTree = "<group>";
-		};
-		5E2FFB8918367C75003333F8 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				5E2FFB8A18367C85003333F8 /* MainViewController */,
-			);
-			name = "View Controllers";
-			sourceTree = "<group>";
-		};
-		5E2FFB8A18367C85003333F8 /* MainViewController */ = {
-			isa = PBXGroup;
-			children = (
-				5E2FFB8B18367CA3003333F8 /* MainViewController.h */,
-				5E2FFB8C18367CA3003333F8 /* MainViewController.m */,
-				5E2FFB8D18367CA3003333F8 /* MainViewController.xib */,
-			);
-			name = MainViewController;
-			sourceTree = "<group>";
-		};
 		E4E4AA5EC795FD2639745FD3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				56E21D16D0A5B551EC7F898B /* Pods-Acceptance Tests.debug.xcconfig */,
 				79DA33C1BA40E2B7D0BAEEDB /* Pods-Acceptance Tests.release.xcconfig */,
+				85F9B6A6B83F20F30949FBCC /* Pods.debug.xcconfig */,
+				A5C34B8CE5D5385C9E763484 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -330,9 +306,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5E2FFB7F18367C01003333F8 /* Build configuration list for PBXNativeTarget "CRToastDemo" */;
 			buildPhases = (
+				F505BC1637948CA84D3ED336 /* Check Pods Manifest.lock */,
 				5E2FFB4F18367C01003333F8 /* Sources */,
 				5E2FFB5018367C01003333F8 /* Frameworks */,
 				5E2FFB5118367C01003333F8 /* Resources */,
+				3282961262C0D0DB5342F314 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -412,6 +390,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3282961262C0D0DB5342F314 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		43ED98BCD1F943D3B72E14E0 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,6 +421,21 @@
 			showEnvVarsInLog = 0;
 		};
 		84095A9B6D2D472DB5FBB6E1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F505BC1637948CA84D3ED336 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -467,13 +475,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5419E0221A44AE0B004C073B /* CRToastView.m in Sources */,
-				5E0D045E1838AE0D00CBFC35 /* CRToast.m in Sources */,
 				5E2FFB6718367C01003333F8 /* AppDelegate.m in Sources */,
 				5E2FFB6318367C01003333F8 /* main.m in Sources */,
-				5419E0281A44AE33004C073B /* CRToastViewController.m in Sources */,
-				5419E0251A44AE21004C073B /* CRToastWindow.m in Sources */,
-				5419E02B1A44AE5A004C073B /* CRToastManager.m in Sources */,
 				5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,32 +691,46 @@
 		};
 		5E2FFB8018367C01003333F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 85F9B6A6B83F20F30949FBCC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
+				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		5E2FFB8118367C01003333F8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5C34B8CE5D5385C9E763484 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_OBJC_EXPLICIT_OWNERSHIP_TYPE = YES;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
+				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -209,7 +209,3 @@ static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
     [[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:YES] :
     [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
 }
-#pragma clang diagnostic pop
-
-@interface CRToastLayoutHelpers : NSObject
-@end

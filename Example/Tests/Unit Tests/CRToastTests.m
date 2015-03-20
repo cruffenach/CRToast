@@ -4,7 +4,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
 
 @interface CRToastTests : XCTestCase
 

@@ -1,0 +1,7 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'CRToast', :path => "../"
+
+target 'Acceptance Tests', :exclusive => true do
+  pod 'KIF', '~> 3.0'
+end

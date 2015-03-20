@@ -5,8 +5,8 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "CRToastManager.h"
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
+#import <CRToast/CRToastManager.h>
 
 @interface CRToastManagerTests : XCTestCase
 @end

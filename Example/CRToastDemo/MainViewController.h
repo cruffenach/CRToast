@@ -4,7 +4,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CRToast.h"
 
 @interface MainViewController : UIViewController
 
