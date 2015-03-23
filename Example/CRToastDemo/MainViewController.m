@@ -107,7 +107,7 @@
 }
 
 - (void)updateDurationLabel {
-    self.lblDuration.text = [NSString stringWithFormat:@"%f seconds", self.sliderDuration.value];
+    self.lblDuration.text = [NSString stringWithFormat:@"%.1f seconds", self.sliderDuration.value];
 }
 
 - (IBAction)sliderDurationChanged:(UISlider *)sender {
