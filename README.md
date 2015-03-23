@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cruffenach/CRToast.svg?branch=master)](https://travis-ci.org/cruffenach/CRToast)
 [![Pod Version](http://img.shields.io/cocoapods/v/CRToast.svg?style=flat)](http://cocoadocs.org/docsets/CRToast)
+[![Coverage Status](https://coveralls.io/repos/dmiedema/CRToast/badge.svg?branch=slather)](https://coveralls.io/r/dmiedema/CRToast?branch=slather)
 
 `CRToast` is a library that allows you to easily create notifications that appear on top of or by pushing out the status bar or navigation bar. `CRToast` was originally based on [CWStatusBarNotification](https://github.com/cezarywojcik/CWStatusBarNotification).
 
