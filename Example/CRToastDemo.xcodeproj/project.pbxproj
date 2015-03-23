@@ -18,8 +18,6 @@
 		2D8F2E1118CED50A0077A7F6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2D8F2E0F18CED50A0077A7F6 /* InfoPlist.strings */; };
 		2D8F2E1318CED50A0077A7F6 /* CRToastTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8F2E1218CED50A0077A7F6 /* CRToastTests.m */; };
 		467291561ABBF1DD0035359D /* libPods-CRToastDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */; };
-		46DF1C161ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 46DF1C151ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig */; };
-		46DF1C181ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 46DF1C171ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig */; };
 		547BC2421A4FCA42004C45FE /* CRToastViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547BC2411A4FCA42004C45FE /* CRToastViewTests.m */; };
 		547BC2441A4FCA54004C45FE /* CRToastManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 547BC2431A4FCA54004C45FE /* CRToastManagerTests.m */; };
 		5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
@@ -397,11 +395,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46DF1C181ABBC90E00003563 /* Pods-CRToastDemo.release.xcconfig in Resources */,
 				5E2FFB6118367C01003333F8 /* InfoPlist.strings in Resources */,
 				5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */,
 				5E2FFB6918367C01003333F8 /* Images.xcassets in Resources */,
-				46DF1C161ABBC8DF00003563 /* Pods-CRToastDemo.debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,10 +751,6 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -782,10 +774,6 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/build/Debug-iphoneos",
-				);
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
