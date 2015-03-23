@@ -751,7 +751,7 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.inAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = 0;
-            y = (factor*CGRectGetHeight(self.notificationViewAnimationFrame1))+(push ? -4*kCRCollisionTweak : kCRCollisionTweak);
+            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*kCRCollisionTweak : kCRCollisionTweak));
             break;
         case CRToastAnimationDirectionLeft:
             x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);
@@ -766,7 +766,7 @@ static CGFloat kCRCollisionTweak = 0.5;
             y = 0;
             break;
     }
-    return (CGPoint){x, y};
+    return CGPointMake(x, y);
 }
 
 - (CGPoint)inCollisionPoint2 {
@@ -777,7 +777,7 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.inAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
-            y = (factor*CGRectGetHeight(self.notificationViewAnimationFrame1))+(push ? -4*kCRCollisionTweak : kCRCollisionTweak);
+            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*kCRCollisionTweak : kCRCollisionTweak));
             break;
         case CRToastAnimationDirectionLeft:
             x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);
@@ -792,7 +792,7 @@ static CGFloat kCRCollisionTweak = 0.5;
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
     }
-    return (CGPoint){x, y};
+    return CGPointMake(x, y);
 }
 
 - (CGPoint)outCollisionPoint1 {
@@ -816,7 +816,7 @@ static CGFloat kCRCollisionTweak = 0.5;
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
     }
-    return (CGPoint){x, y};
+    return CGPointMake(x, y);
 }
 
 - (CGPoint)outCollisionPoint2 {
@@ -840,7 +840,7 @@ static CGFloat kCRCollisionTweak = 0.5;
             y = 0;
             break;
     }
-    return (CGPoint){x, y};
+    return CGPointMake(x, y);
 }
 
 - (void)warnAboutSensibility {
