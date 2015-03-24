@@ -1,13 +1,10 @@
 //
-//  CRToastTests.m
-//  CRToastTests
-//
-//  Created by Ashton Williams on 11/03/2014.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
 
 @interface CRToastTests : XCTestCase
 

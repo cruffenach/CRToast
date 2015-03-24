@@ -1,9 +1,6 @@
 //
-//  CRToastLayoutHelpers.h
-//  CRToastDemo
-//
-//  Created by Daniel on 12/19/14.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -212,7 +209,3 @@ static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
     [[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:YES] :
     [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
 }
-#pragma clang diagnostic pop
-
-@interface CRToastLayoutHelpers : NSObject
-@end

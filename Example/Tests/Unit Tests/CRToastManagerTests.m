@@ -1,15 +1,12 @@
 //
-//  CRToastManagerTests.m
-//  CRToastDemo
-//
-//  Created by Daniel on 12/27/14.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "CRToastManager.h"
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
+#import <CRToast/CRToastManager.h>
 
 @interface CRToastManagerTests : XCTestCase
 @end

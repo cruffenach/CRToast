@@ -1,9 +1,6 @@
 //
-//  CRToastView.m
-//  CRToastDemo
-//
-//  Created by Daniel on 12/19/14.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import "CRToastView.h"
@@ -18,7 +15,7 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 // UIApplication's statusBarFrame will return a height for the status bar that includes
 // a 5 pixel vertical padding. This frame height is inappropriate to use when centering content
-// vertically under the status bar. This adjustment is uesd to correct the frame height when centering
+// vertically under the status bar. This adjustment is used to correct the frame height when centering
 // content under the status bar.
 
 static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;

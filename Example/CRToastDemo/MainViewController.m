@@ -1,11 +1,10 @@
 //
-//  MainViewController.m
-//  CRNotificationDemo
-//
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import "MainViewController.h"
-#import "CRToast.h"
+#import <CRToast/CRToast.h>
 
 @interface MainViewController ()<UITextFieldDelegate>
 
@@ -108,7 +107,7 @@
 }
 
 - (void)updateDurationLabel {
-    self.lblDuration.text = [NSString stringWithFormat:@"%f seconds", self.sliderDuration.value];
+    self.lblDuration.text = [NSString stringWithFormat:@"%.1f seconds", self.sliderDuration.value];
 }
 
 - (IBAction)sliderDurationChanged:(UISlider *)sender {

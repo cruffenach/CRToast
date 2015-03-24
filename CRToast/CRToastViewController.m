@@ -1,9 +1,6 @@
 //
-//  CRToastViewController.m
-//  CRToastDemo
-//
-//  Created by Daniel on 12/19/14.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import "CRToastViewController.h"
@@ -18,12 +15,8 @@
 @end
 
 #pragma mark - CRToastViewController
-@interface CRToastViewController ()
-@end
 
 @implementation CRToastViewController
-
-UIStatusBarStyle statusBarStyle;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,21 +26,23 @@ UIStatusBarStyle statusBarStyle;
     return self;
 }
 
+- (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle {
+    _statusBarStyle = statusBarStyle;
+    [self setNeedsStatusBarAppearanceUpdate];
+}
+
+#pragma mark UIViewController
+
+- (BOOL)shouldAutorotate {
+    return _autorotate;
+}
+
 - (BOOL)prefersStatusBarHidden {
     return [UIApplication sharedApplication].statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    return statusBarStyle;
-}
-
-- (void)statusBarStyle:(UIStatusBarStyle)newStatusBarStyle {
-    statusBarStyle = newStatusBarStyle;
-    [self setNeedsStatusBarAppearanceUpdate];
-}
-
-- (BOOL)shouldAutorotate {
-    return _autorotate;
+    return self.statusBarStyle;
 }
 
 - (void)loadView {
@@ -62,6 +57,5 @@ UIStatusBarStyle statusBarStyle;
         self.toastView.frame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
     }
 }
-
 
 @end

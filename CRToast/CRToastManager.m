@@ -1,13 +1,9 @@
 //
-//  CRToastManager.m
-//  CRToastDemo
-//
-//  Created by Daniel on 12/19/14.
-//  Copyright (c) 2014 Collin Ruffenach. All rights reserved.
+//  CRToast
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import "CRToastManager.h"
-
 #import "CRToast.h"
 #import "CRToastView.h"
 #import "CRToastViewController.h"
@@ -269,11 +265,14 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     _notificationWindow.hidden = NO;
     CGSize notificationSize = CRNotificationViewSize(notification.notificationType, notification.preferredHeight);
+    if (notification.shouldKeepNavigationBarBorder) {
+        notificationSize.height -= 1.0f;
+    }
     
     CGRect containerFrame = CRGetNotificationContainerFrame(CRGetDeviceOrientation(), notificationSize);
     
     CRToastViewController *rootViewController = (CRToastViewController*)_notificationWindow.rootViewController;
-    [rootViewController statusBarStyle:notification.statusBarStyle];
+    rootViewController.statusBarStyle = notification.statusBarStyle;
     rootViewController.autorotate = notification.autorotate;
     rootViewController.notification = notification;
     

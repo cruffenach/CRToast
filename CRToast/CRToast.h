@@ -1,7 +1,6 @@
 //
 //  CRToast
-//  CRNotificationDemo
-//
+//  Copyright (c) 2014-2015 Collin Ruffenach. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -9,10 +8,10 @@
 @import UIKit;
 
 @class CRToastSwipeGestureRecognizer, CRToastTapGestureRecognizer;
+
 /**
  CRToastInteractionType defines the types of interactions that can be injected into a CRToastIneractionResponder.
  */
-
 typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
     CRToastInteractionTypeSwipeUp           = 1 << 0,
     CRToastInteractionTypeSwipeLeft         = 1 << 1,
@@ -45,7 +44,6 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the
  options for any given notification or in defaults.
  */
-
 @interface CRToastInteractionResponder : NSObject
 
 /**
@@ -56,7 +54,6 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  @param block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the
  block firing
  */
-
 + (instancetype)interactionResponderWithInteractionType:(CRToastInteractionType)interactionType
                                    automaticallyDismiss:(BOOL)automaticallyDismiss
                                                   block:(void (^)(CRToastInteractionType interactionType))block;
@@ -70,7 +67,6 @@ extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType inter
  `CRToastType` defines the height of the notification. `CRToastTypeStatusBar` covers the status bar, `CRToastTypeNavigationBar` covers the status bar
  and navigation bar
  */
-
 typedef NS_ENUM(NSInteger, CRToastType){
     CRToastTypeStatusBar,
     CRToastTypeNavigationBar,
@@ -81,7 +77,6 @@ typedef NS_ENUM(NSInteger, CRToastType){
  `CRToastPresentationType` defines whether a notification will cover the contents of the status/navigation bar or whether the content will be pushed
  out by the notification.
  */
-
 typedef NS_ENUM(NSInteger, CRToastPresentationType){
     CRToastPresentationTypeCover,
     CRToastPresentationTypePush
@@ -90,7 +85,6 @@ typedef NS_ENUM(NSInteger, CRToastPresentationType){
 /**
  `CRToastAnimationDirection` defines the direction of the notification. A direction can be specified for both notification entrance and exit.
  */
-
 typedef NS_ENUM(NSInteger, CRToastAnimationDirection) {
     CRToastAnimationDirectionTop,
     CRToastAnimationDirectionBottom,
@@ -101,7 +95,6 @@ typedef NS_ENUM(NSInteger, CRToastAnimationDirection) {
 /**
  `CRToastAnimationType` defines the timing function used for the notification presentation.
  */
-
 typedef NS_ENUM(NSInteger, CRToastAnimationType) {
     CRToastAnimationTypeLinear,
     CRToastAnimationTypeSpring,
@@ -158,6 +151,15 @@ extern NSString *const kCRToastNotificationPresentationTypeKey;
  odd. Expects type `BOOL`.
  */
 extern NSString *const kCRToastUnderStatusBarKey;
+
+/**
+ Keep toast within navigation bar border.
+ The standard navigation bar has a thin border on the bottom. Animations are
+ improved when the toast is within the border. Customized bars without the border
+ should have this set to NO.
+ Expects type `BOOL`. Defaults to YES.
+*/
+extern NSString *const kCRToastKeepNavigationBarBorderKey;
 
 /**
  The animation in type for the notification. Expects type `CRToastAnimationType`.
@@ -389,6 +391,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, assign) CGFloat preferredHeight;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
+@property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
 
 @property (nonatomic, readonly) CRToastAnimationType inAnimationType;
 @property (nonatomic, readonly) CRToastAnimationType outAnimationType;
