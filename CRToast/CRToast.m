@@ -179,7 +179,7 @@ NSString *const kCRToastNotificationPreferredHeightKey      = @"kCRToastNotifica
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
-NSString *const kCRToastKeepNavigationBarBorder             = @"kCRToastKeepNavigationBarBorder";
+NSString *const kCRToastKeepNavigationBarBorderKey          = @"kCRToastKeepNavigationBarBorder";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
@@ -234,6 +234,7 @@ static CRToastType                   kCRNotificationTypeDefault             = CR
 static CGFloat                       kCRNotificationPreferredHeightDefault  = 0;
 static CRToastPresentationType       kCRNotificationPresentationTypeDefault = CRToastPresentationTypePush;
 static BOOL                          kCRDisplayUnderStatusBarDefault        = NO;
+static BOOL                          kCRToastKeepNavigationBarBorderDefault = YES;
 static NSString *                    kCRToastIdentifer                      = nil;
 
 static CRToastAnimationType          kCRAnimationTypeDefaultIn              = CRToastAnimationTypeLinear;
@@ -306,6 +307,8 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastNotificationPreferredHeightKey      : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
                                 kCRToastUnderStatusBarKey                   : NSStringFromClass([@(kCRDisplayUnderStatusBarDefault) class]),
+                                kCRToastKeepNavigationBarBorderKey          : NSStringFromClass([@(kCRToastKeepNavigationBarBorderDefault) class]),
+                                
                                 kCRToastIdentifierKey                       : NSStringFromClass([NSString class]),
                                 
                                 kCRToastAnimationInTypeKey                  : NSStringFromClass([@(kCRAnimationTypeDefaultIn) class]),
@@ -540,9 +543,9 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (BOOL)shouldKeepNavigationBarBorder {
-    return _options[kCRToastKeepNavigationBarBorder] ?
-    [_options[kCRToastKeepNavigationBarBorder] boolValue] :
-    YES;
+    return _options[kCRToastKeepNavigationBarBorderKey] ?
+    [_options[kCRToastKeepNavigationBarBorderKey] boolValue] :
+    kCRToastKeepNavigationBarBorderDefault;
 }
 
 - (CRToastAnimationType)inAnimationType {

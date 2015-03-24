@@ -159,7 +159,7 @@ extern NSString *const kCRToastUnderStatusBarKey;
  should have this set to NO.
  Expects type `BOOL`. Defaults to YES.
 */
-extern NSString *const kCRToastKeepNavigationBarBorder;
+extern NSString *const kCRToastKeepNavigationBarBorderKey;
 
 /**
  The animation in type for the notification. Expects type `CRToastAnimationType`.
