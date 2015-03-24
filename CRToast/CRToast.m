@@ -179,7 +179,7 @@ NSString *const kCRToastNotificationPreferredHeightKey      = @"kCRToastNotifica
 NSString *const kCRToastNotificationPresentationTypeKey     = @"kCRToastNotificationPresentationTypeKey";
 
 NSString *const kCRToastUnderStatusBarKey                   = @"kCRToastUnderStatusBarKey";
-NSString *const kCRToastKeepNavigationBarBorderKey          = @"kCRToastKeepNavigationBarBorder";
+NSString *const kCRToastKeepNavigationBarBorderKey          = @"kCRToastKeepNavigationBarBorderKey";
 
 NSString *const kCRToastAnimationInTypeKey                  = @"kCRToastAnimationInTypeKey";
 NSString *const kCRToastAnimationOutTypeKey                 = @"kCRToastAnimationOutTypeKey";
