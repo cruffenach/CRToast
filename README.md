@@ -81,18 +81,18 @@ Title and Subtitle text with:
 
 ### Touch Interactions
 
-`CRToast` allows for any notification to respond to different types of touch interactions (tap, swipe). Interaction responders can be set as defaults or on a per notification basis. 
+`CRToast` allows for any notification to respond to different types of touch interactions (tap, swipe). Interaction responders can be set as defaults or on a per notification basis.
 The types of interactions you can set up to respond to are:
 
 ```Obj-C
-CRToastInteractionTypeSwipeUp          
-CRToastInteractionTypeSwipeLeft        
-CRToastInteractionTypeSwipeDown        
-CRToastInteractionTypeSwipeRight       
-CRToastInteractionTypeTapOnce          
-CRToastInteractionTypeTapTwice         
-CRToastInteractionTypeTwoFingerTapOnce 
-CRToastInteractionTypeTwoFingerTapTwice              
+CRToastInteractionTypeSwipeUp
+CRToastInteractionTypeSwipeLeft
+CRToastInteractionTypeSwipeDown
+CRToastInteractionTypeSwipeRight
+CRToastInteractionTypeTapOnce
+CRToastInteractionTypeTapTwice
+CRToastInteractionTypeTwoFingerTapOnce
+CRToastInteractionTypeTwoFingerTapTwice
 ```
 
 There are also wild card interaction types which cover a range of interactions

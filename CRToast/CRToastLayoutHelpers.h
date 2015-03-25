@@ -57,12 +57,12 @@ static UIInterfaceOrientation CRGetDeviceOrientation() {
 /// Get the height of the status bar for given orientation.
 static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    
+
     if (CRFrameAutoAdjustedForOrientation()) {
         return CGRectGetHeight(statusBarFrame);
     }
-    
-    return (UIDeviceOrientationIsLandscape(orientation)) ?
+
+    return (UIInterfaceOrientationIsLandscape(orientation)) ?
     CGRectGetWidth(statusBarFrame) :
     CGRectGetHeight(statusBarFrame);
 }
@@ -70,12 +70,12 @@ static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orienta
 /// Get the width of the status bar for given orientation.
 static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
     CGRect mainScreenBounds = [UIScreen mainScreen].bounds;
-    
+
     if (CRFrameAutoAdjustedForOrientation()) {
         return CGRectGetWidth(mainScreenBounds);
     }
-    
-    return (UIDeviceOrientationIsPortrait(orientation)) ?
+
+    return (UIInterfaceOrientationIsPortrait(orientation)) ?
     CGRectGetWidth(mainScreenBounds) :
     CGRectGetHeight(mainScreenBounds);
 }
@@ -88,7 +88,7 @@ static CGFloat CRGetStatusBarWidth() {
 #pragma mark - Navigation Bar Frame
 /**
  Get the height of the status bar for given orientation.
- 
+
  \note if size classes can be used this method will account for compact vs regular size class
  */
 static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
@@ -96,7 +96,7 @@ static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation ori
     if (CRUseSizeClass()) {
         regularHorizontalSizeClass = CRHorizontalSizeClassRegular();
     }
-    return (UIDeviceOrientationIsPortrait(orientation) ||
+    return (UIInterfaceOrientationIsPortrait(orientation) ||
             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad || regularHorizontalSizeClass) ?
     CRNavigationBarDefaultHeight :
     CRNavigationBarDefaultHeightiPhoneLandscape;
@@ -119,7 +119,7 @@ static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFlo
 
 /**
  Get the height of the view needed for specified notification type & preferred height.
- 
+
  \note uses the devices current orientation for calculation
  */
 static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNotificationHeight) {
@@ -128,7 +128,7 @@ static CGFloat CRGetNotificationViewHeight(CRToastType type, CGFloat preferredNo
 
 #pragma mark - -- clang diagnostic warning supression --
 // Lumped all functions that warn as unused
-// together so they can be ignored together 
+// together so they can be ignored together
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
 
@@ -179,7 +179,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 /// Get the notifications container frame based on orientation & notification size
 static CGRect CRGetNotificationContainerFrame(UIInterfaceOrientation statusBarOrientation, CGSize notificationSize) {
     CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
-    
+
     if (!CRFrameAutoAdjustedForOrientation()) {
         switch (statusBarOrientation) {
             case UIInterfaceOrientationLandscapeLeft: {
@@ -198,7 +198,7 @@ static CGRect CRGetNotificationContainerFrame(UIInterfaceOrientation statusBarOr
                 break;
             }
         }
-        
+
     }
     return containerFrame;
 }
