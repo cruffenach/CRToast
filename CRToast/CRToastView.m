@@ -40,7 +40,7 @@ static CGFloat CRImageViewFrameXOffsetForAlignment(CRToastAccessoryViewAlignment
 static CGFloat CRContentXOffsetForViewAlignmentAndWidth(CRToastAccessoryViewAlignment alignment, CGFloat width) {
     return (width == 0 || alignment != CRToastAccessoryViewAlignmentLeft) ?
     kCRStatusBarViewNoImageLeftContentInset :
-    width + kCRStatusBarViewNoImageLeftContentInset;
+    width;
 }
 
 static CGFloat CRToastWidthOfViewWithAlignment(CGFloat height, BOOL showing, CRToastAccessoryViewAlignment alignment) {
