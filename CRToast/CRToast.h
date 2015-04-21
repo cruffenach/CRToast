@@ -373,7 +373,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 
 //Autorotate
 
-@property (nonatomic, assign) BOOL autorotate;
+@property (nonatomic, assign, readonly) BOOL autorotate;
 
 //Views and Layout Data
 
@@ -388,7 +388,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 //Read Only Convinence Properties Providing Default Values or Values from Options
 
 @property (nonatomic, readonly) CRToastType notificationType;
-@property (nonatomic, assign) CGFloat preferredHeight;
+@property (nonatomic, assign, readonly) CGFloat preferredHeight;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
 @property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
