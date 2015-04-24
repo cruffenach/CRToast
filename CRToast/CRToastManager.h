@@ -76,4 +76,9 @@
  */
 + (NSArray *)notificationIdentifiersInQueue;
 
+/**
+ Checks if there is a notification currently being displayed
+ */
++ (BOOL)isShowingNotification;
+
 @end
