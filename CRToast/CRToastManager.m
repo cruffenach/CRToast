@@ -74,7 +74,7 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (BOOL)isShowingNotification {
-	return [[[self manager] showingNotification];
+	return [[self manager] showingNotification];
 }
 
 + (instancetype)manager {
