@@ -10,8 +10,8 @@
 @interface CRToastView ()
 @end
 
-static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
-static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
+static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 15;
+static CGFloat const kCRStatusBarViewNoImageRightContentInset = 15;
 
 // UIApplication's statusBarFrame will return a height for the status bar that includes
 // a 5 pixel vertical padding. This frame height is inappropriate to use when centering content
