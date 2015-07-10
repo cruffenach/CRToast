@@ -37,9 +37,9 @@ typedef void (^CRToastAnimationStepBlock)(void);
 }
 
 + (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
-    [[CRToastManager manager] addNotification:[CRToast notificationWithOptions:options
-                                                               appearanceBlock:nil
-                                                               completionBlock:completion]];
+    [self showNotificationWithOptions:options
+                       apperanceBlock:nil
+                      completionBlock:completion];
 }
 
 + (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
