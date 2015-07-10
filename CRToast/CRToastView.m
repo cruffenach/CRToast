@@ -20,40 +20,48 @@ static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
 static CGFloat const CRStatusBarViewUnderStatusBarYOffsetAdjustment = -5;
 
-static CGFloat CRImageViewFrameXOffsetForAlignment(CRToastAccessoryViewAlignment alignment, CGSize contentSize) {
+static CGFloat CRImageViewFrameXOffsetForAlignment(CRToastAccessoryViewAlignment alignment, CGFloat preferredPadding, CGSize contentSize) {
     CGFloat imageSize = contentSize.height;
     CGFloat xOffset = 0;
 
     if (alignment == CRToastAccessoryViewAlignmentLeft) {
-        xOffset = 0;
+        xOffset = preferredPadding;
     } else if (alignment == CRToastAccessoryViewAlignmentCenter) {
         // Calculate mid point of contentSize, then offset for x for full image width
         // that way center of image will be center of content view
         xOffset = (contentSize.width / 2) - (imageSize / 2);
     } else if (alignment == CRToastAccessoryViewAlignmentRight) {
-        xOffset = contentSize.width - imageSize;
+        xOffset = contentSize.width - preferredPadding - imageSize;
     }
     
     return xOffset;
 }
 
-static CGFloat CRContentXOffsetForViewAlignmentAndWidth(CRToastAccessoryViewAlignment alignment, CGFloat width) {
+static CGFloat CRContentXOffsetForViewAlignmentAndWidth(CRToastAccessoryViewAlignment alignment, CGFloat imageXOffset, CGFloat width, CGFloat preferredPadding) {
     return (width == 0 || alignment != CRToastAccessoryViewAlignmentLeft) ?
     kCRStatusBarViewNoImageLeftContentInset :
-    width;
+    imageXOffset + width;
 }
 
-static CGFloat CRToastWidthOfViewWithAlignment(CGFloat height, BOOL showing, CRToastAccessoryViewAlignment alignment) {
+static CGFloat CRToastWidthOfViewWithAlignment(CGFloat height, BOOL showing, CRToastAccessoryViewAlignment alignment, CGFloat preferredPadding) {
     return (!showing || alignment == CRToastAccessoryViewAlignmentCenter) ?
     0 :
-    height;
+    height + preferredPadding;
 }
 
-CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth, CGFloat fullContentHeight, BOOL showingImage, CRToastAccessoryViewAlignment imageAlignment, BOOL showingActivityIndicator, CRToastAccessoryViewAlignment activityIndicatorAlignment) {
+CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth,
+                                                      CGFloat fullContentHeight,
+                                                      CGFloat preferredPadding,
+                                                      BOOL showingImage,
+                                                      CRToastAccessoryViewAlignment imageAlignment,
+                                                      BOOL showingActivityIndicator,
+                                                      CRToastAccessoryViewAlignment activityIndicatorAlignment)
+{
     CGFloat width = fullContentWidth;
     
-    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingImage, imageAlignment);
-    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingActivityIndicator, activityIndicatorAlignment);
+    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingImage, imageAlignment, preferredPadding);
+    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingActivityIndicator, activityIndicatorAlignment, preferredPadding);
+    width -= preferredPadding*2;
     
     if (imageAlignment == activityIndicatorAlignment && showingActivityIndicator && showingImage) {
         width += fullContentWidth;
@@ -66,9 +74,9 @@ CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth, 
     return width;
 }
 
-static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAlignment alignment, CGFloat viewWidth, CGFloat contentWidth) {
+static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAlignment alignment, CGFloat viewWidth, CGFloat contentWidth, CGFloat preferredPadding) {
     CGFloat center = 0;
-    CGFloat offset = viewWidth / 2;
+    CGFloat offset = viewWidth / 2 + preferredPadding;
     
     switch (alignment) {
         case CRToastAccessoryViewAlignmentLeft:
@@ -121,13 +129,14 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     [super layoutSubviews];
     CGRect contentFrame = self.bounds;
     CGSize imageSize = self.imageView.image.size;
+    CGFloat preferredPadding = self.toast.preferredPadding;
     
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
     self.backgroundView.frame = self.bounds;
     
-    CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, contentFrame.size);
+    CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, preferredPadding, contentFrame.size);
     self.imageView.frame = CGRectMake(imageXOffset,
                                       statusBarYOffset,
                                       imageSize.width == 0 ?
@@ -138,15 +147,15 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                       CGRectGetHeight(contentFrame));
     
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);
-    CGFloat x = CRContentXOffsetForViewAlignmentAndWidth(self.toast.imageAlignment, imageWidth);
+    CGFloat x = CRContentXOffsetForViewAlignmentAndWidth(self.toast.imageAlignment, imageXOffset, imageWidth, preferredPadding);
     
     if (self.toast.showActivityIndicator) {
-        CGFloat centerX = CRCenterXForActivityIndicatorWithAlignment(self.toast.activityViewAlignment, CGRectGetHeight(contentFrame), CGRectGetWidth(contentFrame));
+        CGFloat centerX = CRCenterXForActivityIndicatorWithAlignment(self.toast.activityViewAlignment, CGRectGetHeight(contentFrame), CGRectGetWidth(contentFrame), preferredPadding);
         self.activityIndicator.center = CGPointMake(centerX,
                                      CGRectGetMidY(contentFrame) + statusBarYOffset);
         
         [self.activityIndicator startAnimating];
-        x = MAX(CRContentXOffsetForViewAlignmentAndWidth(self.toast.activityViewAlignment, CGRectGetHeight(contentFrame)), x);
+        x = MAX(CRContentXOffsetForViewAlignmentAndWidth(self.toast.activityViewAlignment, imageXOffset, CGRectGetHeight(contentFrame), preferredPadding), x);
 
         [self bringSubviewToFront:self.activityIndicator];
     }
@@ -155,6 +164,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     
     CGFloat width = CRContentWidthForAccessoryViewsWithAlignments(CGRectGetWidth(contentFrame),
                                                                   CGRectGetHeight(contentFrame),
+                                                                  preferredPadding,
                                                                   showingImage,
                                                                   self.toast.imageAlignment,
                                                                   self.toast.showActivityIndicator,
