@@ -36,14 +36,14 @@ typedef void (^CRToastAnimationStepBlock)(void);
     [CRToast setDefaultOptions:defaultOptions];
 }
 
-+ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
-    [self showNotificationWithOptions:options
-                       apperanceBlock:nil
++ (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
+    [self showNotificationWithOptions:@{kCRToastTextKey : message}
                       completionBlock:completion];
 }
 
-+ (void)showNotificationWithMessage:(NSString*)message completionBlock:(void (^)(void))completion {
-    [self showNotificationWithOptions:@{kCRToastTextKey : message}
++ (void)showNotificationWithOptions:(NSDictionary*)options completionBlock:(void (^)(void))completion {
+    [self showNotificationWithOptions:options
+                       apperanceBlock:nil
                       completionBlock:completion];
 }
 
