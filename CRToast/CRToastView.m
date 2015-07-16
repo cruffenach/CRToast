@@ -37,16 +37,16 @@ static CGFloat CRImageViewFrameXOffsetForAlignment(CRToastAccessoryViewAlignment
     return xOffset;
 }
 
-static CGFloat CRContentXOffsetForViewAlignmentAndWidth(CRToastAccessoryViewAlignment alignment, CGFloat imageXOffset, CGFloat width, CGFloat preferredPadding) {
-    return (width == 0 || alignment != CRToastAccessoryViewAlignmentLeft) ?
-    kCRStatusBarViewNoImageLeftContentInset :
-    imageXOffset + width;
+static CGFloat CRContentXOffsetForViewAlignmentAndWidth(CRToastAccessoryViewAlignment imageAlignment, CGFloat imageXOffset, CGFloat imageWidth, CGFloat preferredPadding) {
+    return ((imageWidth == 0 || imageAlignment != CRToastAccessoryViewAlignmentLeft) ?
+    kCRStatusBarViewNoImageLeftContentInset + preferredPadding :
+    imageXOffset + imageWidth);
 }
 
 static CGFloat CRToastWidthOfViewWithAlignment(CGFloat height, BOOL showing, CRToastAccessoryViewAlignment alignment, CGFloat preferredPadding) {
     return (!showing || alignment == CRToastAccessoryViewAlignmentCenter) ?
     0 :
-    height + preferredPadding;
+    preferredPadding + height + preferredPadding;
 }
 
 CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth,
@@ -59,16 +59,16 @@ CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth,
 {
     CGFloat width = fullContentWidth;
     
-    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingImage, imageAlignment, preferredPadding);
-    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingActivityIndicator, activityIndicatorAlignment, preferredPadding);
-    width -= preferredPadding*2;
-    
     if (imageAlignment == activityIndicatorAlignment && showingActivityIndicator && showingImage) {
-        width += fullContentWidth;
+        return fullContentWidth;
     }
     
+    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingImage, imageAlignment, preferredPadding);
+    width -= CRToastWidthOfViewWithAlignment(fullContentHeight, showingActivityIndicator, activityIndicatorAlignment, preferredPadding);
+        
     if (!showingImage && !showingActivityIndicator) {
         width -= (kCRStatusBarViewNoImageLeftContentInset + kCRStatusBarViewNoImageRightContentInset);
+        width -= (preferredPadding + preferredPadding);
     }
     
     return width;
