@@ -36,7 +36,7 @@ typedef NS_OPTIONS(NSInteger, CRToastInteractionType) {
                                                CRToastInteractionTypeTwoFingerTapTwice),
     
     //An interaction responder with a CRToastInteractionTypeAll interaction type will fire on all swipe and tap interactions
-    CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe, CRToastInteractionTypeTap)
+    CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe | CRToastInteractionTypeTap)
 };
 
 extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType);
