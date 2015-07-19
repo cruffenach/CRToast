@@ -31,6 +31,8 @@ NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionT
             return @"Two Fingers Tap Twice";
         case CRToastInteractionTypeTap:
             return @"Any Tap";
+        case CRToastInteractionTypeAll:
+            return nil;
     }
     return nil;
 }
