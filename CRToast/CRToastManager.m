@@ -73,6 +73,10 @@ typedef void (^CRToastAnimationStepBlock)(void);
     return [[self manager] notificationIdentifiersInQueue];
 }
 
++ (BOOL)isShowingNotification {
+	return [[self manager] showingNotification];
+}
+
 + (instancetype)manager {
     static dispatch_once_t once;
     static id sharedInstance;
