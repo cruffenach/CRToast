@@ -141,6 +141,11 @@ extern NSString *const kCRToastNotificationTypeKey;
 extern NSString *const kCRToastNotificationPreferredHeightKey;
 
 /**
+ The general preferred padding for the notification.
+ */
+extern NSString *const kCRToastNotificationPreferredPaddingKey;
+
+/**
  The presentation type for the notification. Expects type `CRToastPresentationType`.
  */
 extern NSString *const kCRToastNotificationPresentationTypeKey;
@@ -389,6 +394,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 
 @property (nonatomic, readonly) CRToastType notificationType;
 @property (nonatomic, assign) CGFloat preferredHeight;
+@property (nonatomic, assign) CGFloat preferredPadding;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
 @property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
