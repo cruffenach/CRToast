@@ -5,7 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CRToastManager.h"
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @class CRToastSwipeGestureRecognizer, CRToastTapGestureRecognizer;
 
