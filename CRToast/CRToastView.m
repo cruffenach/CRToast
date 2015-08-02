@@ -202,7 +202,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                               subtitleHeight);
     }
     
-    // account for center alignment crap
+    // Account for center alignment of text and an accessory view
     if ((showingImage || self.toast.showActivityIndicator)
         && (self.toast.activityViewAlignment == CRToastAccessoryViewAlignmentCenter
             || self.toast.imageAlignment == CRToastAccessoryViewAlignmentCenter)
