@@ -238,6 +238,12 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
         // Get the smallest X value so our image/activity indicator doesn't cover any thing
         CGFloat smallestXView = MIN(CGRectGetMinX(self.label.frame), CGRectGetMinX(self.subtitleLabel.frame));
         
+        // If both our labels have 0 width (empty text) don't change the centers of our
+        // image or activity indicator and just move along
+        if (CGRectGetWidth(self.label.frame) == 0.0
+            && CGRectGetWidth(self.subtitleLabel.frame) == 0.0) {
+            return;
+        }
         // Move our image if that is what we're showing
         if (showingImage && self.toast.imageAlignment == CRToastAccessoryViewAlignmentCenter) {
             self.imageView.frame = (CGRect) {
