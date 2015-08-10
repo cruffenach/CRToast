@@ -201,6 +201,66 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                               CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
                                               subtitleHeight);
     }
+    
+    // Account for center alignment of text and an accessory view
+    if ((showingImage || self.toast.showActivityIndicator)
+        && (self.toast.activityViewAlignment == CRToastAccessoryViewAlignmentCenter
+            || self.toast.imageAlignment == CRToastAccessoryViewAlignmentCenter)
+        && self.toast.textAlignment == NSTextAlignmentCenter
+        ) {
+        CGFloat labelHeight = CGRectGetHeight(self.label.frame); // Store labelHeight for resetting after calling sizeToFit
+        [self.label sizeToFit]; // By default our size is rather large so lets fix that for further calculations
+        
+        CGFloat subTitleLabelHeight = CGRectGetHeight(self.label.frame); // Store labelHeight for resetting after calling sizeToFit
+        [self.subtitleLabel sizeToFit]; // Again, default size is too large so we need to shrink it down
+        
+        // Center the label in the view since we're center aligned text
+        self.label.center = (CGPoint) {
+            .x = CGRectGetMidX(self.frame),
+            .y = self.label.center.y
+        };
+        // After calling sizeToFit we need to reset our frames so they look correct
+        self.label.frame = CGRectMake(CGRectGetMinX(self.label.frame),
+                                      CGRectGetMinY(self.label.frame),
+                                      CGRectGetWidth(self.label.frame),
+                                      labelHeight);
+        
+        // Same thing as for Label
+        self.subtitleLabel.center = (CGPoint) {
+            .x = CGRectGetMidX(self.frame),
+            .y = self.subtitleLabel.center.y
+        };
+        self.subtitleLabel.frame = CGRectMake(CGRectGetMinX(self.subtitleLabel.frame),
+                                              CGRectGetMinY(self.subtitleLabel.frame),
+                                              CGRectGetWidth(self.subtitleLabel.frame),
+                                              subTitleLabelHeight);
+        
+        // Get the smallest X value so our image/activity indicator doesn't cover any thing
+        CGFloat smallestXView = MIN(CGRectGetMinX(self.label.frame), CGRectGetMinX(self.subtitleLabel.frame));
+        
+        // If both our labels have 0 width (empty text) don't change the centers of our
+        // image or activity indicator and just move along
+        if (CGRectGetWidth(self.label.frame) == 0.0
+            && CGRectGetWidth(self.subtitleLabel.frame) == 0.0) {
+            return;
+        }
+        // Move our image if that is what we're showing
+        if (showingImage && self.toast.imageAlignment == CRToastAccessoryViewAlignmentCenter) {
+            self.imageView.frame = (CGRect) {
+                .origin.x = smallestXView - CGRectGetWidth(self.imageView.frame) - preferredPadding,
+                .origin.y = self.imageView.frame.origin.y,
+                .size = self.imageView.frame.size,
+            };
+        }
+        // Move our activity indicator over.
+        if ((self.toast.showActivityIndicator && self.toast.activityViewAlignment == CRToastAccessoryViewAlignmentCenter)) {
+            self.activityIndicator.frame = (CGRect) {
+                .origin.x = smallestXView - CGRectGetWidth(self.activityIndicator.frame) - preferredPadding,
+                .origin.y = self.activityIndicator.frame.origin.y,
+                .size = self.activityIndicator.frame.size,
+            };
+        }
+    }
 }
 
 #pragma mark - Overrides

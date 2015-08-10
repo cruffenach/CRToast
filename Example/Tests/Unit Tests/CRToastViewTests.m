@@ -48,13 +48,11 @@ CRToast * __TestToast(void) {
     toast.options = options;
     self.view.toast = toast;
     
-    CGRect assumedRect = CGRectMake(100, 0, 100, 100);
-    
     [self.view layoutSubviews];
     
-    BOOL rectsEqual = CGRectEqualToRect(assumedRect, self.view.imageView.frame);
+    BOOL centersEqual = CGPointEqualToPoint(self.view.center, self.view.imageView.center);
     
-    XCTAssertTrue(rectsEqual, @"center aligned rect should be equal to assumed rect. Intead was %@", NSStringFromCGRect(self.view.imageView.frame));
+    XCTAssertTrue(centersEqual, @"center of image view should be center of self.view (%@). Intead was %@", NSStringFromCGPoint(self.view.center), NSStringFromCGPoint(self.view.imageView.center));
 }
 
 - (void)testImageFrameRightAlignment {
@@ -113,7 +111,7 @@ CRToast * __TestToast(void) {
     
     BOOL centersEqual = CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
     
-    XCTAssertTrue(centersEqual, @"center aligned activity indicator center shold equal assumed center. Instead was %@", NSStringFromCGPoint(self.view.activityIndicator.center));
+    XCTAssertTrue(centersEqual, @"center aligned activity indicator center shold equal assumed center (%@). Instead was %@", NSStringFromCGPoint(self.view.center), NSStringFromCGPoint(self.view.activityIndicator.center));
 }
 
 - (void)testActivityFrameRightAlignment {
@@ -134,6 +132,48 @@ CRToast * __TestToast(void) {
     BOOL centersEqual = CGPointEqualToPoint(assumedCenter, self.view.activityIndicator.center);
     
     XCTAssertTrue(centersEqual, @"right aligned activity indicator center shold equal assumed center. Instead was %@", NSStringFromCGPoint(self.view.activityIndicator.center));
+}
+
+#pragma mark Padding
+
+- (void)testPreferredPaddingSetToZero {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    
+    options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon"];
+    options[kCRToastImageAlignmentKey] = @(CRToastAccessoryViewAlignmentLeft);
+    options[kCRToastTextKey] = @"Test";
+    options[kCRToastTextAlignmentKey] = @(NSTextAlignmentLeft);
+    options[kCRToastNotificationPreferredPaddingKey] = @0;
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    [self.view layoutSubviews];
+    
+    CGFloat imageViewX = CGRectGetMinX(self.view.imageView.frame);
+    
+    XCTAssertTrue(imageViewX == 0.0, @"With no padding minX should be 0.0. Instead was %f", imageViewX);
+}
+
+- (void)testPrefferedPaddingIsRespectedWhenHigher {
+    CRToast *toast = __TestToast();
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    
+    options[kCRToastShowActivityIndicatorKey] = @YES;
+    options[kCRToastActivityIndicatorAlignmentKey] = @(CRToastAccessoryViewAlignmentLeft);
+    options[kCRToastTextKey] = @"Test";
+    options[kCRToastTextAlignmentKey] = @(NSTextAlignmentLeft);
+    options[kCRToastNotificationPreferredPaddingKey] = @20;
+    
+    toast.options = options;
+    self.view.toast = toast;
+    
+    [self.view layoutSubviews];
+    
+    CGFloat imageViewX = CGRectGetMinX(self.view.imageView.frame);
+    
+    XCTAssertTrue(imageViewX == 20.0, @"With no padding minX should be 20.0. Instead was %f", imageViewX);
 }
 
 #pragma mark Width Calculations
