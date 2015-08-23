@@ -283,7 +283,12 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
         _subtitleLabel.shadowOffset = toast.subtitleTextShadowOffset;
         _subtitleLabel.shadowColor = toast.subtitleTextShadowColor;
     }
-    _imageView.image = toast.image;
+    if (toast.imageTint) {
+        _imageView.image = [toast.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        _imageView.tintColor = toast.imageTint;
+    } else {
+        _imageView.image = toast.image;
+    }
     _imageView.contentMode = toast.imageContentMode;
     _activityIndicator.activityIndicatorViewStyle = toast.activityIndicatorViewStyle;
     self.backgroundColor = toast.backgroundColor;

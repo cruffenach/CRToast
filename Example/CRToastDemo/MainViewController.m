@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblDuration;
 @property (weak, nonatomic) IBOutlet UILabel *lblPadding;
 
+@property (weak, nonatomic) IBOutlet UISwitch *imageTintEnabledSwitch;
+@property (weak, nonatomic) IBOutlet UISlider *imageTintSlider;
 
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *showActivityIndicatorSwitch;
@@ -90,6 +92,8 @@
     
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
         self.edgesForExtendedLayout = UIRectEdgeAll;
+    
+    [self updateImageTintSwitch]; // So our `onTint` is correct the first time we see it
 }
 
 - (void)layoutSubviews {
@@ -122,6 +126,14 @@
 
 - (IBAction)sliderPaddingChanged:(UISlider *)sender {
     [self updatePaddingLabel];
+}
+
+- (IBAction)sliderImageTintChanged:(UISlider *)sender {
+    [self updateImageTintSwitch];
+}
+
+- (void)updateImageTintSwitch {
+    self.imageTintEnabledSwitch.onTintColor = [UIColor colorWithHue:self.imageTintSlider.value saturation:1.0 brightness:1.0 alpha:1.0];
 }
 
 - (IBAction)statusBarChanged:(UISwitch *)sender {
@@ -209,6 +221,10 @@ CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmente
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
         options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
+    }
+    
+    if (self.imageTintEnabledSwitch.on) {
+        options[kCRToastImageTintKey] = [UIColor colorWithHue:self.imageTintSlider.value saturation:1.0 brightness:1.0 alpha:1.0];
     }
     
     if (self.showActivityIndicatorSwitch.on) {
