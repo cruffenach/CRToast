@@ -321,6 +321,11 @@ extern NSString *const kCRToastImageContentModeKey;
 extern NSString *const kCRToastImageAlignmentKey;
 
 /**
+ The `UIColor` to tint the image provided. If supplied, `imageWithRenderingMode:` is used with `AlwaysTemplate`
+ */
+extern NSString *const kCRToastImageTintKey;
+
+/**
  BOOL setting whether the CRToast should show a loading indicator in the left image location.
  */
 extern NSString *const kCRToastShowActivityIndicatorKey;
@@ -432,6 +437,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIImage *image;
 @property (nonatomic, readonly) UIViewContentMode imageContentMode;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;
+@property (nonatomic, readonly) UIColor *imageTint;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
