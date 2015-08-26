@@ -275,7 +275,7 @@ static UIInterfaceOrientation CRGetDeviceOrientation() {
 
 static CGFloat CRGetStatusBarHeightForOrientation(UIInterfaceOrientation orientation) {
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-        return (UIDeviceOrientationIsLandscape(orientation)) ?
+        return (UIInterfaceOrientationIsPortrait(orientation)) ?
         [[UIApplication sharedApplication] statusBarFrame].size.width :
         [[UIApplication sharedApplication] statusBarFrame].size.height;
     }
@@ -288,7 +288,7 @@ static CGFloat CRGetStatusBarHeight() {
 
 static CGFloat CRGetStatusBarWidthForOrientation(UIInterfaceOrientation orientation) {
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-        if (UIDeviceOrientationIsLandscape(orientation)) {
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
             return [UIScreen mainScreen].bounds.size.height;
         }
     }
@@ -300,7 +300,7 @@ static CGFloat CRGetStatusBarWidth() {
 }
 
 static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation orientation) {
-    return (UIDeviceOrientationIsPortrait(orientation) ||
+    return (UIInterfaceOrientationIsPortrait(orientation) ||
             UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ?
     CRNavigationBarDefaultHeight :
     CRNavigationBarDefaultHeightiPhoneLandscape;
@@ -455,7 +455,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
         kCRInteractionResponders = @[];
         
         kCRCoverBackgroundColorDefault = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
-
+        
         kCRToastKeyClassMap = @{kCRToastNotificationTypeKey                 : NSStringFromClass([@(kCRNotificationTypeDefault) class]),
                                 kCRToastNotificationPreferredHeightKey         : NSStringFromClass([@(kCRNotificationPreferredHeightDefault) class]),
                                 kCRToastNotificationPresentationTypeKey     : NSStringFromClass([@(kCRNotificationPresentationTypeDefault) class]),
@@ -536,7 +536,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
     
     if (defaultOptions[kCRToastShowCoverBackgroundKey])             kCRShowCoverBackgroundDefault           = [defaultOptions[kCRToastShowCoverBackgroundKey] boolValue];
     if (defaultOptions[kCRToastCoverBackgroundColorKey])            kCRCoverBackgroundColorDefault          = defaultOptions[kCRToastCoverBackgroundColorKey];
-
+    
     if (defaultOptions[kCRToastSubtitleTextKey])                    kCRSubtitleTextDefault                  = defaultOptions[kCRToastSubtitleTextKey];
     if (defaultOptions[kCRToastSubtitleFontKey])                    kCRSubtitleFontDefault                  = defaultOptions[kCRToastSubtitleFontKey];
     if (defaultOptions[kCRToastSubtitleTextColorKey])               kCRSubtitleTextColorDefault             = defaultOptions[kCRToastSubtitleTextColorKey];
@@ -570,10 +570,10 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 }
 
 - (UIView *)coverBackgroundView {
-  // frame is set by notificationWindow
-  UIView *coverBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
-  coverBackgroundView.backgroundColor = self.coverBackgroundColor;
-  return coverBackgroundView;
+    // frame is set by notificationWindow
+    UIView *coverBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
+    coverBackgroundView.backgroundColor = self.coverBackgroundColor;
+    return coverBackgroundView;
 }
 
 - (UIView*)statusBarView {
@@ -1408,8 +1408,8 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
         // in iOS7, the notification window bounds doesn't change with orientation
         // in iOS8, this seems to have been fixed so we don't need to switch the width/height
         if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_7_1) {
-            if (UIDeviceOrientationIsLandscape(CRGetDeviceOrientation())) {
-                backgroundSize = CGSizeMake(backgroundSize.height, backgroundSize.width);
+            if (UIInterfaceOrientationIsLandscape(CRGetDeviceOrientation())) {
+                //                backgroundSize = CGSizeMake(backgroundSize.height, backgroundSize.width);
             }
         }
         else {
@@ -1440,7 +1440,7 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     self.notificationView = notificationView;
     rootViewController.toastView = notificationView;
     self.statusBarView = statusBarView;
-
+    
     for (UIView *subview in _notificationWindow.rootViewController.view.subviews) {
         subview.userInteractionEnabled = NO;
     }
@@ -1450,7 +1450,9 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     
     __weak __block typeof(self) weakSelf = self;
     CRToastAnimationStepBlock inwardAnimationsBlock = ^void(void) {
-        weakSelf.notificationView.frame = weakSelf.notificationWindow.rootViewController.view.bounds;
+        CGSize size = weakSelf.notificationView.frame.size;
+        CGRect resetOrigin = CGRectMake(0, 0, size.width, size.height);
+        weakSelf.notificationView.frame = resetOrigin;
         weakSelf.statusBarView.frame = notification.statusBarViewAnimationFrame1;
     };
     
