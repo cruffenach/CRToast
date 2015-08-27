@@ -58,16 +58,18 @@ CGFloat CRContentWidthForAccessoryViewsWithAlignments(CGFloat fullContentWidth,
 {
     CGFloat width = fullContentWidth;
     
-    if (imageAlignment == activityIndicatorAlignment && showingActivityIndicator && showingImage) {
-        return fullContentWidth;
-    }
-    
     width -= CRToastWidthOfViewWithAlignment(imageWidth, showingImage, imageAlignment, preferredPadding);
     width -= CRToastWidthOfViewWithAlignment(imageWidth, showingActivityIndicator, activityIndicatorAlignment, preferredPadding);
         
     if (!showingImage && !showingActivityIndicator) {
         width -= (kCRStatusBarViewNoImageLeftContentInset + kCRStatusBarViewNoImageRightContentInset);
         width -= (preferredPadding + preferredPadding);
+    }
+    else if (showingImage && !showingActivityIndicator) {
+        width -= preferredPadding;
+    }
+    else if (!showingImage && showingActivityIndicator) {
+        width -= preferredPadding;
     }
     
     return width;
