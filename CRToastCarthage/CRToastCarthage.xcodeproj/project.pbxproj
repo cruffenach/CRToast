@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		65986EC71B9E21DC00BCA1C3 /* CRToastCarthage.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EC61B9E21DC00BCA1C3 /* CRToastCarthage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65986ECD1B9E21DC00BCA1C3 /* CRToastCarthage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65986EC11B9E21DC00BCA1C3 /* CRToastCarthage.framework */; };
-		65986ED41B9E21DC00BCA1C3 /* CRToastCarthageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986ED31B9E21DC00BCA1C3 /* CRToastCarthageTests.m */; };
 		65986EE91B9E21FE00BCA1C3 /* CRToast.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EDE1B9E21FE00BCA1C3 /* CRToast.h */; };
 		65986EEA1B9E21FE00BCA1C3 /* CRToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EDF1B9E21FE00BCA1C3 /* CRToast.m */; };
 		65986EEB1B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EE01B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h */; };
@@ -38,8 +37,6 @@
 		65986EC51B9E21DC00BCA1C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65986EC61B9E21DC00BCA1C3 /* CRToastCarthage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRToastCarthage.h; sourceTree = "<group>"; };
 		65986ECC1B9E21DC00BCA1C3 /* CRToastCarthageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRToastCarthageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		65986ED21B9E21DC00BCA1C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65986ED31B9E21DC00BCA1C3 /* CRToastCarthageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRToastCarthageTests.m; sourceTree = "<group>"; };
 		65986EDE1B9E21FE00BCA1C3 /* CRToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToast.h; sourceTree = "<group>"; };
 		65986EDF1B9E21FE00BCA1C3 /* CRToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToast.m; sourceTree = "<group>"; };
 		65986EE01B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastLayoutHelpers.h; sourceTree = "<group>"; };
@@ -76,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				65986EC31B9E21DC00BCA1C3 /* CRToastCarthage */,
-				65986ED01B9E21DC00BCA1C3 /* CRToastCarthageTests */,
 				65986EC21B9E21DC00BCA1C3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -104,23 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				65986EC51B9E21DC00BCA1C3 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		65986ED01B9E21DC00BCA1C3 /* CRToastCarthageTests */ = {
-			isa = PBXGroup;
-			children = (
-				65986ED31B9E21DC00BCA1C3 /* CRToastCarthageTests.m */,
-				65986ED11B9E21DC00BCA1C3 /* Supporting Files */,
-			);
-			path = CRToastCarthageTests;
-			sourceTree = "<group>";
-		};
-		65986ED11B9E21DC00BCA1C3 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				65986ED21B9E21DC00BCA1C3 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -269,7 +248,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65986ED41B9E21DC00BCA1C3 /* CRToastCarthageTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +429,7 @@
 				65986ED91B9E21DC00BCA1C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65986EDA1B9E21DC00BCA1C3 /* Build configuration list for PBXNativeTarget "CRToastCarthageTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +438,7 @@
 				65986EDC1B9E21DC00BCA1C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
