@@ -20,20 +20,6 @@
                ReferencedContainer = "container:CRToastCarthage.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65986ECB1B9E21DC00BCA1C3"
-               BuildableName = "CRToastCarthageTests.xctest"
-               BlueprintName = "CRToastCarthageTests"
-               ReferencedContainer = "container:CRToastCarthage.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -42,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65986ECB1B9E21DC00BCA1C3"
-               BuildableName = "CRToastCarthageTests.xctest"
-               BlueprintName = "CRToastCarthageTests"
-               ReferencedContainer = "container:CRToastCarthage.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
