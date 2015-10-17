@@ -5,7 +5,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
-#import "CRToast.h"
+#import "CRToastConfig.h"
 #import "CRToastView.h"
 #import "CRToastLayoutHelpers.h"
 

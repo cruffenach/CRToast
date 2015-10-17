@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0640"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,65 +14,59 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "65986EC01B9E21DC00BCA1C3"
-               BuildableName = "CRToastCarthage.framework"
-               BlueprintName = "CRToastCarthage"
-               ReferencedContainer = "container:CRToastCarthage.xcodeproj">
+               BlueprintIdentifier = "464D04B51BD21BE600E0E90A"
+               BuildableName = "libCRToast.a"
+               BlueprintName = "CRToast-static"
+               ReferencedContainer = "container:CRToast.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65986EC01B9E21DC00BCA1C3"
-            BuildableName = "CRToastCarthage.framework"
-            BlueprintName = "CRToastCarthage"
-            ReferencedContainer = "container:CRToastCarthage.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65986EC01B9E21DC00BCA1C3"
-            BuildableName = "CRToastCarthage.framework"
-            BlueprintName = "CRToastCarthage"
-            ReferencedContainer = "container:CRToastCarthage.xcodeproj">
+            BlueprintIdentifier = "464D04B51BD21BE600E0E90A"
+            BuildableName = "libCRToast.a"
+            BlueprintName = "CRToast-static"
+            ReferencedContainer = "container:CRToast.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "65986EC01B9E21DC00BCA1C3"
-            BuildableName = "CRToastCarthage.framework"
-            BlueprintName = "CRToastCarthage"
-            ReferencedContainer = "container:CRToastCarthage.xcodeproj">
+            BlueprintIdentifier = "464D04B51BD21BE600E0E90A"
+            BuildableName = "libCRToast.a"
+            BlueprintName = "CRToast-static"
+            ReferencedContainer = "container:CRToast.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

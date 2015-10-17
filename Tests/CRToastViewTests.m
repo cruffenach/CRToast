@@ -6,7 +6,7 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <CRToast/CRToast.h>
-#import <CRToast/CRToastView.h>
+#import "CRToastView.h"
 
 @interface CRToastViewTests : XCTestCase
 @property (strong, nonatomic) CRToastView *view;
