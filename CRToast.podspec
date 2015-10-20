@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'CRToast'
-  s.version  = '0.0.8'
+  s.version  = '0.0.9'
   s.license  = 'MIT'
   s.summary  = 'A modern iOS toast view that can fit your notification needs'
   s.homepage = 'https://github.com/cruffenach/CRToast'
