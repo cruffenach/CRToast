@@ -681,7 +681,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (UIView *)backgroundView {
-    return _options[kCRToastBackgroundViewKey];
+    return _options[kCRToastBackgroundViewKey] ?: kCRBackgroundView;
 }
 
 - (UIImage *)image {
