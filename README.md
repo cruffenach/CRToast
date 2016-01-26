@@ -20,7 +20,7 @@
 
 ### Carthage
 
-`github 'cruffenach/CRToast'`
+`github "cruffenach/CRToast"`
 
 ### Manual
 
