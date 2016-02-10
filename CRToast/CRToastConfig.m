@@ -548,12 +548,6 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     kCRNotificationPreferredPaddingDefault;
 }
 
-- (CGFloat)verticalImagePadding {
-    return _options[kCRToastImageVerticalPadding] ?
-    [_options[kCRToastImageVerticalPadding] floatValue] :
-    kCRImageVerticalPadding;
-}
-
 - (CRToastPresentationType)presentationType {
     return _options[kCRToastNotificationPresentationTypeKey] ?
     [self.options[kCRToastNotificationPresentationTypeKey] integerValue] :
@@ -706,6 +700,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 
 - (UIColor *)imageTint {
     return _options[kCRToastImageTintKey] ?: kCRImageTintDefault;
+}
+
+- (CGFloat)imageVericalPadding {
+  return _options[kCRToastImageVerticalPadding] ?
+  [_options[kCRToastImageVerticalPadding] floatValue] :
+  kCRImageVerticalPadding;
 }
 
 - (BOOL)showActivityIndicator {
