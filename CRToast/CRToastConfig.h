@@ -326,6 +326,16 @@ extern NSString *const kCRToastImageAlignmentKey;
 extern NSString *const kCRToastImageTintKey;
 
 /**
+ The vertical padding used in this image. If supplied, it will create a padding of the specified amount of px above and below the image.
+ */
+extern NSString *const kCRToastImageVerticalPaddingKey;
+
+/**
+ The image style to use. If true is supplied, it will make the image render as a circle. Expects a BOOL
+ */
+extern NSString *const kCRToastImageRoundedKey;
+
+/**
  BOOL setting whether the CRToast should show a loading indicator in the left image location.
  */
 extern NSString *const kCRToastShowActivityIndicatorKey;
