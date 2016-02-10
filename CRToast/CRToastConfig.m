@@ -220,6 +220,7 @@ NSString *const kCRToastImageKey                            = @"kCRToastImageKey
 NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageContentModeKey";
 NSString *const kCRToastImageAlignmentKey                   = @"kCRToastImageAlignmentKey";
 NSString *const kCRToastImageTintKey                        = @"kCRToastImageTintKey";
+NSString *const kCRToastImageVerticalPadding                = @"kCRToastImageVerticalPadding";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
 NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
 NSString *const kCRToastActivityIndicatorAlignmentKey       = @"kCRToastActivityIndicatorAlignmentKey";
@@ -277,6 +278,7 @@ static UIImage  *                    kCRImageDefault                        = ni
 static UIViewContentMode             kCRImageContentModeDefault             = UIViewContentModeCenter;
 static CRToastAccessoryViewAlignment kCRImageAlignmentDefault               = CRToastAccessoryViewAlignmentLeft;
 static UIColor  *                    kCRImageTintDefault                    = nil;
+static CGFloat                       kCRImageVerticalPadding                = 0;
 static BOOL                          kCRShowActivityIndicatorDefault        = NO;
 static UIActivityIndicatorViewStyle  kCRActivityIndicatorViewStyleDefault   = UIActivityIndicatorViewStyleWhite;
 static CRToastAccessoryViewAlignment kCRActivityIndicatorAlignmentDefault   = CRToastAccessoryViewAlignmentLeft;
@@ -544,6 +546,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastNotificationPreferredPaddingKey] ?
     [_options[kCRToastNotificationPreferredPaddingKey] floatValue] :
     kCRNotificationPreferredPaddingDefault;
+}
+
+- (CGFloat)verticalImagePadding {
+    return _options[kCRToastImageVerticalPadding] ?
+    [_options[kCRToastImageVerticalPadding] floatValue] :
+    kCRImageVerticalPadding;
 }
 
 - (CRToastPresentationType)presentationType {

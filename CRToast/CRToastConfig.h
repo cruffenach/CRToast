@@ -400,6 +400,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) CRToastType notificationType;
 @property (nonatomic, assign) CGFloat preferredHeight;
 @property (nonatomic, assign) CGFloat preferredPadding;
+@property (nonatomic, assign) CGFloat verticalImagePadding;
 @property (nonatomic, readonly) CRToastPresentationType presentationType;
 @property (nonatomic, readonly) BOOL displayUnderStatusBar;
 @property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
