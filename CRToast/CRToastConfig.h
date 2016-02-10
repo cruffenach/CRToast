@@ -439,6 +439,7 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;
 @property (nonatomic, readonly) UIColor *imageTint;
 @property (nonatomic, readonly) CGFloat imageVerticalPadding;
+@property (nonatomic, readonly) BOOL imageRounded;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
 @property (nonatomic, readonly) BOOL showActivityIndicator;

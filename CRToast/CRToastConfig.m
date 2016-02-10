@@ -221,6 +221,7 @@ NSString *const kCRToastImageContentModeKey                 = @"kCRToastImageCon
 NSString *const kCRToastImageAlignmentKey                   = @"kCRToastImageAlignmentKey";
 NSString *const kCRToastImageTintKey                        = @"kCRToastImageTintKey";
 NSString *const kCRToastImageVerticalPadding                = @"kCRToastImageVerticalPadding";
+NSString *const kCRToastImageRounded                        = @"kCRToastImageRounded";
 NSString *const kCRToastShowActivityIndicatorKey            = @"kCRToastShowActivityIndicatorKey";
 NSString *const kCRToastActivityIndicatorViewStyleKey       = @"kCRToastActivityIndicatorViewStyleKey";
 NSString *const kCRToastActivityIndicatorAlignmentKey       = @"kCRToastActivityIndicatorAlignmentKey";
@@ -279,6 +280,7 @@ static UIViewContentMode             kCRImageContentModeDefault             = UI
 static CRToastAccessoryViewAlignment kCRImageAlignmentDefault               = CRToastAccessoryViewAlignmentLeft;
 static UIColor  *                    kCRImageTintDefault                    = nil;
 static CGFloat                       kCRImageVerticalPadding                = 0;
+static BOOL                          kCRImageRounded                        = NO;
 static BOOL                          kCRShowActivityIndicatorDefault        = NO;
 static UIActivityIndicatorViewStyle  kCRActivityIndicatorViewStyleDefault   = UIActivityIndicatorViewStyleWhite;
 static CRToastAccessoryViewAlignment kCRActivityIndicatorAlignmentDefault   = CRToastAccessoryViewAlignmentLeft;
@@ -706,6 +708,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
   return _options[kCRToastImageVerticalPadding] ?
   [_options[kCRToastImageVerticalPadding] floatValue] :
   kCRImageVerticalPadding;
+}
+
+- (BOOL)imageRounded {
+  return _options[kCRToastImageRounded] ?
+  [_options[kCRToastImageRounded] boolValue] :
+  kCRImageRounded;
 }
 
 - (BOOL)showActivityIndicator {

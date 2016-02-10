@@ -131,6 +131,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGSize imageSize = self.imageView.image.size;
     CGFloat preferredPadding = self.toast.preferredPadding;
     CGFloat imageVerticalPadding = self.toast.imageVerticalPadding;
+    BOOL imageRounded = self.toast.imageRounded;
   
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
@@ -146,7 +147,11 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                       imageSize.height == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame) - (imageVerticalPadding*2));
-    
+    if (imageRounded == YES) {
+      self.imageView.layer.cornerRadius = MIN(imageSize.height, imageSize.width)/2;
+      self.imageView.clipsToBounds = YES;
+    }
+  
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);
     CGFloat x = CRContentXOffsetForViewAlignmentAndWidth(self.toast.imageAlignment, imageXOffset, imageWidth, preferredPadding);
     
