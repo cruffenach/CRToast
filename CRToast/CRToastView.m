@@ -139,17 +139,29 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     self.backgroundView.frame = self.bounds;
     
     CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, preferredPadding, contentFrame.size);
-    self.imageView.frame = CGRectMake(imageXOffset,
-                                      statusBarYOffset+imageVerticalPadding,
-                                      imageSize.width == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame),
-                                      imageSize.height == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame) - (imageVerticalPadding*2));
+    
+    
+    
     if (imageRounded == YES) {
-      self.imageView.layer.cornerRadius = MIN(imageSize.height, imageSize.width)/2;
-      self.imageView.clipsToBounds = YES;
+        // Force the image to be a square
+        CGFloat dimension = CGRectGetHeight(contentFrame);
+        self.imageView.frame = CGRectMake(imageXOffset,
+                                          statusBarYOffset+imageVerticalPadding,
+                                          dimension,
+                                          dimension - (imageVerticalPadding*2));
+        
+        // Set it as rounded
+        self.imageView.layer.cornerRadius = dimension/2;
+        self.imageView.clipsToBounds = YES;
+    } else {
+        self.imageView.frame = CGRectMake(imageXOffset,
+                                          statusBarYOffset+imageVerticalPadding,
+                                          imageSize.width == 0 ?
+                                          0 :
+                                          CGRectGetHeight(contentFrame),
+                                          imageSize.height == 0 ?
+                                          0 :
+                                          CGRectGetHeight(contentFrame) - (imageVerticalPadding*2));
     }
   
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);

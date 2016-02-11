@@ -28,6 +28,8 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *imageTintEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *imageTintSlider;
+@property (weak, nonatomic) IBOutlet UISlider *imageVerticalPaddingSlider;
+@property (weak, nonatomic) IBOutlet UILabel *lblImageVerticalPadding;
 
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *roundedImageSwitch;
@@ -133,8 +135,16 @@
     [self updateImageTintSwitch];
 }
 
+- (IBAction)sliderImageVerticalPaddingChanged:(UISlider *)sender {
+    [self updateVerticalPaddingLabel];
+}
+
 - (void)updateImageTintSwitch {
     self.imageTintEnabledSwitch.onTintColor = [UIColor colorWithHue:self.imageTintSlider.value saturation:1.0 brightness:1.0 alpha:1.0];
+}
+
+- (void)updateVerticalPaddingLabel {
+    self.lblImageVerticalPadding.text = [NSString stringWithFormat:@"%d", (int)roundf(self.imageVerticalPaddingSlider.value)];
 }
 
 - (IBAction)statusBarChanged:(UISwitch *)sender {
