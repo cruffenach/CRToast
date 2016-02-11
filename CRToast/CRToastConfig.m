@@ -355,6 +355,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastImageKey                            : NSStringFromClass([UIImage class]),
                                 kCRToastImageContentModeKey                 : NSStringFromClass([@(kCRImageContentModeDefault) class]),
                                 kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRImageAlignmentDefault) class]),
+                                kCRToastImageRoundedKey                     : NSStringFromClass([@(kCRImageRoundedDefault) class]),
                                 kCRToastImageTintKey                        : NSStringFromClass([UIColor class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
@@ -430,6 +431,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastImageContentModeKey])                kCRImageContentModeDefault              = [defaultOptions[kCRToastImageContentModeKey] integerValue];
     if (defaultOptions[kCRToastImageAlignmentKey])                  kCRImageAlignmentDefault                = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
     if (defaultOptions[kCRToastImageTintKey])                       kCRImageTintDefault                     = defaultOptions[kCRToastImageTintKey];
+    if (defaultOptions[kCRToastImageRoundedKey])                    kCRImageRoundedDefault                  = defaultOptions[kCRToastImageRoundedKey];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     if (defaultOptions[kCRToastActivityIndicatorAlignmentKey])      kCRActivityIndicatorAlignmentDefault    = [defaultOptions[kCRToastActivityIndicatorAlignmentKey] integerValue];

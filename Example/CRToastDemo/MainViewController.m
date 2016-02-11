@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *imageTintSlider;
 
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *roundedImageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *showActivityIndicatorSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
@@ -217,9 +218,10 @@ CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmente
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
-                                      kCRToastNotificationPreferredPaddingKey   : @(self.sliderPadding.value)} mutableCopy];
+                                      kCRToastNotificationPreferredPaddingKey   : @(self.sliderPadding.value),
+                                      kCRToastImageRoundedKey                   : @(self.roundedImageSwitch.on)} mutableCopy];
     if (self.showImageSwitch.on) {
-        options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+        options[kCRToastImageKey] = [UIImage imageNamed:@"test_picture"];
         options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
     }
     

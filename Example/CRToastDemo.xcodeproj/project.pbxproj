@@ -197,7 +197,7 @@
 				ORGANIZATIONNAME = "Collin Ruffenach";
 				TargetAttributes = {
 					5E2FFB5218367C01003333F8 = {
-						DevelopmentTeam = 7AM27DZVQU;
+						DevelopmentTeam = XYZ9TSFRN2;
 					};
 				};
 			};
@@ -384,7 +384,7 @@
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = CRToastDemo.self;
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -409,7 +409,7 @@
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = CRToastDemo.self;
 				PRODUCT_NAME = CRToastDemo;
 				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
