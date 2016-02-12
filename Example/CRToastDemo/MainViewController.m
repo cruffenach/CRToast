@@ -229,7 +229,8 @@ CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmente
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
                                       kCRToastNotificationPreferredPaddingKey   : @(self.sliderPadding.value),
-                                      kCRToastImageRoundedKey                   : @(self.roundedImageSwitch.on)} mutableCopy];
+                                      kCRToastImageRoundedKey                   : @(self.roundedImageSwitch.on),
+                                      kCRToastImageVerticalPaddingKey           : @(self.imageVerticalPaddingSlider.value)} mutableCopy];
     if (self.showImageSwitch.on) {
         options[kCRToastImageKey] = [UIImage imageNamed:@"test_picture"];
         options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));

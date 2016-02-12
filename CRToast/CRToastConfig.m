@@ -357,6 +357,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 kCRToastImageAlignmentKey                   : NSStringFromClass([@(kCRImageAlignmentDefault) class]),
                                 kCRToastImageRoundedKey                     : NSStringFromClass([@(kCRImageRoundedDefault) class]),
                                 kCRToastImageTintKey                        : NSStringFromClass([UIColor class]),
+                                kCRToastImageVerticalPaddingKey             : NSStringFromClass([@(kCRImageVerticalPaddingDefault) class]),
                                 kCRToastShowActivityIndicatorKey            : NSStringFromClass([@(kCRShowActivityIndicatorDefault) class]),
                                 kCRToastActivityIndicatorViewStyleKey       : NSStringFromClass([@(kCRActivityIndicatorViewStyleDefault) class]),
                                 kCRToastActivityIndicatorAlignmentKey       : NSStringFromClass([@(kCRActivityIndicatorAlignmentDefault) class]),
@@ -431,7 +432,8 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastImageContentModeKey])                kCRImageContentModeDefault              = [defaultOptions[kCRToastImageContentModeKey] integerValue];
     if (defaultOptions[kCRToastImageAlignmentKey])                  kCRImageAlignmentDefault                = [defaultOptions[kCRToastImageAlignmentKey] integerValue];
     if (defaultOptions[kCRToastImageTintKey])                       kCRImageTintDefault                     = defaultOptions[kCRToastImageTintKey];
-    if (defaultOptions[kCRToastImageRoundedKey])                    kCRImageRoundedDefault                  = defaultOptions[kCRToastImageRoundedKey];
+    if (defaultOptions[kCRToastImageRoundedKey])                    kCRImageRoundedDefault                  = [defaultOptions[kCRToastImageRoundedKey] boolValue];
+    if (defaultOptions[kCRToastImageVerticalPaddingKey])            kCRImageVerticalPaddingDefault          = [defaultOptions [kCRToastImageVerticalPaddingKey] integerValue];
     if (defaultOptions[kCRToastShowActivityIndicatorKey])           kCRShowActivityIndicatorDefault         = [defaultOptions[kCRToastShowActivityIndicatorKey] boolValue];
     if (defaultOptions[kCRToastActivityIndicatorViewStyleKey])      kCRActivityIndicatorViewStyleDefault    = [defaultOptions[kCRToastActivityIndicatorViewStyleKey] integerValue];
     if (defaultOptions[kCRToastActivityIndicatorAlignmentKey])      kCRActivityIndicatorAlignmentDefault    = [defaultOptions[kCRToastActivityIndicatorAlignmentKey] integerValue];
@@ -706,7 +708,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return _options[kCRToastImageTintKey] ?: kCRImageTintDefault;
 }
 
-- (CGFloat)imageVericalPadding {
+- (CGFloat)imageVerticalPadding {
   return _options[kCRToastImageVerticalPaddingKey] ?
   [_options[kCRToastImageVerticalPaddingKey] floatValue] :
   kCRImageVerticalPaddingDefault;

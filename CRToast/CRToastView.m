@@ -131,6 +131,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGSize imageSize = self.imageView.image.size;
     CGFloat preferredPadding = self.toast.preferredPadding;
     CGFloat imageVerticalPadding = self.toast.imageVerticalPadding;
+    NSLog(@"vertical padding: %f", imageVerticalPadding); // TODO: Remove
     BOOL imageRounded = self.toast.imageRounded;
   
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
