@@ -145,11 +145,11 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     
     if (imageRounded == YES) {
         // Force the image to be a square
-        CGFloat dimension = CGRectGetHeight(contentFrame);
+        CGFloat dimension = self.imageView.frame.size.height > 0 ? self.imageView.frame.size.height : CGRectGetHeight(contentFrame) - imageVerticalPadding*2;
         self.imageView.frame = CGRectMake(imageXOffset,
                                           statusBarYOffset+imageVerticalPadding,
                                           dimension,
-                                          dimension - (imageVerticalPadding*2));
+                                          dimension);
         
         // Set it as rounded
         self.imageView.layer.cornerRadius = dimension/2;
