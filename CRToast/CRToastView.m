@@ -163,6 +163,9 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
                                           imageSize.height == 0 ?
                                           0 :
                                           CGRectGetHeight(contentFrame) - (imageVerticalPadding*2));
+        
+        // Only clip to bounds when the image has padding
+        self.imageView.clipsToBounds = imageVerticalPadding > 0;
     }
   
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);

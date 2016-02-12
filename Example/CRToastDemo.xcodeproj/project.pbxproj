@@ -195,11 +195,6 @@
 			attributes = {
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Collin Ruffenach";
-				TargetAttributes = {
-					5E2FFB5218367C01003333F8 = {
-						DevelopmentTeam = XYZ9TSFRN2;
-					};
-				};
 			};
 			buildConfigurationList = 5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */;
 			compatibilityVersion = "Xcode 3.2";

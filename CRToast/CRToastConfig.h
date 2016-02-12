@@ -327,11 +327,16 @@ extern NSString *const kCRToastImageTintKey;
 
 /**
  The vertical padding used in this image. If supplied, it will create a padding of the specified amount of px above and below the image.
+ 
+ @note Providing `kCRToastImageContentModeKey` a UIViewContentMode.ScaleToFit is recommended when using this property.
  */
 extern NSString *const kCRToastImageVerticalPaddingKey;
 
 /**
  The image style to use. If true is supplied, it will make the image render as a circle. Expects a BOOL
+ 
+ 
+ @note Providing `kCRToastImageContentModeKey` a UIViewContentMode.ScaleToFit is recommended when using this property.
  */
 extern NSString *const kCRToastImageRoundedKey;
 
