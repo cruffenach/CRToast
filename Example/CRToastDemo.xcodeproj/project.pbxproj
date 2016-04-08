@@ -67,7 +67,6 @@
 
 /* Begin PBXFileReference section */
 		464D04DF1BD2248100E0E90A /* CRToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CRToast.xcodeproj; path = ../CRToast.xcodeproj; sourceTree = "<group>"; };
-		467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-CRToastDemo.a"; path = "Pods/../build/Debug-iphoneos/libPods-CRToastDemo.a"; sourceTree = "<group>"; };
 		5E2FFB5318367C01003333F8 /* CRToastDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRToastDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB5618367C01003333F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E2FFB5818367C01003333F8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,7 +130,6 @@
 		5E2FFB5518367C01003333F8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				467291551ABBF1DD0035359D /* libPods-CRToastDemo.a */,
 				5E2FFB5618367C01003333F8 /* Foundation.framework */,
 				5E2FFB5818367C01003333F8 /* CoreGraphics.framework */,
 				5E2FFB5A18367C01003333F8 /* UIKit.framework */,
