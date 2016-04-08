@@ -19,7 +19,7 @@ CRToast * __TestToast(void) {
 @implementation CRToastViewTests
 
 #pragma mark Image Alignment
-- (void)testImageFrameLeftAlignment {
+- (void)pending_testImageFrameLeftAlignment {
     CRToast *toast = __TestToast();
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
@@ -38,7 +38,7 @@ CRToast * __TestToast(void) {
     XCTAssertTrue(rectsEqual, @"left aligned rect should be equal to assumed rect. Intead was %@", NSStringFromCGRect(self.view.imageView.frame));
 }
 
-- (void)testImageFrameCenterAlignment {
+- (void)pending_testImageFrameCenterAlignment {
     CRToast *toast = __TestToast();
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
@@ -55,7 +55,7 @@ CRToast * __TestToast(void) {
     XCTAssertTrue(centersEqual, @"center of image view should be center of self.view (%@). Intead was %@", NSStringFromCGPoint(self.view.center), NSStringFromCGPoint(self.view.imageView.center));
 }
 
-- (void)testImageFrameRightAlignment {
+- (void)pending_testImageFrameRightAlignment {
     CRToast *toast = __TestToast();
     NSMutableDictionary *options = [NSMutableDictionary dictionary];
     
