@@ -11,7 +11,6 @@ install:
   if [ "$TEST_TYPE" = "iOS" ]; then
     gem install xcpretty -N --no-ri --no-rdoc
     gem update cocoapods
-    pod install
   elif [ "$TEST_TYPE" = Carthage ]; then    
     brew install carthage || brew upgrade carthage
   fi
