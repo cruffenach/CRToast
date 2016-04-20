@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CRToastManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/CRToastManager" class="dashAnchor"></a>
+    <a title="CRToastManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CRToast Docs</a> (42% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CRToast Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CRToastManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CRToast.html">CRToast</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastInteractionResponder.html">CRToastInteractionResponder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastManager.html">CRToastManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorAlignmentKey">kCRToastActivityIndicatorAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorViewStyleKey">kCRToastActivityIndicatorViewStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationGravityMagnitudeKey">kCRToastAnimationGravityMagnitudeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInDirectionKey">kCRToastAnimationInDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTimeIntervalKey">kCRToastAnimationInTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTypeKey">kCRToastAnimationInTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutDirectionKey">kCRToastAnimationOutDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTimeIntervalKey">kCRToastAnimationOutTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTypeKey">kCRToastAnimationOutTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringDampingKey">kCRToastAnimationSpringDampingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringInitialVelocityKey">kCRToastAnimationSpringInitialVelocityKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAutorotateKey">kCRToastAutorotateKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundColorKey">kCRToastBackgroundColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundViewKey">kCRToastBackgroundViewKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastCaptureDefaultWindowKey">kCRToastCaptureDefaultWindowKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastFontKey">kCRToastFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastForceUserInteractionKey">kCRToastForceUserInteractionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastIdentifierKey">kCRToastIdentifierKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageAlignmentKey">kCRToastImageAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageContentModeKey">kCRToastImageContentModeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageKey">kCRToastImageKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageTintKey">kCRToastImageTintKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastInteractionRespondersKey">kCRToastInteractionRespondersKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastKeepNavigationBarBorderKey">kCRToastKeepNavigationBarBorderKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredHeightKey">kCRToastNotificationPreferredHeightKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredPaddingKey">kCRToastNotificationPreferredPaddingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPresentationTypeKey">kCRToastNotificationPresentationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationTypeKey">kCRToastNotificationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastShowActivityIndicatorKey">kCRToastShowActivityIndicatorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastStatusBarStyleKey">kCRToastStatusBarStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleFontKey">kCRToastSubtitleFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextAlignmentKey">kCRToastSubtitleTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextColorKey">kCRToastSubtitleTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextKey">kCRToastSubtitleTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextMaxNumberOfLinesKey">kCRToastSubtitleTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowColorKey">kCRToastSubtitleTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowOffsetKey">kCRToastSubtitleTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextAlignmentKey">kCRToastTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextColorKey">kCRToastTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextKey">kCRToastTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextMaxNumberOfLinesKey">kCRToastTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowColorKey">kCRToastTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowOffsetKey">kCRToastTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTimeIntervalKey">kCRToastTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastUnderStatusBarKey">kCRToastUnderStatusBarKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAccessoryViewAlignment.html">CRToastAccessoryViewAlignment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationDirection.html">CRToastAnimationDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationType.html">CRToastAnimationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastInteractionType.html">CRToastInteractionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastPresentationType.html">CRToastPresentationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastState.html">CRToastState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastType.html">CRToastType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@NSStringFromCRToastInteractionType">NSStringFromCRToastInteractionType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CRToastManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">CRToastManager</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>A toast manager providing Class level API&rsquo;s for the presentation of notifications with a variery of options</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)setDefaultOptions:"></a>
+                    <a name="//apple_ref/objc/Method/+setDefaultOptions:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)setDefaultOptions:">+setDefaultOptions:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets the default options that CRToast will use when displaying a notification
+- parameter: defaultOptions A dictionary of the options that are to be used as defaults for all subsequent
+showNotificationWithOptions:completionBlock and showNotificationWithMessage:completionBlock: calls</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setDefaultOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">defaultOptions</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>defaultOptions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A dictionary of the options that are to be used as defaults for all subsequent
+showNotificationWithOptions:completionBlock and showNotificationWithMessage:completionBlock: calls</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)showNotificationWithOptions:apperanceBlock:completionBlock:"></a>
+                    <a name="//apple_ref/objc/Method/+showNotificationWithOptions:apperanceBlock:completionBlock:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)showNotificationWithOptions:apperanceBlock:completionBlock:">+showNotificationWithOptions:apperanceBlock:completionBlock:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Queues a notification to be shown with a collection of options.
+- parameter: options A dictionary of the options that are to be used when showing the notification, defaults
+will be used for all non present options. Options passed in will override defaults
+- parameter: completion A completion block to be fired at the completion of the dismisall of the notification
+- parameter: appearance A  block to be fired when the notification is actually shown &ndash; notifications can queue,
+and this block will only fire when the notification actually becomes visible to the user. Useful for
+synchronizing sound / vibration.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showNotificationWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span>
+                     <span class="nf">apperanceBlock</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">appearance</span>
+                    <span class="nf">completionBlock</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A dictionary of the options that are to be used when showing the notification, defaults
+will be used for all non present options. Options passed in will override defaults</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion block to be fired at the completion of the dismisall of the notification</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>appearance</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A  block to be fired when the notification is actually shown &ndash; notifications can queue,
+and this block will only fire when the notification actually becomes visible to the user. Useful for
+synchronizing sound / vibration.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)showNotificationWithOptions:completionBlock:"></a>
+                    <a name="//apple_ref/objc/Method/+showNotificationWithOptions:completionBlock:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)showNotificationWithOptions:completionBlock:">+showNotificationWithOptions:completionBlock:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Queues a notification to be shown with a collection of options.
+- parameter: options A dictionary of the options that are to be used when showing the notification, defaults
+will be used for all non present options. Options passed in will override defaults
+- parameter: completion A completion block to be fired at the completion of the dismisall of the notification</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showNotificationWithOptions</span><span class="p">:(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span>
+                    <span class="nf">completionBlock</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A dictionary of the options that are to be used when showing the notification, defaults
+will be used for all non present options. Options passed in will override defaults</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion block to be fired at the completion of the dismisall of the notification</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)showNotificationWithMessage:completionBlock:"></a>
+                    <a name="//apple_ref/objc/Method/+showNotificationWithMessage:completionBlock:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)showNotificationWithMessage:completionBlock:">+showNotificationWithMessage:completionBlock:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Queues a notification to be shown with a given message
+- parameter: options The notification message to be shown. Defaults will be used for all other notification
+properties
+- parameter: completion A completion block to be fired at the completion of the dismisall of the notification</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">showNotificationWithMessage</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">message</span>
+                    <span class="nf">completionBlock</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The notification message to be shown. Defaults will be used for all other notification
+properties</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A completion block to be fired at the completion of the dismisall of the notification</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)dismissNotification:"></a>
+                    <a name="//apple_ref/objc/Method/+dismissNotification:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)dismissNotification:">+dismissNotification:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Immidiately begins the (un)animated dismisal of a notification
+- parameter: animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissNotification</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)dismissAllNotifications:"></a>
+                    <a name="//apple_ref/objc/Method/+dismissAllNotifications:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)dismissAllNotifications:">+dismissAllNotifications:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Immidiately begins the (un)animated dismisal of a notification and canceling all others
+- parameter: animated If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissAllNotifications</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)dismissAllNotificationsWithIdentifier:animated:"></a>
+                    <a name="//apple_ref/objc/Method/+dismissAllNotificationsWithIdentifier:animated:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)dismissAllNotificationsWithIdentifier:animated:">+dismissAllNotificationsWithIdentifier:animated:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Immidiately begins the (un)animated dismisal of a notification and removing of all notifications 
+with specified identifier
+- parameter: identifier <code>kCRToastIdentiferKey</code> specified for the toasts in queue. If no toasts are found with that identifier, none will be removed.
+- parameter: animated   If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dismissAllNotificationsWithIdentifier</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifer</span>
+                                     <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><code>kCRToastIdentiferKey</code> specified for the toasts in queue. If no toasts are found with that identifier, none will be removed.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If YES the notification will dismiss with its configure animation, otherwise it will immidiately disappear</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)notificationIdentifiersInQueue"></a>
+                    <a name="//apple_ref/objc/Method/+notificationIdentifiersInQueue" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)notificationIdentifiersInQueue">+notificationIdentifiersInQueue</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Gets the array of notification identifiers currently in the @c CRToastManager notifications queue.
+If no identifier is specified for the @c kCRToastIdentifier when created, it will be excluded from this collection.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">notificationIdentifiersInQueue</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastManager(cm)isShowingNotification"></a>
+                    <a name="//apple_ref/objc/Method/+isShowingNotification" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastManager(cm)isShowingNotification">+isShowingNotification</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Checks if there is a notification currently being displayed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">isShowingNotification</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/cruffenach/CRToast" target="_blank" rel="external">Collin Ruffenach and Ashton Williams</a>. All rights reserved. (Last updated: 2016-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

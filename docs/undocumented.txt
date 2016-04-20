@@ -1,0 +1,193 @@
+CRToastConfig.h
+	CRToastInteractionTypeSwipeUp           = 1 << 0
+	CRToastInteractionTypeSwipeLeft         = 1 << 1
+	CRToastInteractionTypeSwipeDown         = 1 << 2
+	CRToastInteractionTypeSwipeRight        = 1 << 3
+	CRToastInteractionTypeTapOnce           = 1 << 4
+	CRToastInteractionTypeTapTwice          = 1 << 5
+	CRToastInteractionTypeTwoFingerTapOnce  = 1 << 6
+	CRToastInteractionTypeTwoFingerTapTwice = 1 << 7
+	CRToastInteractionTypeSwipe             = (CRToastInteractionTypeSwipeUp    |
+                                               CRToastInteractionTypeSwipeLeft  |
+                                               CRToastInteractionTypeSwipeDown  |
+                                               CRToastInteractionTypeSwipeRight)
+	CRToastInteractionTypeTap               = (CRToastInteractionTypeTapOnce            |
+                                               CRToastInteractionTypeTapTwice           |
+                                               CRToastInteractionTypeTwoFingerTapOnce   |
+                                               CRToastInteractionTypeTwoFingerTapTwice)
+	CRToastInteractionTypeAll               = (CRToastInteractionTypeSwipe | CRToastInteractionTypeTap)
+	extern NSString *NSStringFromCRToastInteractionType(CRToastInteractionType interactionType)
+	CRToastTypeStatusBar
+	CRToastTypeNavigationBar
+	CRToastTypeCustom
+	CRToastPresentationTypeCover
+	CRToastPresentationTypePush
+	CRToastAnimationDirectionTop
+	CRToastAnimationDirectionBottom
+	CRToastAnimationDirectionLeft
+	CRToastAnimationDirectionRight
+	CRToastAnimationTypeLinear
+	CRToastAnimationTypeSpring
+	CRToastAnimationTypeGravity
+	CRToastStateWaiting
+	CRToastStateEntering
+	CRToastStateDisplaying
+	CRToastStateExiting
+	CRToastStateCompleted
+	CRToastAccessoryViewAlignmentLeft
+	CRToastAccessoryViewAlignmentCenter
+	CRToastAccessoryViewAlignmentRight
+	@interface CRToast : NSObject <UIGestureRecognizerDelegate>
+
+@property (nonatomic, strong) NSUUID *uuid;
+@property (nonatomic, assign) CRToastState state;
+
+//Top Level Properties
+
+@property (nonatomic, strong) NSDictionary *options;
+@property (nonatomic, copy) void(^completion)(void);
+@property (nonatomic, copy) void(^appearance)(void);
+
+//Interactions
+
+@property (nonatomic, strong) NSArray *gestureRecognizers;
+
+//Autorotate
+
+@property (nonatomic, assign) BOOL autorotate;
+
+//Views and Layout Data
+
+@property (nonatomic, readonly) UIView *notificationView;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect notificationViewAnimationFrame2;
+@property (nonatomic, readonly) UIView *statusBarView;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1;
+@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2;
+@property (nonatomic, strong) UIDynamicAnimator *animator;
+
+//Read Only Convinence Properties Providing Default Values or Values from Options
+
+@property (nonatomic, readonly) CRToastType notificationType;
+@property (nonatomic, assign) CGFloat preferredHeight;
+@property (nonatomic, assign) CGFloat preferredPadding;
+@property (nonatomic, readonly) CRToastPresentationType presentationType;
+@property (nonatomic, readonly) BOOL displayUnderStatusBar;
+@property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder;
+
+@property (nonatomic, readonly) CRToastAnimationType inAnimationType;
+@property (nonatomic, readonly) CRToastAnimationType outAnimationType;
+@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection;
+@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection;
+@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval;
+@property (nonatomic, readonly) NSTimeInterval timeInterval;
+@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval;
+
+@property (nonatomic, readonly) CGFloat animationSpringDamping;
+@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity;
+@property (nonatomic, readonly) CGFloat animationGravityMagnitude;
+
+@property (nonatomic, readonly) NSString *text;
+@property (nonatomic, readonly) UIFont *font;
+@property (nonatomic, readonly) UIColor *textColor;
+@property (nonatomic, readonly) NSTextAlignment textAlignment;
+@property (nonatomic, readonly) UIColor *textShadowColor;
+@property (nonatomic, readonly) CGSize textShadowOffset;
+@property (nonatomic, readonly) NSInteger textMaxNumberOfLines;
+
+@property (nonatomic, readonly) NSString *subtitleText;
+@property (nonatomic, readonly) UIFont *subtitleFont;
+@property (nonatomic, readonly) UIColor *subtitleTextColor;
+@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment;
+@property (nonatomic, readonly) UIColor *subtitleTextShadowColor;
+@property (nonatomic, readonly) CGSize subtitleTextShadowOffset;
+@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines;
+@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle;
+@property (nonatomic, readonly) UIColor *backgroundColor;
+@property (nonatomic, readonly) UIView *backgroundView;
+@property (nonatomic, readonly) UIImage *image;
+@property (nonatomic, readonly) UIViewContentMode imageContentMode;
+@property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;
+@property (nonatomic, readonly) UIColor *imageTint;
+@property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
+@property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
+@property (nonatomic, readonly) BOOL showActivityIndicator;
+@property (nonatomic, readonly) BOOL forceUserInteraction;
+
+@property (nonatomic, readonly) CGVector inGravityDirection;
+@property (nonatomic, readonly) CGVector outGravityDirection;
+
+@property (nonatomic, readonly) CGPoint inCollisionPoint1;
+@property (nonatomic, readonly) CGPoint inCollisionPoint2;
+@property (nonatomic, readonly) CGPoint outCollisionPoint1;
+@property (nonatomic, readonly) CGPoint outCollisionPoint2;
+
+- (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
+- (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
+- (void)initiateAnimator:(UIView *)view;
+
+@end
+	@property (nonatomic, strong) NSUUID *uuid
+	@property (nonatomic, assign) CRToastState state
+	@property (nonatomic, strong) NSDictionary *options
+	@property (nonatomic, copy) void(^completion
+	@property (nonatomic, copy) void(^appearance
+	@property (nonatomic, strong) NSArray *gestureRecognizers
+	@property (nonatomic, assign) BOOL autorotate
+	@property (nonatomic, readonly) UIView *notificationView
+	@property (nonatomic, readonly) CGRect notificationViewAnimationFrame1
+	@property (nonatomic, readonly) CGRect notificationViewAnimationFrame2
+	@property (nonatomic, readonly) UIView *statusBarView
+	@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame1
+	@property (nonatomic, readonly) CGRect statusBarViewAnimationFrame2
+	@property (nonatomic, strong) UIDynamicAnimator *animator
+	@property (nonatomic, readonly) CRToastType notificationType
+	@property (nonatomic, assign) CGFloat preferredHeight
+	@property (nonatomic, assign) CGFloat preferredPadding
+	@property (nonatomic, readonly) CRToastPresentationType presentationType
+	@property (nonatomic, readonly) BOOL displayUnderStatusBar
+	@property (nonatomic, readonly) BOOL shouldKeepNavigationBarBorder
+	@property (nonatomic, readonly) CRToastAnimationType inAnimationType
+	@property (nonatomic, readonly) CRToastAnimationType outAnimationType
+	@property (nonatomic, readonly) CRToastAnimationDirection inAnimationDirection
+	@property (nonatomic, readonly) CRToastAnimationDirection outAnimationDirection
+	@property (nonatomic, readonly) NSTimeInterval animateInTimeInterval
+	@property (nonatomic, readonly) NSTimeInterval timeInterval
+	@property (nonatomic, readonly) NSTimeInterval animateOutTimeInterval
+	@property (nonatomic, readonly) CGFloat animationSpringDamping
+	@property (nonatomic, readonly) CGFloat animationSpringInitialVelocity
+	@property (nonatomic, readonly) CGFloat animationGravityMagnitude
+	@property (nonatomic, readonly) NSString *text
+	@property (nonatomic, readonly) UIFont *font
+	@property (nonatomic, readonly) UIColor *textColor
+	@property (nonatomic, readonly) NSTextAlignment textAlignment
+	@property (nonatomic, readonly) UIColor *textShadowColor
+	@property (nonatomic, readonly) CGSize textShadowOffset
+	@property (nonatomic, readonly) NSInteger textMaxNumberOfLines
+	@property (nonatomic, readonly) NSString *subtitleText
+	@property (nonatomic, readonly) UIFont *subtitleFont
+	@property (nonatomic, readonly) UIColor *subtitleTextColor
+	@property (nonatomic, readonly) NSTextAlignment subtitleTextAlignment
+	@property (nonatomic, readonly) UIColor *subtitleTextShadowColor
+	@property (nonatomic, readonly) CGSize subtitleTextShadowOffset
+	@property (nonatomic, readonly) NSInteger subtitleTextMaxNumberOfLines
+	@property (nonatomic, readonly) UIStatusBarStyle statusBarStyle
+	@property (nonatomic, readonly) UIColor *backgroundColor
+	@property (nonatomic, readonly) UIView *backgroundView
+	@property (nonatomic, readonly) UIImage *image
+	@property (nonatomic, readonly) UIViewContentMode imageContentMode
+	@property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment
+	@property (nonatomic, readonly) UIColor *imageTint
+	@property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle
+	@property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment
+	@property (nonatomic, readonly) BOOL showActivityIndicator
+	@property (nonatomic, readonly) BOOL forceUserInteraction
+	@property (nonatomic, readonly) CGVector inGravityDirection
+	@property (nonatomic, readonly) CGVector outGravityDirection
+	@property (nonatomic, readonly) CGPoint inCollisionPoint1
+	@property (nonatomic, readonly) CGPoint inCollisionPoint2
+	@property (nonatomic, readonly) CGPoint outCollisionPoint1
+	@property (nonatomic, readonly) CGPoint outCollisionPoint2
+	- (void)swipeGestureRecognizerSwiped:(CRToastSwipeGestureRecognizer*)swipeGestureRecognizer;
+	- (void)tapGestureRecognizerTapped:(CRToastTapGestureRecognizer*)tapGestureRecognizer;
+	- (void)initiateAnimator:(UIView *)view;

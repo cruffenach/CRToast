@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CRToast Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/CRToast" class="dashAnchor"></a>
+    <a title="CRToast Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CRToast Docs</a> (42% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CRToast Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CRToast Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CRToast.html">CRToast</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastInteractionResponder.html">CRToastInteractionResponder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastManager.html">CRToastManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorAlignmentKey">kCRToastActivityIndicatorAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorViewStyleKey">kCRToastActivityIndicatorViewStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationGravityMagnitudeKey">kCRToastAnimationGravityMagnitudeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInDirectionKey">kCRToastAnimationInDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTimeIntervalKey">kCRToastAnimationInTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTypeKey">kCRToastAnimationInTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutDirectionKey">kCRToastAnimationOutDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTimeIntervalKey">kCRToastAnimationOutTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTypeKey">kCRToastAnimationOutTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringDampingKey">kCRToastAnimationSpringDampingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringInitialVelocityKey">kCRToastAnimationSpringInitialVelocityKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAutorotateKey">kCRToastAutorotateKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundColorKey">kCRToastBackgroundColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundViewKey">kCRToastBackgroundViewKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastCaptureDefaultWindowKey">kCRToastCaptureDefaultWindowKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastFontKey">kCRToastFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastForceUserInteractionKey">kCRToastForceUserInteractionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastIdentifierKey">kCRToastIdentifierKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageAlignmentKey">kCRToastImageAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageContentModeKey">kCRToastImageContentModeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageKey">kCRToastImageKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageTintKey">kCRToastImageTintKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastInteractionRespondersKey">kCRToastInteractionRespondersKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastKeepNavigationBarBorderKey">kCRToastKeepNavigationBarBorderKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredHeightKey">kCRToastNotificationPreferredHeightKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredPaddingKey">kCRToastNotificationPreferredPaddingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPresentationTypeKey">kCRToastNotificationPresentationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationTypeKey">kCRToastNotificationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastShowActivityIndicatorKey">kCRToastShowActivityIndicatorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastStatusBarStyleKey">kCRToastStatusBarStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleFontKey">kCRToastSubtitleFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextAlignmentKey">kCRToastSubtitleTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextColorKey">kCRToastSubtitleTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextKey">kCRToastSubtitleTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextMaxNumberOfLinesKey">kCRToastSubtitleTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowColorKey">kCRToastSubtitleTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowOffsetKey">kCRToastSubtitleTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextAlignmentKey">kCRToastTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextColorKey">kCRToastTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextKey">kCRToastTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextMaxNumberOfLinesKey">kCRToastTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowColorKey">kCRToastTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowOffsetKey">kCRToastTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTimeIntervalKey">kCRToastTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastUnderStatusBarKey">kCRToastUnderStatusBarKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAccessoryViewAlignment.html">CRToastAccessoryViewAlignment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationDirection.html">CRToastAnimationDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationType.html">CRToastAnimationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastInteractionType.html">CRToastInteractionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastPresentationType.html">CRToastPresentationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastState.html">CRToastState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastType.html">CRToastType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@NSStringFromCRToastInteractionType">NSStringFromCRToastInteractionType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CRToast</h1>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)uuid"></a>
+                    <a name="//apple_ref/objc/Property/uuid" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)uuid">uuid</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)state"></a>
+                    <a name="//apple_ref/objc/Property/state" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)state">state</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)options"></a>
+                    <a name="//apple_ref/objc/Property/options" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)options">options</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)completion"></a>
+                    <a name="//apple_ref/objc/Property/completion" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)completion">completion</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)appearance"></a>
+                    <a name="//apple_ref/objc/Property/appearance" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)appearance">appearance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)gestureRecognizers"></a>
+                    <a name="//apple_ref/objc/Property/gestureRecognizers" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)gestureRecognizers">gestureRecognizers</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)autorotate"></a>
+                    <a name="//apple_ref/objc/Property/autorotate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)autorotate">autorotate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)notificationView"></a>
+                    <a name="//apple_ref/objc/Property/notificationView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)notificationView">notificationView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)notificationViewAnimationFrame1"></a>
+                    <a name="//apple_ref/objc/Property/notificationViewAnimationFrame1" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)notificationViewAnimationFrame1">notificationViewAnimationFrame1</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)notificationViewAnimationFrame2"></a>
+                    <a name="//apple_ref/objc/Property/notificationViewAnimationFrame2" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)notificationViewAnimationFrame2">notificationViewAnimationFrame2</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)statusBarView"></a>
+                    <a name="//apple_ref/objc/Property/statusBarView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)statusBarView">statusBarView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)statusBarViewAnimationFrame1"></a>
+                    <a name="//apple_ref/objc/Property/statusBarViewAnimationFrame1" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)statusBarViewAnimationFrame1">statusBarViewAnimationFrame1</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)statusBarViewAnimationFrame2"></a>
+                    <a name="//apple_ref/objc/Property/statusBarViewAnimationFrame2" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)statusBarViewAnimationFrame2">statusBarViewAnimationFrame2</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animator"></a>
+                    <a name="//apple_ref/objc/Property/animator" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animator">animator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)notificationType"></a>
+                    <a name="//apple_ref/objc/Property/notificationType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)notificationType">notificationType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)preferredHeight"></a>
+                    <a name="//apple_ref/objc/Property/preferredHeight" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)preferredHeight">preferredHeight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)preferredPadding"></a>
+                    <a name="//apple_ref/objc/Property/preferredPadding" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)preferredPadding">preferredPadding</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)presentationType"></a>
+                    <a name="//apple_ref/objc/Property/presentationType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)presentationType">presentationType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)displayUnderStatusBar"></a>
+                    <a name="//apple_ref/objc/Property/displayUnderStatusBar" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)displayUnderStatusBar">displayUnderStatusBar</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)shouldKeepNavigationBarBorder"></a>
+                    <a name="//apple_ref/objc/Property/shouldKeepNavigationBarBorder" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)shouldKeepNavigationBarBorder">shouldKeepNavigationBarBorder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)inAnimationType"></a>
+                    <a name="//apple_ref/objc/Property/inAnimationType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)inAnimationType">inAnimationType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)outAnimationType"></a>
+                    <a name="//apple_ref/objc/Property/outAnimationType" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)outAnimationType">outAnimationType</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)inAnimationDirection"></a>
+                    <a name="//apple_ref/objc/Property/inAnimationDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)inAnimationDirection">inAnimationDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)outAnimationDirection"></a>
+                    <a name="//apple_ref/objc/Property/outAnimationDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)outAnimationDirection">outAnimationDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animateInTimeInterval"></a>
+                    <a name="//apple_ref/objc/Property/animateInTimeInterval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animateInTimeInterval">animateInTimeInterval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)timeInterval"></a>
+                    <a name="//apple_ref/objc/Property/timeInterval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)timeInterval">timeInterval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animateOutTimeInterval"></a>
+                    <a name="//apple_ref/objc/Property/animateOutTimeInterval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animateOutTimeInterval">animateOutTimeInterval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animationSpringDamping"></a>
+                    <a name="//apple_ref/objc/Property/animationSpringDamping" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animationSpringDamping">animationSpringDamping</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animationSpringInitialVelocity"></a>
+                    <a name="//apple_ref/objc/Property/animationSpringInitialVelocity" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animationSpringInitialVelocity">animationSpringInitialVelocity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)animationGravityMagnitude"></a>
+                    <a name="//apple_ref/objc/Property/animationGravityMagnitude" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)animationGravityMagnitude">animationGravityMagnitude</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)text"></a>
+                    <a name="//apple_ref/objc/Property/text" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)text">text</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)font"></a>
+                    <a name="//apple_ref/objc/Property/font" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)font">font</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)textColor"></a>
+                    <a name="//apple_ref/objc/Property/textColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)textColor">textColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)textAlignment"></a>
+                    <a name="//apple_ref/objc/Property/textAlignment" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)textAlignment">textAlignment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)textShadowColor"></a>
+                    <a name="//apple_ref/objc/Property/textShadowColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)textShadowColor">textShadowColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)textShadowOffset"></a>
+                    <a name="//apple_ref/objc/Property/textShadowOffset" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)textShadowOffset">textShadowOffset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)textMaxNumberOfLines"></a>
+                    <a name="//apple_ref/objc/Property/textMaxNumberOfLines" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)textMaxNumberOfLines">textMaxNumberOfLines</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleText"></a>
+                    <a name="//apple_ref/objc/Property/subtitleText" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleText">subtitleText</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleFont"></a>
+                    <a name="//apple_ref/objc/Property/subtitleFont" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleFont">subtitleFont</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleTextColor"></a>
+                    <a name="//apple_ref/objc/Property/subtitleTextColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleTextColor">subtitleTextColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleTextAlignment"></a>
+                    <a name="//apple_ref/objc/Property/subtitleTextAlignment" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleTextAlignment">subtitleTextAlignment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleTextShadowColor"></a>
+                    <a name="//apple_ref/objc/Property/subtitleTextShadowColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleTextShadowColor">subtitleTextShadowColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleTextShadowOffset"></a>
+                    <a name="//apple_ref/objc/Property/subtitleTextShadowOffset" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleTextShadowOffset">subtitleTextShadowOffset</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)subtitleTextMaxNumberOfLines"></a>
+                    <a name="//apple_ref/objc/Property/subtitleTextMaxNumberOfLines" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)subtitleTextMaxNumberOfLines">subtitleTextMaxNumberOfLines</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)statusBarStyle"></a>
+                    <a name="//apple_ref/objc/Property/statusBarStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)statusBarStyle">statusBarStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)backgroundColor"></a>
+                    <a name="//apple_ref/objc/Property/backgroundColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)backgroundColor">backgroundColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)backgroundView"></a>
+                    <a name="//apple_ref/objc/Property/backgroundView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)backgroundView">backgroundView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)image"></a>
+                    <a name="//apple_ref/objc/Property/image" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)image">image</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)imageContentMode"></a>
+                    <a name="//apple_ref/objc/Property/imageContentMode" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)imageContentMode">imageContentMode</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)imageAlignment"></a>
+                    <a name="//apple_ref/objc/Property/imageAlignment" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)imageAlignment">imageAlignment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)imageTint"></a>
+                    <a name="//apple_ref/objc/Property/imageTint" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)imageTint">imageTint</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)activityIndicatorViewStyle"></a>
+                    <a name="//apple_ref/objc/Property/activityIndicatorViewStyle" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)activityIndicatorViewStyle">activityIndicatorViewStyle</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)activityViewAlignment"></a>
+                    <a name="//apple_ref/objc/Property/activityViewAlignment" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)activityViewAlignment">activityViewAlignment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)showActivityIndicator"></a>
+                    <a name="//apple_ref/objc/Property/showActivityIndicator" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)showActivityIndicator">showActivityIndicator</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)forceUserInteraction"></a>
+                    <a name="//apple_ref/objc/Property/forceUserInteraction" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)forceUserInteraction">forceUserInteraction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)inGravityDirection"></a>
+                    <a name="//apple_ref/objc/Property/inGravityDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)inGravityDirection">inGravityDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)outGravityDirection"></a>
+                    <a name="//apple_ref/objc/Property/outGravityDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)outGravityDirection">outGravityDirection</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)inCollisionPoint1"></a>
+                    <a name="//apple_ref/objc/Property/inCollisionPoint1" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)inCollisionPoint1">inCollisionPoint1</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)inCollisionPoint2"></a>
+                    <a name="//apple_ref/objc/Property/inCollisionPoint2" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)inCollisionPoint2">inCollisionPoint2</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)outCollisionPoint1"></a>
+                    <a name="//apple_ref/objc/Property/outCollisionPoint1" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)outCollisionPoint1">outCollisionPoint1</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(py)outCollisionPoint2"></a>
+                    <a name="//apple_ref/objc/Property/outCollisionPoint2" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(py)outCollisionPoint2">outCollisionPoint2</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(im)swipeGestureRecognizerSwiped:"></a>
+                    <a name="//apple_ref/objc/Method/-swipeGestureRecognizerSwiped:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(im)swipeGestureRecognizerSwiped:">-swipeGestureRecognizerSwiped:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(im)tapGestureRecognizerTapped:"></a>
+                    <a name="//apple_ref/objc/Method/-tapGestureRecognizerTapped:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(im)tapGestureRecognizerTapped:">-tapGestureRecognizerTapped:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToast(im)initiateAnimator:"></a>
+                    <a name="//apple_ref/objc/Method/-initiateAnimator:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToast(im)initiateAnimator:">-initiateAnimator:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/cruffenach/CRToast" target="_blank" rel="external">Collin Ruffenach and Ashton Williams</a>. All rights reserved. (Last updated: 2016-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

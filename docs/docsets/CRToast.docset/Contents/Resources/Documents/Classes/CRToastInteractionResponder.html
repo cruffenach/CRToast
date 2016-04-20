@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CRToastInteractionResponder Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/objc/Class/CRToastInteractionResponder" class="dashAnchor"></a>
+    <a title="CRToastInteractionResponder Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">CRToast Docs</a> (42% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">CRToast Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        CRToastInteractionResponder Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/CRToast.html">CRToast</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastInteractionResponder.html">CRToastInteractionResponder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CRToastManager.html">CRToastManager</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Constants.html">Constants</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorAlignmentKey">kCRToastActivityIndicatorAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastActivityIndicatorViewStyleKey">kCRToastActivityIndicatorViewStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationGravityMagnitudeKey">kCRToastAnimationGravityMagnitudeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInDirectionKey">kCRToastAnimationInDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTimeIntervalKey">kCRToastAnimationInTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationInTypeKey">kCRToastAnimationInTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutDirectionKey">kCRToastAnimationOutDirectionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTimeIntervalKey">kCRToastAnimationOutTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationOutTypeKey">kCRToastAnimationOutTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringDampingKey">kCRToastAnimationSpringDampingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAnimationSpringInitialVelocityKey">kCRToastAnimationSpringInitialVelocityKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastAutorotateKey">kCRToastAutorotateKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundColorKey">kCRToastBackgroundColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastBackgroundViewKey">kCRToastBackgroundViewKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastCaptureDefaultWindowKey">kCRToastCaptureDefaultWindowKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastFontKey">kCRToastFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastForceUserInteractionKey">kCRToastForceUserInteractionKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastIdentifierKey">kCRToastIdentifierKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageAlignmentKey">kCRToastImageAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageContentModeKey">kCRToastImageContentModeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageKey">kCRToastImageKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastImageTintKey">kCRToastImageTintKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastInteractionRespondersKey">kCRToastInteractionRespondersKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastKeepNavigationBarBorderKey">kCRToastKeepNavigationBarBorderKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredHeightKey">kCRToastNotificationPreferredHeightKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPreferredPaddingKey">kCRToastNotificationPreferredPaddingKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationPresentationTypeKey">kCRToastNotificationPresentationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastNotificationTypeKey">kCRToastNotificationTypeKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastShowActivityIndicatorKey">kCRToastShowActivityIndicatorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastStatusBarStyleKey">kCRToastStatusBarStyleKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleFontKey">kCRToastSubtitleFontKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextAlignmentKey">kCRToastSubtitleTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextColorKey">kCRToastSubtitleTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextKey">kCRToastSubtitleTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextMaxNumberOfLinesKey">kCRToastSubtitleTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowColorKey">kCRToastSubtitleTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastSubtitleTextShadowOffsetKey">kCRToastSubtitleTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextAlignmentKey">kCRToastTextAlignmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextColorKey">kCRToastTextColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextKey">kCRToastTextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextMaxNumberOfLinesKey">kCRToastTextMaxNumberOfLinesKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowColorKey">kCRToastTextShadowColorKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTextShadowOffsetKey">kCRToastTextShadowOffsetKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastTimeIntervalKey">kCRToastTimeIntervalKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@kCRToastUnderStatusBarKey">kCRToastUnderStatusBarKey</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAccessoryViewAlignment.html">CRToastAccessoryViewAlignment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationDirection.html">CRToastAnimationDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastAnimationType.html">CRToastAnimationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastInteractionType.html">CRToastInteractionType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastPresentationType.html">CRToastPresentationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastState.html">CRToastState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/CRToastType.html">CRToastType</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Type Definitions.html">Type Definitions</a>
+            <ul class="nav-group-tasks">
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@NSStringFromCRToastInteractionType">NSStringFromCRToastInteractionType</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>CRToastInteractionResponder</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="k">@interface</span> <span class="nc">CRToastInteractionResponder</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                </div>
+              </div>
+            <p>CRToastInteractionResponder is a container object to configure responses to user interactions with a notification. A collection of interaction responders can be included in the
+options for any given notification or in defaults.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)CRToastInteractionResponder(cm)interactionResponderWithInteractionType:automaticallyDismiss:block:"></a>
+                    <a name="//apple_ref/objc/Method/+interactionResponderWithInteractionType:automaticallyDismiss:block:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)CRToastInteractionResponder(cm)interactionResponderWithInteractionType:automaticallyDismiss:block:">+interactionResponderWithInteractionType:automaticallyDismiss:block:</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an interaction responder for a given interaction type.
+- parameter: interactionType The kind of interaction that will trigger the responder
+- parameter: automaticallyDismiss A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
+animation will begin immidiately upon encountering the interaction.
+- parameter: block A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the
+block firing</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight"><code><span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span>
+    <span class="nf">interactionResponderWithInteractionType</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">CRToastInteractionType</span><span class="p">)</span><span class="nv">interactionType</span>
+                       <span class="nf">automaticallyDismiss</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">automaticallyDismiss</span>
+                                      <span class="nf">block</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CRToastInteractionType</span><span class="p">))</span>
+                                                <span class="n">block</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>interactionType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The kind of interaction that will trigger the responder</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>automaticallyDismiss</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A BOOL indiciating if the notification should automatically be dismissed on the interaction being observed. If YES the configured notification dismisall
+animation will begin immidiately upon encountering the interaction.</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>block</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block of code to be called immidiately upon the interaction being encountered. The block will be provided the specific CRToastInteractionType that resulted in the
+block firing</p>
+
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2016 <a class="link" href="https://github.com/cruffenach/CRToast" target="_blank" rel="external">Collin Ruffenach and Ashton Williams</a>. All rights reserved. (Last updated: 2016-04-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.5.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
