@@ -5,6 +5,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "UINavigationControllerWIthUpsideDownSupport.h"
 #import <CRToast/CRToast.h>
 
 @implementation AppDelegate
@@ -18,7 +19,7 @@
         
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil]];
+    UINavigationController *navigationController = [[UINavigationControllerWIthUpsideDownSupport alloc] initWithRootViewController:[[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil]];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     return YES;
