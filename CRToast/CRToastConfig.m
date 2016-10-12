@@ -583,7 +583,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (CRToastAnimationDirection)outAnimationDirection {
-    return _options[kCRToastAnimationInDirectionKey] ?
+    return _options[kCRToastAnimationOutDirectionKey] ?
     [_options[kCRToastAnimationOutDirectionKey] integerValue] :
     kCROutAnimationDirectionDefault;
 }
