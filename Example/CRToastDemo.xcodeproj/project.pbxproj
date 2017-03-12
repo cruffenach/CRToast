@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		307C71BC1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 307C71BB1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.m */; };
 		464D04F01BD2258200E0E90A /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 464D04E61BD2248100E0E90A /* CRToast.framework */; };
 		464D04F11BD2258200E0E90A /* CRToast.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 464D04E61BD2248100E0E90A /* CRToast.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5E2FFB5718367C01003333F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2FFB5618367C01003333F8 /* Foundation.framework */; };
@@ -66,6 +67,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		307C71BA1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UINavigationControllerWIthUpsideDownSupport.h; sourceTree = "<group>"; };
+		307C71BB1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UINavigationControllerWIthUpsideDownSupport.m; sourceTree = "<group>"; };
 		464D04DF1BD2248100E0E90A /* CRToast.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CRToast.xcodeproj; path = ../CRToast.xcodeproj; sourceTree = "<group>"; };
 		5E2FFB5318367C01003333F8 /* CRToastDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRToastDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2FFB5618367C01003333F8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -148,6 +151,8 @@
 				5E2FFB8D18367CA3003333F8 /* MainViewController.xib */,
 				5E2FFB6818367C01003333F8 /* Images.xcassets */,
 				5E2FFB5D18367C01003333F8 /* Supporting Files */,
+				307C71BA1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.h */,
+				307C71BB1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.m */,
 			);
 			path = CRToastDemo;
 			sourceTree = "<group>";
@@ -193,11 +198,6 @@
 			attributes = {
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Collin Ruffenach";
-				TargetAttributes = {
-					5E2FFB5218367C01003333F8 = {
-						DevelopmentTeam = 7AM27DZVQU;
-					};
-				};
 			};
 			buildConfigurationList = 5E2FFB4E18367C01003333F8 /* Build configuration list for PBXProject "CRToastDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -265,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E2FFB6718367C01003333F8 /* AppDelegate.m in Sources */,
+				307C71BC1D3CA6C200CE2EDC /* UINavigationControllerWIthUpsideDownSupport.m in Sources */,
 				5E2FFB6318367C01003333F8 /* main.m in Sources */,
 				5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */,
 			);
