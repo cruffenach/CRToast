@@ -65,8 +65,8 @@ typedef void (^CRToastAnimationStepBlock)(void);
     [[self manager] dismissAllNotifications:animated];
 }
 
-+ (void)dismissAllNotificationsWithIdentifier:(NSString *)identifer animated:(BOOL)animated {
-    [[self manager] dismissAllNotificationsWithIdentifier:identifer animated:animated];
++ (void)dismissAllNotificationsWithIdentifier:(NSString *)identifier animated:(BOOL)animated {
+    [[self manager] dismissAllNotificationsWithIdentifier:identifier animated:animated];
 }
 
 + (NSArray *)notificationIdentifiersInQueue {
@@ -235,14 +235,14 @@ CRToastAnimationStepBlock CRToastOutwardAnimationsSetupBlock(CRToastManager *wea
     [self.notifications removeAllObjects];
 }
 
-- (void)dismissAllNotificationsWithIdentifier:(NSString *)identifer animated:(BOOL)animated {
+- (void)dismissAllNotificationsWithIdentifier:(NSString *)identifier animated:(BOOL)animated {
     if (_notifications.count == 0) { return; }
     NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
     
     __block BOOL callDismiss = NO;
     [self.notifications enumerateObjectsUsingBlock:^(CRToast *toast, NSUInteger idx, BOOL *stop) {
         NSString *toastIdentifier = toast.options[kCRToastIdentifierKey];
-        if (toastIdentifier && [toastIdentifier isEqualToString:identifer]) {
+        if (toastIdentifier && [toastIdentifier isEqualToString:identifier]) {
             if (idx == 0) { callDismiss = YES; }
             else {
                 [indexes addIndex:idx];
