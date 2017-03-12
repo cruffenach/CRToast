@@ -130,22 +130,44 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGRect contentFrame = self.bounds;
     CGSize imageSize = self.imageView.image.size;
     CGFloat preferredPadding = self.toast.preferredPadding;
-    
+    CGFloat imageVerticalPadding = self.toast.imageVerticalPadding;
+    NSLog(@"vertical padding: %f", imageVerticalPadding); // TODO: Remove
+    BOOL imageRounded = self.toast.imageRounded;
+  
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
     contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
     
     self.backgroundView.frame = self.bounds;
     
     CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, preferredPadding, contentFrame.size);
-    self.imageView.frame = CGRectMake(imageXOffset,
-                                      statusBarYOffset,
-                                      imageSize.width == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame),
-                                      imageSize.height == 0 ?
-                                      0 :
-                                      CGRectGetHeight(contentFrame));
     
+    
+    
+    if (imageRounded == YES) {
+        // Force the image to be a square
+        CGFloat dimension = self.imageView.frame.size.height > 0 ? self.imageView.frame.size.height : CGRectGetHeight(contentFrame) - imageVerticalPadding*2;
+        self.imageView.frame = CGRectMake(imageXOffset,
+                                          statusBarYOffset+imageVerticalPadding,
+                                          dimension,
+                                          dimension);
+        
+        // Set it as rounded
+        self.imageView.layer.cornerRadius = dimension/2;
+        self.imageView.clipsToBounds = YES;
+    } else {
+        self.imageView.frame = CGRectMake(imageXOffset,
+                                          statusBarYOffset+imageVerticalPadding,
+                                          imageSize.width == 0 ?
+                                          0 :
+                                          CGRectGetHeight(contentFrame),
+                                          imageSize.height == 0 ?
+                                          0 :
+                                          CGRectGetHeight(contentFrame) - (imageVerticalPadding*2));
+        
+        // Only clip to bounds when the image has padding
+        self.imageView.clipsToBounds = imageVerticalPadding > 0;
+    }
+  
     CGFloat imageWidth = imageSize.width == 0 ? 0 : CGRectGetMaxX(_imageView.frame);
     CGFloat x = CRContentXOffsetForViewAlignmentAndWidth(self.toast.imageAlignment, imageXOffset, imageWidth, preferredPadding);
     

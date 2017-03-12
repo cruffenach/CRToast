@@ -28,8 +28,11 @@
 
 @property (weak, nonatomic) IBOutlet UISwitch *imageTintEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *imageTintSlider;
+@property (weak, nonatomic) IBOutlet UISlider *imageVerticalPaddingSlider;
+@property (weak, nonatomic) IBOutlet UILabel *lblImageVerticalPadding;
 
 @property (weak, nonatomic) IBOutlet UISwitch *showImageSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *roundedImageSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *showActivityIndicatorSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *coverNavBarSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *slideOverSwitch;
@@ -132,8 +135,16 @@
     [self updateImageTintSwitch];
 }
 
+- (IBAction)sliderImageVerticalPaddingChanged:(UISlider *)sender {
+    [self updateVerticalPaddingLabel];
+}
+
 - (void)updateImageTintSwitch {
     self.imageTintEnabledSwitch.onTintColor = [UIColor colorWithHue:self.imageTintSlider.value saturation:1.0 brightness:1.0 alpha:1.0];
+}
+
+- (void)updateVerticalPaddingLabel {
+    self.lblImageVerticalPadding.text = [NSString stringWithFormat:@"%d", (int)roundf(self.imageVerticalPaddingSlider.value)];
 }
 
 - (IBAction)statusBarChanged:(UISwitch *)sender {
@@ -217,9 +228,11 @@ CRToastAccessoryViewAlignment CRToastViewAlignmentForSegmentedControl(UISegmente
                                       kCRToastAnimationOutTypeKey               : @(CRToastAnimationTypeFromSegmentedControl(_outAnimationTypeSegmentedControl)),
                                       kCRToastAnimationInDirectionKey           : @(self.segFromDirection.selectedSegmentIndex),
                                       kCRToastAnimationOutDirectionKey          : @(self.segToDirection.selectedSegmentIndex),
-                                      kCRToastNotificationPreferredPaddingKey   : @(self.sliderPadding.value)} mutableCopy];
+                                      kCRToastNotificationPreferredPaddingKey   : @(self.sliderPadding.value),
+                                      kCRToastImageRoundedKey                   : @(self.roundedImageSwitch.on),
+                                      kCRToastImageVerticalPaddingKey           : @(self.imageVerticalPaddingSlider.value)} mutableCopy];
     if (self.showImageSwitch.on) {
-        options[kCRToastImageKey] = [UIImage imageNamed:@"alert_icon.png"];
+        options[kCRToastImageKey] = [UIImage imageNamed:@"test_picture"];
         options[kCRToastImageAlignmentKey] = @(CRToastViewAlignmentForSegmentedControl(self.imageAlignmentSegmentedControl));
     }
     

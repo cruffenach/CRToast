@@ -326,6 +326,21 @@ extern NSString *const kCRToastImageAlignmentKey;
 extern NSString *const kCRToastImageTintKey;
 
 /**
+ The vertical padding used in this image. If supplied, it will create a padding of the specified amount of px above and below the image.
+ 
+ @note Providing `kCRToastImageContentModeKey` a UIViewContentMode.ScaleToFit is recommended when using this property.
+ */
+extern NSString *const kCRToastImageVerticalPaddingKey;
+
+/**
+ The image style to use. If true is supplied, it will make the image render as a circle. Expects a BOOL
+ 
+ 
+ @note Providing `kCRToastImageContentModeKey` a UIViewContentMode.ScaleToFit is recommended when using this property.
+ */
+extern NSString *const kCRToastImageRoundedKey;
+
+/**
  BOOL setting whether the CRToast should show a loading indicator in the left image location.
  */
 extern NSString *const kCRToastShowActivityIndicatorKey;
@@ -438,6 +453,8 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 @property (nonatomic, readonly) UIViewContentMode imageContentMode;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment imageAlignment;
 @property (nonatomic, readonly) UIColor *imageTint;
+@property (nonatomic, readonly) CGFloat imageVerticalPadding;
+@property (nonatomic, readonly) BOOL imageRounded;
 @property (nonatomic, readonly) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) CRToastAccessoryViewAlignment activityViewAlignment;
 @property (nonatomic, readonly) BOOL showActivityIndicator;
