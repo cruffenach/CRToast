@@ -469,7 +469,9 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (!_privateStatusBarView) {
         _privateStatusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
         if (self.snapshotWindow) {
-            [_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+		});
         }
         _privateStatusBarView.clipsToBounds = YES;
     }
