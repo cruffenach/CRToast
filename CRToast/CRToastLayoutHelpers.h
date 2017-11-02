@@ -5,6 +5,7 @@
 
 #import <Foundation/Foundation.h>
 #import "CRToast.h" // For NS_ENUM values
+#import "CRToastView.h"
 
 /**
  `BOOL` to determine if the frame is automatically adjusted for orientation. iOS 8 automatically accounts for orientation when getting frame where as iOS 7 does not.
@@ -111,7 +112,13 @@ static CGFloat CRGetNotificationViewHeightForOrientation(CRToastType type, CGFlo
         case CRToastTypeStatusBar:
             return CRGetStatusBarHeightForOrientation(orientation);
         case CRToastTypeNavigationBar:
-            return CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
+        {
+            CGFloat height = CRGetStatusBarHeightForOrientation(orientation) + CRGetNavigationBarHeightForOrientation(orientation);
+            if (IsIPhoneX) {
+                height = MAX(88, height);
+            }
+            return  height;
+        }
         case CRToastTypeCustom:
             return preferredNotificationHeight;
     }

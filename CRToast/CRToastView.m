@@ -10,22 +10,6 @@
 @interface CRToastView ()
 @end
 
-#ifndef kScreenWidth
-#define kScreenWidth        ([[UIScreen mainScreen] bounds].size.width)
-#endif
-
-#ifndef kScreenHeight
-#define kScreenHeight       ([[UIScreen mainScreen] bounds].size.height)
-#endif
-
-#ifndef IsIPhoneX
-#define IsIPhoneX           (kScreenHeight == 812 && kScreenWidth == 375)
-#endif
-
-#ifndef kNaviBarHeightOffset
-#define kNaviBarHeightOffset (IsIPhoneX ? 24 : 0)
-#endif
-
 static CGFloat const kCRStatusBarViewNoImageLeftContentInset = 10;
 static CGFloat const kCRStatusBarViewNoImageRightContentInset = 10;
 
