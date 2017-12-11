@@ -212,13 +212,13 @@ static CGRect CRGetNotificationContainerFrame(UIInterfaceOrientation statusBarOr
 
 /// Get view snapshot. If `underStatusBar` it will get key windows root view controller. Otherwise it'll get the mainscreens snapshot
 static UIView *CRStatusBarSnapShotView(BOOL underStatusBar) {
-    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
-        return underStatusBar ?
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:YES] :
-        [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
-    } else {
-        return underStatusBar ?
-        [[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:NO] :
-        [[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
-    }
+	if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+		return underStatusBar ?
+		[[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:YES] :
+		[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:YES];
+	} else {
+		return underStatusBar ?
+		[[UIApplication sharedApplication].keyWindow.rootViewController.view snapshotViewAfterScreenUpdates:NO] :
+		[[UIScreen mainScreen] snapshotViewAfterScreenUpdates:NO];
+	}
 }
