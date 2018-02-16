@@ -18,6 +18,7 @@
 		5E2FFB6918367C01003333F8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB6818367C01003333F8 /* Images.xcassets */; };
 		5E2FFB8E18367CA3003333F8 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8C18367CA3003333F8 /* MainViewController.m */; };
 		5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5E2FFB8D18367CA3003333F8 /* MainViewController.xib */; };
+		A046EB0820359D6400AFF1D2 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A046EB0720359D6400AFF1D2 /* Launch.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,7 @@
 		5E2FFB8B18367CA3003333F8 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		5E2FFB8C18367CA3003333F8 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		5E2FFB8D18367CA3003333F8 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		A046EB0720359D6400AFF1D2 /* Launch.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 				5E2FFB8D18367CA3003333F8 /* MainViewController.xib */,
 				5E2FFB6818367C01003333F8 /* Images.xcassets */,
 				5E2FFB5D18367C01003333F8 /* Supporting Files */,
+				A046EB0720359D6400AFF1D2 /* Launch.storyboard */,
 			);
 			path = CRToastDemo;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				5E2FFB6118367C01003333F8 /* InfoPlist.strings in Resources */,
 				5E2FFB8F18367CA3003333F8 /* MainViewController.xib in Resources */,
 				5E2FFB6918367C01003333F8 /* Images.xcassets in Resources */,
+				A046EB0820359D6400AFF1D2 /* Launch.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,7 +384,7 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CRToastDemo;
@@ -405,7 +409,7 @@
 				GCC_PREFIX_HEADER = "CRToastDemo/CRToastDemo-Prefix.pch";
 				GCC_WARN_PEDANTIC = YES;
 				INFOPLIST_FILE = "CRToastDemo/CRToastDemo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = CRToastDemo;
