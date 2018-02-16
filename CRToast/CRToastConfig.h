@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, CRToastAnimationType) {
 };
 
 /**
-  `CRToastState` defines the current state of the CRToast. Used for internal state management in the manager 
+ `CRToastState` defines the current state of the CRToast. Used for internal state management in the manager
  */
 typedef NS_ENUM(NSInteger, CRToastState){
     CRToastStateWaiting,
@@ -163,7 +163,7 @@ extern NSString *const kCRToastUnderStatusBarKey;
  improved when the toast is within the border. Customized bars without the border
  should have this set to NO.
  Expects type `BOOL`. Defaults to YES.
-*/
+ */
 extern NSString *const kCRToastKeepNavigationBarBorderKey;
 
 /**
@@ -302,7 +302,7 @@ extern NSString *const kCRToastBackgroundColorKey;
 
 /**
  Custom view used as the background of the notification
-*/
+ */
 extern NSString *const kCRToastBackgroundViewKey;
 
 /**
@@ -364,6 +364,11 @@ extern NSString *const kCRToastIdentifierKey;
  A BOOL setting whether the CRToast's should capture the screen behind the default UIWindow. Expects type `BOOL` defaults to `YES`
  */
 extern NSString *const kCRToastCaptureDefaultWindowKey;
+
+/**
+ A float setting the correction in the collision calculus border. Default is 0.5 but in iOS>8 with Push of the navigationbar is better 0.0
+ */
+extern NSString *const kCRToastCollisionTweakKey;
 
 #pragma mark - CRToast Interface
 @interface CRToast : NSObject <UIGestureRecognizerDelegate>
@@ -456,3 +461,4 @@ extern NSString *const kCRToastCaptureDefaultWindowKey;
 - (void)initiateAnimator:(UIView *)view;
 
 @end
+

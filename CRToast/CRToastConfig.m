@@ -77,7 +77,7 @@ BOOL CRToastInteractionResponderIsSwipe(CRToastInteractionType interactionType) 
     return CRToastInteractionTypeSwipe & interactionType;
 }
 
-BOOL CRToastInteractionResponderIsTap(interactionType) {
+BOOL CRToastInteractionResponderIsTap(CRToastInteractionType interactionType) {
     return CRToastInteractionTypeTap & interactionType;
 }
 
@@ -169,7 +169,7 @@ NSArray * CRToastGenericRecognizersMake(id target, CRToastInteractionResponder *
 // device is running iOS 8 or later, in order to pass Travis CI. Can be removed
 // once Travis CI is updated to support Xcode 6 and iOS 8 SDK.
 #ifndef NSFoundationVersionNumber_iOS_7_1
-	#define NSFoundationVersionNumber_iOS_7_1 1047.25
+    #define NSFoundationVersionNumber_iOS_7_1 1047.25
 #endif
 
 #pragma mark - CRToast
@@ -232,6 +232,8 @@ NSString *const kCRToastAutorotateKey                       = @"kCRToastAutorota
 NSString *const kCRToastIdentifierKey                       = @"kCRToastIdentifierKey";
 NSString *const kCRToastCaptureDefaultWindowKey             = @"kCRToastCaptureDefaultWindowKey";
 
+NSString *const kCRToastCollisionTweakKey                   = @"kCRToastCollisionTweakKey";
+
 #pragma mark - Option Defaults
 
 static CRToastType                   kCRNotificationTypeDefault             = CRToastTypeStatusBar;
@@ -251,23 +253,23 @@ static NSTimeInterval                kCRTimeIntervalDefault                 = 2.
 static NSTimeInterval                kCRAnimateOutTimeIntervalDefault       = 0.4;
 
 static CGFloat                       kCRSpringDampingDefault                = 0.6;
-static CGFloat                  	 kCRSpringInitialVelocityDefault        = 1.0;
+static CGFloat                       kCRSpringInitialVelocityDefault        = 1.0;
 static CGFloat                       kCRGravityMagnitudeDefault             = 1.0;
 
 static NSString *                    kCRTextDefault                         = @"";
 static UIFont   *                    kCRFontDefault                         = nil;
-static UIColor  *               	 kCRTextColorDefault                    = nil;
-static NSTextAlignment          	 kCRTextAlignmentDefault                = NSTextAlignmentCenter;
-static UIColor  *               	 kCRTextShadowColorDefault              = nil;
-static CGSize                   	 kCRTextShadowOffsetDefault;
+static UIColor  *                    kCRTextColorDefault                    = nil;
+static NSTextAlignment               kCRTextAlignmentDefault                = NSTextAlignmentCenter;
+static UIColor  *                    kCRTextShadowColorDefault              = nil;
+static CGSize                        kCRTextShadowOffsetDefault;
 static NSInteger                     kCRTextMaxNumberOfLinesDefault         = 0;
 
 static NSString *                    kCRSubtitleTextDefault                 = nil;
 static UIFont   *                    kCRSubtitleFontDefault                 = nil;
-static UIColor  *               	 kCRSubtitleTextColorDefault            = nil;
-static NSTextAlignment          	 kCRSubtitleTextAlignmentDefault        = NSTextAlignmentCenter;
-static UIColor  *               	 kCRSubtitleTextShadowColorDefault      = nil;
-static CGSize                   	 kCRSubtitleTextShadowOffsetDefault;
+static UIColor  *                    kCRSubtitleTextColorDefault            = nil;
+static NSTextAlignment               kCRSubtitleTextAlignmentDefault        = NSTextAlignmentCenter;
+static UIColor  *                    kCRSubtitleTextShadowColorDefault      = nil;
+static CGSize                        kCRSubtitleTextShadowOffsetDefault;
 static NSInteger                     kCRSubtitleTextMaxNumberOfLinesDefault = 0;
 static UIStatusBarStyle              kCRStatusBarStyleDefault               = UIStatusBarStyleDefault;
 
@@ -287,6 +289,8 @@ static BOOL                          kCRForceUserInteractionDefault         = NO
 static BOOL                          kCRAutoRotateDefault                   = YES;
 
 static BOOL                          kCRCaptureDefaultWindowDefault         = YES;
+
+static CGFloat                       kCRToastCollisionTweakDefault          = 0.5;
 
 static NSDictionary *                kCRToastKeyClassMap                    = nil;
 
@@ -363,7 +367,9 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
                                 
                                 kCRToastAutorotateKey                       : NSStringFromClass([@(kCRAutoRotateDefault) class]),
                                 
-                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class])
+                                kCRToastCaptureDefaultWindowKey             : NSStringFromClass([@(kCRCaptureDefaultWindowDefault) class]),
+                                
+                                kCRToastCollisionTweakKey                   : NSStringFromClass([@(kCRToastCollisionTweakDefault) class])
                                 };
     }
 }
@@ -375,7 +381,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     notification.state = CRToastStateWaiting;
     notification.uuid = [NSUUID UUID];
     notification.appearance = appearance;
-	
+    
     return notification;
 }
 
@@ -432,10 +438,12 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     
     if (defaultOptions[kCRToastInteractionRespondersKey])           kCRInteractionResponders                = defaultOptions[kCRToastInteractionRespondersKey];
     if (defaultOptions[kCRToastForceUserInteractionKey])            kCRForceUserInteractionDefault          = [defaultOptions[kCRToastForceUserInteractionKey] boolValue];
-        
+    
     if (defaultOptions[kCRToastAutorotateKey])                      kCRAutoRotateDefault                    = [defaultOptions[kCRToastAutorotateKey] boolValue];
-
+    
     if (defaultOptions[kCRToastCaptureDefaultWindowKey])            kCRCaptureDefaultWindowDefault          = [defaultOptions[kCRToastCaptureDefaultWindowKey] boolValue];
+    
+    if (defaultOptions[kCRToastCollisionTweakKey])                  kCRToastCollisionTweakDefault           = [defaultOptions[kCRToastCollisionTweakKey] floatValue];
 }
 
 #pragma mark - Notification View Helpers
@@ -469,9 +477,9 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (!_privateStatusBarView) {
         _privateStatusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
         if (self.snapshotWindow) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
-		});
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+            });
         }
         _privateStatusBarView.clipsToBounds = YES;
     }
@@ -742,6 +750,10 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     return (_options[kCRToastCaptureDefaultWindowKey] ? [_options[kCRToastCaptureDefaultWindowKey] boolValue] : kCRCaptureDefaultWindowDefault);
 }
 
+- (CGFloat)collisionTweak {
+    return _options[kCRToastCollisionTweakKey] ? [_options[kCRToastCollisionTweakKey] floatValue]: kCRToastCollisionTweakDefault;
+}
+
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
     return (animationDirection == CRToastAnimationDirectionTop || animationDirection == CRToastAnimationDirectionBottom);
 }
@@ -750,7 +762,8 @@ BOOL CRToastAnimationDirectionIsHorizontal(CRToastAnimationDirection animationDi
     return !CRToastAnimationDirectionIsVertical(animationDirection);
 }
 
-static CGFloat kCRCollisionTweak = 0.5;
+//Este valor estaba a 0.5. Lo cambiamos a variable de configuración porque a partir de iOS>=9 hace que detecte la colisión mal y es necesario ponerlo a 0.0 ahora ver kCRToastCollisionTweakKey
+//static CGFloat kCRCollisionTweak = 0.5;
 
 - (CGVector)inGravityDirection {
     CGFloat xVector = CRToastAnimationDirectionIsVertical(self.inAnimationDirection) ? 0.0 :
@@ -776,18 +789,18 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.inAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = 0;
-            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*kCRCollisionTweak : kCRCollisionTweak));
+            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*self.collisionTweak : self.collisionTweak));
             break;
         case CRToastAnimationDirectionLeft:
-            x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);
+            x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*self.collisionTweak : 2*self.collisionTweak);
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
         case CRToastAnimationDirectionBottom:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
-            y = -((factor-1)*CGRectGetHeight(self.notificationViewAnimationFrame1))-(push ? -5*kCRCollisionTweak : kCRCollisionTweak);;
+            y = -((factor-1)*CGRectGetHeight(self.notificationViewAnimationFrame1))-(push ? -5*self.collisionTweak : self.collisionTweak);;
             break;
         case CRToastAnimationDirectionRight:
-            x = -((factor-1)*CGRectGetWidth(self.notificationViewAnimationFrame1))-(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);;
+            x = -((factor-1)*CGRectGetWidth(self.notificationViewAnimationFrame1))-(push ? -5*self.collisionTweak : 2*self.collisionTweak);;
             y = 0;
             break;
     }
@@ -802,18 +815,18 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.inAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
-            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*kCRCollisionTweak : kCRCollisionTweak));
+            y = factor*(CGRectGetHeight(self.notificationViewAnimationFrame1)+(push ? -4*self.collisionTweak : self.collisionTweak));
             break;
         case CRToastAnimationDirectionLeft:
-            x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);
+            x = (factor*CGRectGetWidth(self.notificationViewAnimationFrame1))+(push ? -5*self.collisionTweak : 2*self.collisionTweak);
             y = 0;
             break;
         case CRToastAnimationDirectionBottom:
             x = 0;
-            y = -((factor-1)*CGRectGetHeight(self.notificationViewAnimationFrame1))-(push ? -5*kCRCollisionTweak : kCRCollisionTweak);
+            y = -((factor-1)*CGRectGetHeight(self.notificationViewAnimationFrame1))-(push ? -5*self.collisionTweak : self.collisionTweak);
             break;
         case CRToastAnimationDirectionRight:
-            x = -((factor-1)*CGRectGetWidth(self.notificationViewAnimationFrame1))-(push ? -5*kCRCollisionTweak : 2*kCRCollisionTweak);
+            x = -((factor-1)*CGRectGetWidth(self.notificationViewAnimationFrame1))-(push ? -5*self.collisionTweak : 2*self.collisionTweak);
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
     }
@@ -826,18 +839,18 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.outAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
-            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-self.collisionTweak;
             break;
         case CRToastAnimationDirectionLeft:
-            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-self.collisionTweak;
             y = 0;
             break;
         case CRToastAnimationDirectionBottom:
             x = 0;
-            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+self.collisionTweak;
             break;
         case CRToastAnimationDirectionRight:
-            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*self.collisionTweak;
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
     }
@@ -850,18 +863,18 @@ static CGFloat kCRCollisionTweak = 0.5;
     switch (self.outAnimationDirection) {
         case CRToastAnimationDirectionTop:
             x = 0;
-            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            y = -CGRectGetHeight(self.notificationViewAnimationFrame1)-self.collisionTweak;
             break;
         case CRToastAnimationDirectionLeft:
-            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-kCRCollisionTweak;
+            x = -CGRectGetWidth(self.notificationViewAnimationFrame1)-self.collisionTweak;
             y = CGRectGetHeight(self.notificationViewAnimationFrame1);
             break;
         case CRToastAnimationDirectionBottom:
             x = CGRectGetWidth(self.notificationViewAnimationFrame1);
-            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+kCRCollisionTweak;
+            y = 2*CGRectGetHeight(self.notificationViewAnimationFrame1)+self.collisionTweak;
             break;
         case CRToastAnimationDirectionRight:
-            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*kCRCollisionTweak;
+            x = 2*CGRectGetWidth(self.notificationViewAnimationFrame1)+2*self.collisionTweak;
             y = 0;
             break;
     }
