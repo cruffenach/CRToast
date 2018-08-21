@@ -751,7 +751,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (CGFloat)collisionTweak {
-    return _options[kCRToastCollisionTweakKey] ? [_options[kCRToastCollisionTweakKey] floatValue]: kCRToastCollisionTweakDefault;
+    return _options[kCRToastCollisionTweakKey] ? [_options[kCRToastCollisionTweakKey] floatValue] : kCRToastCollisionTweakDefault;
 }
 
 BOOL CRToastAnimationDirectionIsVertical(CRToastAnimationDirection animationDirection) {
@@ -762,7 +762,7 @@ BOOL CRToastAnimationDirectionIsHorizontal(CRToastAnimationDirection animationDi
     return !CRToastAnimationDirectionIsVertical(animationDirection);
 }
 
-//Este valor estaba a 0.5. Lo cambiamos a variable de configuración porque a partir de iOS>=9 hace que detecte la colisión mal y es necesario ponerlo a 0.0 ahora ver kCRToastCollisionTweakKey
+//The value was set to 0.5. We change it to a configuration variable becouse since iOS>=9 it detects the collision wrong and a value of 0.0 is needed. Now kCRToastCollisionTweakKey can be used
 //static CGFloat kCRCollisionTweak = 0.5;
 
 - (CGVector)inGravityDirection {
