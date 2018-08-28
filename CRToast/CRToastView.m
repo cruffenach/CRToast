@@ -130,15 +130,16 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     CGRect contentFrame = self.bounds;
     CGSize imageSize = self.imageView.image.size;
     CGFloat preferredPadding = self.toast.preferredPadding;
-    
+    CGFloat safeAreaOffset = CRGetSafeAreaTopOffset() / 2; // Divide by 2 to have better bottom margin
     CGFloat statusBarYOffset = self.toast.displayUnderStatusBar ? (CRGetStatusBarHeight()+CRStatusBarViewUnderStatusBarYOffsetAdjustment) : 0;
-    contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset;
+
+    contentFrame.size.height = CGRectGetHeight(contentFrame) - statusBarYOffset - safeAreaOffset;
     
     self.backgroundView.frame = self.bounds;
     
     CGFloat imageXOffset = CRImageViewFrameXOffsetForAlignment(self.toast.imageAlignment, preferredPadding, contentFrame.size);
     self.imageView.frame = CGRectMake(imageXOffset,
-                                      statusBarYOffset,
+                                      statusBarYOffset + safeAreaOffset,
                                       imageSize.width == 0 ?
                                       0 :
                                       CGRectGetHeight(contentFrame),
@@ -152,7 +153,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     if (self.toast.showActivityIndicator) {
         CGFloat centerX = CRCenterXForActivityIndicatorWithAlignment(self.toast.activityViewAlignment, CGRectGetHeight(contentFrame), CGRectGetWidth(contentFrame), preferredPadding);
         self.activityIndicator.center = CGPointMake(centerX,
-                                     CGRectGetMidY(contentFrame) + statusBarYOffset);
+                                     CGRectGetMidY(contentFrame) + statusBarYOffset + safeAreaOffset);
         
         [self.activityIndicator startAnimating];
         x = MAX(CRContentXOffsetForViewAlignmentAndWidth(self.toast.activityViewAlignment, imageXOffset, CGRectGetHeight(contentFrame), preferredPadding), x);
@@ -172,7 +173,7 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
     
     if (self.toast.subtitleText == nil) {
         self.label.frame = CGRectMake(x,
-                                      statusBarYOffset,
+                                      statusBarYOffset + safeAreaOffset,
                                       width,
                                       CGRectGetHeight(contentFrame));
     } else {
@@ -191,13 +192,13 @@ static CGFloat CRCenterXForActivityIndicatorWithAlignment(CRToastAccessoryViewAl
         CGFloat offset = (CGRectGetHeight(contentFrame) - (height + subtitleHeight))/2;
         
         self.label.frame = CGRectMake(x,
-                                      offset+statusBarYOffset,
+                                      offset+statusBarYOffset+safeAreaOffset,
                                       CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
                                       height);
         
         
         self.subtitleLabel.frame = CGRectMake(x,
-                                              height+offset+statusBarYOffset,
+                                              height+offset+statusBarYOffset+safeAreaOffset,
                                               CGRectGetWidth(contentFrame)-x-kCRStatusBarViewNoImageRightContentInset,
                                               subtitleHeight);
     }
