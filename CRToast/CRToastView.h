@@ -6,6 +6,35 @@
 #import <UIKit/UIKit.h>
 #import "CRToast.h"
 
+#ifndef kScreenWidth
+#define kScreenWidth        ([[UIScreen mainScreen] bounds].size.width)
+#endif
+
+#ifndef kScreenHeight
+#define kScreenHeight       ([[UIScreen mainScreen] bounds].size.height)
+#endif
+
+#ifndef IsIPhoneX
+#define IsIPhoneX           (isIPhoneXScreen())
+#endif
+
+#ifndef kNaviBarHeightOffset
+#define kNaviBarHeightOffset (IsIPhoneX ? 24 : 0)
+#endif
+
+static inline BOOL isIPhoneXScreen (void) {
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets edgInsets = [UIApplication sharedApplication].keyWindow.safeAreaInsets;
+        
+        if (edgInsets.top > 0 &&
+            edgInsets.bottom > 0) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 /**
  Calculate the width of the view given all necessary values of the given `CRToastView`s properties
  
