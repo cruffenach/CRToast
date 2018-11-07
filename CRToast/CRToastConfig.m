@@ -240,7 +240,7 @@ static CGFloat                       kCRNotificationPreferredPaddingDefault  = 0
 static CRToastPresentationType       kCRNotificationPresentationTypeDefault = CRToastPresentationTypePush;
 static BOOL                          kCRDisplayUnderStatusBarDefault        = NO;
 static BOOL                          kCRToastKeepNavigationBarBorderDefault = YES;
-static NSString *                    kCRToastIdentifer                      = nil;
+static NSString *                    kCRToastIdentifier                     = nil;
 
 static CRToastAnimationType          kCRAnimationTypeDefaultIn              = CRToastAnimationTypeLinear;
 static CRToastAnimationType          kCRAnimationTypeDefaultOut             = CRToastAnimationTypeLinear;
@@ -385,7 +385,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (defaultOptions[kCRToastNotificationPreferredHeightKey])     kCRNotificationPreferredHeightDefault   = [defaultOptions[kCRToastNotificationPreferredHeightKey] floatValue];
     if (defaultOptions[kCRToastNotificationPreferredPaddingKey])    kCRNotificationPreferredPaddingDefault  = [defaultOptions[kCRToastNotificationPreferredPaddingKey] floatValue];
     if (defaultOptions[kCRToastNotificationPresentationTypeKey])    kCRNotificationPresentationTypeDefault  = [defaultOptions[kCRToastNotificationPresentationTypeKey] integerValue];
-    if (defaultOptions[kCRToastIdentifierKey])                      kCRToastIdentifer                       = defaultOptions[kCRToastIdentifierKey];
+    if (defaultOptions[kCRToastIdentifierKey])                      kCRToastIdentifier                       = defaultOptions[kCRToastIdentifierKey];
     
     if (defaultOptions[kCRToastUnderStatusBarKey])                  kCRDisplayUnderStatusBarDefault         = [defaultOptions[kCRToastUnderStatusBarKey] boolValue];
     
@@ -469,7 +469,9 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
     if (!_privateStatusBarView) {
         _privateStatusBarView = [[UIView alloc] initWithFrame:self.statusBarViewAnimationFrame1];
         if (self.snapshotWindow) {
-            [_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[_privateStatusBarView addSubview:CRStatusBarSnapShotView(self.displayUnderStatusBar)];
+		});
         }
         _privateStatusBarView.clipsToBounds = YES;
     }
@@ -583,7 +585,7 @@ static NSDictionary *                kCRToastKeyClassMap                    = ni
 }
 
 - (CRToastAnimationDirection)outAnimationDirection {
-    return _options[kCRToastAnimationInDirectionKey] ?
+    return _options[kCRToastAnimationOutDirectionKey] ?
     [_options[kCRToastAnimationOutDirectionKey] integerValue] :
     kCROutAnimationDirectionDefault;
 }
