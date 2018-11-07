@@ -15,12 +15,25 @@
 #endif
 
 #ifndef IsIPhoneX
-#define IsIPhoneX           (kScreenHeight == 812 && kScreenWidth == 375)
+#define IsIPhoneX           (isIPhoneXScreen())
 #endif
 
 #ifndef kNaviBarHeightOffset
 #define kNaviBarHeightOffset (IsIPhoneX ? 24 : 0)
 #endif
+
+static inline BOOL isIPhoneXScreen (void) {
+    if (@available(iOS 11.0, *)) {
+        UIEdgeInsets edgInsets = [UIApplication sharedApplication].keyWindow.safeAreaInsets;
+        
+        if (edgInsets.top > 0 &&
+            edgInsets.bottom > 0) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
 
 /**
  Calculate the width of the view given all necessary values of the given `CRToastView`s properties
