@@ -1,6 +1,6 @@
 language: objective-c
 os: osx
-osx_image: xcode7.3
+osx_image: xcode10.3
 env:
   matrix:
     - TEST_TYPE=iOS
@@ -23,8 +23,8 @@ script:
       xcodebuild -project CRToastDemo.xcodeproj -scheme CRToastDemo -sdk iphonesimulator | xcpretty -c
     popd
   elif [ "$TEST_TYPE" = CocoaPods ]; then
-    pod lib lint CRToast.podspec
-    pod lib lint --use-libraries CRToast.podspec
+    pod lib lint CRToast.podspec --allow-warnings
+    pod lib lint --use-libraries CRToast.podspec --allow-warnings
   elif [ "$TEST_TYPE" = Carthage ]; then
     carthage build --no-skip-current
   fi
