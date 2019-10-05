@@ -89,7 +89,14 @@ typedef void (^CRToastAnimationStepBlock)(void);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        UIWindow *notificationWindow = [[CRToastWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
+        UIWindow *notificationWindow = nil;
+        if (@available(iOS 13.0, *)) {  // PS-1465
+            notificationWindow          = [[CRToastWindow alloc] initWithWindowScene:[UIApplication sharedApplication].keyWindow.windowScene];
+            notificationWindow.frame    = [[UIScreen mainScreen] bounds];
+        }else{
+            notificationWindow = [[CRToastWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        }
         notificationWindow.backgroundColor = [UIColor clearColor];
         notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         notificationWindow.windowLevel = UIWindowLevelStatusBar;
