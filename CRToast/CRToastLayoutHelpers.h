@@ -102,6 +102,19 @@ static CGFloat CRGetNavigationBarHeightForOrientation(UIInterfaceOrientation ori
     CRNavigationBarDefaultHeightiPhoneLandscape;
 }
 
+#pragma mark - Safe area offset
+/**
+ Get safe area offset to fix iPhone X top notch
+ */
+static CGFloat CRGetSafeAreaTopOffset() {
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        CGFloat topOffset = window.safeAreaInsets.top;
+        return topOffset;
+    }
+    return 0.0;
+}
+
 #pragma mark - Notification Frame
 /**
  Get the height of view needed to contain the notification given the specific orienation & notification type
@@ -178,7 +191,7 @@ static CGRect CRStatusBarViewFrame(CRToastType type, CRToastAnimationDirection d
 #pragma mark - Notification Container Frame
 /// Get the notifications container frame based on orientation & notification size
 static CGRect CRGetNotificationContainerFrame(UIInterfaceOrientation statusBarOrientation, CGSize notificationSize) {
-    CGRect containerFrame = CGRectMake(0, 0, notificationSize.width, notificationSize.height);
+    CGRect containerFrame = CGRectMake(0, CRGetSafeAreaTopOffset(), notificationSize.width, notificationSize.height);
 
     if (!CRFrameAutoAdjustedForOrientation()) {
         switch (statusBarOrientation) {
