@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		464D04B11BD21AC300E0E90A /* CRToast.h in Headers */ = {isa = PBXBuildFile; fileRef = 464D04B01BD21AC300E0E90A /* CRToast.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		464D04BF1BD21CB400E0E90A /* CRToastConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EDF1B9E21FE00BCA1C3 /* CRToastConfig.m */; settings = {ASSET_TAGS = (); }; };
-		464D04C01BD21CB800E0E90A /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE21B9E21FE00BCA1C3 /* CRToastManager.m */; settings = {ASSET_TAGS = (); }; };
-		464D04C11BD21CBB00E0E90A /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE41B9E21FE00BCA1C3 /* CRToastView.m */; settings = {ASSET_TAGS = (); }; };
-		464D04C21BD21CBD00E0E90A /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE61B9E21FE00BCA1C3 /* CRToastViewController.m */; settings = {ASSET_TAGS = (); }; };
-		464D04C31BD21CC000E0E90A /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE81B9E21FE00BCA1C3 /* CRToastWindow.m */; settings = {ASSET_TAGS = (); }; };
-		464D04CD1BD2218900E0E90A /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65986EC11B9E21DC00BCA1C3 /* CRToast.framework */; settings = {ASSET_TAGS = (); }; };
-		464D04D61BD221A400E0E90A /* CRToastManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 464D04D31BD221A400E0E90A /* CRToastManagerTests.m */; settings = {ASSET_TAGS = (); }; };
-		464D04D81BD221A400E0E90A /* CRToastViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 464D04D51BD221A400E0E90A /* CRToastViewTests.m */; settings = {ASSET_TAGS = (); }; };
+		464D04BF1BD21CB400E0E90A /* CRToastConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EDF1B9E21FE00BCA1C3 /* CRToastConfig.m */; };
+		464D04C01BD21CB800E0E90A /* CRToastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE21B9E21FE00BCA1C3 /* CRToastManager.m */; };
+		464D04C11BD21CBB00E0E90A /* CRToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE41B9E21FE00BCA1C3 /* CRToastView.m */; };
+		464D04C21BD21CBD00E0E90A /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE61B9E21FE00BCA1C3 /* CRToastViewController.m */; };
+		464D04C31BD21CC000E0E90A /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE81B9E21FE00BCA1C3 /* CRToastWindow.m */; };
+		464D04CD1BD2218900E0E90A /* CRToast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65986EC11B9E21DC00BCA1C3 /* CRToast.framework */; };
+		464D04D61BD221A400E0E90A /* CRToastManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 464D04D31BD221A400E0E90A /* CRToastManagerTests.m */; };
+		464D04D81BD221A400E0E90A /* CRToastViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 464D04D51BD221A400E0E90A /* CRToastViewTests.m */; };
 		65986EE91B9E21FE00BCA1C3 /* CRToastConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EDE1B9E21FE00BCA1C3 /* CRToastConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		65986EEA1B9E21FE00BCA1C3 /* CRToastConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EDF1B9E21FE00BCA1C3 /* CRToastConfig.m */; };
 		65986EEB1B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EE01B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h */; };
@@ -27,6 +27,8 @@
 		65986EF11B9E21FE00BCA1C3 /* CRToastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE61B9E21FE00BCA1C3 /* CRToastViewController.m */; };
 		65986EF21B9E21FE00BCA1C3 /* CRToastWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 65986EE71B9E21FE00BCA1C3 /* CRToastWindow.h */; };
 		65986EF31B9E21FE00BCA1C3 /* CRToastWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 65986EE81B9E21FE00BCA1C3 /* CRToastWindow.m */; };
+		66B191BA23586DD50066F89F /* DeviceFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = 66B191B823586DD50066F89F /* DeviceFamily.h */; };
+		66B191BB23586DD50066F89F /* DeviceFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = 66B191B923586DD50066F89F /* DeviceFamily.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		65986EE61B9E21FE00BCA1C3 /* CRToastViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastViewController.m; sourceTree = "<group>"; };
 		65986EE71B9E21FE00BCA1C3 /* CRToastWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRToastWindow.h; sourceTree = "<group>"; };
 		65986EE81B9E21FE00BCA1C3 /* CRToastWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CRToastWindow.m; sourceTree = "<group>"; };
+		66B191B823586DD50066F89F /* DeviceFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceFamily.h; sourceTree = "<group>"; };
+		66B191B923586DD50066F89F /* DeviceFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceFamily.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,8 @@
 		65986EDD1B9E21FE00BCA1C3 /* CRToast */ = {
 			isa = PBXGroup;
 			children = (
+				66B191B823586DD50066F89F /* DeviceFamily.h */,
+				66B191B923586DD50066F89F /* DeviceFamily.m */,
 				65986EDE1B9E21FE00BCA1C3 /* CRToastConfig.h */,
 				65986EDF1B9E21FE00BCA1C3 /* CRToastConfig.m */,
 				65986EE01B9E21FE00BCA1C3 /* CRToastLayoutHelpers.h */,
@@ -184,6 +190,7 @@
 				65986EF21B9E21FE00BCA1C3 /* CRToastWindow.h in Headers */,
 				65986EF01B9E21FE00BCA1C3 /* CRToastViewController.h in Headers */,
 				65986EE91B9E21FE00BCA1C3 /* CRToastConfig.h in Headers */,
+				66B191BA23586DD50066F89F /* DeviceFamily.h in Headers */,
 				464D04B11BD21AC300E0E90A /* CRToast.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +277,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 65986EB71B9E21DC00BCA1C3;
@@ -330,6 +338,7 @@
 				65986EED1B9E21FE00BCA1C3 /* CRToastManager.m in Sources */,
 				65986EF11B9E21FE00BCA1C3 /* CRToastViewController.m in Sources */,
 				65986EF31B9E21FE00BCA1C3 /* CRToastWindow.m in Sources */,
+				66B191BB23586DD50066F89F /* DeviceFamily.m in Sources */,
 				65986EEA1B9E21FE00BCA1C3 /* CRToastConfig.m in Sources */,
 				65986EEF1B9E21FE00BCA1C3 /* CRToastView.m in Sources */,
 			);
